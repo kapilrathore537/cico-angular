@@ -1,0 +1,61 @@
+<div id="main" class="main dashboard_page">
+    <div class="profile d-flex mb-4">
+
+        <div class="profile_top_heading d-flex gap_24">
+            <h1 class="font-27 font-700 secondary mb-0">Announcements</h1>
+            <a routerLink="/admin/createannouncements">
+                <button class="top_profile_sec_btn font-14 font-500">New Announcement</button>
+            </a>
+        </div>
+
+        <app-profile-bar></app-profile-bar>
+    </div>
+
+    <!-- DASHBOARD START -->
+
+    <div class="scroll_dashboard">
+
+        <div class="row">
+
+            <div class="col-md-12">
+                <h3 class="admin-title font-17 font-600 secondary position-relative">Announcements Log</h3>
+                <div class="table_container mt-2">
+                    <table class="table mb-0">
+                        <thead style="background:#EDF9FB;">
+                            <tr class="table_heading">
+                                <th scope="col" class="font-15 font-600 secondary">Date Time</th>
+                                <th scope="col" class="font-15 font-600 secondary">Title</th>
+                                <th scope="col" class="font-15 font-600 secondary">Message</th>
+                                <th scope="col" class="font-15 font-600 secondary">Sent To</th>
+                                <th scope="col" class="font-15 font-600 secondary">Seen By</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-light">
+                            <tr *ngFor="let obj of announcements ; let i  = index">
+                                <td>{{obj.date | date:'medium'}}</td>
+                                <td>{{obj.title}}</td>
+                                <td>{{obj.message}}</td>
+                                <td>{{all[i]}}
+                                    <span class="secondary font-500 font-14" (click)="showMore(i)">+more</span>
+                                </td>
+                                <!-- {{obj.course.length-1}}{{visibilityStatus} -->
+                                <td>{{obj.seenBy.seenBy}} of {{obj.seenBy.totalStudents}}</td>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    <!-- DASHBOARD END -->
+
+    <!-- RIGHT SIDE START-->
+    <app-right-side-bar></app-right-side-bar>
+    <!-- RIGHT SIDE END -->
+
+
+    <!-- MIDDLE CONTENT END -->
+
+
+</div>

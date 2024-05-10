@@ -1,0 +1,546 @@
+<div id="main" class="main mycourse_page">
+  <div class="profile d-flex">
+    <h1 class="font-27 font-700 secondary mb-0">Student Profile</h1>
+    <app-profile-bar></app-profile-bar>
+  </div>
+
+
+  <div class="scroll_section">
+    <div class="row mb-4">
+      <div class="col-md-12">
+        <div class="top-content my_course">
+          <div class="d-flex java">
+            <div class="profile_change_student d-flex justify-content-center align-items-center position-relative">
+              <div class="stu-img">
+                <div class="img_hover_icon  d-flex align-items-end">
+                  <input type="file" id="file" class="change-student-img" onchange="loadFile(event)">
+                  <i class="fi fi-rr-file-edit hover_icon secondary"></i>
+                  <i class="fi fi-rr-trash hover_icon delete-icon-color" data-bs-toggle="modal"
+                    data-bs-target="#delete-modal"></i>
+                </div>
+              </div>
+              <img [src]="student.profilePic" alr="" class="profile_image" id="output">
+            </div>
+            <div>
+              <h2 class="font-24 font-600 text-white java mb_6">{{student.fullName}}</h2>
+              <h3 class="font-16 font-500 text-white java mb_6">{{student.mobile}}</h3>
+              <h4 class="font-16 font-500 text-white java mb_6">{{student.email}}</h4>
+              <h5 class="font-16 font-500 text-white mb-0">{{student.joinDate}} To 31 Dec, 23/Present</h5>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <!-- =========TABS START========= -->
+        <ul class="nav nav-tabs student_profile_tabs mt_24 border-0" id="myTab" role="tablist">
+          <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="assignment-tab" data-bs-toggle="tab" data-bs-target="#assignments"
+              type="button" role="tab" aria-controls="home" aria-selected="true">Assignments</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="tasks-tab" data-bs-toggle="tab" data-bs-target="#tasks" type="button"
+              role="tab" aria-controls="profile" aria-selected="false">Tasks</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="payments-tab" data-bs-toggle="tab" data-bs-target="#payments" type="button"
+              role="tab" aria-controls="contact" aria-selected="false" (click)="getAllTrasection()">Payments</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="attendance-tab" data-bs-toggle="tab" data-bs-target="#attendance" type="button"
+              role="tab" aria-controls="contact" aria-selected="false" (click)="getStudentOverAllAttendancesAndLeaves()"
+              (click)="getStudentLeaves()">Attendance</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="profile-info-tab" data-bs-toggle="tab" data-bs-target="#profile_info"
+              type="button" role="tab" aria-controls="contact" aria-selected="false">Profile Info</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="enrolment-details-tab" data-bs-toggle="tab" data-bs-target="#enrolment_details"
+              type="button" role="tab" aria-controls="contact" aria-selected="false">Enrolment Details</button>
+          </li>
+        </ul>
+        <div class="tab-content" id="myTabContent">
+          <!-- assignments tabs start -->
+          <div class="tab-pane fade show active" id="assignments" role="tabpanel" aria-labelledby="assignment-tab">
+            <div class="task_assignment mt-0">
+              <div class="row">
+                <div class="col-md-6 mb-4">
+                  <app-unlocked-locked-assignment [lockAssignments]="lockAssignments"
+                    [unLockAssignments]="unLockAssignments" [assignmentTaskVisibility]="assignmentTaskVisibility">
+                  </app-unlocked-locked-assignment>
+                </div>
+
+                <div class="col-md-6 mb-4">
+                  <h3 class="title font-17 font-500 secondary position-relative">Submission History</h3>
+
+                  <div class="all_summary assignment-updates">
+
+                    <app-task-and-assignment-submission [id]="'example1'"   [title]="'Assignment'"
+                      [submission]="assignmentSubmissionsList"></app-task-and-assignment-submission>
+                    <app-pagination [paginationManager]="assignmentSubmissionPagination"
+                      (eventEmit)="getAllData($event)" [type]="'AssignmentSubmission'"
+                      [pageRequest]="assignmentSubmissionPageRequest"></app-pagination>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- assignments tabs end -->
+
+          <!-- tasks tabs start -->
+          <div class="tab-pane fade" id="tasks" role="tabpanel" aria-labelledby="tasks-tab">
+            <div class="task_assignment mt-0">
+              <div class="row">
+                <div class="col-md-6 mb-4">
+                  <app-shared-task [tasks]="tasks" [taskIndexing]="taskIndexing"></app-shared-task>
+                  <app-pagination (eventEmit)="getAllData($event)" [type]="'task'" [paginationManager]="TaskpageManager"
+                    [pageRequest]="TaskPageRequest"></app-pagination>
+                </div>
+                <!-- col-md-6/// -->
+                <div class="col-md-6 mb-4">
+                  <div class="all_summary assignment-updates">
+                    <app-task-and-assignment-submission  [id]="'example2'" [title]="'Task'"
+                      [submission]="taskSubmissionList"></app-task-and-assignment-submission>
+                  </div>
+                  <app-pagination [paginationManager]="submissioTaskpageManager" (eventEmit)="getAllData($event)"
+                    [type]="'taskSubmission'" [pageRequest]="submissioTaskPageRequest"></app-pagination>
+                </div>
+                <!-- col-md-6/// -->
+
+              </div>
+            </div>
+          </div>
+          <!-- tasks tabs end -->
+
+          <!-- payments tabs start -->
+          <div class="tab-pane fade" id="payments" role="tabpanel" aria-labelledby="payments-tab">
+            <div class="table_container">
+              <table class="table mb-0">
+                <thead style="background:#EDF9FB;">
+                  <tr class="table_heading">
+                    <th scope="col" class="font-15 font-600 secondary">EMI no.</th>
+                    <th scope="col" class="font-15 font-600 secondary">Amount</th>
+                    <th scope="col" class="font-15 font-600 secondary">Due on</th>
+                    <th scope="col" class="font-15 font-600 secondary">Status</th>
+                    <th scope="col" class="font-15 font-600 secondary">Actions</th>
+                  </tr>
+                </thead>
+                <tbody class="bg-light">
+                  <tr *ngFor="let fees of feesPay;let i=index">
+                    <td>{{i+1}}/{{feesPay.length}}</td>
+                    <td>{{fees.feesPayAmount}}</td>
+                    <td>--:--</td>
+                    <td>Paid on {{fees.payDate|date:'dd MMM , YYYY'}}</td>
+                    <td class="text_light_blue">View Details</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <!-- payments tabs end -->
+
+          <!-- attendance tabs start -->
+          <div class="tab-pane fade" id="attendance" role="tabpanel" aria-labelledby="attendance-tab">
+            <div class="task_assignment mt-0">
+              <div class="row">
+                <div class="col-md-8 mb-4">
+                  <div class="attendance_dropdown d-flex justify-content-between align-items-center">
+                    <h3 class="admin-title font-17 font-600 secondary position-relative">Attendance Log</h3>
+                    <div class="right-side-dropdown-btn d-flex">
+                      <div class="dropdown">
+                        <a class="attendance_dropdown1 dropdown-toggle font-15 font-500 dark" href="#" role="button"
+                          data-bs-toggle="dropdown" aria-expanded="false">
+                          Month
+                        </a>
+                        <ul class="dropdown-menu">
+                          <li><a class="dropdown-item" [attr.value]="obj" *ngFor="let obj of monthsList">{{obj}}</a>
+                          </li>
+
+                        </ul>
+                      </div>
+
+                      <div class="dropdown">
+                        <a class="attendance_dropdown1 dropdown-toggle font-15 font-500 dark" href="#" role="button"
+                          data-bs-toggle="dropdown" aria-expanded="false">
+                          State
+                        </a>
+                        <ul class="dropdown-menu">
+                          <li><a class="dropdown-item" [attr.value]="obj"
+                              *ngFor="let obj of attandancesState">{{obj}}</a></li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="table_container">
+                    <table class="table mb-0">
+                      <thead style="background:#EDF9FB;">
+                        <tr class="table_heading">
+                          <th scope="col" class="font-15 font-600 secondary">Date</th>
+                          <th scope="col" class="font-15 font-600 secondary">Check-in</th>
+                          <th scope="col" class="font-15 font-600 secondary">Check-out</th>
+                          <th scope="col" class="font-15 font-600 secondary">Time in</th>
+                          <th scope="col" class="font-15 font-600 secondary">State</th>
+                        </tr>
+                      </thead>
+                      <tbody class="bg-light">
+                        <tr *ngFor="let obj of attendanceLog">
+                          <td>{{obj.date | date:'dd MMM YYYY'}}</td>
+                          <td *ngIf="obj.checkIn != null">{{changeTimeFormat(obj.checkIn)}}</td>
+                          <td *ngIf="obj.checkOut != null">{{changeTimeFormat(obj.checkOut)}}</td>
+                          <td *ngIf="obj.timeIn != null">{{timerFormate(obj.timeIn)}} Hrs</td>
+                          <td *ngIf="obj.checkIn == null">NA</td>
+                          <td *ngIf="obj.checkOut == null">NA</td>
+                          <td *ngIf="obj.timeIn == null">NA</td>
+                          <td>{{obj.status}}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <nav aria-label="Page navigation example" class="table-pagination"
+                    *ngIf="attendanceLog.length >=submissioTaskPageRequest.pageSize">
+
+                    <ul class="pagination">
+                      <li class="p-2  mx-2 ms-0 "><a class="fs-16 fw-500 secondary "
+                          [ngClass]="attandancePageManager.first?'theading ':' cur-point'"
+                          (click)="attandanceManageNextPrev(false)">Previous</a></li>
+                      <li class="page-item cur-point" *ngFor="let b of attandancePageManager.showButtons ;"
+                        (click)="attandancePageGet(b-1)"><a class="page-link text_orange "
+                          [ngClass]="attandancePageRequest.pageNumber==b-1?'active':''" id="{{b}}"
+                          href="javascript:void(0)">{{b}}</a>
+                      </li>
+                      <!-- <li class="page-item "><a class="page-link" >2</a></li>
+                        <li class="page-item "><a class="page-link" >3</a></li>
+                        <li class="page-item "><a class="page-link" >4</a></li>
+                        <li class="page-item "><a class="page-link" >5</a></li> -->
+                      <li class="p-2  mx-0 ms-2"><a class="fs-16 fw-500 secondary"
+                          [ngClass]="attandancePageManager.last?'theading':' cur-point'"
+                          (click)="attandanceManageNextPrev(true)">Next</a></li>
+                    </ul>
+                  </nav>
+                </div>
+
+                <div class="col-md-4">
+                  <h3 class="admin-title font-17 font-600 secondary position-relative">Attendance Overview</h3>
+                  <div class="attendance-area position-relative mb_20">
+                    <div id="chart">
+                      <apx-chart [series]="chartOptions.series" [chart]="chartOptions.chart"
+                        [labels]="chartOptions.labels" [responsive]="chartOptions.responsive"
+                        [legend]="chartOptions.legend" [colors]="chartOptions.colors"
+                        [stroke]="chartOptions.stroke"></apx-chart>
+                    </div>
+                  </div>
+
+                  <div class="attendance_dropdown d-flex justify-content-between align-items-center">
+                    <h3 class="admin-title font-17 font-600 secondary position-relative">Leave Requests</h3>
+                    <div class="right-side-dropdown-btn d-flex">
+                      <div class="dropdown">
+                        <a class="attendance_dropdown1 dropdown-toggle font-15 font-500 dark" href="#" role="button"
+                          data-bs-toggle="dropdown" aria-expanded="false">
+                          {{leaveMonth}}
+                        </a>
+                        <ul class="dropdown-menu leaves_dropdown">
+                          <li><a class="dropdown-item" (click)="getStudentLeaves()">All</a></li>
+                          <li><a class="dropdown-item" (click)="getLeavesFilter(i+1)"
+                              *ngFor="let obj of monthsList;let i=index">{{obj}}</a></li>
+                        </ul>
+                      </div>
+
+                    </div>
+                  </div>
+
+                  <div class="leaves_description">
+                    <h3 class="font-21 font-600 secondary position-relative" *ngIf="leavesList.length == 0">
+                      NO LEAVES FOUND !!!
+                    </h3>
+                    <div class="all_summary" data-bs-toggle="modal" data-bs-target="#exampleModal2"
+                      *ngFor="let leave of leavesList">
+                      <div class="leaves d-flex align-items-center position-relative justify-content-between">
+                        <div class="leaves_dec">
+                          <h2 class="font-13 font-500 text-black mb-0" *ngIf="leave.leaveType.leaveTypeId == 2">CL 4
+                            Days</h2>
+                          <h2 class="font-13 font-500 text-black mb-0" *ngIf="leave.leaveType.leaveTypeId == 1">CL 4
+                            Days</h2>
+                          <h2 class="font-11 font-500 text-black java mtb_2">{{ leave.leaveDate | date : "dd/MM/YYYY"
+                            }}-{{
+                            leave.leaveEndDate | date : "dd/MM/YYYY"
+                            }}</h2>
+                          <h3 class="font-11 font-400 text-black">{{ leave.leaveReason }}</h3>
+                        </div>
+                        <div class="leaves_right d-flex gap_24 align-items-center">
+                          <h3 class="Approved ms-auto font-13 font-400" *ngIf="leave.leaveStatus == 0">
+                            Pending
+                          </h3>
+                          <h3 class="Approved ms-auto font-13 font-400" *ngIf="leave.leaveStatus == 1">
+                            Approved
+                          </h3>
+                          <h3 class="Approved ms-auto font-13 font-400" *ngIf="leave.leaveStatus == 2">
+                            Declined
+                          </h3>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+          <!-- attendance tabs end -->
+
+          <!-- Profile Info tabs start -->
+          <div class="tab-pane fade" id="profile_info" role="tabpanel" aria-labelledby="profile-info-tab">
+            <form action="" class="mb_24">
+              <div class="row">
+                <div class="col-md-4 mb_20">
+                  <label for="" class="mb_6 font-15 font-500 secondary">Name</label>
+                  <div class="input_icon position-relative">
+                    <input type="text" id="" name="fullName" [(ngModel)]="student.fullName"
+                      class="form-control input_text" placeholder="">
+                  </div>
+                </div>
+                <div class="col-md-4 mb_20">
+                  <label for="" class="mb_6 font-15 font-500 secondary">Phone</label>
+                  <div class="input_icon position-relative">
+                    <input type="number" id="" name="mobile" [(ngModel)]="student.mobile" 
+                      class="form-control input_text" placeholder="">
+                  </div>
+                </div>
+                <div class="col-md-4 mb_20">
+                  <label for="" class="mb_6 font-15 font-500 secondary">E-mail</label>
+                  <div class="input_icon position-relative">
+                    <input type="email" id="" name="email" [(ngModel)]="student.email" class="form-control input_text"
+                      placeholder="" readonly>
+                  </div>
+                </div>
+                <div class="col-md-4 mb_20">
+                  <label for="" class="mb_6 font-15 font-500 secondary">Mother’s Name</label>
+                  <div class="input_icon position-relative">
+                    <input type="text" id="" name="mothersName" [(ngModel)]="student.mothersName"
+                      class="form-control input_text" placeholder="">
+                  </div>
+                </div>
+                <div class="col-md-4 mb_20">
+                  <label for="" class="mb_6 font-15 font-500 secondary">Father's Name</label>
+                  <div class="input_icon position-relative">
+                    <input type="text" id="" name="fathersName" [(ngModel)]="student.fathersName"
+                      class="form-control input_text" placeholder="">
+                  </div>
+                </div>
+                <div class="col-md-4 mb_20">
+                  <label for="" class="mb_6 font-15 font-500 secondary">Gender</label>
+                  <div class="input_icon position-relative">
+                    <input type="text" id="" name="gender" class="form-control input_text" placeholder="Male">
+                  </div>
+                </div>
+                <div class="col-md-6 mb_20">
+                  <label for="" class="mb_6 font-15 font-500 secondary">City</label>
+                  <div class="input_icon position-relative">
+                    <input type="text" id="" name="localAddress" [(ngModel)]="student.localAddress"
+                      class="form-control input_text" placeholder="">
+                  </div>
+                </div>
+                <div class="col-md-6 mb_20">
+                  <label for="" class="mb_6 font-15 font-500 secondary">Address</label>
+                  <div class="input_icon position-relative">
+                    <input type="text" id="" name="parmanentAddress" [(ngModel)]="student.parmanentAddress"
+                      class="form-control input_text"
+                      placeholder="">
+                  </div>
+                </div>
+                <!-- <div class="col-md-6 mb_20">
+                  <label for="" class="mb_6 font-15 font-500 secondary">Branch</label>
+                  <div class="input_icon position-relative">
+                    <input type="text" id="" name="branch" class="form-control input_text" placeholder="Computer Science">
+                  </div>
+                </div> -->
+                <div class="col-md-6 mb_20">
+                  <label for="" class="mb_6 font-15 font-500 secondary">Course</label>
+                  <div class="input_icon position-relative">
+                    <input type="text" id="" name="currentCourse" [(ngModel)]="student.currentCourse"
+                      class="form-control input_text" placeholder="">
+                  </div>
+                </div>
+                <!-- <div class="col-md-6 mb_20">
+                  <label for="" class="mb_6 font-15 font-500 secondary">City</label>
+                  <div class="input_icon position-relative">
+                    <input type="text" id="" name="" class="form-control input_text" placeholder="Indore">
+                  </div>
+                </div> -->
+                <div class="col-md-6 mb_20">
+                  <label for="" class="mb_6 font-15 font-500 secondary">Collage</label>
+                  <div class="input_icon position-relative">
+                    <input type="text" id="" name="college" [(ngModel)]="student.college"
+                      class="form-control input_text"
+                      placeholder="">
+                  </div>
+                </div>
+                <div class="col-md-12 text-center">
+                  <button (click)="updateStudent()" class="top_profile_sec_btn font-14 font-500">Edit Info</button>
+                </div>
+
+
+              </div><!-- row -->
+            </form>
+          </div>
+          <!-- Profile Info tabs end -->
+
+          <!-- Enrolment Details tabs start -->
+          <div class="tab-pane fade" id="enrolment_details" role="tabpanel" aria-labelledby="enrolment-details-tab">
+            <form action="" class="mb_24">
+              <div class="row">
+                <div class="col-md-4 mb_20">
+                  <label for="" class="mb_6 font-15 font-500 secondary">Course</label>
+                  <div class="input_icon position-relative">
+                    <input type="text" id="" name="applyForCourse" [(ngModel)]="student.applyForCourse"
+                      class="form-control input_text" placeholder="">
+                  </div>
+                </div>
+                <div class="col-md-4 mb_20">
+                  <label for="" class="mb_6 font-15 font-500 secondary">Roll Number</label>
+                  <div class="input_icon position-relative">
+                    <input type="number" id="" readonly name="studentId" [(ngModel)]="student.studentId"
+                      class="form-control input_text" placeholder="">
+                  </div>
+                </div>
+                <div class="col-md-4 mb_20">
+                  <label for="" class="mb_6 font-15 font-500 secondary">Batch Number</label>
+                  <div class="input_icon position-relative">
+                    <input type="text" id="" name="" class="form-control input_text" placeholder="">
+                  </div>
+                </div>
+                <div class="col-md-4 mb_20">
+                  <label for="" class="mb_6 font-15 font-500 secondary">Joining Date</label>
+                  <div class="input_icon position-relative">
+                    <input type="text" id="" name="joiningDate" [(ngModel)]="student.joinDate"
+                      class="form-control input_text" placeholder="">
+                  </div>
+                </div>
+                <div class="col-md-4 mb_20">
+                  <label for="" class="mb_6 font-15 font-500 secondary">Completion Date</label>
+                  <div class="input_icon position-relative">
+                    <input type="text" id="" name="" class="form-control input_text" placeholder="">
+                  </div>
+                </div>
+                <div class="col-md-4 mb_20">
+                  <label for="" class="mb_6 font-15 font-500 secondary">Total Fee</label>
+                  <div class="input_icon position-relative">
+                    <input type="text" id="" name="" class="form-control input_text" placeholder="">
+                  </div>
+                </div>
+
+                <div class="col-md-12 text-center">
+                  <button (click)="updateStudent()" class="top_profile_sec_btn font-14 font-500">Edit Info</button>
+                </div>
+
+
+              </div><!-- row -->
+            </form>
+          </div>
+          <!-- Enrolment Details tabs end -->
+
+        </div>
+        <!-- =========TABS END========= -->
+      </div>
+
+
+    </div>
+  </div>
+
+  <!-- RIGHT SIDE START-->
+  <app-right-side-bar></app-right-side-bar>
+  <!-- RIGHT SIDE END -->
+
+  <!-- MIDDLE CONTENT END -->
+
+
+</div>
+
+<div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel1" aria-hidden="true">
+  <div class="modal-dialog position-relative assignment_modal" style="width: 514px;">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5 font-17 font-600 secondary modal_line position-relative mb-2"
+            id="exampleModalLabel1">
+            Submission Details</h1>
+          <button type="button" class="close_btn" data-bs-dismiss="modal" aria-label="Close" style="top: -15%;">
+            <i class="fi fi-rr-cross close_modal"></i>
+          </button>
+          <h3 class="font-15 font-500"
+            [ngClass]="{'text_light_green':assignmentSubmissionObj.status == 'Accepted','text_light_red':assignmentSubmissionObj.status=='Rejected','text_light_blue':(assignmentSubmissionObj.status=='Unreviewed')||(assignmentSubmissionObj.status=='Reviewing')}">
+            {{assignmentSubmissionObj.status}}</h3>
+        </div>
+        <div class="">
+          <div class="assignment">
+            <div class="question_ans">
+              <h3 class="font-17 font-500 secondary">Report</h3>
+              <ol class="ps-3">
+                <li class="font-17 font-400 text_dark">{{assignmentSubmissionObj.description}}</li>
+                <!-- <li class="font-17 font-400 text_dark">Maintain a high level of creativity</li> -->
+              </ol>
+            </div>
+            <div class="question_ans">
+              <h3 class="font-17 font-500 secondary">Review</h3>
+              <ol class="ps-3">
+                <li class="font-17 font-400 text_dark">{{assignmentSubmissionObj.review}}</li>
+                <!-- <li class="font-17 font-400 text_dark">Maintain a high level of creativity</li> -->
+              </ol>
+            </div>
+            <form class="attachment_file1 d-flex align-items-center  position-relative attechment_file"
+              *ngIf="assignmentSubmissionObj.submitFile!=null && assignmentSubmissionObj.submitFile!=''">
+              <a href="{{assignmentSubmissionObj.submitFile}}" class="font-15 font-400 text_gray  attachment_file_text">
+                <i class="fi fi-rr-paperclip-vertical secondary add_more position-absolute  mx-2"></i>
+                Download Submited File</a>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+  <div class="modal-dialog position-relative assignment_modal" style="width: 514px;">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5 font-17 font-600 secondary modal_line position-relative mb-2"
+            id="exampleModalLabel1">
+            Submission Details</h1>
+          <button type="button" class="close_btn" data-bs-dismiss="modal" aria-label="Close" style="top: -15%;">
+            <i class="fi fi-rr-cross close_modal"></i>
+          </button>
+          <h3 class="font-15 font-500"
+            [ngClass]="{'text_light_green':taskSubmissionObj.status == 'Accepted','text_light_red':taskSubmissionObj.status=='Rejected','text_light_blue':(taskSubmissionObj.status=='Unreviewed')||(taskSubmissionObj.status=='Reviewing')}">
+            {{taskSubmissionObj.status}}</h3>
+        </div>
+        <div class="">
+          <div class="assignment">
+            <div class="question_ans">
+              <h3 class="font-17 font-500 secondary">Report</h3>
+              <ol class="ps-3">
+                <li class="font-17 font-400 text_dark">{{taskSubmissionObj.taskDescription}}</li>
+              </ol>
+            </div>
+            <div class="question_ans">
+              <h3 class="font-17 font-500 secondary">Reivew</h3>
+              <ol class="ps-3">
+                <li class="font-17 font-400 text_dark">{{taskSubmissionObj.review}}</li>
+              </ol>
+            </div>
+            <form class="attachment_file1 d-flex align-items-center  position-relative attechment_file"
+              *ngIf="taskSubmissionObj.submittionFileName!=null">
+              <a href="{{taskSubmissionObj.submittionFileName}}"
+                class="font-15 font-400 text_gray  attachment_file_text">
+                <i class="fi fi-rr-paperclip-vertical secondary add_more position-absolute  mx-2"></i>
+                Download Submited File</a>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Delete Modal End -->

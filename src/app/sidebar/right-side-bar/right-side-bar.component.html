@@ -1,0 +1,39 @@
+<div class="right-sidebar">
+  <div class="box0 sidepanel">
+    <div class="profile mb-4 profile-right">
+      <div class="">
+        <img [src]="profileData.profilePic" class="round-img image">
+      </div>
+      <div class="text">
+        <h3 class="font-17 font-600 text-black user-name">{{profileData.name}}</h3>
+        <p class="font-14 font-400  text-black mb-0">{{profileData.course}}</p>
+        <p class="font-14 font-400  text-black mb-0">{{profileData.role}}</p>
+      </div>
+      <a class="ms-3 right_menu_toggle">
+        <i class="fi fi-rr-cross-small warning fs-2 close_menu"></i>
+      </a>
+    </div>
+
+
+    <div class="text1">
+      <h4 class="font-17 font-600 light pointer">Updates</h4> 
+      <h4 class="font-17 font-600 light pointer "(click)="clearMessage()"    *ngIf="announcements.length!==0" >Clear All</h4>
+      <h4 class="font-17 font-600 light pointer  "  *ngIf="announcements.length==0 && isDataReloading==false" (click)="getAnnouncementsForStudents()"><i class="fa fa-refresh fa-1x fa-fw"></i></h4>
+      <h4 class="font-17 font-600 light pointer  "  *ngIf="isDataReloading" ><i class="fa fa-refresh fa-spin fa-1x fa-fw"></i> Loading...</h4>
+    </div>
+    <div class=" scroller-bar">
+    <div class="nortification mb-3 position-relative " *ngFor="let obj of announcements;let i = index">
+      <div class="nortifications-h">
+        <h6 class="font-17 font-400 light notification_title">{{obj.title}}</h6>
+        <a class="font-12 font-400 mb-0 msg-hover  pointer" (click)="seenMessage(i+1,obj.announcementId)">{{announcementsVisibility[i+1] ? 'hide':'read'}} message</a>
+        <h6 class="font-14 font-400 light mb-0 notification_message">{{ announcementsVisibility[i+1] ? obj.message:''  }}</h6>
+      </div>
+      <h5 class="font-11 font-400 light">{{utilityService.updateTimeline(obj.date)}}</h5>
+    </div>
+    <div  class=" mb-8 position-relative " *ngIf="messages">
+      <h6> no new meessage...</h6>
+     </div>
+    </div>
+   
+  </div>
+</div>

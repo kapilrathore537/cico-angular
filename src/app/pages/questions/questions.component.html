@@ -1,0 +1,92 @@
+<div id="main" class="main mycourse_page ms-0 content"  >
+
+    <div class="container">
+        <div class="col-md-10 question_page m-auto">
+            <div class="Questions_quiz d-flex justify-content-between align-items-center ">
+                <h4 class="font-17 font-700 light-black mb-0 d-flex align-items-center pointer"  (click)="clickQuitButton()"><i
+                        class="fi fi-sr-arrow-left mx-2 ms-0 lh-0" ></i>Quit</h4>
+                <div class="text-center">
+                    <h6 class="font-17 font-500 light-black mb-0">Time Left:{{remainingTime}} </h6>
+                    <h5 class="font-19 font-700 light-info mb-0">Question - {{questionNumber}}</h5>
+                </div>
+                <h4 class="font-17 font-700 light-black mb-0 d-flex align-items-center pointer"  (click)="clickSubmitButton()" >Submit&nbsp;&nbsp;<i
+                    class="fi fi-sr-arrow-right mx-2 ms-0 lh-0" ></i></h4>
+            </div>
+            <div class="progressbar">
+                  <span [ngClass]="manageQuestionProgressBar(obj.questionId)?'prosesss complete':'prosesss'" *ngFor="let obj of questions"></span> 
+                  <!-- <span [ngClass]="'prosesss '" ></span> -->
+            </div>
+            <div class="question_section">
+                <div class="d-flex justify-content-center align-items-center" *ngIf="question.questionImage!=null">
+                    <img [src]="question.questionImage " style="height: 250px; width: 600px;">
+                </div>
+                <div class="question_1 ">
+                    <h5 class="font-17 font-500 txt-dark" [innerHTML]="question.questionContent"></h5>
+                 
+                </div>
+                <div class="d-inline-block left position-relative account_option ms-auto">
+                    <input class="d-none" type="radio" name="i" [id]="'inlineRadio1-' + index" [checked]="questionClicked.get(question.questionId) === question.option1">
+                    <label class="form-check-label" for="inlineRadio1">
+                        <div class="radio-box " (click)="questionClick(question.option1,question.questionId)">
+                            <p class="font-17 font-600 mb-0 text0" > A- {{question.option1}}</p>
+                        </div>
+                    </label>
+                </div>
+                <div class="d-inline-block position-relative account_option ms-auto">
+                    <input class="d-none" type="radio" name="i" [id]="'inlineRadio2-' + index" [checked]="questionClicked.get(question.questionId) === question.option2">
+                    <label class="form-check-label" for="inlineRadio2">
+                        <div class="radio-box" (click)="questionClick(question.option2,question.questionId)">
+                            <p class="font-17 font-600 mb-0 text0"  > B- {{question.option2}}</p>
+                        </div>
+                    </label>
+                </div>
+                <div class="d-inline-block position-relative account_option ms-auto">
+                    <input class="d-none" type="radio" name="i" [id]="'inlineRadio3-' + index" [checked]="questionClicked.get(question.questionId) === question.option3">
+                    <label class="form-check-label" for="inlineRadio3">
+                        <div class="radio-box" (click)="questionClick(question.option3,question.questionId)">
+                            <p class="font-17 font-600 mb-0 text0" > C- {{question.option3}} </p>
+                        </div>
+                    </label>
+                </div>
+                <div class="d-inline-block position-relative account_option ms-auto">
+                    <input class="d-none" type="radio" name="i" [id]="'inlineRadio4-' + index" [checked]="questionClicked.get(question.questionId) === question.option4">
+                    <label class="form-check-label" for="inlineRadio4">
+                        <div class="radio-box" (click)="questionClick(question.option4,question.questionId)">
+                            <p class="font-17 font-600 mb-0 text0" > D- {{question.option4}} </p>
+                        </div>
+                    </label>
+                </div>
+
+            </div>
+            <div class="question_bottom d-flex justify-content-between align-items-center">
+                <button type="button" class="Previous_btn font-17 font-500 light-info" [disabled]="previousButton"   (click)="previousQuestion()">Previous</button>
+                <div class="d-flex flex-column align-items-center">
+                    <h4
+                        class="ans_details d-flex justify-content-center align-items-center position-relative mb-0 font-15 font-700">
+                        {{questionAnswered}}</h4>
+                    <h5 class="font-13 font-500 txt-dark mb-0 mt-3">Answered</h5>
+                </div>
+                <div class="d-flex flex-column align-items-center">
+                    <h4
+                        class="marked_details d-flex justify-content-center align-items-center position-relative mb-0 font-15 font-700">
+                        {{questionAnswered}}</h4>
+                    <h5 class="font-13 font-500 txt-dark mb-0 mt-3" >Marked</h5>
+                </div>
+                <div class="d-flex flex-column align-items-center">
+                    <h4
+                        class="not_ans_details d-flex justify-content-center align-items-center position-relative mb-0 font-15 font-700">
+                        {{questionNotAnswered}}</h4>
+                    <h5 class="font-13 font-500 txt-dark mb-0 mt-3">Not Answered</h5>
+            
+                </div>
+
+                <button type="button" class="next_btn font-17 font-500 txt-white" [disabled]="nextButton" (click)="nextQuestion(question.questionId)" >Next</button>
+
+            </div>
+        </div>
+    </div>    
+
+<!-- MIDDLE CONTENT END -->
+
+
+</div>

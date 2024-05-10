@@ -1,0 +1,44 @@
+@import '~@fortawesome/fontawesome-free/css/all.css';
+
+.checkOutButton {
+    background: linear-gradient(209.24deg, #000000 -5.81%, #f5220d 98.82%);
+}
+
+.profile-Image-Size {
+    width: 48px;
+    // height: 48px;
+    border-radius: 25px;
+
+}
+
+.image {
+    height: 50px;
+    width: 50px;
+    border-radius: 50px;
+}
+
+.msg-hover {
+    color: azure;
+}
+
+.msg-hover:hover {
+    color: #0e75d4;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+.nortifications-h {
+    z-index: 999;
+}
+
+.scroller-bar {
+    overflow: scroll;
+    overflow-x: hidden;
+    height: 100%;
+}
+
+.scroller-bar::-webkit-scrollbar {
+    display: none;
+}

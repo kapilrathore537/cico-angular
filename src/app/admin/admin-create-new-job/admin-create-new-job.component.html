@@ -1,0 +1,168 @@
+<div id="main" class="main dashboard_page">
+    <div class="profile d-flex mb-4">
+
+        <h1 class="font-27 font-700 secondary mb-0">New Job Alert</h1>
+
+
+        <app-profile-bar></app-profile-bar>
+    </div>
+
+    <!-- DASHBOARD START -->
+
+    <div class="scroll_dashboard">
+        <form [formGroup]="jobDetailsForm">
+
+        <div class="assignment-stats">
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="jobType" class="mb_6 font-17 font-500 secondary">Job Type</label>
+                       
+                        <select class="form-select" aria-label="Default select example" id="jobType" [(ngModel)]="jobAlertRequest.type" name="jobType"  formControlName="jobType">
+                        <option value="">Select Job Type</option>
+                        <option value="JOB">JOB</option>
+                        <option value="INTERN">INTERN</option>
+                        
+                        </select>
+                        <div *ngIf="isFieldInvalidForjobDetailsForm('jobType')"
+                        class="text-danger">jobType is required.</div>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="" class="mb_6 font-17 font-500 secondary">Company Name</label>
+                        <div class="input_icon position-relative">
+                            <input type="text" id="companyName" name="companyName" class="form-control input_text"
+                            formControlName="companyName"  placeholder="Dollop Infotech" [(ngModel)]="jobAlertRequest.companyName">
+                            <div *ngIf="isFieldInvalidForjobDetailsForm('companyName')"
+                            class="text-danger">Full ComapanyName is required.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <label for="" class="mb_6 font-17 font-500 secondary">Job Package</label>
+                        <div class="input_icon position-relative">
+                            <input type="number" id="jobPackage" name="jobPackage" class="form-control input_text" placeholder="3.2" [(ngModel)]="jobAlertRequest.jobPackage" formControlName="jobPackage">
+                            <div *ngIf="isFieldInvalidForjobDetailsForm('jobPackage')"
+                            class="text-danger">jobPackage is required.</div>
+                        </div>
+                     
+                </div>
+                </div>
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <label for="" class="mb_6 font-17 font-500 secondary">Technical Skills</label>
+                        <div class="input_icon position-relative">
+                            <input type="text" id="technicalSkills" name="technicalSkills" class="form-control input_text" placeholder="technicalSkills" [(ngModel)]="jobAlertRequest.technicalSkills" formControlName="technicalSkills">
+                            <div *ngIf="isFieldInvalidForjobDetailsForm('technicalSkills')"
+                            class="text-danger">technicalSkills is required.</div>
+                        </div>
+                       
+                        </div>
+                </div>
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <label for="" class="mb_6 font-17 font-500 secondary">Experience Required(*in years)</label>
+                        <div class="input_icon position-relative">
+                            <input type="number" id="experienceRequired" name="experienceRequired" class="form-control input_text" placeholder="experienceRequired" [(ngModel)]="jobAlertRequest.experienceRequired" formControlName="experienceRequired">
+                            <div *ngIf="isFieldInvalidForjobDetailsForm('experienceRequired')"
+                        class="text-danger">experienceRequired is required.</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <label for="" class="mb_6 font-17 font-500 secondary">Job Title</label>
+                        <div class="input_icon position-relative">
+                            <input type="text" id="jobTitle" name="jobTitle" class="form-control input_text" placeholder="Job Title" [(ngModel)]="jobAlertRequest.jobTitle" formControlName="jobTitle">
+                            <div *ngIf="isFieldInvalidForjobDetailsForm('jobTitle')"
+                            class="text-danger">jobTitle is required.</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-4">
+                     <div class="col-md-6 mb_18">
+                                    <h6 class="mb-4 font-15 font-500 secondary" >Selected Image :- {{imageName}}</h6>
+                                    <div class="all-course-images d-flex flex-wrap">
+                            <div class="add-course-img" *ngFor="let image of technologyStack">
+                               <img [ngClass]="imageName == image.technologyName ?'techImage-border':''" [src]="image.imageName" alt="" (click)="jobAlertRequest.technologyStackId= image.id"  (click)="imageName = image.technologyName" name=imageName  id=imageName >
+                               
+                            </div>
+                           
+                            <br>
+                    </div>
+                    <div *ngIf="imageName == ''"
+                    class="text-danger">image is required</div>
+                    </div> 
+                </div>
+               
+               </div>
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="" class="mb_6 font-17 font-500 secondary">Job Description</label>
+                        <textarea class="form-control text_area" name="jobDescription" id="exampleFormControlTextarea1" row mb-3s="3"
+                            placeholder="Start Typing....." [(ngModel)]="jobAlertRequest.jobDescription" formControlName="jobDescription"></textarea>
+                            <div *ngIf="isFieldInvalidForjobDetailsForm('jobDescription')"
+                            class="text-danger">jobDescription is required.</div>
+                    </div>
+              
+</div>
+                <div class="row mb-3">
+
+                    <div class="col-md-12">
+                        <a   class="top_profile_sec_btn font-14 font-500" (click)="createJob()">Publish
+                            Now</a>
+                    </div>
+                </div>
+
+            </form>
+            </div>
+
+
+    
+
+
+    <!-- DASHBOARD END -->
+
+    <!-- RIGHT SIDE START-->
+    <app-right-side-bar></app-right-side-bar>
+    <!-- RIGHT SIDE END -->
+
+
+    <!-- MIDDLE CONTENT END -->
+
+
+</div>
+<!--DASHBOARD END -->
+
+ 
+    <!-- Modal Delete Modal Start -->
+    <div class="modal fade" id="delete-modal" tabindex="-1" aria-labelledby="delete-modal" aria-hidden="true">
+        <div class="modal-dialog position-relative leave_modal">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <button type="button" class="close_btn" data-bs-dismiss="modal" aria-label="Close"
+                        style="top: -23%;">
+                        <i class="fi fi-rr-cross close_icon"></i>
+                    </button>
+
+                    <p class="secondary font-21 font-500 text-center">Are You Sure You Want To Delete This
+                        Question?</p>
+                    <div class="apply_modal_buttons d-flex justify-content-between align-items-center">
+                        <a routerLink="/admin/createjob">
+                            <button type="button"
+                                class="cancel_modal_btn font-15 font-500 delete-icon-color">Yes, delete</button>
+                        </a>
+                        <a routerLink="/admin/createjob">
+                            <button type="button" class="apply_modal_btn font-15 font-500">No, Do not
+                                delete</button>
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Delete Modal End -->

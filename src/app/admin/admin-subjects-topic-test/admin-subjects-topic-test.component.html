@@ -1,0 +1,191 @@
+<div id="main" class="main dashboard_page">
+    <div class="profile d-flex">
+
+        <div class="profile_top_heading d-flex gap_24">
+            <h1 class="font-27 font-700 secondary mb-0">{{ this.chapterName}}</h1>
+            <button class="top_profile_sec_btn font-14 font-500 lh-1" data-bs-toggle="modal"
+                data-bs-target="#chapter-add-content-modal" (click)="cancelContent()">Create New</button>
+
+                <button class="top_profile_sec_btn font-14 font-500 lh-1"(click)=" pageRenderUsingRouterLink('/admin/result/',chapterId)">RESULT</button>
+        </div>
+
+        <app-profile-bar></app-profile-bar>
+        </div>
+    </div>
+
+<!-- RESULT START -->
+<div class="d-flex mt_24 justify-content-center">
+    <div class="main_page">
+      <div class="dashboard_title d-flex justify-content-between align-items-center">
+        <nav aria-label="breadcrumb" class="font-17 font-600 light-black mb-0 lh-36">
+          <ol class="breadcrumb mb-0">
+            <li class="breadcrumb-item"><a href="index.html" class="font-17 font-500 gray-light">Home</a></li>
+            <li class="breadcrumb-item" aria-current="page"><a href="" class="font-17 font-500 gray-light" routerLink="/admin/subject">Subjects</a>
+            </li>
+            <li class="breadcrumb-item" aria-current="page"><a class="font-17 font-500 gray-light"  (click)="renderToChapter('/admin/subjectchapter')">Chapters</a></li>
+            <li class="breadcrumb-item  light-black" aria-current="page">{{chapterName }}</li>
+          </ol>
+        </nav>
+        <a  (click)="renderToChapter('/admin/subjectchapter')" type="button"
+          class="back_button font-15 font-500 d-flex justify-content-center align-items-center lh-0 mt-0"><i
+            class="fi fi-rr-arrow-left lh-0"></i>Back</a>
+      </div>
+      <div class="scroll_sec sub_detail-scroll">
+        <div class="sub_details d-flex flex-column" id="updown_btn" *ngFor="let obj of chapteContentResponse;let i =index">
+            <div class="top-test-question">
+                <h1 class="font-24 font-600 dark-black">{{obj.title}} </h1>
+                <div class="test-que-edit-del">
+                    <span class="d-flex align-items-center gap_5 font-17 font-500 secondary" data-bs-toggle="modal"
+                    data-bs-target="#chapter-edit-content-modal" (click)="getChapterContent(obj.id)"><i
+                            class="fi fi-rr-file-edit line-height-0"  ></i> Edit</span>
+                    <span class="d-flex align-items-center gap_5 font-17 font-500 delete-icon-color" data-bs-toggle="modal" data-bs-target="#delete-modal"  (click)="deleteContentId = obj?.id ?? 0;contentIndex=i"  ><i
+                            class="fi fi-rr-trash line-height-0" ></i> Delete</span>
+                </div>
+            </div>
+
+          <h3 class="font-17 font-600 dark-black">{{obj.subTitle}}</h3>
+          <h4 class="font-15 font-400 lh-26"  [innerHTML]="obj.content"></h4>
+        </div>
+        <a  (click)="pageRenderUsingRouterLink('/admin/chapterquiz',chapterId)" type="button" class="back_button font-17 font-700 text-capitalize">Chapter quiz</a>
+      </div>
+    </div>
+   
+  
+  <!-- RESULT END -->
+
+    <!-- RIGHT SIDE START-->
+    <app-right-side-bar></app-right-side-bar>
+    <!-- RIGHT SIDE END -->
+
+
+    <!-- MIDDLE CONTENT END -->
+
+
+</div>
+<!--DASHBOARD END -->
+
+<!-- Modal Delete Modal Start -->
+<div class="modal fade" id="delete-modal" tabindex="-1" aria-labelledby="delete-modal" aria-hidden="true">
+    <app-delete-modal [title]="'Content'" (onClick)="deleteContent()"></app-delete-modal>
+    
+</div>
+<!-- Modal Delete Modal End -->
+
+<!-- Modal Admin Chapter Add Content Modal Start -->
+<div class="modal fade" id="chapter-add-content-modal" tabindex="-1" aria-labelledby="chapter-add-content-modal" aria-hidden="true">
+    <div class="modal-dialog position-relative leave_modal  subject_modal">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="modal-header apply_title">
+                    <h1 class="modal-title fs-5 font-21 font-600 secondary modal_line position-relative"
+                        id="exampleModalLabel1">Add Content</h1>
+                    <button type="button" class="close_btn" data-bs-dismiss="modal" aria-label="Close"   id="add-content-modal" (click)="reload()" (click)="clearFormSubmission()">
+                        <i class="fi fi-rr-cross close_icon"></i>
+                    </button>
+                </div>
+
+                <div class="row">
+                    <form [formGroup]="submissionForm">
+                     <div class="form-group">
+                         <div class="col-md-12 mb_18">
+                             <div class="input_icon position-relative">
+                                 <input type="text" id="" name="title" class="form-control input_text" placeholder="Title" [(ngModel)]="chapterContent.title" formControlName="title" >
+                             </div>
+                             <div *ngIf=" isFieldInvalidForSubmissionForm('title')" class="text-danger">
+                                 subjectName is required.</div>
+                         </div>
+                     </div>
+                     <div class="form-group">
+                     <div class="col-md-12">
+                         <div class="input_icon position-relative">
+                             <input type="text" id="" name="subTitle" class="form-control input_text" placeholder="Sub-Title"   [(ngModel)]="chapterContent.subTitle" formControlName="subTitle">
+                         </div>
+                         <div *ngIf=" isFieldInvalidForSubmissionForm('subTitle')" class="text-danger">
+                             subTitle is required.</div>
+                     </div>
+                     </div>
+                     <div class="form-group">
+                     <div class="col-md-12 mb_18">
+                         <label for="" class="mb_6 font-15 font-500 secondary">Enter Content Here..</label>
+                         <ckeditor [editor]="Editor" (ready)="onEditorReady($event)" name="content" [(ngModel)]="chapterContent.content" formControlName="content">
+                         </ckeditor>
+                         <div *ngIf=" isFieldInvalidForSubmissionForm('content')" class="text-danger">
+                             content is required.</div>
+                     </div>
+                 </div>
+                 </form>
+       
+                 </div><!-- row -->
+                <div class="apply_modal_buttons d-flex justify-content-between align-items-center">
+                    <button type="button" class="cancel_modal_btn font-15 font-500" data-bs-dismiss="modal"
+                        aria-label="Close" (click)="clearForm()">Cancel</button>
+                    <a >
+                        <button type="button" class="apply_modal_btn font-15 font-500" (click)="submit()">Save</button>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Admin Chapter Add Content Modal End -->
+
+        <!-- Modal Admin Chapter Edit Content Modal Start -->
+        <div class="modal fade" id="chapter-edit-content-modal" tabindex="-1" aria-labelledby="chapter-edit-content-modal" aria-hidden="true">
+            <div class="modal-dialog position-relative leave_modal subject_modal">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="modal-header apply_title">
+                            <h1 class="modal-title fs-5 font-21 font-600 secondary modal_line position-relative"
+                                id="exampleModalLabel1">Edit Content</h1>
+                            <button type="button" class="close_btn" data-bs-dismiss="modal" aria-label="Close" id="content-update-modal" (click)="reload()">
+                                <i class="fi fi-rr-cross close_icon"></i>
+                            </button>
+                        </div>
+
+                        
+                                <div class="row">
+                                   <form [formGroup]="submissionForm">
+                                    <div class="form-group">
+                                        <div class="col-md-12 mb_18">
+                                            <div class="input_icon position-relative">
+                                                <input type="text" id="" name="title" class="form-control input_text" placeholder="Title" [(ngModel)]="chapterContent.title" formControlName="title" >
+                                            </div>
+                                            <div *ngIf=" isFieldInvalidForSubmissionForm('title')" class="text-danger">
+                                                subjectName is required.</div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                    <div class="col-md-12">
+                                        <div class="input_icon position-relative">
+                                            <input type="text" id="" name="subTitle" class="form-control input_text" placeholder="Sub-Title"   [(ngModel)]="chapterContent.subTitle" formControlName="subTitle">
+                                        </div>
+                                        <div *ngIf=" isFieldInvalidForSubmissionForm('subTitle')" class="text-danger">
+                                            subTitle is required.</div>
+                                    </div>
+                                    </div>
+                                    <div class="form-group">
+                                    <div class="col-md-12 mb_18">
+                                        <label for="" class="mb_6 font-15 font-500 secondary">Enter Content Here..</label>
+                                        <ckeditor [editor]="Editor" (ready)="onEditorReady($event)" name="content" [(ngModel)]="chapterContent.content" formControlName="content">
+                                        </ckeditor>
+                                        <div *ngIf=" isFieldInvalidForSubmissionForm('content')" class="text-danger">
+                                            content is required.</div>
+                                    </div>
+                                </div>
+                                </form>
+                              
+                                </div><!-- row -->
+                           
+                      
+                        <div class="apply_modal_buttons d-flex justify-content-between align-items-center">
+                            <button type="button" class="cancel_modal_btn font-15 font-500" data-bs-dismiss="modal"
+                                aria-label="Close" (click)="cancelContent()">Cancel</button>
+                            <a >
+                                <button type="button" class="apply_modal_btn font-15 font-500" (click)="updateContent()">Save</button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>

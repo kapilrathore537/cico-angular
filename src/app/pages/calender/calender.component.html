@@ -1,0 +1,53 @@
+
+<!-- <div class="">
+    <div class="wrapper">
+        <div class="container-calendar calender_background">
+            <div class="calendar-hadding">
+                <h3 id="monthAndYear"></h3>
+                <div class="button-container-calendar">
+                    <button id="previous" (click)="previous()">&#8249;</button>
+                    <button id="next" (click)="next()">&#8250;</button>
+                </div>
+            </div>
+            <table class="table-calendar" id="calendar" >
+                <thead id="thead-month"></thead>
+                <tbody id="calendar-body"></tbody>
+            </table>
+        </div>
+    </div>
+  </div> -->
+            
+
+  <div class="row attendance_chart d-flex justify-content-center align-items-center">
+    <div class="col-md-6" >
+        <!-- <img src="assets/images/temp_img/calender.png" class="img-fluid" style="width: -webkit-fill-available;"> -->
+    <div class="calendar-hadding textcolor mb-0">
+        <h3 id="monthAndYear"></h3>
+        <div class="button-container-calendar">
+            <button class="text-light" id="previous" (click)="previous()">&#8249;</button>
+            <button class="text-light" id="next" (click)="next()" [disabled]="status">&#8250;</button>
+        </div>
+    </div>
+    <table style="color: aliceblue;" class="table-calendar " id="calendar"  >
+        <thead id="thead-month"></thead>
+        <tbody id="calendar-body"></tbody>
+    </table>
+
+    
+    </div>
+
+    <div class="col-md-6 d-flex justify-content-center align-items-center">
+
+        <div id="chart" class="chartmargin">
+            <apx-chart
+              [colors]="chartOptions.colors"
+              [series]="chartOptions.series"
+              [chart]="chartOptions.chart"
+              [labels]="chartOptions.labels"
+              [responsive]="chartOptions.responsive"
+              [legend]="chartOptions.legend"
+              [stroke]="chartOptions.stroke"
+            ></apx-chart>
+          </div>
+    </div>
+  </div>

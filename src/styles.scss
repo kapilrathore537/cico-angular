@@ -1,0 +1,240 @@
+
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@use '@angular/material' as mat;
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat.core();
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+$CicoAngular-primary: mat.define-palette(mat.$indigo-palette);
+$CicoAngular-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+
+// The warn palette is optional (defaults to red).
+$CicoAngular-warn: mat.define-palette(mat.$red-palette);
+
+// Create the theme object. A theme consists of configurations for individual
+// theming systems such as "color" or "typography".
+$CicoAngular-theme: mat.define-light-theme((
+  color: (
+    primary: $CicoAngular-primary,
+    accent: $CicoAngular-accent,
+    warn: $CicoAngular-warn,
+  )
+));
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include mat.all-component-themes($CicoAngular-theme);
+
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+:root{
+  --color-fff:#fff;
+  --color-000:#000;
+}
+.wrapper {
+  margin: 15px auto;
+  max-width: 1100px;
+}
+
+.container-calendar {
+  background: #ffffff;
+  padding: 15px;
+  max-width: 100%;
+  margin: 0 auto;
+  overflow: auto;
+}
+
+.button-container-calendar button {
+  cursor: pointer;
+  display: inline-block;
+  zoom: 1;
+  border: unset;
+  background-color: transparent;
+  color: var(--color-000);
+  font-size: 50px;
+}
+.button-container-calendar button#previous {
+  margin-right: 15px;
+}
+.table-calendar {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.table-calendar td, .table-calendar th {
+  padding: 12px 0;
+  text-align: center;
+  vertical-align: top;
+}
+/* .table-calendar td:first-child, .table-calendar th:first-child{
+  text-align: left;
+}
+.table-calendar td:last-child, .table-calendar th:last-child{
+  text-align: right;
+} */
+.date-picker span {
+  position: relative;
+}
+.date-picker span::before{
+  content: '';
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  position: absolute;
+  left: 0px;
+  right: 0;
+  bottom: -6px;
+  margin: 0 auto;
+}
+
+.date-picker.present span::before{
+  background: #5754E5;
+
+}
+.date-picker.absent span::before{
+  background: #FF4A11;
+
+}
+.date-picker.leaves span::before{
+  background: #F8961E;
+}
+
+.date-picker.EarlyCheckOut span::before{
+  background: #10e317;
+}
+
+.date-picker.Mispunch span::before{
+  background: #88048f;
+}
+
+.date-picker.selected {
+  font-weight: bold;
+}
+
+.date-picker.selected span {
+  display: block;
+  margin: 0 auto;
+  z-index: 9;
+}
+
+.date-picker.selected span::before{
+  content: '';
+  width: 30px;
+  height: 30px;
+  background-color: white;
+  opacity: 0.5;
+  border-radius: 50%;
+  position: absolute;
+  top: -5px;
+  z-index: -1;
+}
+/* sunday */
+/* .date-picker:nth-child(1) {
+color: red;
+} */
+
+/* friday */
+/* .date-picker:nth-child(6) {
+color: green;
+} */
+
+#monthAndYear {
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.button-container-calendar {
+  position: relative;
+  margin-bottom: 0;
+  overflow: hidden;
+  clear: both;
+}
+
+#previous {
+  float: left;
+}
+
+#next {
+  float: right;
+}
+
+.footer-container-calendar {
+  margin-top: 1em;
+  border-top: 1px solid #dadada;
+  padding: 10px 0;
+}
+
+.footer-container-calendar select {
+  cursor: pointer;
+  display: inline-block;
+  zoom: 1;
+  background: #ffffff;
+  color: #585858;
+  border: 1px solid #bfc5c5;
+  border-radius: 3px;
+  padding: 5px 1em;
+}
+.calendar-hadding{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  padding-left: 10px;
+}
+
+.ProgressBar {
+  height: 6px;
+  padding-right: 264.5px;
+  background: #edf1fa;
+  border-radius: 6px;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.ProgressW {
+  width: 145.5px;
+  height: 6px;
+  background: #00C012;
+  border-radius: 6px;
+}
+.punch_btn {
+  background-color: #49bfcf;
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  // width: 100%;
+  height: 100%;
+  padding: 20px;
+}
+.timestamps {
+  display: flex;
+  gap: 12px;
+  justify-content: space-between;
+  width: 100%;
+}
+.timestamicon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  // width: 30%;
+  text-align: center;
+}
+.pointer {cursor: pointer;}
+
+.techImage-border{
+  border: 2px solid green;
+}

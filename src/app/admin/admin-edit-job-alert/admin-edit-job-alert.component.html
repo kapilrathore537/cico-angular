@@ -1,0 +1,166 @@
+<div id="main" class="main dashboard_page">
+    <div class="profile d-flex mb-4">
+
+        <h1 class="font-27 font-700 secondary mb-0">New Job Alert</h1>
+
+
+        <app-profile-bar></app-profile-bar>
+    </div>
+
+    <!-- DASHBOARD START -->
+
+    <div class="scroll_dashboard">
+
+
+        <div class="assignment-stats">
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="jobType" class="mb_6 font-17 font-500 secondary">Job Type</label>
+                        <select class="form-select" aria-label="Default select example" id="jobType" [(ngModel)]="jobAlert.type" name="jobType">
+                        <option value="">Select Job Type</option>
+                        <option value="JOB">JOB</option>
+                        <option value="INTERN">INTERN</option>
+                        </select>
+  
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="" class="mb_6 font-17 font-500 secondary">Company Name</label>
+                        <div class="input_icon position-relative">
+                            <input type="text" id="companyName" name="companyName" class="form-control input_text"
+                                placeholder="Dollop Infotech" [(ngModel)]="jobAlert.companyName">
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <label for="" class="mb_6 font-17 font-500 secondary">Job Package</label>
+                        <div class="input_icon position-relative">
+                            <input type="text" id="jobPackage" name="jobPackage" class="form-control input_text" placeholder="3.2" [(ngModel)]="jobAlert.jobPackage">
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <label for="" class="mb_6 font-17 font-500 secondary">Technical Skills</label>
+                        <div class="input_icon position-relative">
+                            <input type="text" id="technicalSkills" name="technicalSkills" class="form-control input_text" placeholder="technicalSkills" [(ngModel)]="jobAlert.technicalSkills">
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <label for="" class="mb_6 font-17 font-500 secondary">Experience Required</label>
+                        <div class="input_icon position-relative">
+                            <input type="text" id="experienceRequired" name="experienceRequired" class="form-control input_text" placeholder="experienceRequired" [(ngModel)]="jobAlert.experienceRequired">
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <label for="" class="mb_6 font-17 font-500 secondary">Job Title</label>
+                        <div class="input_icon position-relative">
+                            <input type="text" id="jobTitle" name="jobTitle" class="form-control input_text" placeholder="2" [(ngModel)]="jobAlert.jobTitle">
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-4">
+                     <div class="col-md-6 mb_18">
+                                    <h6 class="mb-4 font-15 font-500 secondary" >Selected Image :- {{jobAlert.technologyStack.technologyName}}</h6>
+                                    <div class="all-course-images d-flex flex-wrap">
+                            <div class="add-course-img" *ngFor="let image of technologyStack">
+                                <img [ngClass]="jobAlert.technologyStack.technologyName == image.technologyName ?'techImage-border':''" [src]="image.imageName" alt="" (click)="jobAlert.technologyStack= image" (click)="imageName = image.technologyName">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                          
+                        
+                    <!-- <h6 class="mb-4 font-15 font-500 secondary" >Selected Image :- {{imageName}}</h6>
+                                    <div class="all-course-images d-flex flex-wrap">
+                                        <div class="add-course-img" *ngFor="let image of technologyStack">
+                                            <img [src]="imageUrl+image.imageName"  alt="" (click)="jobAlert.technologyStacks= image.id" (click)="imageName = image.technologyName">
+                                        </div>
+                                    </div> -->
+
+               
+               </div>
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="" class="mb_6 font-17 font-500 secondary">Job Description</label>
+                        <textarea class="form-control text_area" name="jobDescription" id="exampleFormControlTextarea1" row mb-3s="3"
+                            placeholder="Start Typing....." [(ngModel)]="jobAlert.jobDescription"></textarea>
+                    </div>
+              
+</div>
+
+                <!-- <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="" class="mb_6 font-17 font-500 secondary">Action On Apply</label>
+                        <select class="form-select" aria-label="Default select example">
+                            <option selected="">Display Phone</option>
+                            <option value="1">Core Java</option>
+                            <option value="2">UI/UX Designer</option>
+                        </select>
+                    </div>
+                </div> -->
+
+                <div class="row mb-3">
+
+                    <div class="col-md-12">
+                        <a   class="top_profile_sec_btn font-14 font-500" (click)=" updateJob()">Update
+                            Now</a>
+                    </div>
+                </div>
+
+        </div><!-- row -->
+
+
+    
+
+
+    <!-- DASHBOARD END -->
+
+    <!-- RIGHT SIDE START-->
+    <app-right-side-bar></app-right-side-bar>
+    <!-- RIGHT SIDE END -->
+
+
+    <!-- MIDDLE CONTENT END -->
+
+
+</div>
+<!--DASHBOARD END -->
+
+ 
+    <!-- Modal Delete Modal Start -->
+    <div class="modal fade" id="delete-modal" tabindex="-1" aria-labelledby="delete-modal" aria-hidden="true">
+        <div class="modal-dialog position-relative leave_modal">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <button type="button" class="close_btn" data-bs-dismiss="modal" aria-label="Close"
+                        style="top: -23%;">
+                        <i class="fi fi-rr-cross close_icon"></i>
+                    </button>
+
+                    <p class="secondary font-21 font-500 text-center">Are You Sure You Want To Delete This
+                        Question?</p>
+                    <div class="apply_modal_buttons d-flex justify-content-between align-items-center">
+                        <a routerLink="/admin/createjob">
+                            <button type="button"
+                                class="cancel_modal_btn font-15 font-500 delete-icon-color">Yes, delete</button>
+                        </a>
+                        <a routerLink="/admin/createjob">
+                            <button type="button" class="apply_modal_btn font-15 font-500">No, Do not
+                                delete</button>
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Delete Modal End -->

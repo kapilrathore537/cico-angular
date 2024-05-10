@@ -1,0 +1,29 @@
+<div id="main" class="main main_news">
+    <div class="profile d-flex mb-4">
+      <h1 class="font-27 font-700 secondary mb-0">News And Events Details</h1>
+      <app-profile-bar></app-profile-bar>
+    </div>
+    <div class="scroll_section">
+      <div class="news_events">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="news">
+              
+              
+                
+                  <div class="news">
+                    <!-- <img src="/assets/images/temp_img/news.png" alt=""> -->
+                    <img class="imageSize" [src]="newsAndEvents.image">
+                    <div class="news_text">
+                      <h3 class="font-11 font-400 small_text">{{utilityService.updateTimeline(newsAndEvents.createdDate)}}</h3>
+                      <h4 class="font-21 font-600 small_text">{{newsAndEvents.title}}</h4>
+                      <h5 class="font-14 font-500 small_text">{{newsAndEvents.briefDescription}}</h5>
+                  
+              </div>
+            </div>
+          </div>
+      </div>
+      </div>
+    </div>
+     
+  </div>

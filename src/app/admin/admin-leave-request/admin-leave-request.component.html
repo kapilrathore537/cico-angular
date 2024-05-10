@@ -1,0 +1,206 @@
+
+<div id="main" class="main dashboard_page">
+    <div class="profile d-flex">
+            <h1 class="font-27 font-700 secondary mb-0">Leave Requests</h1>
+
+        <app-profile-bar></app-profile-bar>   
+     </div>
+
+    <!-- DASHBOARD START -->
+
+    <div class="scroll_dashboard">
+
+        <div class="row">
+
+            <div class="col-md-12">
+                <div class="attendance_dropdown d-flex justify-content-between align-items-center">
+                    <h3 class="admin-title font-17 font-600 secondary position-relative">Student</h3>
+                   <div class="right-side-dropdown-btn d-flex">
+                    <div class="student-search">
+                        <input type="text" name="" id="" placeholder="Search" class="gray-input-bg">
+                    </div>
+                    <div class="dropdown">
+                        <a class="attendance_dropdown1 dropdown-toggle font-15 font-500 dark" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                          Course
+                        </a>
+                        <ul class="dropdown-menu">
+                          <li><a class="dropdown-item" href="#">January</a></li>
+                          <li><a class="dropdown-item" href="#">February</a></li>
+                          <li><a class="dropdown-item" href="#">March</a></li>
+                          <li><a class="dropdown-item" href="#">April</a></li>
+                          <li><a class="dropdown-item" href="#">May</a></li>
+                          <li><a class="dropdown-item" href="#">June</a></li>
+                          <li><a class="dropdown-item" href="#">July</a></li>
+                          <li><a class="dropdown-item" href="#">August</a></li>
+                          <li><a class="dropdown-item" href="#">September</a></li>
+                          <li><a class="dropdown-item" href="#">October</a></li>
+                          <li><a class="dropdown-item" href="#">November </a></li>
+                          <li><a class="dropdown-item" href="#">December </a></li>
+                        </ul>
+                      </div>
+                      <div class="dropdown">
+                          <a class="attendance_dropdown1 dropdown-toggle font-15 font-500 dark" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Year/Month
+                          </a>
+                          <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">January</a></li>
+                            <li><a class="dropdown-item" href="#">February</a></li>
+                            <li><a class="dropdown-item" href="#">March</a></li>
+                            <li><a class="dropdown-item" href="#">April</a></li>
+                            <li><a class="dropdown-item" href="#">May</a></li>
+                            <li><a class="dropdown-item" href="#">June</a></li>
+                            <li><a class="dropdown-item" href="#">July</a></li>
+                            <li><a class="dropdown-item" href="#">August</a></li>
+                            <li><a class="dropdown-item" href="#">September</a></li>
+                            <li><a class="dropdown-item" href="#">October</a></li>
+                            <li><a class="dropdown-item" href="#">November </a></li>
+                            <li><a class="dropdown-item" href="#">December </a></li>
+                          </ul>
+                        </div>
+                        <div class="dropdown">
+                          <a class="attendance_dropdown1 dropdown-toggle font-15 font-500 dark" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Status
+                          </a>
+                          <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">January</a></li>
+                            <li><a class="dropdown-item" href="#">February</a></li>
+                            <li><a class="dropdown-item" href="#">March</a></li>
+                            <li><a class="dropdown-item" href="#">April</a></li>
+                            <li><a class="dropdown-item" href="#">May</a></li>
+                            <li><a class="dropdown-item" href="#">June</a></li>
+                            <li><a class="dropdown-item" href="#">July</a></li>
+                            <li><a class="dropdown-item" href="#">August</a></li>
+                            <li><a class="dropdown-item" href="#">September</a></li>
+                            <li><a class="dropdown-item" href="#">October</a></li>
+                            <li><a class="dropdown-item" href="#">November </a></li>
+                            <li><a class="dropdown-item" href="#">December </a></li>
+                          </ul>
+                        </div>
+                   </div>
+                  </div>
+                <div class="table_container">
+                    <table class="table mb-0 table_admin_side">
+                        <thead style="background:#EDF9FB;">
+                            <tr class="table_heading">
+                                <th scope="col" class="font-15 font-600 secondary">Name</th>
+                                <th scope="col" class="font-15 font-600 secondary">Type</th>
+                                <th scope="col" class="font-15 font-600 secondary">Duration</th>
+                                <th scope="col" class="font-15 font-600 secondary">From</th>
+                                <th scope="col" class="font-15 font-600 secondary">To</th>
+                                <th scope="col" class="font-15 font-600 secondary">Reason</th>
+                                <th scope="col" class="font-15 font-600 secondary"> Action/Status</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-light">
+                       
+                            <tr *ngFor="let obj of leavesRequestData">
+                                <td>
+                                    <a href="student_profile.html"  class="font-13 font-500 mb-0 text_gray d-flex align-items-center" style="gap:5px;">
+                                     <img [src]="obj.profilePic" alt="" class="img-fluid imagestudent">
+                                     <h5 class="font-13 font-500 mb-0">{{obj.fullName}}<br>
+                                        <p class="text_gray font-13 font-400 mb-0">Core Java</p>
+                                    </h5>                                    
+                                    </a>
+                                 </td>
+                                <td>{{obj.leaveTypeName}}</td>
+                                <td>{{obj.leaveDuration}} Days</td>
+                                <td>{{obj.leaveDate}}</td>
+                                <td>{{obj.leaveEndDate}}</td>
+                                <td>{{obj.leaveReason}}</td>
+                                <td class="d-flex align-items-center gap_24">
+                                  <h3 class="mb-0 active_approved_btn font-13 font-400 border-radius12 text-light text-center" style="padding: 6px 10px;" (click)="approveStudentLeaveReqeust(obj.studentId,obj.leaveId,'approve')">Approved</h3>
+                                  <h5 class="warning font-13 font-500 mb-0 text-center" (click)="approveStudentLeaveReqeust(obj.studentId,obj.leaveId,'deny')">Deny</h5></td>
+                            </tr>
+                            <h1 class="font-21 font-600 secondary position-relative" 
+                                *ngIf="length==0"><br>NO DATA AVAILABLE !!!</h1>
+                        </tbody>
+                    </table>
+                </div>
+                <nav aria-label="Page navigation example" class="table-pagination"  >
+                      
+                    <ul class="pagination">
+                        <li class="p-2  mx-2 ms-0 "><a class="fs-16 fw-500 secondary "  [ngClass]="leavesRequestPageManager.first?'theading ':' cur-point'"  (click)="leavesRequestManageNextPrev(false)">Previous</a></li>
+                        <li class="page-item cur-point" *ngFor="let b of leavesRequestPageManager.showButtons ;"  (click)="leavestRequestPageGet(b-1)"><a class="page-link text_orange " [ngClass]="leavesRequestPageRequest.pageNumber==b-1?'active':''" id="{{b}}" href="javascript:void(0)">{{b}}</a>
+                        </li>
+                        <!-- <li class="page-item "><a class="page-link" >2</a></li>
+                        <li class="page-item "><a class="page-link" >3</a></li>
+                        <li class="page-item "><a class="page-link" >4</a></li>
+                        <li class="page-item "><a class="page-link" >5</a></li> -->
+                        <li class="p-2  mx-0 ms-2"><a class="fs-16 fw-500 secondary"  [ngClass]="leavesRequestPageManager.last?'theading':' cur-point'"   (click)="leavesRequestManageNextPrev(true)">Next</a></li>
+                    </ul>
+                </nav>
+            </div>
+
+        </div>
+    </div>
+    <!-- DASHBOARD END -->
+
+    <!-- RIGHT SIDE START-->
+    <app-right-side-bar></app-right-side-bar>
+    <!-- RIGHT SIDE END -->
+
+
+    <!-- MIDDLE CONTENT END -->
+
+
+</div>
+<!--DASHBOARD END -->
+
+
+<!-- Modal Create New Assignment start -->
+<div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel1"
+    aria-hidden="true">
+    <div class="modal-dialog position-relative leave_modal">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="modal-header apply_title">
+                    <h1 class="modal-title fs-5 font-21 font-600 secondary modal_line position-relative"
+                        id="exampleModalLabel1">Assignment Details</h1>
+                    <button type="button" class="close_btn" data-bs-dismiss="modal" aria-label="Close">
+                        <i class="fi fi-rr-cross close_icon"></i>
+                    </button>
+                </div>
+
+                <form action="">
+                    <div class="row">
+                        <div class="col-md-12 mb_18">
+                            <label for="" class="mb_6 font-15 font-500 secondary">Assignment
+                                Title</label>
+                            <div class="input_icon position-relative">
+                                <input type="text" id="" name="" class="form-control input_text"
+                                    placeholder="Day 1">
+                            </div>
+                        </div>
+                        <div class="col-md-12 mb_18">
+                            <label for="" class="mb_6 font-15 font-500 secondary">Course</label>
+                            <div class="input_icon position-relative">
+                                <input type="text" id="" name="" class="form-control input_text"
+                                    placeholder="Mern Stack">
+                            </div>
+                        </div>
+                        <div class="col-md-12 mb_18">
+                            <label for="" class="mb_6 font-15 font-500 secondary">Subject</label>
+                            <div class="input_icon position-relative">
+                                <input type="text" id="" name="" class="form-control input_text"
+                                    placeholder="Core Java">
+                            </div>
+                        </div>
+                        <div class="col-md-12 mb_18">
+                            <label for="" class="mb_6 font-15 font-500 secondary">Duration</label>
+                            <div class="input_icon position-relative">
+                                <input type="text" id="" name="" class="form-control input_text"
+                                    placeholder="1 Day">
+                            </div>
+                        </div>
+                       
+                    </div><!-- row -->
+                </form>
+
+                <a href="admin_create_assignment.html" class="apply_modal_buttons d-flex justify-content-center align-items-center mt-2">
+                    <button type="button" class="apply_modal_btn">Create</button>
+                </a>
+
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,329 @@
+.main-inner {
+    display: flex;
+    gap: 20px;
+    justify-content: space-between;
+  }
+
+  .card0,
+  .right-task-area {
+    width: 25%;
+  }
+
+  .calender-img {
+    width: 50%;
+  }
+  .image{
+    height: 50px;
+    width: 50px;
+    border-radius: 50px;
+}
+
+
+.table_scroll{
+  overflow-y: scroll !important;
+}
+.table_scroll::-webkit-scrollbar{
+  display: none;
+}
+
+.chartmargin {
+  margin-top: 80px;
+}
+#chart {
+  max-width: 380px;
+  margin: 50px auto;
+  padding: 0;
+}
+
+
+.Present {
+  background: #1105ee;
+  //width: 60%;
+  height: 40px;
+}
+
+.Present:hover {
+  background: #8581d4;
+  //width: 60%;
+  height: 40px;
+}
+
+.Absent {
+  background-color: #e95b09;
+  //width: 20%;
+  height: 40px;
+}
+
+.Absent:hover {
+  background-color: #d87567;
+  //width: 20%;
+  height: 40px;
+}
+
+.Leave {
+  background: #fbff00;
+  //width: 15%;
+  height: 40px;
+}
+
+.Leave:hover {
+  background: #e6e78a;
+  //width: 15%;
+  height: 40px;
+}
+
+.pointer {cursor: pointer;}
+
+.imagestudent {
+  border-radius: 40px;
+  height: 24px;
+  width: 24px;
+}
+
+// .table_heading {
+//   position: sticky;
+//   top: 0;
+//   z-index: 1;
+//   background-color: #EDF9FB; /* You can adjust this to match the background color of the table header */
+// }
+
+
+
+.attendance-area, .assignment-area, .fees-area{
+  min-height: 260px;
+}
+
+
+.table_heading {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background-color: #EDF9FB; /* You can adjust this to match the background color of the table header */
+}
+.body {
+  overflow: visible; /* Ensure it is not set to 'hidden' */
+}
+
+table
+{
+	width: 100%;
+	border-collapse: collapse;
+	table-layout: fixed;
+}
+
+
+thead tr,
+tfoot tr
+{
+	background: #EDF9FB;
+}
+
+tbody tr
+{
+	background: #f8f9fa;
+}
+
+th, td
+{
+	border: 1px solid #dee2e6;
+	padding: 0.5em;
+	text-align: left;
+	vertical-align: top;
+	font-weight: 600;
+  text-transform: capitalize;
+  font-size: 15px;
+}
+th{
+  color: #115e68;
+}
+
+.scrollable thead,
+.scrollable tfoot,
+.scrollable tbody,
+.scrollable th,
+.scrollable td
+{
+	display: block;
+	width: 100%;
+}
+
+.scrollable tfoot,
+.scrollable tbody
+{
+	overflow-y: scroll;
+}
+.scrollable tbody::-webkit-scrollbar{
+  display: none;
+}
+
+.scrollable thead,
+.scrollable tfoot
+{
+	-ms-overflow-style: none;
+}
+
+.scrollable thead::-webkit-scrollbar,
+.scrollable tfoot::-webkit-scrollbar
+{
+	visibility: hidden;
+}
+
+.scrollable tbody
+{
+	max-height: 25em;
+	position: relative;
+	-ms-overflow-style: -ms-autohiding-scrollbar;
+}
+
+.scrollable tr
+{
+	display: flex;
+}
+
+.scrollable tbody th,
+.scrollable tbody td
+{
+	border-top: none;
+}
+
+.scrollable th:not(:last-child),
+.scrollable td:not(:last-child)
+{
+	border-right: none;
+}
+
+.tool_tip, .tool_tip_absent, .tool_tip_leave{
+  position: relative;
+  display: inline-block;
+}
+.tooltiptext, .tooltiptext_absent, .tooltiptext_leave{
+  display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    justify-content: center;
+    font-size: 13px;
+}
+.tip-box{
+  display: block;
+  width: 17px;
+  height: 15px;
+  border: 1px solid #fff;
+  padding-left: 6px;
+}
+.tool_tip .tooltiptext{
+  visibility: hidden;
+  width: 120px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.tool_tip_absent .tooltiptext_absent, .tool_tip_leave .tooltiptext_leave{
+  visibility: hidden;
+  width: 120px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.tool_tip .tooltiptext::after, .tool_tip_absent .tooltiptext_absent::after, .tool_tip_leave .tooltiptext_leave::after{
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+.tool_tip:hover .tooltiptext{
+  visibility: visible;
+  opacity: 1;
+}
+.tool_tip_absent:hover .tooltiptext_absent{
+  visibility: visible;
+  opacity: 1;
+}
+.tool_tip_leave:hover .tooltiptext_leave{
+  visibility: visible;
+  opacity: 1;
+}
+
+.tooltiptext_leave{
+  right: 50% !important;
+  margin-right: 0 !important;
+  left: inherit !important;
+}
+
+
+.page-link:focus {
+  color: #fff !important;
+  background-color: #49BFCF !important;
+  outline: 0;
+  box-shadow: none !important;
+  border-radius: 6px;
+
+}
+
+.pagination {
+  align-items: center;
+  --bs-pagination-border-color: none;
+  --bs-pagination-bg: #fbefe9;
+  --bs-pagination-border-radius: 6px !important;
+}
+
+.page-link {
+  color: #49BFCF !important;
+  font-size: 18px;
+  font-weight: 500;
+  padding: 8px 17px;
+}
+
+.table-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 22px;
+}
+
+.pagination {
+  align-items: center;
+  --bs-pagination-border-color: none !important;
+  --bs-pagination-bg: #e6ecfd !important;
+  --bs-pagination-border-radius: 6px !important;
+}
+
+ul li a {
+  padding: 13px 15px 13px 20px;
+}
+
+.page-link:hover {
+  z-index: 2;
+  color: var(--bs-pagination-hover-color);
+  background-color: var(--bs-pagination-hover-bg);
+  border-color: var(--bs-pagination-hover-border-color);
+}
+  
+.inactiveLink {
+  pointer-events: none;
+  cursor: default;
+}
+.active{
+  background-color: #49BFCF ;
+  color: white !important;
+  border-radius: 9px;
+}

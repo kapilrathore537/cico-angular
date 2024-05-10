@@ -1,0 +1,114 @@
+<div id="main" class="main dashboard_page">
+    <div class="profile d-flex mb-4">
+
+        <h1 class="font-27 font-700 secondary mb-0">New Announcement</h1>
+
+
+        <app-profile-bar></app-profile-bar>
+    </div>
+
+    <!-- DASHBOARD START -->
+
+    <div class="scroll_dashboard">
+
+
+        <div class="assignment-stats">
+            <form action="" class="mb_24">
+
+        <div class="row mb-3">
+            <div class="col-md-8 col-lg-6 ">
+                <label for="" class="mb_6 font-17 font-500 secondary">Title</label>
+                <div class="input_icon position-relative">
+                    <input type="text" id="title" name="title" class="form-control input_text"
+                        placeholder="title" [(ngModel)]="announcementRequest.title">
+                </div>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-md-8 col-lg-6">
+                <label for="" class="mb_6 font-17 font-500 secondary">Message</label>
+                <textarea class="form-control text_area" id="exampleFormControlTextarea1" row mb-3s="3"
+                    name="message" placeholder="Start Typing....." [(ngModel)]="announcementRequest.message"></textarea>
+            </div>
+        </div>
+
+        <div class="row d-block mb_20">
+            <div class="col-md-8 col-lg-6">
+                <label for="" class="mb_6 font-17 font-500 secondary">Sent To (Course)</label>
+               
+            </div>
+            <div class="col-md-6">
+                <!-- "Select All" Checkbox -->
+                <div class="input_icon position-relative input_text checkbox_area mb-3">
+                  <div class="d-flex gap_5 align-items-center">
+                    <h2 class="font-15 font-500 mb-0 secondary">Select All</h2>
+                  </div>
+                  <input
+                    type="checkbox"
+                    name="courseId"
+                    [(ngModel)]="selectAll"
+                    (ngModelChange)="selectAllChanged()"
+                    class="choose-subjects"
+                  >
+                </div>
+              
+                <!-- Course Checkboxes -->
+                <div *ngFor="let obj of courses" class="input_icon position-relative input_text checkbox_area mb-3">
+                  <div class="d-flex gap_5 align-items-center">
+                    <img [src]="obj.technologyStack.imageName" alt="" width="24" height="24">
+                    <h2 class="font-15 font-500 mb-0 secondary">{{ obj.courseName }}</h2>
+                  </div>
+                  <input
+                    type="checkbox"
+                    name="courseId"
+                    [checked]="checkCourse(obj.courseId)"
+                    [ngModel]="selectedCourseIds[obj.courseId]"
+                    (ngModelChange)="checkboxChanged(obj.courseId)"
+                    class="choose-subjects"
+                  >
+                </div>
+              </div>
+              
+     </div>
+        <!-- <div class="row mb_20">
+            <div class="col-md-8 col-lg-6">
+                <div class="all-select-course">
+                    <p class="mb-0 font-13 font-600 secondary">Core Java</p>
+                    <p class="mb-0 font-13 font-600 secondary">Core Java</p>
+                    <p class="mb-0 font-13 font-600 secondary">Core Java</p>
+                    <p class="mb-0 font-13 font-600 secondary">Core Java</p>
+                    <p class="mb-0 font-13 font-600 secondary">Core Java</p>
+                    <p class="mb-0 font-13 font-600 secondary">Core Java</p>
+                    <p class="mb-0 font-13 font-600 secondary">Core Java</p>
+                    <p class="mb-0 font-13 font-600 secondary">Core Java</p>
+                </div>        
+            </div>
+        </div> -->
+        
+        <div class="row mb-3">
+            <div class="col-md-12">
+                <a class="top_profile_sec_btn font-14 font-500" (click)="publishAnnouncement()">Publish Now</a>
+                <a routerLink="/admin/announcements" class="secondary font-14 font-500 ms-5" (click)="clearObj()">Discard</a>
+
+            </div>
+        </div>
+
+
+<!-- row -->
+    </form>
+
+</div>
+
+
+<!-- DASHBOARD END -->
+
+<!-- RIGHT SIDE START-->
+<app-right-side-bar></app-right-side-bar>
+<!-- RIGHT SIDE END -->
+
+
+<!-- MIDDLE CONTENT END -->
+
+
+</div>

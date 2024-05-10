@@ -1,0 +1,313 @@
+<div id="main" class="main dashboard_page">
+    <div class="profile d-flex mb-4">
+
+        <div class="profile_top_heading d-flex gap_24">
+            <h1 class="font-27 font-700 secondary mb-0">Tasks</h1>
+            <button class="top_profile_sec_btn font-14 font-500" data-bs-toggle="modal"
+                data-bs-target="#exampleModal1">Create New</button>
+        </div>
+
+        <app-profile-bar></app-profile-bar>
+    </div>
+
+    <!-- DASHBOARD START -->
+
+    <div class="scroll_dashboard">
+
+        <div class="row">
+            <div class="col-md-6 mb-4">
+                <div class="assignment-stats">
+                    <h3 class="admin-title font-17 font-600 secondary position-relative">Status</h3>
+                    <div class="assignment-stats-area">
+                        <div class="assignment-chart">
+                            <div class="Present tool_tip" [style.width]="totalSubmitted+'%'">
+                                <span class="tooltiptext">
+                                    <span class="tip-box" style="background: #8079FF;"></span>Submited
+                                    {{totalSubmitted}}%
+                                </span>
+                            </div>
+                            <div class="Absent tool_tip_absent" [style.width]="reveiwed+'%'">
+                                <span class="tooltiptext_absent">
+                                    <span class="tip-box" style="background: #49CF9F;"></span>Reviewed {{reveiwed}}%
+                                </span>
+                            </div>
+                            <div class="Leave tool_tip_leave" [style.width]="unReveiwed+'%'">
+                                <span class="tooltiptext_leave">
+                                    <span class="tip-box" style="background: #F6C453;"></span>Unreviewed {{unReveiwed}}%
+                                </span>
+                            </div>
+                            <!-- <div class="our_due" [style.width]="presentWidth"></div> -->
+                        </div>
+                        <div class="chart-detail-bottom justify-content-center">
+                            <div class="submitted-value">
+                                <p>Submited</p>
+                                <h2 class="font-14 font-600 text_dark"> <span
+                                        class="purple-small-box"></span>{{totalSubmitted}}%</h2>
+                            </div>
+                            <div class="pending-value">
+                                <p>Reviewed</p>
+                                <h2 class="font-14 font-600 text_dark"> <span
+                                        class="purple-small-box"></span>{{reveiwed}}%</h2>
+                            </div>
+                            <div class="approve-value">
+                                <p>Unreviewed</p>
+                                <h2 class="font-14 font-600 text_dark"> <span
+                                        class="purple-small-box"></span>{{unReveiwed}}%</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="attendance_dropdown d-flex justify-content-between align-items-center">
+                    <h3 class="admin-title font-17 font-600 secondary position-relative">Active Tasks</h3>
+                    <div class="right-side-dropdown-btn d-flex">
+                        <div class="dropdown">
+                            <a class="attendance_dropdown1 dropdown-toggle font-15 font-500 dark" id="course1"
+                                role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Course
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item"
+                                        (click)="courseFilterByCourseIdAndSubjectId(obj,this.subject,pageRequest)"
+                                        *ngFor="let obj of courses">{{obj.courseName}}</a></li>
+                            </ul>
+                        </div>
+                        <div class="dropdown">
+                            <a class="attendance_dropdown1 dropdown-toggle font-15 font-500 dark" id="subject1"
+                                role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Subject
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item"
+                                        (click)="courseFilterByCourseIdAndSubjectId(course,obj,pageRequest)"
+                                        *ngFor="let obj of  subjectes">{{obj.subjectName}}</a></li>
+
+                            </ul>
+                        </div>
+                      
+                    </div>
+                </div>
+
+                <div class="table_container">
+                    <table class="table mb-0 admin-table">
+                        <thead style="background:#EDF9FB;">
+                            <tr class="table_heading">
+                                <th scope="col" class="font-15 font-600 secondary">Tasks</th>
+                                <th scope="col" class="font-15 font-600 secondary">Status</th>
+                                <th scope="col" class="font-15 font-600 secondary">Summited</th>
+                                <th scope="col" class="font-15 font-600 secondary">Reviewed</th>
+                                <th scope="col" class="font-15 font-600 secondary">Unreviewed</th>
+                                <!-- <th scope="col" class="font-15 font-600 secondary">Over Due</th> -->
+                            </tr>
+                        </thead>
+                        <tbody class="bg-light">
+                            <tr *ngFor="let obj of taskSubmissionStatus ;let i=index" class="pointer">
+                                <td>
+                                    <h5 class="font-15 font-500 mb-0" routerLink="/admin/createtask/{{obj.taskId}}">
+                                        {{obj.taskTitle}}</h5>
+                                </td>
+                                <td class="txt_color_blue" [ngClass]="obj.status==false?'success':'text-danger'"
+                                  >
+                                  <input type="checkbox" checked  (input)="ActivateTask(obj)" [checked]="obj.status"> 
+                                    <!-- <input class="" type="checkbox"   > -->
+                                </td>
+                                <td class="txt_color_purple">{{obj.totalSubmitted}}</td>
+                                <td class="txt_color_light_green">{{obj.reveiwed}}</td>
+                                <td class="txt_color_yellow">{{obj.unReveiwed}}</td>
+                                <!-- <td class="txt_color_orange">16</td> -->
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+
+                <div class=" pagination1 ttendance_dropdown d-flex justify-3-between align-items-center">
+                    <app-pagination [paginationManager]="pageManager" (eventEmit)="getAllData($event)"
+                    [type]="'task'" [pageRequest]="pageRequest"></app-pagination>
+                </div>
+            </div>
+
+            <div class="col-md-6 mb-4">
+                <div class="attendance_dropdown d-flex justify-content-between align-items-center">
+                    <h3 class="admin-title font-17 font-600 secondary position-relative">Submissions (Recent)</h3>
+                    <div class="right-side-dropdown-btn d-flex">
+                        <div class="dropdown">
+                            <a class="attendance_dropdown1 dropdown-toggle font-15 font-500 dark" href="#" id="course2"
+                                role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Course
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item"
+                                        (click)="getAllSubmittedTaskFilter(obj,0,'NOT_CHECKED_WITH_IT',submissioTaskPageRequest)"
+                                        *ngFor="let obj of courses">{{obj.courseName}}</a></li>
+
+                            </ul>
+                        </div>
+                        <div class="dropdown">
+                            <a class="attendance_dropdown1 dropdown-toggle font-15 font-500 dark" id="subject2"
+                                role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Subject
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" (click)="getCourseSubjects(obj)"
+                                        (click)="getAllSubmittedTaskFilter(course1,subjectId,'NOT_CHECKED_WITH_IT',submissioTaskPageRequest)"
+                                        *ngFor="let obj of  subjectes">{{obj.subjectName}}</a></li>
+                            </ul>
+                        </div>
+                        <div class="dropdown">
+                            <a class="attendance_dropdown1 dropdown-toggle font-15 font-500 dark" id="status2"
+                                role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Status
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item"
+                                        (click)="getAllSubmittedTaskFilter(course1,subjectId,'Accepted',submissioTaskPageRequest)">Accept</a>
+                                </li>
+                                <li><a class="dropdown-item"
+                                        (click)="getAllSubmittedTaskFilter(course1,subjectId,'Unreviewed',submissioTaskPageRequest)">Unreviewed</a>
+                                </li>
+                                <li><a class="dropdown-item"
+                                        (click)="getAllSubmittedTaskFilter(course1,subjectId,'Rejected',submissioTaskPageRequest)">Rejected</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="table_container mt-4">
+                    <table class="table mb-0">
+                        <thead style="background:#EDF9FB;">
+                            <tr class="table_heading">
+                                <th scope="col" class="font-15 font-600 secondary">Student Name</th>
+                                <th scope="col" class="font-15 font-600 secondary">Task </th>
+                                <th scope="col" class="font-15 font-600 secondary">Time</th>
+                                <th scope="col" class="font-15 font-600 secondary">Status</th>
+                            </tr>
+                        </thead>
+
+                        <tbody class="bg-light">
+                            <tr *ngFor="let obj of submitedTasksList">
+                                <td class="d-flex align-items-center" style="gap:5px;"
+                                    (click)="pageRanderWithObj(obj.submissionId,obj.taskId)">
+                                    <img [src]="obj.profilePic" alt="" class="img-fluid imagestudent">
+                                    <h5 class="font-13 font-500 mb-0 pointer">{{obj.fullName}} <br>
+                                        <p class="text_gray font-13 font-400 mb-0">{{obj.applyForCourse}}</p>
+                                    </h5>
+                                </td>
+                                <td>{{obj.title}}</td>
+                                <td>{{obj.submissionDate|date:'short'}}</td>
+                                <td
+                                    [ngClass]="{'active_txt_green':obj.status == 'Accepted','active_txt_orange':obj.status=='Rejected','active_txt_blue':(obj.status=='Unreviewed')||(obj.status=='Reviewing')}">
+                                    {{obj.status}}</td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+                <!-- <nav aria-label="Page navigation example" class="table-pagination" *ngIf="submitedTasksList.length >=submissioTaskPageRequest.pageSize">
+
+                    <ul class="pagination">
+                        <li class="p-2  mx-2 ms-0 "><a class="fs-16 fw-500 secondary "
+                                [ngClass]="submissioTaskpageManager.first?'theading ':' cur-point'"
+                                (click)="submissionManageNextPrev(false)">Previous</a></li>
+                        <li class="page-item cur-point" *ngFor="let b1 of submissioTaskpageManager.showButtoons ;"
+                            (click)="submissionPage(b1-1)"><a class="page-link text_orange "
+                                [ngClass]="submissioTaskPageRequest.pageNumber==b1-1?'active':''" id="{{b1}}"
+                                href="javascript:void(0)">{{b1}}</a>
+                        </li>
+
+                        <li class="p-2  mx-0 ms-2"><a class="fs-16 fw-500 secondary"
+                                [ngClass]="submissioTaskpageManager.last?'theading':' cur-point'"
+                                (click)="submissionManageNextPrev(true)">Next</a></li>
+                    </ul>
+                </nav> -->
+                <app-pagination [paginationManager]="submissioTaskpageManager" (eventEmit)="getAllData($event)"
+                [type]="'taskSubmission'" [pageRequest]="submissioTaskPageRequest"></app-pagination>
+            </div>
+
+        </div>
+    </div>
+    <!-- DASHBOARD END -->
+
+    <!-- RIGHT SIDE START-->
+    <app-right-side-bar></app-right-side-bar>
+    <!-- RIGHT SIDE END -->
+
+
+    <!-- MIDDLE CONTENT END -->
+
+
+</div>
+<!--DASHBOARD END -->
+
+
+<!-- Modal Create New Assignment start -->
+<div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel1" aria-hidden="true">
+    <div class="modal-dialog position-relative leave_modal">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="modal-header apply_title p-0">
+                    <h1 class="modal-title fs-5 font-21 font-600 secondary modal_line position-relative"
+                        id="exampleModalLabel1">Task Details</h1>
+                    <button type="button" class="close_btn" data-bs-dismiss="modal" aria-label="Close">
+                        <i class="fi fi-rr-cross close_icon"></i>
+                    </button>
+                </div>
+
+                <form [formGroup]="firstTaskForm">
+                    <div class="row">
+                        <div class="col-md-12 mb_18">
+                            <label for="" class="mb_6 font-15 font-500 secondary">Task Name</label>
+                            <div class="input_icon position-relative">
+                                <input type="text" id="" name="taskName" formControlName="taskName"
+                                    class="form-control input_text" [(ngModel)]="task.taskName"
+                                    placeholder="Task Name..">
+                            </div>
+                            <div *ngIf="isFieldInvalidForTaskForm('taskName')" class="text-danger">Task name is required
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <label for="" class="mb_6 font-15 font-500 secondary">Course</label>
+                            <select class="form-select" aria-label="Default select example" formControlName="course"
+                                name="course" (change)="getCourseSubject()" [(ngModel)]="task.course">
+                                <option value="">Select Course</option>
+                                <option [ngValue]="obj" *ngFor="let obj of courses">{{obj.courseName}}</option>
+
+                            </select>
+                            <div style="margin-top: -17px;" *ngIf="isFieldInvalidForTaskForm('course')"
+                                class="text-danger">Course is required</div>
+                        </div>
+                        <div class="col-md-12">
+                            <label for="" class="mb_6 font-15 font-500 secondary">Subject</label>
+                            <select class="form-select" aria-label="Default select example" formControlName="subject"
+                                name="subject" [(ngModel)]="task.subject">
+                                <option value="">Select Subject</option>
+                                <option [ngValue]="obj" *ngFor="let obj of subjectes">{{obj.subjectName}}</option>
+                            </select>
+                            <div style="margin-top: -17px;" *ngIf="isFieldInvalidForTaskForm('subject')"
+                                class="text-danger">Subject is required</div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <label for="" class="mb_6 font-15 font-500 secondary">File Attachments in Submission</label>
+                            <select class="form-select" aria-label="Default select example"
+                                formControlName="taskAttachment" name="taskAttachment"
+                                [(ngModel)]="task.attachmentStatus">
+                                <option value="">Select File Type</option>
+                                <option value="Required">Required</option>
+                                <option value="Optional">Optional</option>
+                                <option value="Not Allowed">Not Allowed</option>
+                            </select>
+                            <div style="margin-top: -17px;" *ngIf="isFieldInvalidForTaskForm('taskAttachment')"
+                                class="text-danger">TaskAttachment is required</div>
+                        </div>
+
+                    </div><!-- row -->
+                </form>
+
+                <a class="apply_modal_buttons d-flex justify-content-center align-items-center mt-2">
+                    <button type="button" class="apply_modal_btn" (click)="submit()">Create</button>
+                </a>
+
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,244 @@
+.main-inner {
+    display: flex;
+    gap: 20px;
+    justify-content: space-between;
+}
+
+.card0,
+.right-task-area {
+    width: 25%;
+}
+
+.calender-img {
+    width: 50%;
+}
+
+.imagestudent {
+    border-radius: 40px;
+    height: 25px;
+    width: 25px;
+  }
+
+  .Present {
+    background: #8079FF;
+    //width: 60%;
+    height: 40px;
+  }
+  
+  .Present:hover {
+    background: #1105ee;
+    //width: 60%;
+    height: 40px;
+  }
+  
+  .Absent {
+    background-color: #49CF9F;
+    //width: 20%;
+    height: 40px;
+  }
+  
+  .Absent:hover {
+    background-color: #00f7a0;
+    //width: 20%;
+    height: 40px;
+  }
+  
+  .Leave {
+    background: #F6C453;
+    //width: 15%;
+    height: 40px;
+  }
+  
+  .Leave:hover {
+    background: #e7a710;
+    //width: 15%;
+    height: 40px;
+  }
+
+  .tool_tip, .tool_tip_absent, .tool_tip_leave{
+    position: relative;
+    display: inline-block;
+  }
+  .tooltiptext, .tooltiptext_absent, .tooltiptext_leave{
+    display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      justify-content: center;
+      font-size: 13px;
+  }
+  .tip-box{
+    display: block;
+    width: 17px;
+    height: 15px;
+    border: 1px solid #fff;
+    padding-left: 6px;
+  }
+  .tool_tip .tooltiptext{
+    visibility: hidden;
+    width: 120px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .tool_tip_absent .tooltiptext_absent, .tool_tip_leave .tooltiptext_leave{
+    visibility: hidden;
+    width: 120px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .tool_tip .tooltiptext::after, .tool_tip_absent .tooltiptext_absent::after, .tool_tip_leave .tooltiptext_leave::after{
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+  }
+  .tool_tip:hover .tooltiptext{
+    visibility: visible;
+    opacity: 1;
+  }
+  .tool_tip_absent:hover .tooltiptext_absent{
+    visibility: visible;
+    opacity: 1;
+  }
+  .tool_tip_leave:hover .tooltiptext_leave{
+    visibility: visible;
+    opacity: 1;
+  }
+  
+  .tooltiptext_leave{
+    right: 50% !important;
+    margin-right: 0 !important;
+    left: inherit !important;
+  }
+  
+  .pending-value h2 span {
+    background: #49CF9F;
+  }
+  
+  .approve-value h2 span {
+  background: #F6C453;
+  }
+  
+  .submitted-value h2 span {
+    background: #8079FF;
+  }
+
+  .pagination1{
+    padding-left: 202px;
+    list-style: none;
+  }
+
+
+
+.booking_search:focus {
+  background-color: #fff;
+  border-color: #f67e2b;
+  outline: 0;
+}
+
+/* .form-select {
+  height: 46px;
+} */
+
+.table>:not(caption)>*>* {
+  padding: 15px 22px;
+}
+
+.show_entries {
+  padding: 22px;
+}
+
+.nav-pills .nav-link {
+  padding: 8px;
+}
+
+.nav-pills {
+  gap: 10px;
+}
+
+.table_hover tr:hover {
+  background-color: #F4F5F6;
+}
+
+.form-control:focus {
+  border: 1px solid #f68229;
+}
+
+.page-link:focus {
+  color: #fff !important;
+  background-color: #49BFCF !important;
+  outline: 0;
+  box-shadow: none !important;
+  border-radius: 6px;
+
+}
+
+.pagination {
+  align-items: center;
+  --bs-pagination-border-color: none;
+  --bs-pagination-bg: #fbefe9;
+  --bs-pagination-border-radius: 6px !important;
+}
+
+.page-link {
+  color: #49BFCF !important;
+  font-size: 18px;
+  font-weight: 500;
+  padding: 8px 17px;
+}
+
+.table-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 22px;
+}
+
+.pagination {
+  align-items: center;
+  --bs-pagination-border-color: none !important;
+  --bs-pagination-bg: #e6ecfd !important;
+  --bs-pagination-border-radius: 6px !important;
+}
+
+ul li a {
+  padding: 13px 15px 13px 20px;
+}
+
+.page-link:hover {
+  z-index: 2;
+  color: var(--bs-pagination-hover-color);
+  background-color: var(--bs-pagination-hover-bg);
+  border-color: var(--bs-pagination-hover-border-color);
+}
+  
+.inactiveLink {
+  pointer-events: none;
+  cursor: default;
+}
+.active{
+  background-color: #49BFCF ;
+  color: white !important;
+  border-radius: 9px;
+}

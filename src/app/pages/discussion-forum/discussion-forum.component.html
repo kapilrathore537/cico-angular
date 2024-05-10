@@ -1,0 +1,205 @@
+<div id="main" class="main mycourse_page">
+  <div class="profile d-flex mb-4">
+    <h1 class="font-27 font-700 secondary mb-0">Discussion Forum</h1>
+    <app-profile-bar></app-profile-bar>
+  </div>
+  <div class="Dashboard d-flex">
+    <!-- MIDDLE CONTENT START -->
+    <div id="main" class="timeline_page position-relative">
+      <div class="main_page">
+        <div class="d-flex align-items-center justify-content-between">
+          <h2 class="font-17 font-600 text_small mb-0">Discussion Forum</h2>
+
+        </div>
+        <div class="scroll_section ">
+          <div class="timeline_massages" id="updown_btn">
+            <div class="timeline_post d-flex justify-content-between align-items-center">
+              <img class="profilePic" [src]="student.profilePic">
+
+              <form class="form-inline text_input my-2 my-lg-0">
+                <input
+                  [ngClass]="discussionForm.content.length==0?'form_control font-14 font-400 mx-0 search-box':'form_control font-14 font-400 mx-0' "
+                  (input)="clearMessage()" type="search" placeholder="Write a post..." name="content"
+                  [(ngModel)]="discussionForm.content" />
+                <!-- <h6 style="color: red;">{{  message}}</h6> -->
+              </form>
+              <span class="reply_svg d-flex align-items-center justify-content-center  button"
+                (click)="createDiscussionForm()" *ngIf="isMessageSend==false">
+                <a> <img src="assets/images/svg_img/reply.svg"></a>
+              </span>
+              <span class="reply_svg d-flex align-items-center justify-content-center  button" *ngIf="isMessageSend">
+                <h6 style="color: white;"> <i class="fa fa-spinner fa-pulse fa-2x fa-fw"></i>
+                  <span class="sr-only">Loading...</span>
+                </h6>
+              </span>
+
+            </div>
+            <div class="post_btn d-flex align-items-center">
+              <button class="Camera font-13 font-700 d-flex justify-content-center align-items-center">
+                <i class="fi fi-rr-camera lh-0"></i>Camera
+              </button>
+              <button class="select_options">
+                <form class="d-flex align-items-center  mb-1 position-relative">
+                  <input type="file" name="imageupload" value="fileupload" class="d-none"
+                    accept="audio/mp3, video/mp4, image/*" id="imageupload" (change)="fileEvent($event)">
+                  <label for="imageupload"
+                    class="image_upload font-13 font-700 d-flex justify-content-center align-items-center"><i
+                      class="fi fi-rr-file lh-0"></i>Gallery</label>
+                </form>
+              </button>
+              <button class="select_options">
+                <form class="d-flex align-items-center  mb-1 position-relative">
+                  <input type="file" name="fileupload" value="fileupload" class="d-none" id="fileupload"
+                    accept="audio/mp3, video/mp4, image/*" (change)="fileEvent($event)">
+                  <label for="fileupload"
+                    class="file_upload font-13 font-700 d-flex justify-content-center align-items-center"><i
+                      class="fi fi-rr-file lh-0"></i>File</label>
+                </form>
+              </button>
+            </div>
+          </div>
+          <app-right-side-bar></app-right-side-bar>
+
+          <div class="">
+            <div class="post_details" *ngFor="let  obj of  discussionFormList ;let i =index">
+              <div class="post_discription d-flex align-items-center">
+                <div class="">
+                  <img class="profilePic" [src]="obj.studentProfilePic">
+                </div>
+                <div class="text mx-1">
+
+                  <h3 class="font-17 font-600 black mb-0">{{obj.studentName}}</h3>
+                  <p class="font-13 font-400 light2 mb-0"> {{obj.createdDate | date}}<span
+                      class="mx-0 ms-1"></span>{{date(obj.createdDate)}}</p>
+
+                </div>
+                <div class="dropdown d-flex justify-content-center align-items-center ms-auto" type="button"
+                  data-bs-toggle="dropdown" aria-expanded="false">
+                  <i class="fi fi-rr-menu-dots info2 font-20 lh-0"></i>
+                  <ul class="dropdown-menu delete_dropdown">
+                    <li>
+                      <a class="dropdown-item d-flex align-items-center justify-content-center delete_post" href="#"><i class="fi fi-sr-trash lh-0 mx-2 ms-0"></i>Delete Post</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <h4 class="post_subtitle text_small font-17 font-400 lh-21">{{obj.content}} </h4>
+
+
+              <div class="d-flex justify-content-center align-items-center mb-1">
+                <div
+                  *ngIf="  obj.audioFile !== 'null'&& obj.audioFile !== null &&  obj.audioFile!=='' &&obj.audioFile !== undefined">
+                  <video [src]=" obj.audioFile" class="post_img" controls></video>
+
+                </div>
+
+                <div class="assignment_image"
+                  *ngIf="obj.file!=='null' &&obj.file!==null && obj.file!=='' && obj.file !== undefined ">
+                  <img [src]="obj.file" (click)="toggleImageSize($event)" class="post_img">
+                </div>
+
+
+
+              </div>
+              <ul class=" social_icon d-flex align-items-center justify-content-around position-relative mb-0">
+                <div class="d-flex align-items-center p-1 like">
+
+
+                  <img
+                    [src]="obj.isLike ? 'assets/images/temp_img/like_filled.png' : 'assets/images/temp_img/like_blank.png'"
+                    (click)="like(obj.id)">
+                  <h3 class="social_text font-13 font-500 mb-0 mx-0 ms-1">{{obj.likes.length}} Like</h3>
+                </div>
+                <div class="d-flex align-items-center p-1 comment_box" onclick="myfun1()" (click)="toggleComment(i)">
+                  <img src="assets/images/svg_img/Comment.svg">
+                  <h3 class="gray font-13 font-500 mb-0 mx-0 ms-1">Submit Answer</h3>
+                </div>
+              </ul>
+              <!-- comment tabs in timeline -->
+              <!-- id="taskcard_show_{{i}}" [style.display]="assignmentTaskVisibility[i] ? 'block' : 'none'" -->
+              <div class="comment_details comment_post" [style.display]="commnetVisibility[i] ? 'block' : 'none'"
+                id="fee-table_{{i}}">
+                <div class="forum_post d-flex justify-content-between align-items-center">
+                  <img class="profilePic" [src]="student.profilePic">
+                  <form class="form-inline text_input my-2 my-lg-0">
+                    <input class="form_control font-14 font-400 mx-0" type="search" name="comment" [(ngModel)]="comment"
+                      (keyup)="sendTypingUser('typing')" placeholder="Write your answer...">
+
+                  </form>
+                  <i class="send_option  fi fi-rr-paper-plane-top white d-flex align-items-center justify-content-center"
+                    (click)="createComment(obj.id)"></i>
+                  <br>
+                </div>
+                <div style="display: flex; flex-direction: row; margin-left: 40px; margin-top: 0px; padding-top: 0px;">
+                  <h6 *ngFor="let obj of typing;let i = index " style="font-size: smaller; color: green;">
+                    {{obj.name.split(' ')[0]}} <span *ngIf="typing.length>1  && typing.length-1!==i">,</span> </h6>
+                  <h6 *ngIf="typing.length>0">
+                    <pre style="font-size: smaller; color: green;"> is typing</pre>
+                  </h6>
+                  <!-- <h6 *ngIf="typing.length>0"  > <pre style="font-size: smaller; color: green; "*ngIf="typing.length>7"> {{typing.length-(i+1)}} more+</pre></h6> -->
+                  <div class="typing " style="margin-top:8px ;margin-left: 5px;" *ngIf="typing.length>0 ">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                  </div>
+                </div>
+                <!-- <div class="comment_section" *ngFor=" let comment of obj.comments">
+                  <div class="d-flex align-items-center mb-1">
+                    <div class="mx-1 ms-0">
+                      <img class="profilePic" [src]="IMAGE_URL+comment.studentProfilePic">
+                    </div>
+                    <div class="text mx-1">
+
+                      <h3 class="font-15 font-500 black mb-0">{{comment.studentName}}</h3>
+                      <p class="font-11 font-400 light22 mb-0">{{comment.createdDate | date}} <span
+                          class="mx-0 ms-1">{{date(comment.createdDate)}}</span>
+
+                      </p>
+                    </div>
+
+                  </div>
+                  <h3 class="font-15 font-400 text_small">{{comment.content}}</h3>
+
+                </div> -->
+
+
+                <div class="comment_section d-flex" *ngFor=" let comment of obj.comments">
+                  <div>
+                   <div class="d-flex align-items-center mb-1">
+                     <div class="mx-1 ms-0">
+                      <img class="profilePic" [src]="comment.studentProfilePic">
+                     </div>
+                     <div class="text mx-1">
+                       <h3 class="font-15 font-500 black mb-0">{{comment.studentName}}</h3>
+                       <p class="font-11 font-400 light2 mb-0">{{comment.createdDate | date}}<span class="mx-0 ms-1">{{date(comment.createdDate)}}</span>
+                       </p>
+                     </div>
+                   
+                   </div>
+                   <h3 class="font-15 font-400 text_small">{{comment.content}}</h3>
+                     <h4 class="light2 font-13 font-500 reply_ans">Reply</h4>
+                  </div>
+                     <div class="mx-0 ms-auto">
+                       <i class="fi fi-sr-trash light2"></i>
+                     </div>
+                 </div>
+
+                <!-- end -->
+              </div>
+
+
+
+
+
+
+            </div>
+          </div>
+        <!-- </div>
+        <a href="#updown_btn" class="scroll_btn d-flex justify-content-center align-items-center">
+          <img src="assets/images/svg_img/uparrow.svg">
+        </a> -->
+      </div>
+    </div>
+
+  </div>

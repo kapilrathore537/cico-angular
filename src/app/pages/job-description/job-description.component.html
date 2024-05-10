@@ -1,0 +1,50 @@
+<div id="main" class="main mycourse_page">
+  <div class="profile d-flex mb-4">
+    <h1 class="font-27 font-700 secondary mb-0">Job Description</h1>
+    <app-profile-bar></app-profile-bar>
+  </div>
+
+
+  <div class="scroll_section">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="all_summary1">
+          <div class="d-flex align-items-center">
+            <div class="">
+              <div class="d-flex java">
+                  <img style="height:100px;width: 100px;" [src]="jobAlert.technologyStack.imageName">
+                <div class="ms-2">
+                  <h2 class="font-21 font-600 secondary job_title">{{jobAlert.jobTitle}}</h2>
+                  <h2 class="font-17 font-400 secondary job_title">{{jobAlert.jobTitle}}</h2>
+                  <h3 class="font-17 font-400 secondary mb-0">Upto {{jobAlert.jobPackage}} LPA</h3>
+                </div>
+              </div>
+            </div>
+            <button type="button" class="apply_btn font-14 font-500 text-white ms-auto">
+              Apply
+            </button>
+          </div>
+        </div>
+        <div class="job_discription">
+          <h3 class="font-17 font-700">Job Title</h3>
+          <h3 class="font-17 font-400 mb-4">{{jobAlert.jobTitle}}</h3>
+          <h3 class="font-17 font-700">Salary Range</h3>
+          <h3 class="font-17 font-400 mb-4">1,80,000 to 2,40,000 P.A.</h3>
+          <h3 class="font-17 font-700">Company Description</h3>
+          <h3 class="font-17 font-400 mb-4">{{jobAlert.companyDescription}}</h3>
+
+          <h3 class="font-17 font-700">Job Description</h3>
+          <h3 class="font-17 font-400 mb-4">{{jobAlert.jobDescription}}</h3>
+
+          <h3 class="font-17 font-700">Responsibilities:</h3>
+          <h3 class="font-17 font-400 mb-4">
+            <ul class="discription_list"  >
+              
+              <li *ngFor="let obj of  jobAlert.jobResponsibilities let i =index"
+              >{{obj}}</li>
+            </ul>
+          </h3>
+        </div>
+      </div>
+    </div>
+  </div>

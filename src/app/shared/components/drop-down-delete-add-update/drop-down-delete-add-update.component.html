@@ -1,0 +1,22 @@
+<div class="dropdown" id="hoverDropdown">
+    <i class="fi fi-ss-menu-dots-vertical text_gray fw-bold fs-5" role="button" id="dropdownMenuLink"
+        data-bs-toggle="dropdown" aria-expanded="false"></i>
+
+    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink" style="min-width: 8rem;">
+        <li><a (click)="pageRenderUsingRouterLink()"
+                class="mb-0 warning d-flex align-items-center gap_5 dropdown-padding pointer"><i
+                    class="fi fi-rr-document line-height-0"></i> View</a></li>
+        <li>
+            <p class="mb-0 warning d-flex align-items-center gap_5 dropdown-padding pointer" data-bs-toggle="modal"
+                [attr.data-bs-target]="editModalId" (click)="getData()">
+                <i class="fi fi-rr-file-edit line-height-0"></i> Edit
+            </p>
+
+        </li>
+        <li>
+            <p class="mb-0 delete-icon-color d-flex align-items-center gap_5 dropdown-padding pointer"
+                data-bs-toggle="modal" [attr.data-bs-target]="deleteModalId" (click)="deleteData()"><i
+                    class="fi fi-rr-trash line-hei "></i> Delete</p>
+        </li>
+    </ul>
+</div>

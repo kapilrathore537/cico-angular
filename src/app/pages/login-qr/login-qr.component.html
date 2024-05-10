@@ -1,0 +1,15 @@
+<div class="qr_page">
+  <h1 class="qr_heading1 text-center heading-1 font-600 warning mb-2">Welcome to</h1>
+  <img src="assets/images/temp_img/Logo.png" alt="" class="mb-4">
+<div class="login_box">
+    <h3 class="secondary font-18 font-600 text-center mb-0">Scan This QR Code or Enter This Code in Mobile App to log in</h3>
+       <div class="ratio-1x1 qr_img" *ngIf="connection">
+        <!-- <img [src]="'http://localhost:8080/qr/generateQR'" class="qr_img ratio-1x1"> -->
+        <img [src]="'data:image/png;base64,'+qrImage" class="qr_img ratio-1x1">
+       </div>
+       <div class="spinner-border text-light" role="status" *ngIf="!connection">
+        <span class="sr-only">Loading...</span>
+      </div>
+    <!-- <h4 class="qr_code secondary font-30 font-600 text-end mb-0">CICO-987654</h4> -->
+</div>
+</div>

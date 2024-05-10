@@ -1,0 +1,172 @@
+<div id="main" class="main dashboard_page">
+    <div class="profile d-flex mb-4">
+
+        <div class="profile_top_heading d-flex gap_24">
+            <h1 class="font-27 font-700 secondary mb-0">Subjects</h1>
+            <button class="top_profile_sec_btn font-14 font-500 lh-1" data-bs-toggle="modal" (click)="getAllTechImage()" (click)="clearFormSubmission()"
+                data-bs-target="#subject-add-modal">Create New</button>
+        </div>
+
+        <app-profile-bar></app-profile-bar>
+    </div>
+
+    <!-- DASHBOARD START -->
+
+    <div class="scroll_sec mt-0">
+        <div class="row">
+            <div class="col-md-3 bootstrap_cards" *ngFor="let subject of subjects;let i =index">
+                <div class="admin-subject_card">
+                    <div class="admin-subject_card_top">
+                        <div class="admin-subject_name_card">
+                            <div class="admin-sub-left">
+                                <div class="admin-subject-image">
+                                    <img [src]="subject.technologyStack.imageName">
+                                </div>
+                                <div class="subject-details">
+                                    <h3 class="subject_heading txt-dark mb-0">{{ subject.subjectName }}</h3>
+                                    <p class="chapter-cout mb-0">{{subject.chapterCount!=0?subject.chapterCount:0}}
+                                        Chapters</p>
+                                </div>
+                            </div>
+                        </div>
+                        <app-drop-down-delete-add-update [deleteModalId]="'#delete-modal'"
+                            [editModalId]="'#subject-edit-modal'" [path]="'/admin/subjectchapter/'"
+                            [params]="{subjectId:subject.subjectId}" [id]="subject.subjectId" [index]="i"
+                            (onClick)="onClick($event)"></app-drop-down-delete-add-update>
+                    </div><!-- subject_card_top -->
+
+                </div> <!-- subject_card -->
+            </div>
+        </div>
+    </div>
+    <!-- DASHBOARD END -->
+
+    <!-- RIGHT SIDE START-->
+    <app-right-side-bar></app-right-side-bar>
+    <!-- RIGHT SIDE END -->
+
+    <!-- MIDDLE CONTENT END -->
+</div>
+<!--DASHBOARD END -->
+
+<!-- Modal Delete Modal Start -->
+<div class="modal fade" id="delete-modal" tabindex="-1" aria-labelledby="delete-modal" aria-hidden="true">
+    <app-delete-modal [title]="'Subject'" (onClick)="deleteSubject()"></app-delete-modal>
+</div>
+<!-- Modal Delete Modal End -->
+
+<!-- Modal Admin Subject Edit Modal Start -->
+<div class="modal fade" id="subject-edit-modal" tabindex="-1" aria-labelledby="delete-modal" aria-hidden="true">
+    <div class="modal-dialog position-relative leave_modal">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="modal-header apply_title p-0">
+                    <h1 class="modal-title fs-5 font-21 font-600 secondary modal_line position-relative"
+                        id="exampleModalLabel1">Edit Subject</h1>
+                    <!-- <button type="button" class="close_btn" data-bs-dismiss="modal" aria-label="Close"   id="subject-edite-modal-close" (click)="reloadMessage()">
+                        <i class="fi fi-rr-cross close_icon"></i>
+                    </button> -->
+                </div>
+
+                <form [formGroup]="subjectSubmissionForm">
+                    <div class="row" *ngIf="subject">
+                        <div class="col-md-12 mb_18">
+
+                            <h6 class="mb-4 font-15 font-500 secondary">Selected Image :-
+                                {{subject.technologyStack.technologyName}}</h6>
+                            <div class="all-course-images d-flex flex-wrap">
+                                <div class="add-course-img" *ngFor="let image of techImages">
+                                    <img [ngClass]="subject.technologyStack.technologyName == image.technologyName ?'techImage-border':''"
+                                        [src]="image.imageName" alt="" (click)="subject.technologyStack.id= image.id"
+                                        (click)="subject.technologyStack.technologyName = image.technologyName">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 mb_18">
+                            <label for="" class="mb_6 font-15 font-500 secondary">Subject Name</label>
+                            <div class="input_icon position-relative">
+                                <input type="text" id="" name="subjectName" class="form-control input_text"
+                                    placeholder="Enter subject name" formControlName="subjectName" name="subjectName"
+                                    [(ngModel)]="subject.subjectName">
+                            </div>
+                        </div>
+                        <!-- <h6 style="color: red;" *ngIf="subject.subjectName!=null">{{message}}</h6> -->
+                        <div class="text-danger"
+                            *ngIf="subjectSubmissionForm.get('subjectName')?.hasError('required')  && subjectSubmissionForm.get('subjectName')?.touched">
+                            <h6>field is required</h6>
+                        </div>
+                    </div><!-- row -->
+                </form>
+                <div class="apply_modal_buttons d-flex justify-content-between align-items-center">
+                    <button type="button" class="cancel_modal_btn font-15 font-500" data-bs-dismiss="modal"
+                        aria-label="Close" (click)="reloadMessage() " id="subject-edite-modal-close">Cancel</button>
+                    <a>
+                        <button type="button" class="apply_modal_btn font-15 font-500" (click)="updateSubject()">Update
+                            Subject</button>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Admin Subject Edit Modal End -->
+
+<!-- Modal Admin Subject Add Modal Start -->
+<div class="modal fade" id="subject-add-modal" tabindex="-1" aria-labelledby="delete-modal" aria-hidden="true">
+    <div class="modal-dialog position-relative leave_modal">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="modal-header apply_title p-0">
+                    <h1 class="modal-title fs-5 font-21 font-600 secondary modal_line position-relative"
+                        id="exampleModalLabel1">Add Subject</h1>
+                    <!-- <button type="button" class="close_btn" data-bs-dismiss="modal" aria-label="Close" id="subject-model-close" (click)="reloadMessage()" (click)="clearFormSubmission()">
+                        <i class="fi fi-rr-cross close_icon"></i>
+                    </button> -->
+                </div>
+
+                <form [formGroup]="subjectSubmissionForm">
+                    <div class="row">
+                        <div class="col-md-12 mb_18">
+                            <h6 class="mb-4 font-15 font-500 secondary">Selected Image :- {{ imageName }}</h6>
+                            <div class="all-course-images d-flex flex-wrap">
+                                <div class="add-course-img" *ngFor="let image of techImages">
+                                    <img [ngClass]="imageName == image.technologyName ?'techImage-border':''"
+                                        [src]=" image.imageName" alt=""
+                                        (click)="subjectData.imageId = image.id; imageName = image.technologyName">
+                                </div>
+                            </div>
+                            <div class="text-danger" *ngIf="imageName==''">
+                                Image Name is required.
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 mb_18">
+                            <label for="" class="mb_6 font-15 font-500 secondary">Subject Name</label>
+                            <div class="input_icon position-relative">
+                                <input type="text"name="subjectName" class="form-control input_text"
+                                    placeholder="Enter Subject Name" formControlName="subjectName"
+                                    [(ngModel)]="subjectData.subjectName">
+                            </div>
+                            <div class="text-danger" *ngIf="subjectSubmissionForm.get('subjectName')?.hasError('required')  && subjectSubmissionForm.get('subjectName')?.touched">
+                                <h6>field is required</h6>
+                            </div>
+                        </div>
+
+                    </div><!-- row -->
+                </form>
+                <div class="apply_modal_buttons d-flex justify-content-between align-items-center">
+                    <button type="button" class="cancel_modal_btn font-15 font-500" data-bs-dismiss="modal"
+                        aria-label="Close" (click)="reloadMessage() " id="subject-model-close">Cancel</button>
+                    <a routerLink="/admin/subject">
+                        <button type="button" class="apply_modal_btn font-15 font-500" (click)="saveSubject()">Save
+                            Subject</button>
+                    </a>
+
+                </div>
+                <h6 *ngIf="message!==null" style="color: red;">{{message}}</h6>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Admin Subject Add Modal End -->

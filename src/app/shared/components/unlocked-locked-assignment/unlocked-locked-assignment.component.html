@@ -1,0 +1,46 @@
+
+    <h3 class="title font-17 font-500 secondary position-relative">Assignments</h3>
+    <div class="AssignmentCard mb-1" id="head-show" *ngFor="let obj of unLockAssignments; let i=index">
+        <div class="Head">
+            <div class="TaskName text-light">Day {{i+1}} [{{obj.title}}]</div>
+            <div class="Toggle">
+                <i class="fi fi-rr-angle-small-down fs-4 lh-2 secondary" id="down-arrow" (click)="toggleAssignment(i)"
+                    (click)="getAssignment(obj.id)"></i>
+                <i class="fi fi-rr-angle-small-up fs-4 lh-2 secondary" id="up-arrow" onclick="assignhide()"
+                    style="display:none;"></i>
+
+            </div>
+        </div>
+        <div class="Bar">
+            <div class="Progress">
+                <div class="Deadline">{{obj.totalTaskCompleted}}/{{obj.taskQuestion.length}}</div>
+                <div class="Progress">{{calculatePercentages(obj.totalTaskCompleted,obj.taskQuestion.length)}}%</div>
+            </div>
+        </div>
+        <div class="progress">
+            <div class="progress-bar ProgressW bg-primary" role="progressbar"
+                [style.width]="calculatePercentages(obj.totalTaskCompleted,obj.taskQuestion.length)+'%'"
+                aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+
+        </div>
+        <div id="taskcard_show_{{i}}" [style.display]="assignmentTaskVisibility[i] ? 'block' : 'none'">
+            <a (click)="pageRenderUsingRouterLink( task.questionId)"
+                *ngFor="let task of obj.taskQuestion; let j=index">
+                <div class="TaskCard">
+
+                    <div class="TaskName" *ngIf="task.submissionDate!=null">Task {{j+1 }} <span
+                            class="font-15 font-400 text_gray">Summited on {{task.submissionDate | date:'mediumDate'
+                            }}</span>
+                    </div>
+                    <div class="TaskName" *ngIf="task.submissionDate==null">Task {{j+1 }} <span
+                            class="font-15 font-400 text_gray">Pending</span></div>
+                    <div class="Button">View</div>
+                </div>
+            </a>
+        </div>
+    </div>
+
+<div class="TaskCard" *ngFor="let assignment of lockAssignments ; let i=index">
+    <div class="font-15 font-400 text_gray">Assignment Day {{(unLockAssignments.length+1)+i}}</div>
+    <div class=""><i class="fi fi-rr-lock ms-auto"></i></div>
+</div>

@@ -1,0 +1,112 @@
+<div id="main" class="main main_task">
+  <div class="profile d-flex mb-4">
+    <h1 class="font-27 font-700 secondary mb-0">Tasks</h1>
+    <app-profile-bar></app-profile-bar>
+  </div>
+
+  <div class="scroll_section">
+    <div class="task_assignment mt-0">
+      <div class="row">
+        <div class="col-md-6 mb-4" *ngIf="tasks.length!=0">
+          <app-shared-task [tasks]="tasks" [taskIndexing]="taskIndexing"></app-shared-task>
+          <app-pagination (eventEmit)="getAllData($event)" [type]="'task'" [paginationManager]="TaskpageManager"
+            [pageRequest]="TaskPageRequest"></app-pagination>
+        </div>
+        <div class="col-md-6 mb-4" *ngIf="tasks.length==0">
+          <h3 class="font-21 font-600 secondary position-relative">
+            No task found!!
+          </h3>
+        </div>
+        <!-- ASSIGNMENT ACCORDION  END-->
+
+        <div class="col-md-6">
+          <div class="assignment-updates-top">
+            <h3 class="title font-17 font-500 secondary position-relative">Updates</h3>
+
+          
+            
+            <div class="top-status-month d-flex gap-3">
+              <div class="dropdown">
+                <a class="attendance_dropdown1 dropdown-toggle font-15 font-500 dark" id="status1" role="button"
+                  data-bs-toggle="dropdown" aria-expanded="false">
+                  Status
+                </a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" (click)="getSubmitedTaskByStudent('')">All</a></li>
+                  <li><a class="dropdown-item" (click)="getSubmitedTaskByStudent('Accepted')">Completed</a></li>
+                  <li><a class="dropdown-item" (click)="getSubmitedTaskByStudent('Rejected')">Rejected</a></li>
+                  <li><a class="dr  opdown-item" (click)="getSubmitedTaskByStudent('Reviewing')">Reviewing</a></li>
+                </ul>
+              </div>
+
+            </div>
+          </div>
+          <div class="all_summary assignment-updates">
+            <app-task-and-assignment-submission   [submission]="taskSubmissionList2" [title]="'Task'"></app-task-and-assignment-submission>
+          </div>
+          <app-pagination [paginationManager]="submissioTaskpageManager" (eventEmit)="getAllData($event)"
+            [type]="'taskSubmission'" [pageRequest]="submissioTaskPageRequest"></app-pagination>
+          <div class="col-md-6" *ngIf="taskSubmissionList.length==0">
+            <h3 class="font-21 font-600 secondary position-relative">
+              No task submission found!!
+            </h3>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<app-right-side-bar></app-right-side-bar>
+
+<!-- end Assignment  modal -->
+
+<!-- Modal submit button start -->
+<div class="modal fade" id="submit_button" tabindex="-1" aria-labelledby="submit_button" aria-hidden="true">
+  <div class="modal-dialog position-relative leave_modal">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="modal-header apply_title">
+          <h1 class="modal-title  font-21 font-600 secondary modal_line position-relative">Submit Assignment</h1>
+          <button type="button" class="close_btn1" data-bs-dismiss="modal" aria-label="Close">
+            <i class="fi fi-rr-cross close_icon"></i>
+          </button>
+        </div>
+        <div class="form_input">
+          <h5 class="sub-heading font-17 font-500 secondary mb-1">Discription</h5>
+          <div class="">
+            <textarea class="form-control text_area" id="exampleFormControlTextarea1" rows="3"
+              placeholder="Input Text Here"></textarea>
+          </div>
+        </div>
+
+        <h4 class="sub-heading font-17 font-500 secondary mb-1">Heading</h4>
+        <form class="select_file d-flex align-items-center  file position-relative">
+          <input type="file" name="fileupload" value="fileupload" class="d-none" id="fileupload">
+          <label for="fileupload" class="font-15 font-400 secondary w-75">Select A File</label>
+          <button type="button" class="submit_btn0 ms-auto">
+            <i class="fi fi-rr-upload mx-1 mb-0 lh-0"></i><a type="btn" value=""
+              class=" font-15 font-400 text-white">Upload File</a>
+          </button>
+        </form>
+
+        <div class="file_option">
+          <div class=" d-flex file_name">
+            <i class="fi fi-rr-paperclip-vertical secondary add_more"></i>
+            <i class="fi fi-rr-trash secondary delete"></i>
+            <h3 class="font-15 font-400 dark mx-1 mb-0">File_name.pdf</h3>
+          </div>
+
+        </div>
+
+
+        <div class="apply_modal_buttons d-flex justify-content-between align-items-center">
+          <button type="button" class="cancel_modal_btn">Save Draft</button>
+          <button type="button" class="apply_modal_btn">Submit</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>  
+<app-right-side-bar></app-right-side-bar>
+<!-- end dashboard updates modal -->

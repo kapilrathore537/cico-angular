@@ -1,0 +1,230 @@
+<div id="main" class="main main_news">
+    <div class="profile d-flex mb-4">
+      <div class="assign-detail-heading">
+        <h1 class="font-27 font-700 secondary mb-0">Assignment Name</h1>
+        <a href="admin_create_assignment.html">
+          <button type="button" class="submit_buttons font-14 font-500 text-white d-inline-flex">Done</button>
+        </a>
+      </div>
+      <app-profile-bar></app-profile-bar>
+    </div>
+
+    <div class="scroll_section">
+      <div class="row mb-4">
+        <div class="col-md-12">
+          <h3 class="admin-title font-17 font-600 secondary position-relative mb_20">Task Questions</h3>
+          <div class="edit-task-area mb_20">
+            <div class="question_ans my-0">
+              <div class="show-less-question">
+                <h3 class="font-19 font-500 mb-0 secondary">Question - 1</h3>
+                <div class="show_more" onclick="showQuestion()">
+                  <p class="mb-0 font-17 font-500 secondary d-flex align-items-center gap_5"><i
+                      class="fi fi-rr-add line-height-0"></i>Show More</p>
+                </div>
+                <div class="show_less" onclick="hideQuestion()" style="display: none;">
+                  <p class="mb-0 font-17 font-500 secondary d-flex align-items-center gap_5"><i
+                      class="fi fi-rr-minus-circle line-height-0"></i>Show Less</p>
+                </div>
+              </div> <!-- show-less-question -->
+              <div id="hideQuestion" style="display: none;">
+                <h4 class="font-17 font-400 write-que">How would you reverse the order of elements in an array in Java
+                  without
+                  using any built-in methods or additional data structures?</h4>
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                  <div class="assinment_image">
+                    <img src="assets/images/temp_img/modal.png" class="img-fluid">
+                  </div>
+                  <h3 class="font-15 font-500 assignment_sub_heading mt-1">Attachment Title Here</h3>
+                </div>
+
+                <div class="assignment mb-0">
+                  <h3 class="font-17 font-700 list_bottom1">Hints:-</h3>
+                  <ul class="font-17 list_bottom mb-0">
+                    <li>How would you reverse the order of elements in an array in Java without using any built-in
+                      methods
+                      or additional data structures?</li>
+                    <li>How would you reverse the order of elements in an array in Java without using any built-in
+                      methods
+                      or additional data structures?</li>
+                    <li>How would you reverse the order of elements in an array in Java without using any built-in
+                      methods
+                      or additional data structures?</li>
+                  </ul>
+                </div>
+                <div class="edit-delete-que mt-5">
+                  <span class="d-flex align-items-center gap_5 font-17 font-500 delete-icon-color"
+                    data-bs-toggle="modal" data-bs-target="#delete-modal"><i class="fi fi-rr-trash line-height-0"></i>
+                    Delete</span>
+                  <span class="d-flex align-items-center gap_5 font-17 font-500 secondary"><i
+                      class="fi fi-rr-file-edit line-height-0"></i> Edit</span>
+                </div>
+              </div>
+
+            </div> <!-- question_ans -->
+          </div><!-- edit-task-area -->
+        </div> <!-- col-md-12 -->
+        <div class="col-md-12 mb_24">
+          <div class="edit-task-area">
+            <div class="question_ans mt-0">
+              <h3 class="font-19 font-500 mb-0 secondary">Question - 2</h3>
+            </div> <!-- question_ans -->
+
+            <div class="row">
+              <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                  <div class="profile_change d-flex justify-content-center align-items-center mb-4 position-relative mx-auto">
+
+                      <div class="profile_edits">
+                        <div class="profile_buttons d-flex align-items-end">
+                          
+                          <i class="fi fi-rr-trash light font-24 line-height-0 hover-delete-icon" data-bs-toggle="modal" data-bs-target="#delete-modal"></i>
+                        </div>
+                      </div>
+        
+                      <input id="file" type="file" onchange="loadFile(event)" class="d-none">
+                      <img src="assets/images/temp_img/modal.png" class="profile_image" id="output">
+                    </div>
+                  <h3 class="font-15 font-500 assignment_sub_heading mt-1 mb-0">Attachment Title Here
+                  </h3>
+              </div>
+
+              <div class="col-lg-4 col-md-4">
+                  <form class="attachment_file2 d-flex align-items-center justify-content-center  position-relative add-attechment add-media-attech">
+                      <input type="file" name="fileupload" value="fileupload" class="d-none" id="fileupload">
+                      <label for="fileupload" class="font-17 font-500 d-flex">
+                        <i class="fi fi-rr-plus-small warning font-24 line-height-0"></i>
+                        Add Media</label>
+                    </form>
+              </div>
+          </div>
+
+            <div class="que-hint">
+              <h4 class="sub-heading font-17 font-500 secondary">Question, Hints and Instructions</h4>
+              <textarea class="form-control text_area" id="exampleFormControlTextarea1" rows="3"
+                placeholder="Start Typing....."></textarea>
+            </div>
+
+            <div class="edit-delete-que mt-5">
+              <span class="d-flex align-items-center gap_5 font-17 font-500 secondary" data-bs-toggle="modal"
+                data-bs-target="#discard-changes-modal"> Discard Changed</span>
+              <span class="d-flex align-items-center gap_5 font-17 font-500 secondary" data-bs-toggle="modal"
+                data-bs-target="#save-changes-modal">Save Changes</span>
+            </div>
+          </div><!-- edit-task-area -->
+
+        </div><!-- col-md-12 -->
+
+        <div class="col-md-12 mb_24 text-center">
+        <div class="add-que">
+            <i class="fi fi-rr-plus-small warning font-36 line-height-0"></i>
+            <h5 class="font-17 font-500 warning mb-0">Add Question</h5>
+        </div>
+        </div><!-- col-md-12 -->
+
+        <div class="col-md-12">
+          <h3 class="admin-title font-17 font-600 secondary mb_20">Task Questions</h3>
+            <form class="attachment_file2 d-inline-flex align-items-center  position-relative mb-2 add-attechment">
+              <input type="file" name="fileupload" value="fileupload" class="d-none" id="fileupload">
+              <label for="fileupload" class="font-17 font-500 d-flex">
+                <i class="fi fi-rr-plus-small warning font-24 line-height-0"></i>
+                Add Attachments</label>
+            </form><br>
+          <div class="add-que mb-2" style="padding: 16px 12px;">
+            <i class="fi fi-rr-file-zipper warning font-24 line-height-0"></i>
+            <h5 class="font-17 font-500 warning mb-0">Attechment.zip (36.2 mb)</h5>
+        </div>
+        <br>
+        <div class="add-que border-0" style="padding: 16px 12px;">
+          <i class="fi fi-rr-file-zipper warning font-25 line-height-0"></i>
+          <h5 class="font-17 font-500 warning mb-0">Attechment.zip (36.2 mb)</h5>
+          <span data-bs-toggle="modal" data-bs-target="#delete-modal"><i
+              class="fi fi-rr-trash line-height-0 font-24 ms-3 delete-icon-color"></i></span>
+      </div>
+          </div><!-- col-md-12 -->
+
+      </div>
+    </div>
+  </div>
+
+ 
+  <!-- MIDDLE CONTENT END -->
+
+  <!-- RIGHT SIDEBAR START -->
+  <app-right-side-bar></app-right-side-bar>
+  <!-- RIGHT SIDEBAR END -->
+  
+  <!-- DASHBOARD END -->
+
+  <!-- Modal Delete Modal Start -->
+  <div class="modal fade" id="delete-modal" tabindex="-1" aria-labelledby="delete-modal" aria-hidden="true">
+    <div class="modal-dialog position-relative leave_modal">
+      <div class="modal-content">
+        <div class="modal-body">
+          <button type="button" class="close_btn" data-bs-dismiss="modal" aria-label="Close" style="top: -23%;">
+            <i class="fi fi-rr-cross close_icon"></i>
+          </button>
+
+          <p class="secondary font-21 font-500 text-center">Are You Sure You Want To Delete This Question?</p>
+          <div class="apply_modal_buttons d-flex justify-content-between align-items-center">
+            <a routerLink="/admin/editassignments">
+              <button type="button" class="cancel_modal_btn font-15 font-500 delete-icon-color">Yes, delete</button>
+            </a>
+            <a routerLink="/admin/editassignments">
+              <button type="button" class="apply_modal_btn font-15 font-500">No, Do not delete</button>
+            </a>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Modal Delete Modal End -->
+
+  <!-- Modal Discard Changes Modal Start -->
+  <div class="modal fade" id="discard-changes-modal" tabindex="-1" aria-labelledby="discard-changes-modal"
+    aria-hidden="true">
+    <div class="modal-dialog position-relative leave_modal">
+      <div class="modal-content">
+        <div class="modal-body">
+          <button type="button" class="close_btn" data-bs-dismiss="modal" aria-label="Close" style="top: -23%;">
+            <i class="fi fi-rr-cross close_icon"></i>
+          </button>
+
+          <p class="secondary font-21 font-500 text-center">Are You Sure You Want To <br> Discard Changes?</p>
+          <div class="apply_modal_buttons d-flex justify-content-between align-items-center">
+            <a routerLink="/admin/editassignments">
+              <button type="button" class="cancel_modal_btn font-15 font-500 delete-icon-color">Discard changes</button>
+            </a>
+            <a routerLink="/admin/editassignments">
+              <button type="button" class="apply_modal_btn font-15 font-500">No, Do not delete</button>
+            </a>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Modal Discard Changes Modal End -->
+
+  <!-- Modal Discard Changes Modal Start -->
+  <div class="modal fade" id="save-changes-modal" tabindex="-1" aria-labelledby="save-changes-modal" aria-hidden="true">
+    <div class="modal-dialog position-relative leave_modal">
+      <div class="modal-content">
+        <div class="modal-body">
+          <button type="button" class="close_btn" data-bs-dismiss="modal" aria-label="Close" style="top: -23%;">
+            <i class="fi fi-rr-cross close_icon"></i>
+          </button>
+
+          <p class="secondary font-21 font-500 text-center">Are You Sure You Want To<br> Save Changes?</p>
+          <div class="apply_modal_buttons d-flex justify-content-between align-items-center">
+            <a routerLink="/admin/editassignments">
+              <button type="button" class="cancel_modal_btn font-15 font-500 delete-icon-color">Cancel</button>
+            </a>
+            <a routerLink="/admin/editassignments">
+              <button type="button" class="apply_modal_btn font-15 font-500">No, Do not delete</button>
+            </a>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>

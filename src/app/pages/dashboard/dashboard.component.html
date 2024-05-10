@@ -1,0 +1,231 @@
+<div id="main" class="main dashboard_page">
+  <div class="profile d-flex mb-4">
+    <h1 class="font-27 font-700 secondary mb-0">Dashboard</h1>
+    <app-profile-bar></app-profile-bar>
+  </div>
+ 
+  <!-- DASHBOARD START -->
+  <div class="scroll_dashboard">
+    <div class="row main_inner">
+
+      <div class="col-md-3 punch_btn mb-4 ">
+        <div>
+          <app-checkincheckout></app-checkincheckout>
+        </div>
+      </div>
+      <div class="col-md-5  calender_img mb-4" style="height: 400px;">
+        <app-calender></app-calender>
+      </div>
+
+      <div class="col-md-3  right_task_area d-flex flex-wrap mb-4">
+
+        <div class="task-area text-center">
+          <h1 class="font-38 font-700 mb-0 text-light">{{totalTask}}</h1>
+          <p class="font-15 font-500 text-light mb-0">Total Tasks </p>
+        </div>
+        <div class="task-area text-center ">
+          <h1 class="font-38 font-700 mb-0 text-light">{{totalTaskSubmitted}}</h1>
+          <p class="font-15 font-500 text-light mb-0">Tasks submitted</p>
+        </div>
+        <div class="task-area text-center ">
+          <h1 class="font-38 font-700 mb-0 text-light">{{toDoAssignmentLength}}</h1>
+          <p class="font-15 font-500 text-light mb-0">To do Assignment</p>
+        </div>
+        <div class="task-area text-center">
+          <h1 class="font-38 font-700 mb-0 text-light">{{totalAssignmnetSubmitted}}</h1>
+          <p class="font-15 font-500 text-light mb-0">Assginment submitted</p>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="task_assignment">
+      <div class="row">
+        <div class="col-md-4">
+          <h3 class="title font-17 font-600 secondary position-relative">Assignment
+            ({{toDoAssignment.title}})</h3>
+          <div class="scroller-bar">
+            <div class="all_summary">
+              <!-- TASK ACCORDION  START-->
+              <div class="left-tasks" *ngFor="let task of toDoAssignment.taskQuestion;let i=index">
+                <div class="task_summary d-flex align-items-center justify-content-between mb-0">
+                  <h3 class="font-15 font-500 mb-0">Task </h3>
+                  <h4 class="font-13 font-500 warning ms-auto mb-0 task_modal" data-bs-toggle="modal"
+                    (click)="pageRenderUsingRouterLink('/student/assignmentdetails',task.questionId)">View</h4>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <h6 *ngIf="toDoAssignment==null">{{message}}</h6>
+        <div class="col-md-4">
+         
+            <app-shared-task [tasks]="tasks" [taskIndexing]="taskIndexing"></app-shared-task>
+            <app-pagination (eventEmit)="getAllData($event)" [type]="'task'" [paginationManager]="TaskpageManager"
+              [pageRequest]="TaskPageRequest"></app-pagination>
+         
+        </div>
+        <div class="col-md-4">
+
+          <div class="d-flex justify-content-between">
+            <h3 class="title font-17 font-600 secondary position-relative">Updates</h3>
+            <div class=" d-flex  justify-content-end gap-3">
+
+
+              <div class="dropdown" *ngIf="taskSubmissionIsActive==true">
+                <a class="attendance_dropdown1 dropdown-toggle font-15 font-500 dark" id="status1" role="button"
+                  data-bs-toggle="dropdown" aria-expanded="false">
+                  Status
+                </a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" (click)="getSubmitedTaskByStudent('')">All</a></li>
+                  <li><a class="dropdown-item" (click)="getSubmitedTaskByStudent('Accepted')">Completed</a></li>
+                  <li><a class="dropdown-item" (click)="getSubmitedTaskByStudent('Rejected')">Rejected</a></li>
+                  <li><a class="dropdown-item" (click)="getSubmitedTaskByStudent('Reviewing')">Reviewing</a></li>
+                </ul>
+              </div>
+
+
+              <div class="dropdown" *ngIf="AssignmentsSubmissionIsactive==true">
+                <a class="attendance_dropdown1 dropdown-toggle font-15 font-500 dark" id="status2" role="button"
+                  data-bs-toggle="dropdown" aria-expanded="false">
+                  Status
+                </a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" (click)="getSubmitedAssignment('')">All</a></li>
+                  <li><a class="dropdown-item" (click)="getSubmitedAssignment('Accepted')">Completed</a></li>
+                  <li><a class="dropdown-item" (click)="getSubmitedAssignment('Rejected')">Rejected</a></li>
+                  <li><a class="dropdown-item" (click)="getSubmitedAssignment('Reviewing')">Reviewing</a></li>
+                </ul>
+              </div>
+
+              <div class="dropdown">
+                <a class="attendance_dropdown1 dropdown-toggle font-15 font-500 dark" href="#" role="button"
+                  data-bs-toggle="dropdown" aria-expanded="false">
+                  {{submissionUpdates}}
+                </a>
+                <ul class="dropdown-menu">
+                  <!-- <li><a class="dropdown-item" href="#">Assignment Updates</a></li> -->
+                  <li><a class="dropdown-item" (click)="updates()">{{submissionUpdates1}}</a></li>
+
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="all_summary assignment-updates" *ngIf="AssignmentsSubmissionIsactive==true">
+
+            <app-task-and-assignment-submission
+              [submission]="assignmentSubmissionsList" [title]="'Assignment'"></app-task-and-assignment-submission>
+            <app-pagination [paginationManager]="assignmentSubmissionPagination" (eventEmit)="getAllData($event)"
+              [type]="'AssignmentSubmission'" [pageRequest]="assignmentSubmissionPageRequest"></app-pagination>
+          </div>
+
+
+          <div class="all_summary assignment-updates" *ngIf="taskSubmissionIsActive==true">
+            <app-task-and-assignment-submission [submission]="taskSubmissionList" [title]="'Task'"></app-task-and-assignment-submission>
+            <app-pagination [paginationManager]="submissioTaskpageManager" (eventEmit)="getAllData($event)"
+              [type]="'taskSubmission'" [pageRequest]="submissioTaskPageRequest"></app-pagination>
+          </div>
+          
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <app-right-side-bar></app-right-side-bar>
+
+</div>
+
+`
+<!-- assignment submission -->
+<div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel1" aria-hidden="true">
+  <div class="modal-dialog position-relative assignment_modal" style="width: 514px;">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5 font-17 font-600 secondary modal_line position-relative mb-2"
+            id="exampleModalLabel1">
+            Submission Details</h1>
+          <button type="button" class="close_btn" data-bs-dismiss="modal" aria-label="Close" style="top: -15%;">
+            <i class="fi fi-rr-cross close_modal"></i>
+          </button>
+          <h3 class="font-15 font-500"
+            [ngClass]="{'text_light_green':assignmentSubmissionObj.status == 'Accepted','text_light_red':assignmentSubmissionObj.status=='Rejected','text_light_blue':(assignmentSubmissionObj.status=='Unreviewed')||(assignmentSubmissionObj.status=='Reviewing')}">
+            {{assignmentSubmissionObj.status}}</h3>
+        </div>
+        <div class>
+          <div class="assignment">
+            <div class="question_ans">
+              <h3 class="font-17 font-500 secondary">Report</h3>
+              <ol class="ps-3">
+                <li class="font-17 font-400 text_dark">{{assignmentSubmissionObj.description}}</li>
+
+              </ol>
+            </div>
+            <div class="question_ans">
+              <h3 class="font-17 font-500 secondary">Review</h3>
+              <ol class="ps-3">
+                <li class="font-17 font-400 text_dark">{{assignmentSubmissionObj.review}}</li>
+
+              </ol>
+            </div>
+            <form class="attachment_file1 d-flex align-items-center  position-relative attechment_file">
+              <a href="{{assignmentSubmissionObj.submitFile}}" class="font-15 font-400 text_gray  attachment_file_text">
+                <i class="fi fi-rr-paperclip-vertical secondary add_more position-absolute  mx-2"></i>
+                Download Submited File</a>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal submit button start -->
+<div class="modal fade" id="submit_button" tabindex="-1" aria-labelledby="submit_button" aria-hidden="true">
+  <div class="modal-dialog position-relative leave_modal">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="modal-header apply_title">
+          <h1 class="modal-title  font-21 font-600 secondary modal_line position-relative">Submit
+            Assignment</h1>
+          <button type="button" class="close_btn1" data-bs-dismiss="modal" aria-label="Close">
+            <i class="fi fi-rr-cross close_icon"></i>
+          </button>
+        </div>
+        <div class="form_input">
+          <h5 class="sub-heading font-17 font-500 secondary mb-1">Discription</h5>
+          <div class>
+            <textarea class="form-control text_area" id="exampleFormControlTextarea1" rows="3"
+              placeholder="Input Text Here"></textarea>
+          </div>
+        </div>
+
+        <h4 class="sub-heading font-17 font-500 secondary mb-1">Heading</h4>
+        <form class="select_file d-flex align-items-center  file position-relative">
+          <input type="file" name="fileupload" value="fileupload" class="d-none" id="fileupload">
+          <label for="fileupload" class="font-15 font-400 secondary w-75">Select
+            A File</label>
+          <button type="button" class="submit_btn0 ms-auto">
+            <i class="fi fi-rr-upload mx-1 mb-0 lh-0"></i><a type="btn" value
+              class=" font-15 font-400 text-white">Upload File</a>
+          </button>
+        </form>
+
+        <div class="file_option">
+          <div class=" d-flex file_name">
+            <i class="fi fi-rr-paperclip-vertical secondary add_more"></i>
+            <i class="fi fi-rr-trash secondary delete"></i>
+            <h3 class="font-15 font-400 dark mx-1 mb-0">File_name.pdf</h3>
+          </div>
+
+        </div>
+
+        <div class="apply_modal_buttons d-inline-flex justify-content-between align-items-center">
+          <button type="button" class="cancel_modal_btn">Save Draft</button>
+          <button type="button" class="apply_modal_btn">Submit</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

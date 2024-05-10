@@ -1,0 +1,99 @@
+<div id="main" class="main mycourse_page">
+  <!-- REVIEW START -->
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="review  d-flex justify-content-between align-items-center">
+          <a  type="button" (click)="resultView()"
+            class="back_button font-15 font-500 d-flex justify-content-center align-items-center"><i
+              class="fi fi-rr-arrow-left lh-0" ></i>Back</a>
+          <h5 class="font-24 font-700 light-black mb-0">Review Answers</h5>
+          <h6 class="font-19 font-600 light-black mb-0">Your Score : {{chapterExamResult.scoreGet}}/{{chapterExamResult.totalQuestion}}</h6>
+        </div>
+        <div class="review_section">
+          <div class="questions_answer review_questions" *ngFor="let obj of  questionResponse ;let i=index">
+            <div>
+              <div class="review_questions d-flex justify-content-between">
+                <h3 class="font-17 font-700 light-black">Question - {{i+1}}</h3>
+                <h4 class="font-17 font-700 light-red "  *ngIf="obj.correctOption !== review.get(obj.questionId)  && review.get(obj.questionId)!=null" >In-Correct</h4>
+                <h4 class="font-17 font-700 light-green "  *ngIf="obj.correctOption === review.get(obj.questionId)" >Correct</h4>
+                <h4 class="font-17 font-700 light-info"  *ngIf=" review.get(obj.questionId)==null" >Did-Not Answer</h4>
+              </div>
+              <h5 class="font-19 font-400 txt-dark " [innerHTML]="obj.questionContent"></h5>
+            </div>
+            <div>
+             
+
+
+              <div class="  answer_option mb-4 d-flex justify-content-between align-items-center"
+              [ngClass]="{
+                'right_answer':  obj.correctOption === obj.option1 , 
+                'wrong_answer': obj.correctOption != obj.option1 && obj.correctOption != review.get(obj.questionId) &&  obj.option1== review.get(obj.questionId) ,             
+              }">
+           <h5 class="font-17 font-600 mb-0">C- {{ obj.option1 }}</h5>
+           <i class="fi  txt-white lh-0 d-flex justify-content-center align-items-center"
+           [ngClass]="{
+            'fi-rr-check  right_icon ': obj.correctOption === obj.option1,
+            'fi-rr-cross-small cross_icon': obj.correctOption != obj.option1 && obj.correctOption != review.get(obj.questionId) &&  obj.option1== review.get(obj.questionId)
+         }"
+            ></i>
+         </div>
+            
+         <div class=" answer_option  mb-4 d-flex justify-content-between align-items-center"
+         [ngClass]="{
+          'right_answer':  obj.correctOption === obj.option2 , 
+          'wrong_answer': obj.correctOption != obj.option2 && obj.correctOption != review.get(obj.questionId) &&  obj.option2== review.get(obj.questionId) ,           
+         }">
+      <h5 class="font-17 font-600 mb-0">C- {{ obj.option2 }}</h5>
+      <i class="fi  txt-white lh-0 d-flex justify-content-center align-items-center"
+      [ngClass]="{
+       'fi-rr-check  right_icon ': obj.correctOption === obj.option2 ,
+       'fi-rr-cross-small cross_icon': obj.correctOption != obj.option2 && obj.correctOption != review.get(obj.questionId) &&  obj.option2== review.get(obj.questionId) 
+    }"
+       ></i>
+    </div> 
+
+       
+    <div class=" answer_option mb-4 d-flex justify-content-between align-items-center"
+    [ngClass]="{
+      'right_answer':  obj.correctOption === obj.option3 , 
+      'wrong_answer': obj.correctOption != obj.option3 && obj.correctOption != review.get(obj.questionId) &&  obj.option3== review.get(obj.questionId) , 
+    }">
+ <h5 class="font-17 font-600 mb-0">C- {{ obj.option3 }}</h5>
+ <i class="fi  txt-white lh-0 d-flex justify-content-center align-items-center"
+ [ngClass]="{
+  'fi-rr-check  right_icon ': obj.correctOption === obj.option3 ,
+  'fi-rr-cross-small cross_icon': obj.correctOption != obj.option3 && obj.correctOption != review.get(obj.questionId) &&  obj.option3== review.get(obj.questionId) 
+}"
+  ></i>
+</div> 
+
+<div class="  answer_option mb-4 d-flex justify-content-between align-items-center"
+[ngClass]="{
+  'right_answer':  obj.correctOption === obj.option4 , 
+  'wrong_answer': obj.correctOption != obj.option4 && obj.correctOption != review.get(obj.questionId) &&  obj.option4== review.get(obj.questionId) , 
+}"
+
+>
+
+<h5 class="font-17 font-600 mb-0">C- {{ obj.option4 }}</h5>
+<i class="fi  txt-white lh-0 d-flex justify-content-center align-items-center"
+[ngClass]="{
+'fi-rr-check  right_icon ': obj.correctOption === obj.option4 ,
+'fi-rr-cross-small cross_icon': obj.correctOption != obj.option4 && obj.correctOption != review.get(obj.questionId) &&  obj.option4== review.get(obj.questionId) 
+}"
+></i>
+</div>
+    
+              
+            </div>
+          </div>
+
+
+        </div> 
+      </div>
+    </div>
+  </div>
+  <!-- REVIEW END -->
+  <!-- MIDDLE CONTENT END -->
+</div>

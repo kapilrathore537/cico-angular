@@ -1,0 +1,482 @@
+.calendar-wrapper {
+    max-width: 400px;
+    min-width: 200px;
+    margin: 8px;
+}
+
+.igx-calendar{
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,.26),
+    0 1px 1px 0 rgba(0,0,0,.12),
+    0 2px 1px -1px rgba(0,0,0,.08);
+}
+
+.scroller-bar{
+    overflow:scroll; 
+    overflow-x:hidden; 
+    height: 500px;
+}
+.scroller-bar::-webkit-scrollbar {
+    display: none;
+  }
+
+.imageSize{
+    width: 100px;
+    height: 100px;
+}
+.text-center{
+    text-align: center;
+}
+
+
+// .clock {
+// 	width: 400px;
+// 	margin: 5% auto 0px auto;
+// }
+// #clockface {
+//     position: relative;
+//     display: block;
+//     width: 100px;
+//     height: 100px;
+//     background: white;
+//     border-radius: 180px;
+//     border: 3px solid black;
+//     box-shadow: 0 0 3px 0px red;
+// }
+// // .minutes {
+// // 	position: absolute;
+// // 	width: 3px;
+// // 	height: 15px;
+// // 	top: 0px;
+// // 	left: 49.5%;
+// // 	background: grey;
+// // 	transform-origin: 50% 170px;
+// // }
+// // .fiveminutes {
+// //     position: absolute;
+// //     width: 3px;
+// //     height: 22px;
+// //     top: 18px;
+// //     left: 48.5%;
+// //     background: black;
+// //     transform-origin: 50% 170px;
+// //     z-index: 1;
+// // }
+// .hour {
+//     position: absolute;
+//     width: 3px;
+//     height: 20px;
+//     top: 52px;
+//     left: 48%;
+//     border-radius: 7px;
+//     background: black;
+//     transform-origin: 49% 100px;
+// }
+// .min {
+//     position: absolute;
+//     width: 3px;
+//     height: 23px;
+//     top: -71px;
+//     left: -55.5%;
+//     border-radius: 7px;
+//     background: black;
+//     transform-origin: 48.5% 131px;
+// }
+// .sec {
+//     position: absolute;
+//     width: 3px;
+//     height: 24px;
+//     top: 53px;
+//     left: 49%;
+//     border-radius: 7px;
+//     background: red;
+//     transform-origin: 49% 131px;
+// }
+// .centerpoint {
+//     width: 7px;
+//     height: 7px;
+//     border-radius: 12px;
+//     background-color: black;
+//     position: absolute;
+//     left: 44px;
+//     top: 45px;
+// }
+// .numbers {
+// 	position: absolute;
+// 	font-size: 12px;
+// }
+// .one {
+//     top: 7px;
+//     right: 25px;
+// }
+// .two {
+//     top: 21px;
+//     right: 11px;
+// }
+// .three {
+//     top: 42px;
+//     right: 8px;
+// }
+// .four {
+//     top: 58px;
+//     right: 15px;
+// }
+// .five {
+//     top: 70px;
+//     right: 28px;
+// }
+// .six {
+//     top: 75px;
+//     left: 45px;
+// }
+// .seven {
+//     top: 70px;
+//     left: 28px;
+// }
+// .eight {
+//     top: 58px;
+//     left: 15px;
+// }
+// .nine {
+//     top: 42px;
+//     left: 8px;
+// }
+// .ten {
+//     top: 21px;
+//     left: 11px;
+// }
+// .eleven {
+//     top: 7px;
+//     left: 25px;
+// }
+// .twelve {
+//     top: 3px;
+//     left: 42px;
+// }
+// #speaker {
+// 	margin-left: 169px;
+// }
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+}
+
+
+/*** Analog Clock ***/
+// .clock {
+//     position: relative;
+//     width: 200px;
+//     height: 200px;
+//     background: #091a21;
+//     border: 5px solid #00b3ff;
+//     border-radius: 50%;
+//     box-shadow: 0 0 50px #ffffff44;
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+//     margin-bottom: 30px;
+
+//     & span {
+//         position: absolute;
+//         inset: -3px;
+//         color: #ffffff83;
+//         text-align: center;
+//         transform: rotate(calc(30deg*var(--i)));
+
+//         & b {
+//             font-size: 2em;
+//             font-weight: 600;
+//             display: inline-block;
+//             transform: rotate(calc(-30deg*var(--i)));
+//         }
+//     }
+
+//     &::before {
+//         content: '';
+//         position: absolute;
+//         width: 8px;
+//         height: 8px;
+//         border-radius: 50%;
+//         background: #ffffff;
+//         border: 3px solid #1c1c1e;
+//         z-index: 4;
+//     }
+// }
+
+// .circles {
+// 	position: absolute;
+//     width: 300px;
+//     height: 300px;
+//     border: 2px solid rgba(255, 255, 255, 0.1);
+//     border-radius: 61%;
+//     display: contents;
+//     /* justify-content: center; */
+//     align-items: flex-start;
+//      z-index: 3;
+
+//     & i {
+//         position: absolute;
+//         width: 6px;
+//         height: 50%;
+//         border-radius: 50%;
+//         background: var(--clr);
+//         opacity: 0.8;
+//         transform-origin: bottom;
+//         transform: scaleY(0.6);
+//     }
+
+//     &:nth-child(1) i {
+//         width: 2px;
+//     }
+
+//     &:nth-child(2) i {
+//         width: 4px;
+//     }
+
+//     &::before {
+//         content: '';
+//         position: absolute;
+//         width: 15px;
+//         height: 15px;
+//         border-radius: 50%;
+//         top: -8px;
+//         background: var(--clr);
+//         box-shadow: 0 0 20px var(--clr),
+//             0 0 60px var(--clr);
+//     }
+
+// }
+
+// .circles2 {
+//     width: 240px;
+//     height: 240px;
+//     z-index: 2;
+// }
+
+// .circles3 {
+//     width: 180px;
+//     height: 180px;
+//     z-index: 1;
+// }
+
+// /*** Digital Clock ***/
+
+// #time {
+//     margin-bottom: 40px;
+//     display: flex;
+//     padding: 10px 20px;
+//     font-size: 2em;
+//     font-weight: 600;
+//     border: 5px solid rgba(255, 255, 255, 0.15);
+//     border-radius: 40px;
+
+//     & div {
+//         position: relative;
+//         width: 60px;
+//         text-align: center;
+//         font-weight: 500;
+//         color: var(--clr);
+
+//         &:nth-child(1)::after,
+//         &:nth-child(2)::after {
+//             content: ':';
+//             position: absolute;
+//             right: -4px;
+
+//         }
+
+//         &:nth-child(2)::after {
+//             animation: animate 1s steps(1) infinite;
+//         }
+
+//         &:last-child {
+//             font-size: 0.7em;
+//             display: flex;
+//             justify-content: center;
+//             align-items: center;
+//             color: #fff;
+//         }
+
+//     }
+// }
+
+// @keyframes animate {
+//     0% {
+//         opacity: 0;
+//     }
+
+//     50% {
+//         opacity: 1;
+//     }
+// }
+// .container {
+//     position: relative;
+//     display: flex;
+//     flex-direction: column;
+//     justify-content: center;
+//     align-items: center;
+
+// }
+
+
+// /*** Analog Clock ***/
+// .clock {
+//     position: relative;
+//     width: 100px;
+//     height: 100px;
+//     background: #091a21;
+//     border: 2px solid #00b3ff;
+//     border-radius: 50%;
+//     box-shadow: 0 0 50px #ffffff44;
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+//     margin-bottom: 30px;
+
+//     & span {
+//         position: absolute;
+//         inset:-2px;
+//         color: #ffffff83;
+//         text-align: center;
+//         transform: rotate(calc(30deg*var(--i)));
+
+//         & b {
+//             font-size:12px;
+//             font-weight: 600;
+//             display: inline-block;
+//             transform: rotate(calc(-30deg*var(--i)));
+//         }
+//     }
+
+//     &::before {
+//         content: '';
+//         position: absolute;
+//         width: 8px;
+//         height: 8px;
+//         border-radius: 50%;
+//         background: #ffffff;
+//         border: 3px solid #1c1c1e;
+//         z-index: 4;
+//     }
+// }
+
+// .circles {
+//     position: absolute;
+//     width: 30px;
+//     height: 30px;
+//     border: 1px solid rgba(255, 255, 255, 0.1);
+//     border-radius: 50%;
+//     display: flex;
+//     justify-content: center;
+//     align-items: flex-start;
+//     z-index: 3;
+
+//     & i {
+//         position: absolute;
+//         width: 3px;
+//         height: 50%;
+//         border-radius: 50%;
+//         background: var(--clr);
+//         opacity: 0.8;
+//         transform-origin: bottom;
+//         transform: scaleY(0.6);
+//     }
+
+//     &:nth-child(1) i {
+//         width: 3px;
+//     }
+
+//     &:nth-child(2) i {
+//         width: 3px;
+//     }
+
+//     &::before {
+//         content: '';
+//         position: absolute;
+//         width: 4px;
+//         height: 4px;
+//         border-radius: 50%;
+//         top:0px;
+//         background: var(--clr);
+//         box-shadow: 0 0 20px var(--clr),
+//             0 0 60px var(--clr);
+//     }
+
+// }
+
+// .circles2 {
+//     width:45px;
+//     height:45px;
+//     z-index: 2;
+// }
+
+// .circles3 {
+//     width: 60px;
+//     height: 60px;
+//     z-index: 1;
+
+// }
+
+// /*** Digital Clock ***/
+
+// #time {
+//     margin-bottom: 40px;
+//     display: flex;
+//     padding: 10px 20px;
+//     font-size: 2em;
+//     font-weight: 600;
+//     border: 5px solid rgba(255, 255, 255, 0.15);
+//     border-radius: 40px;
+
+//     & div {
+//         position: relative;
+//         width: 60px;
+//         text-align: center;
+//         font-weight: 500;
+//         color: var(--clr);
+
+//         &:nth-child(1)::after,
+//         &:nth-child(2)::after {
+//             content: ':';
+//             position: absolute;
+//             right: -4px;
+
+//         }
+
+//         &:nth-child(2)::after {
+//             animation: animate 1s steps(1) infinite;
+//         }
+
+//         &:last-child {
+//             font-size: 0.7em;
+//             display: flex;
+//             justify-content: center;
+//             align-items: center;
+//             color: #fff;
+//         }
+
+//     }
+// }
+
+// @keyframes animate {
+//     0% {
+//         opacity: 0;
+//     }
+
+//     50% {
+//         opacity: 1;
+//     }
+// }
+// .attendance-modal{
+//     padding: 0px 20px 30px;
+// }

@@ -1,0 +1,27 @@
+.main-inner {
+    display: flex;
+    gap: 20px;
+    justify-content: space-between;
+}
+
+.card0,
+.right-task-area {
+    width: 25%;
+}
+
+.calender-img {
+    width: 50%;
+}
+.modal-backdrop.show {
+    opacity: 0 !important;
+}
+
+
+.button-hover:hover {
+    background-color: #49BFCF;
+
+    h5,
+    i {
+        color: white;
+    }
+}

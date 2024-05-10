@@ -1,0 +1,159 @@
+<div id="main" class="main main_news">
+  <div class="profile d-flex mb-4">
+    <div class="assign-detail-heading">
+      <h1 class="font-27 font-700 secondary mb-0">Assignment - Day 1</h1>
+      <button *ngIf="isSubmittedQuestion" type="button" class="submit_buttons font-14 font-500 text-white d-inline-flex"
+        data-bs-toggle="modal" data-bs-target="#submit_button" (click)="clearForm()">Submit</button>
+    </div>
+    <app-profile-bar></app-profile-bar>
+  </div>
+
+  <div class="scroll_section">
+    <div class="row mb-4">
+      <div class="col-md-12">
+        <div class="question_ans">
+          <h3 class="font-17 font-600">Question - 1</h3>
+          <h4 class="font-17 font-400" [innerHTML]="assignmentQues.question"></h4>
+        </div>
+        <div class="assignment">
+          <div class="row advertisement">
+            
+
+            <div class="col-md-3 col-sm-6 col-xs-12" *ngIf="  assignmentQues.videoUrl!=null && assignmentQues.videoUrl!=undefined && assignmentQues.videoUrl!=''"  >
+              <h3 class="font-15 font-700  assignment_sub_heading">Video 1</h3>
+              <div class="assinment_image video-img">
+                <div class="loader col-md-3 col-sm-6 col-xs-12" *ngIf="loading"></div>
+                <!-- <video width="640" height="360" controls>
+                  <source [src]="assignmentQues.videoUrl" type="video/mp4">
+                  
+              </video> -->
+              <iframe [src]="assignmentQues.videoUrl | safe" frameborder="0" allowfullscreen (load)="onVideoLoad()"></iframe>
+
+                <!-- <iframe src="{{assignmentQues.videoUrl}}" autoplay controls height="" width="270"></iframe> -->
+              </div>
+            </div>
+            <div class="col-md-3 col-sm-6 col-xs-12" *ngIf=" assignmentQues.questionImages.length!=0">
+              <div style="display: flex; flex-direction: row;">
+                <div *ngFor="let img of assignmentQues.questionImages;let i=index">
+                  <h3 class="font-15 font-700  assignment_sub_heading">Image {{i+1}}</h3>
+                  <div class="assinment_image">
+                    <img [src]="img" class="img-fluid image-zoom" 
+                      (click)="toggleImageSize($event)">
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- <div class="col-md-3 col-sm-6 col-xs-12" *ngFor="let images of obj.questionImages; let i=index">
+                  <h3 class="font-15 font-700 assignment_sub_heading">Image {{i + 1}}</h3>
+                  <div class="assignment_image">
+                    <img [src]="imageUrl + images" class="img-fluid image-zoom" (click)="toggleImageSize($event)">
+                  </div>
+                </div> -->
+          </div>
+
+          <form class="attachment_file1 d-inline-flex align-items-center position-relative" *ngIf="attachment!=null">
+            <!-- Instead of an input element, use an anchor (a) tag -->
+            <a href="{{attachment}}" download="Assignment Files.zip"
+              class="font-15 font-700 secondary text-white attachment_file_text">
+              <i class="fi fi-rr-paperclip-vertical secondary add_more position-absolute light mx-2"></i>
+              Attachments
+              <span class="mx-0 ms-2 font-15 font-400 text-white">{{attachment}}</span>
+            </a>
+          </form>
+
+        </div>
+      </div>
+
+    </div>
+
+
+    <div class="modal fade" id="submit_button" tabindex="-1" aria-labelledby="submit_button" aria-hidden="true">
+      <div class="modal-dialog position-relative leave_modal">
+        <div class="modal-content">
+          <div class="modal-body">
+            <div class="modal-header apply_title">
+              <h1 class="modal-title  font-21 font-600 secondary modal_line position-relative">Submit Assignment</h1>
+              <button type="button" class="close_btn1" data-bs-dismiss="modal" aria-label="Close" (click)="clearForm()">
+                <i class="fi fi-rr-cross close_icon"></i>
+              </button>
+            </div>
+
+            <form [formGroup]="submissionForm"> <!-- Bind the form group -->
+              <div class="form-group">
+                <div class="form_input">
+                  <h5 class="sub-heading font-17 font-500 secondary mb-1">Description</h5>
+                  <div class="">
+                    <textarea class="form-control text_area" name="description" id="exampleFormControlTextarea1"
+                      rows="3" placeholder="Input Text Here" formControlName="description"  [(ngModel)]="assignmentSubmission.description"></textarea>
+                    <!-- Bind the form control -->
+                  </div>
+                  <div
+                    *ngIf="submissionForm.get('description')!.touched &&submissionForm.get('description')!.hasError('required')"
+                    class="text-danger">
+                    Description is required.
+                  </div>
+
+                </div>
+              </div>
+            </form>
+            <form [formGroup]="submissionForm">
+              <div class="form-group">
+                <h4 class="sub-heading font-17 font-500 secondary mb-1"></h4>
+                <form [formGroup]="submissionForm" class="select_file d-flex align-items-center file position-relative">
+                  <input type="file" name="file" id="file" accept=".pdf, application/pdf" class="d-none"
+                    formControlName="file" (change)="addSubmitFile($event)">
+                  <label for="file" class="font-15 font-400 secondary w-75">Select A File</label>
+                  <button type="button" class="submit_btn0 ms-auto" onclick="document.getElementById('file').click()">
+                    <i class="fi fi-rr-upload mx-1 mb-0 lh-0"></i>Upload File
+                  </button>
+
+                </form>
+                <div *ngIf=" isFieldInvalidForSubmissionForm('file')" class="text-danger">
+                  file is required.</div>
+              </div>
+            </form>
+
+
+            <!-- <div class="form-group">
+              <label for="" class="mb_6 font-17 font-500 secondary">Joining Date</label>
+              <div class="input_icon position-relative">
+                  <input type="date" id="joinDate" class="form-control input_text" name="joinDate"
+                      formControlName="joinDate" [(ngModel)]="registrationDetails.joinDate"
+                      placeholder="Enter Joining Date">
+                  <div *ngIf=" isFieldInvalidForinrollmentForm('joinDate')" class="text-danger">
+                      joinDate is required.</div>
+              </div> -->
+
+
+
+            <div class="file_option"  *ngIf="file">
+              <div class=" d-flex file_name">
+                <i class="fi fi-rr-paperclip-vertical secondary add_more"></i>
+                <i class="fi fi-rr-trash secondary delete pointer" (click)="clearFile()"></i>
+                <h3 class="font-15 font-400 dark mx-1 mb-0">{{file.name}}</h3>
+              </div>
+
+            </div>
+            <div class="apply_modal_buttons d-flex justify-content-between align-items-center">
+              <button desable="'true'" type="button" class="cancel_modal_btn">Save Draft</button>
+              <button *ngIf="isSubmittedQuestion!" type="button" class="apply_modal_btn"
+                (click)="submitAssignment()">
+                <div *ngIf="!isSubmited;else spinner">
+                  Submit
+                </div>
+    
+                <ng-template #spinner>
+                  <div class="spinner-border text-light" role="status">
+                    <span class="sr-only"></span>
+                  </div>
+                </ng-template>
+              </button>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <app-right-side-bar></app-right-side-bar>

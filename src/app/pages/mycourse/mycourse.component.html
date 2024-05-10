@@ -1,0 +1,128 @@
+<div id="main" class="main mycourse_page">
+  <div class="profile d-flex mb-4">
+    <h1 class="font-32 font-700 secondary mb-0">My Courses</h1>
+    <app-profile-bar></app-profile-bar>
+  </div>
+
+
+  <!-- <h3 class="Enrolled font-21 font-600 secondary position-relative">Enrolled</h3> -->
+  <div class="scroll_section">
+    <div class="row mb-4">
+      <div class="col-md-12">
+        <div class="top-content mb-4 my_course" onclick="myfun1()">
+          <div class="d-flex java">
+            <img [src]="courseImg">
+            <div class="ms-2">
+
+              <h2 class="font-27 font-600 text-white java mb-1 java_title">{{courseName}}</h2>
+              <!-- <h2 class="font-16 font-00 text-white java mb-1">Batch No- 5</h2> -->
+
+              <h3 class="font-14 font-400 text-white">From - {{startDate|date:'mediumDate'}} To {{endDate|date:'mediumDate'}}</h3>
+            </div>
+            <h2 class="ms-auto font-17 font-600 text-light">Fee Structure</h2>
+          </div>
+          <div class="number d-flex align-items-center  mb-1">
+            <h4 class="font-17 font-400 text-white mt-1">My Progress</h4>
+            <h6 class="mb-0 font-17 font-400 ms-auto pe-2 text-white">{{progress}}%</h6>
+          </div>
+          <div class="progress exam_progress" role="progressbar" aria-label="Basic example" 
+            aria-valuemin="0" aria-valuemax="100">
+            <div class="progress-bar" [style.width.%]="progress"></div>
+          </div>
+
+          <div class="task_assignment fee_structure" id="fee-table" style="display: none;">
+            <h3 class="my-2 font-17 font-500 light position-relative">Fee Structure</h3>
+            
+            <div class="table_container">
+              <table class="table mb-0">
+                <thead>
+                  <tr class="table_heading">
+                    <th scope="col" class="font-15 font-600 secondary">EMI no.</th>
+                    <th scope="col" class="font-15 font-600 secondary">Amount</th>
+                    <th scope="col" class="font-15 font-600 secondary">Due on</th>
+                    <th scope="col" class="font-15 font-600 secondary">Status</th>
+                    <th scope="col" class="font-15 font-600 secondary">Actions</th>
+                  </tr>
+                </thead>
+                <tbody class="bg-light">
+                 
+                  <tr *ngFor="let fees of feesPay;let i=index">
+                    <td>{{i+1}}/{{feesPay.length}}</td>
+                    <td>{{fees.feesPayAmount}}</td>
+                    <td>--:--</td>
+                    <td>Paid on {{fees.payDate|date:'dd MMM , YYYY'}}</td>
+                    <td class="text_light_blue">View Details</td>
+                  </tr>
+                 
+                </tbody>
+              
+              </table>
+              <h3 class="bg-light"  *ngIf="feesPayLength == 0">
+                No Transaction  Yet !!!
+              </h3>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+      <div class="task_assignment">
+        <div class="row mx-0">
+          <div class="col-md-6 mb-4">
+            <h3 class="title font-21 font-600 secondary position-relative">Upcoming Batches </h3>
+            <h3  class="font-21 font-600 secondary position-relative"*ngIf="length==0">NO UPCOMING BATCHES!!! </h3>
+
+            
+            <div class="all_summary mb-2" *ngFor="let batch of batches">
+              <div class="Batches d-flex align-items-center">
+                <div class="">
+                  <div class="d-flex java">
+                    <img style="height:60px;width:60px;" class="imageSize"
+                    [src]="batch.subject.technologyStack.imageName">
+                    <div class="ms-2">
+                      <h2 class="font-21 font-600 text-black java java_heading">{{batch.batchName}}</h2>
+                     
+
+                      <h2 class="font-16 font-00 text-black java java_heading2">Duration 90 Days</h2>
+                      <h3 class="font-14 font-400 text-black mb-0">{{batch.batchStartDate}}</h3>
+                    </div>
+                  </div>
+                </div>
+                <button type="button" class="Enroll_btn font-14 font-600 text-white ms-auto">
+                  Enquire Now
+                </button>
+              </div>
+            </div>
+           </div>
+
+          <div class="col-md-6 mb-4">
+            <h3 class="title font-21 font-600 secondary position-relative">Other Courses</h3>
+            <h3  class="font-21 font-600 secondary position-relative" *ngIf="courses.length == 0">
+              NO COURSES AVAILABLE !!!
+            </h3>
+            <div class="all_summary mb-2" *ngFor="let course of courses">
+              <div class="Batches d-flex align-items-center">
+                <div class="">
+                  <div class="d-flex java">
+                    <img style="height:60px;width:60px;" class="imageSize"
+                      [src]="course.technologyStack.imageName">
+                    <div class="ms-2">
+                      <h2 class="font-21 font-600 text-black java java_heading">{{course.courseName}}</h2>
+                      <h2 class="font-16 font-500 text-black java java_heading2">Duration {{course.duration}}</h2>
+                      <h3 class="font-14 font-400 text-black mb-0">{{course.sortDescription}}</h3>
+                    </div>
+                  </div>
+
+                </div>
+                <button type="button" class="Enroll_btn font-14 font-600 text-white ms-auto">
+                  Enquire Now
+                </button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <app-right-side-bar></app-right-side-bar>

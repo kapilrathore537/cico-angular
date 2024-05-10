@@ -1,0 +1,50 @@
+<div id="main" class="main mycourse_page pb-0">
+  <div class="profile d-flex mb-4">
+    <h1 class="font-27 font-700 secondary mb-0">Chapter Details</h1>
+    <app-profile-bar></app-profile-bar>
+  </div>
+
+  <!-- RESULT START -->
+  <div class="d-flex mt_24">
+    <div class="main_page">
+      <div class="dashboard_title d-flex justify-content-between align-items-center">
+        <nav aria-label="breadcrumb" class="font-17 font-600 light-black mb-0 lh-36">
+          <ol class="breadcrumb mb-0 mb-3">
+            <li class="breadcrumb-item"><a routerLink="/student" class="font-17 font-500 gray-light">Home</a></li>
+            <li class="breadcrumb-item" aria-current="page"><a routerLink="/student/study"
+                class="font-17 font-500 gray-light">Subjects</a></li>
+            <li class="breadcrumb-item" aria-current="page"><a routerLink="/student/chapter/{{subjectId}}"
+                class="font-17 font-500 gray-light">Chapters</a></li>
+            <li class="breadcrumb-item  light-black" aria-current="page">{{chapterName}}</li>
+          </ol>
+        </nav>
+        <a routerLink="/student/chapter/{{subjectId}}" type="button"
+          class="back_button font-15 font-500 d-flex justify-content-center align-items-center"><i
+            class="fi fi-rr-arrow-left lh-0"></i>Back</a>
+      </div>
+      <div class="scroll_sec sub_detail-scroll">
+        <div class="sub_details d-flex flex-column" id="updown_btn" *ngFor="let obj of chapterContentResponse">
+          <H1 class="font-24 font-600 dark-black">{{obj.title}}</H1>
+          <H3 class="font-17 font-600 dark-black">{{obj.subTitle}}</H3>
+          <h4 class="font-15 font-400 lh-26" [innerHTML]=obj.content></h4>
+          
+
+        </div>
+        <br>
+        <h5 class="font-24 font-500 secondary mb_20"*ngIf="exam"  >Ready to test yourself?</h5>
+        <a (click)="pageRenderUsingRouterLink('/questions', chapterId)" type="button" class="back_button font-15 font-700" *ngIf="exam" >Take a test</a>
+        <!-- <h5 class="font-24 font-500 secondary mb_20" *ngIf="questionsInChapter != 0">Ready to test yourself?</h5> -->
+        <h2 class="font-17 font-600 dark-black" *ngIf="isQuizeFound">No Quiz Found!!!!!!</h2>
+        <a  type="button" (click)="getReview()" class="back_button font-15 font-700" *ngIf="resultId!=0">View Result</a>
+      </div>
+    </div>
+    <a  class="scroll_btn d-flex justify-content-center align-items-center pointer">
+      <img src="assets/images/svg_img/uparrow.svg">
+    </a>    
+  </div>
+  <!-- RESULT END -->
+
+  <app-right-side-bar></app-right-side-bar>
+
+  <!-- MIDDLE CONTENT END -->
+</div>

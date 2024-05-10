@@ -1,0 +1,348 @@
+<div id="main" class="main dashboard_page">
+    <div class="profile d-flex mb-4">
+
+        <div class="profile_top_heading d-flex gap_24">
+            <h1 class="font-27 font-700 secondary mb-0">{{courseResponse.courseName}}</h1>
+            <a routerLink="/admin/course" class="top_profile_sec_btn font-14 font-500 lh-1">Done</a>
+        </div>
+
+        <app-profile-bar></app-profile-bar>
+    </div>
+
+    <!-- DASHBOARD START -->
+
+    <div class="scroll_sec mt-0">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="top-course-content mb-4 my_course">
+                    <div class="d-flex java align-items-center">
+                        <div class="course-image">
+                            <img [src]="courseResponse.technologyStack.imageName">
+                        </div>
+                        <div class="ms-2">
+                            <h2 class="font-27 font-600 text-white java mb-1">{{courseResponse.courseName}}</h2>
+                            <h3 class="font-14 font-400 text-white">{{courseResponse.batchesCount}} Batches
+                                {{courseResponse.subjectCount}} Subjects</h3>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <h3 class="admin-title font-17 font-600 secondary position-relative mb_18">Subjects</h3>
+            </div>
+            <h3 class="font-21 font-600 secondary position-relative" *ngIf="courseResponse.subjectCount == 0">
+                NO SUBJECTS AVAILABLE
+            </h3>
+            <div class="col-md-3 bootstrap_cards" *ngFor="let subject of courseResponse.subjectResponse">
+                <div class="admin-subject_card">
+                    <div class="admin-subject_card_top">
+                        <div class="admin-subject_name_card">
+                            <div class="admin-sub-left">
+                                <div class="admin-subject-image">
+                                    <img [src]="subject.technologyStack.imageName">
+                                </div>
+                                <div class="subject-details">
+                                    <h3 class="subject_heading txt-dark mb-0">{{subject.subjectName}}</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- subject_card_top -->
+
+                </div> <!-- subject_card -->
+            </div>
+        </div>
+        <div class="row">
+            <div class="d-flex align-items-center justify-content-between mb_18">
+                <h3 class="admin-title font-17 font-600 secondary position-relative">Running Batch</h3>
+                <button class="top_profile_sec_btn font-14 font-500 lh-1" data-bs-toggle="modal"
+                    data-bs-target="#batch-add-modal" (click)="clearValidationForm()">Add New Batch</button>
+            </div>
+            <h3 class="font-21 font-600 secondary position-relative" *ngIf="courseResponse.batchesCount == 0">
+                NO RUNNING BATCHES AVAILABLE
+            </h3>
+            <div class="col-md-3 bootstrap_cards" *ngFor="let batch of  courseResponse.batchResponse;let i=index">
+                <div class="admin-subject_card">
+                    <div class="admin-subject_card_top mb_20">
+                        <div class="admin-subject_name_card">
+                            <div class="admin-sub-left">
+                                <div class="admin-subject-image">
+                                    <img [src]="batch.subject.technologyStack.imageName" alt="">
+                                </div>
+                                <div class="subject-details">
+                                    <h3 class="subject_heading txt-dark mb-0">{{batch.batchName}}</h3>
+                                    <p class="chapter-cout mb-0">Batch No - {{i+1}}, 50 Students</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="dropdown" id="hoverDropdown">
+                            <i class="fi fi-ss-menu-dots-vertical text_gray fw-bold fs-5" role="button"
+                                id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false"></i>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink" style="min-width: 8rem;">
+                                <li>
+                                    <p class="mb-0 warning d-flex align-items-center gap_5 dropdown-padding pointer"
+                                        data-bs-toggle="modal" data-bs-target="#batch-edit-modal"
+                                        (click)="getBatchByBatchId(batch.batchId)"><i
+                                            class="fi fi-rr-file-edit line-height-0"></i> Edit</p>
+                                </li>
+                                <li>
+                                    <p class="mb-0 delete-icon-color d-flex align-items-center gap_5 dropdown-padding pointer"
+                                        data-bs-toggle="modal" data-bs-target="#delete-modal"
+                                        (click)="batchId = batch.batchId"><i class="fi fi-rr-trash line-height-0"></i>
+                                        Delete</p>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- <i class="fi fi-ss-menu-dots-vertical meat-dot  text_gray" onclick="meat_dot(this)"></i>
+                        <div class="meat-dot-dropdown" style="display: none;" >
+                            <p class="mb-0 warning d-flex align-items-center gap_5" data-bs-toggle="modal"
+                                data-bs-target="#batch-edit-modal" (click)="getBatchByBatchId(batch.batchId)"><i
+                                    class="fi fi-rr-file-edit line-height-0"></i> Edit</p>
+                            <p class="mb-0 delete-icon-color d-flex align-items-center gap_5"
+                                data-bs-toggle="modal" data-bs-target="#delete-modal" (click)="deleteBatch(batch.batchId)"><i
+                                    class="fi fi-rr-trash line-height-0"></i> Delete</p>
+                        </div> -->
+                    </div><!-- subject_card_top -->
+                    <h4 class="mb-0 font-15 font-500 text_dark">Starts From</h4>
+                    <div class="batch-date-time">
+                        <p class="font-15 font-500 secondary d-flex align-items-center gap_8"><i
+                                class="fi fi-rr-calendar secondary line-height-0"></i> {{batch.batchStartDate
+                            |date:'dd-MM-yyyy'}}</p>
+                        <p class="font-15 font-400 secondary">At</p>
+                        <p class="font-15 font-500 secondary d-flex align-items-center gap_8"><i
+                                class="fi fi-rr-clock secondary line-height-0"></i>
+                            {{changeTimeFormat(batch.batchTiming)}}</p>
+                    </div>
+
+                    <h4 class="mb-0 font-16 font-500 text_dark">Batch Description</h4>
+                    <p class="batch-description">{{batch.batchDetails}}</p>
+
+                </div> <!-- subject_card -->
+            </div>
+
+        </div>
+    </div>
+    <!-- DASHBOARD END -->
+
+    <!-- RIGHT SIDE START-->
+    <app-right-side-bar></app-right-side-bar>
+    <!-- RIGHT SIDE END -->
+
+
+    <!-- MIDDLE CONTENT END -->
+
+
+</div>
+<!--DASHBOARD END -->
+
+<!-- Modal Delete Modal Start -->
+<div class="modal fade" id="delete-modal" tabindex="-1" aria-labelledby="delete-modal" aria-hidden="true">
+    <div class="modal-dialog position-relative leave_modal">
+        <div class="modal-content">
+            <div class="modal-body">
+                <!-- <button type="button" class="close_btn" data-bs-dismiss="modal" aria-label="Close"
+                    (click)="clearMassage()" style="top: -23%;">
+                    <i class="fi fi-rr-cross close_icon"></i>
+                </button> -->
+
+                <p class="secondary font-21 font-500 text-center">Are You Sure You Want To Delete This Batch?
+                </p>
+                <div class="apply_modal_buttons d-flex justify-content-between align-items-center">
+                    <a>
+                        <button type="button" data-bs-dismiss="modal" aria-label="Close"
+                            class="cancel_modal_btn font-15 font-500 delete-icon-color pointer"
+                            (click)="deleteBatch(batchId)">Yes,
+                            delete</button>
+                    </a>
+                    <a>
+                        <button type="button" data-bs-dismiss="modal" aria-label="Close"
+                            class="apply_modal_btn font-15 font-500 pointer">No, Do not
+                            delete</button>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Delete Modal End -->
+
+
+<!-- Modal Admin Subject Add Batch Modal Start -->
+<div class="modal fade" id="batch-add-modal" tabindex="-1" aria-labelledby="batch-add-modal" aria-hidden="true">
+    <div class="modal-dialog position-relative leave_modal">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="modal-header apply_title p-0">
+                    <h1 class="modal-title fs-5 font-21 font-600 secondary modal_line position-relative"
+                        id="exampleModalLabel1">Add New Batch</h1>
+                    <!-- <button type="button" class="close_btn" data-bs-dismiss="modal" aria-label="Close"
+                        (click)="clearMassage()" id="add-batch-modal">
+                        <i class="fi fi-rr-cross close_icon"></i>
+                    </button> -->
+                </div>
+                <form [formGroup]="createBatchFrom">
+                    <div class="row">
+                        <h2 class="font-15 font-500 secondary">Subjects</h2>
+                        <div class="all-subjects-list mb_18">
+                            <div class="col-md-12 mb_18" *ngFor="let subject of courseResponse.subjectResponse">
+                                <div class="input_icon position-relative input_text checkbox_area">
+                                    <div class="d-flex gap_5 align-items-center">
+                                        <img [src]="subject.technologyStack.imageName" alt="" width="24"
+                                            height="24">
+                                        <h2 class="font-15 font-500 mb-0 secondary">{{subject.subjectName}}</h2>
+                                    </div>
+                                    <input type="radio" name="selectedOption" class="choose-subjects"
+                                        [id]="'subject' + subject.subjectId"
+                                        (click)="batchRequest.subjectId = subject.subjectId" [value]="subject.subjectId"
+                                        formControlName="selectedOption">
+
+                                </div>
+                            </div>
+                            <div *ngIf="isFieldInvalidForCreateBatchDetailsForm('selectedOption') " class="text-danger">
+                                Subject is
+                                required.</div>
+                        </div>
+
+                        <div class="col-md-12 mb_18">
+                            <label  class="mb_6 font-15 font-500 secondary">Batch Title</label>
+                            <div class="input_icon position-relative">
+                                <input type="text" name="batchName" class="form-control input_text" formControlName="batchName"
+                                    placeholder="Title" [(ngModel)]="batchRequest.batchName">
+                            </div>
+                            <div *ngIf="isFieldInvalidForCreateBatchDetailsForm('batchName')" class="text-danger">
+                                Batch Title is
+                                required.</div>
+                        </div>
+                        <div class="col-md-6 mb_18">
+                            <label for="" class="mb_6 font-15 font-500 secondary">Batch Start Date</label>
+                            <div class="input_icon position-relative">
+                                <input type="date" id="" name="batchStartDate" class="form-control input_text"
+                                    placeholder="Enter Batch Start Date" [(ngModel)]="batchRequest.batchStartDate"
+                                    formControlName="batchStartDate">
+                                <div *ngIf="isFieldInvalidForCreateBatchDetailsForm('batchStartDate')"
+                                    class="text-danger">Batch Start Date is
+                                    required.</div>
+                            </div>
+                        </div>
+                      
+                        <div class="col-md-6 mb_18">
+                            <label for="" class="mb_6 font-15 font-500 secondary">Batch Start Time</label>
+                            <div class="input_icon position-relative">
+                                <input type="time" id="" name="batchTiming" class="form-control input_text"
+                                    placeholder="Enter Batch Start Time" [(ngModel)]="batchRequest.batchTiming"
+                                    formControlName="batchTiming">
+                                <div *ngIf="isFieldInvalidForCreateBatchDetailsForm('batchTiming')" class="text-danger">
+                                    Batch Timing is
+                                    required.</div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 mb_18">
+                            <label for="" class="mb_6 font-15 font-500 secondary">Batch Details</label>
+                            <textarea class="form-control text_area" id="exampleFormControlTextarea1" rows="3"
+                                placeholder="Start Typing....." name="batchDetails"
+                                [(ngModel)]="batchRequest.batchDetails" formControlName="batchDetails"></textarea>
+                            <div *ngIf="isFieldInvalidForCreateBatchDetailsForm('batchDetails')" class="text-danger">
+                                Batch Details is
+                                required.</div>
+                        </div>
+
+
+                    </div><!-- row -->
+                </form>
+                <div [ngClass]="messageClass">{{message}}</div>
+                <div class="apply_modal_buttons d-flex justify-content-between align-items-center">
+                    <button type="button" class="cancel_modal_btn font-15 font-500" data-bs-dismiss="modal"
+                        aria-label="Close" id="add-batch-modal">Cancel</button>
+                    <a>
+                        <button type="button" class="apply_modal_btn font-15 font-500"
+                            (click)="createNewBatch()">Save</button>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Admin Subject Add Batch Modal End -->
+
+<!-- Modal Admin Subject Edit Batch Modal Start -->
+<div class="modal fade" id="batch-edit-modal" tabindex="-1" aria-labelledby="batch-edit-modal" aria-hidden="true">
+    <div class="modal-dialog position-relative leave_modal">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="modal-header apply_title">
+                    <h1 class="modal-title fs-5 font-21 font-600 secondary modal_line position-relative"
+                        id="exampleModalLabel1">Edit Batch</h1>
+                    <!-- <button type="button" class="close_btn" data-bs-dismiss="modal" aria-label="Close" 
+                        (click)="clearMassage()">
+                        <i class="fi fi-rr-cross close_icon"></i>
+                    </button> -->
+                </div>
+
+                <form action="">
+                    <div class="row">
+                        <h2 class="font-15 font-500 secondary">Subjects</h2>
+                        <div class="all-subjects-list mb_18">
+                            <div class="col-md-12 mb_18" *ngFor="let subject of courseResponse.subjectResponse">
+                                <div class="input_icon position-relative input_text checkbox_area">
+                                    <div class="d-flex gap_5 align-items-center">
+                                        <img [src]="subject.technologyStack.imageName" alt="" width="24"
+                                            height="24">
+                                        <h2 class="font-15 font-500 mb-0 secondary">{{subject.subjectName}}</h2>
+                                    </div>
+                                    <input type="radio" [checked]="checkSubjectInCourse(subject.subjectId)"
+                                        name="subjects" class="choose-subjects" (click)="batch.subject = subject">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 mb_18">
+                            <label for="" class="mb_6 font-15 font-500 secondary">Batch Title</label>
+                            <div class="input_icon position-relative">
+                                <input type="text" id="" name="batchName" class="form-control input_text"
+                                    placeholder="Day 1" [(ngModel)]="batch.batchName">
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 mb_18">
+                            <label for="" class="mb_6 font-15 font-500 secondary">Batch Start Date</label>
+                            <div class="input_icon position-relative">
+                                <input type="date" id="" name="batchStartDate" class="form-control input_text"
+                                    placeholder="Day 1" [(ngModel)]="batch.batchStartDate">
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 mb_18">
+                            <label for="" class="mb_6 font-15 font-500 secondary">Batch Start Time</label>
+                            <div class="input_icon position-relative">
+                                <input type="time" id="" name="batchTiming" class="form-control input_text"
+                                    placeholder="Day 1" [(ngModel)]="batch.batchTiming">
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 mb_18">
+                            <label for="" class="mb_6 font-15 font-500 secondary">Batch Details</label>
+                            <textarea class="form-control text_area" id="exampleFormControlTextarea1" rows="3"
+                                placeholder="Start Typing....." name="batchDetails"
+                                [(ngModel)]="batch.batchDetails"></textarea>
+                        </div>
+
+                    </div><!-- row -->
+                </form>
+                <div [ngClass]="messageClass">{{message}}</div>
+                <div class="apply_modal_buttons d-flex justify-content-between align-items-center">
+                    <button type="button" class="cancel_modal_btn font-15 font-500" data-bs-dismiss="modal"
+                        aria-label="Close" id="edite-batch-modal">Cancel</button>
+                    <a>
+                        <button type="button" class="apply_modal_btn font-15 font-500"
+                            (click)="updateBatch()">Save</button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Admin Subject Edit Batch Modal End -->

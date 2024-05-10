@@ -1,0 +1,44 @@
+.profile_edit {
+    border-radius: 6px;
+    background: #fff;
+    box-shadow: -1.8124772624167096e-16px 2.9600000381469727px 3.288888931274414px
+      0px rgba(0, 0, 0, 0.07);
+    padding: 10px 30px;
+  }
+  .profile_edits {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    transform: translateY(100%);
+    transition: ease 0.5s;
+  }
+  .profile_section {
+    scroll-behavior: smooth;
+    overflow: scroll;
+    max-height: 716px;
+    padding: 0 20px;
+  }
+  .profile_section::-webkit-scrollbar {
+    display: none;
+  }
+  .profile_change {
+    height: 220px;
+    width: 100%;
+    overflow: hidden;
+  }
+  .profile_change:hover .profile_edits {
+    transform: translateY(0);
+  }
+  .profile_buttons {
+      position: absolute;
+      gap: 20px;
+      bottom: 38%;
+      padding: 0 16px;
+      left: 42%;
+  }
+  .profile_image {
+    width: auto;
+    height: 100%;
+    object-fit: cover;
+  }

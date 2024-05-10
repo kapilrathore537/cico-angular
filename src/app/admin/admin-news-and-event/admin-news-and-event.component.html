@@ -1,0 +1,85 @@
+<!-- MIDDLE CONTENT START -->
+<div id="main" class="main main_news">
+  <div class="profile d-flex mb-4">
+    <div class="profile_top_heading d-flex gap_24">
+      <h1 class="font-27 font-700 secondary mb-0">News & Events</h1>
+      <a  routerLink="/admin/createnewsAndEvent">
+      <button class="top_profile_sec_btn font-14 font-500">Create New</button>
+      </a>
+  </div>
+    <app-profile-bar></app-profile-bar>
+  </div>
+
+  <div class="scroll_section">
+
+    <div class="task_assignment mt-0">
+      <h3 class="title font-21 font-600 secondary position-relative">News</h3>
+      <div class="news_events">
+        <div class="row">
+          <div class="col-md-3 mb-4 bootstrap_cards"*ngFor="let obj of newsAndEvents">
+              <div class="news text_dark"  >
+                <div class="news-event-image" >
+                  
+                <img [src]="obj.image">
+                </div>
+                <div class="news_text  position-relative">
+                  <i class="fi fi-ss-menu-dots-vertical meat-dot  text_gray" id="meat_dot" onclick="meat_dot(this)"></i>
+
+              <div class="meat-dot-dropdown" style="display: none;">
+                <a routerLink="/admin/editnewsandevent/{{obj.id}}" class="mb-1 secondary d-flex align-items-center gap_5"><i class="fi fi-rr-file-edit line-height-0"></i> Edit</a>
+                <p class="mb-0 delete-icon-color d-flex align-items-center gap_5" data-bs-toggle="modal" data-bs-target="#delete-modal" (click)="id=obj.id"><i class="fi fi-rr-trash line-height-0"></i> Delete</p>
+              </div>
+                
+                  <h3 class="font-12 font-400 small_text" *ngIf="obj.dayAgo!=0">{{obj.dayAgo}} DAY AGO</h3>
+                  <h3 class="font-12 font-400 small_text" *ngIf="obj.dayAgo==0">Today</h3>
+                  <h4 class="font-19 font-500 small_text">{{obj.title}}</h4>
+                  <h5 class="font-14 font-500 small_text">{{obj.shortDescriptoin}}</h5>
+                
+
+                </div>
+              </div>
+          </div>
+         
+     
+        </div>
+      </div>
+    </div> 
+  </div>    
+</div>
+
+<!-- MIDDLE CONTENT END -->
+
+<!-- RIGHT SIDE START-->
+<app-right-side-bar></app-right-side-bar>
+<!-- RIGHT SIDE END -->
+
+<!-- DASHBOARD END -->
+
+      <!-- Modal Delete Modal Start -->
+      <div class="modal fade" id="delete-modal" tabindex="-1" aria-labelledby="delete-modal" aria-hidden="true">
+        <div class="modal-dialog position-relative leave_modal">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <button type="button" class="close_btn" data-bs-dismiss="modal" aria-label="Close"
+                        style="top: -23%;">
+                        <i class="fi fi-rr-cross close_icon"></i>
+                    </button>
+      
+                    <p class="secondary font-21 font-500 text-center">Are You Sure You Want To Delete This Course?
+                    </p>
+                    <div class="apply_modal_buttons d-flex justify-content-between align-items-center">
+                        <a >
+                            <button type="button" data-bs-dismiss="modal" aria-label="Close" class="cancel_modal_btn font-15 font-500 delete-icon-color pointer" (click)="deleteNewsAndEvents(id)">Yes,
+                                delete</button>
+                        </a>
+                        <a >
+                            <button type="button" data-bs-dismiss="modal" aria-label="Close" class="apply_modal_btn font-15 font-500 pointer">No, Do not
+                                delete</button>
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Delete Modal End -->

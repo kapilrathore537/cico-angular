@@ -1,0 +1,99 @@
+<div id="main" class="main dashboard_page">
+    <div class="profile d-flex mb-4">
+      <h1 class="font-27 font-700 secondary mb-0">Discussion Forum</h1>
+     <app-profile-bar></app-profile-bar>
+    </div>
+  
+ <!-- DASHBOARD -->
+  <div class="Dashboard d-flex">
+    <!-- MIDDLE CONTENT START -->
+    <div  class="timeline_page position-relative">
+      <div class="main_page">
+        <div class="d-flex align-items-center justify-content-between">
+          <h2 class="font-17 font-600 text_small mb-0">Discussion Forum</h2>
+          <!-- <form >
+           
+        </form> -->
+        <div class="form-inline position-relative search_boxs ">
+          <i class="fi fi-rr-search search_icon2 lh-0"></i>
+          <input class=" font-14 font-400 mx-0 search_massage" type="search"   (keyup)="searching()"  [(ngModel)]="search" placeholder="Search here...">
+        </div>
+        </div>
+        <div class="scroll_section" >
+          <div class="" >
+            <div class="post_details mt-0 mb-3" id="updown_btn" *ngFor="let discussion of discussionFormResponse">
+              <div class="post_discription d-flex align-items-center" >
+                <div class="">
+                  <img class="profilePic" [src]="discussion.studentProfilePic" >
+                </div>
+               
+                <div class="text mx-1">
+                  <h3 class="font-17 font-600 black mb-0">{{discussion.studentName}}</h3>
+                  <p class="font-13 font-400 light2 mb-0">{{discussion.createdDate}} <span class="mx-0 ms-1">{{utilityService.updateTimeline(discussion.createdDate)}}</span></p>
+                </div>
+              </div>
+              <h4 class="post_subtitle text_small font-17 font-400 lh-21">{{discussion.content}} </h4>
+              <div class="d-flex justify-content-center align-items-center mb-1" *ngIf="discussion.file!=null && discussion.file!=''" > 
+                <img [src]="discussion.file" class="post_img">
+              </div>
+            <div class="social_icon d-flex justify-content-end align-items-center" data-bs-target="#exampleModalToggle" data-bs-toggle="modal">
+                <button class="view_details d-flex align-items-center font-14 font-600 lh-0" (click)="newDiscussion=discussion">View & Manage Submit Answer<i class="fi fi-rr-arrow-right ms-2 mx-0 lh-0 iconarrow"></i></button>
+            </div>
+            </div>
+            <app-right-side-bar></app-right-side-bar>
+          </div>
+        </div>
+        <a href="#updown_btn" class="scroll_btn d-flex justify-content-center align-items-center">
+          <img src="assets/images/svg_img/uparrow.svg">
+        </a>
+      </div>
+    </div>
+    <!-- MIDDLE CONTENT END -->
+  </div>
+  
+  <!--DASHBOARD END -->
+
+
+  <!-- MODAL IN TIME LINE -->
+  <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel"
+    tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header position-relative mb-0">
+          <h1 class="modal-title fs-5  font-17 font-600 info submit_title" id="exampleModalToggleLabel">Submit Answer</h1>
+            
+        </div>
+        <div class="modal-body" >
+          <div class="d-flex align-items-center justify-content-center mb-3">
+            <img *ngIf="newDiscussion.file!=null" [src]="newDiscussion.file" class="submit_ans_img" >
+          </div>
+       
+            <h4 class="font-15 font-600 info mb_8 text-center">Total {{newDiscussion.comments.length}} Submit Answer</h4>
+            <h4 class="font-15 font-600 info mb-0 text-center">Like {{newDiscussion.likes.length}}</h4>
+        
+
+            <div class="submit_ans" id="updown_btn" *ngFor="let obj of newDiscussion.comments">
+                <div class="post_discription d-flex align-items-center">
+                  <div class="">
+                    <img [src]="obj.studentProfilePic" class="profilePic">
+                  </div>
+                  <div class="text mx-1">
+                    <h3 class="font-15 font-600 black mb-1" >{{obj.studentName}}</h3>
+                    <p class="font-13 font-400 light2 mb-0">{{obj.createdDate |date: 'mediumTime'}} <span class="mx-0 ms-1">{{utilityService.updateTimeline(obj.createdDate)}}</span></p>
+                  </div>
+                  <h5 class="remove_icon d-flex align-items-center font-14 font-600 lh-0 delete ms-auto"><i  class="fi fi-rr-trash ms-0 mx-1 lh-0 iconarrow" (click)="removeComments(newDiscussion.id,obj.id)"></i>Remove</h5>
+                </div>
+                <h4 class="post_subtitle text_small font-13 font-500 lh-21">{{obj.content}} </h4>
+              </div>
+              
+             <div class="d-flex justify-content-center align-items-center ">
+                <button type="button" class="close_btn2 font-15 font-500 lh-0" data-bs-dismiss="modal" aria-label="Close">
+                    Close
+                  </button>
+             </div>
+         
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- MODAL IN TIME LINE END -->

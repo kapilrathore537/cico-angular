@@ -1,0 +1,183 @@
+<!--Swiper slider Styles -->
+
+<div id="main" class="main dashboard_page">
+    <div class="profile d-flex">
+
+        <div class="profile_top_heading d-flex gap_24">
+            <h1 class="font-27 font-700 secondary mb-0">Submission</h1>
+            <!-- <button class="top_profile_sec_btn font-14 font-500" data-bs-toggle="modal"
+            data-bs-target="#exampleModal1">Create New</button> -->
+        </div>
+
+        <app-profile-bar></app-profile-bar>
+    </div>
+
+    <!-- DASHBOARD START -->
+
+
+
+    <div class="scroll_dashboard">
+
+        <!-- slider section -->
+        <div class="swiper">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide" *ngFor="let obj of submitedAssignment;let i = index">
+                    
+                    <div class="row">
+                        <div class="col-md-12 d-flex align-items-center justify-content-between mb_24">
+                            <div class="person-detail d-flex align-items-center gap_5">
+                                <img [src]="obj.profilePic" alt="" class="img-fluid imagestudent">
+                                <h5 class="font-18 font-600 mb-0">{{obj.fullName}} <br>
+                                    <p class="text_gray font-17 font-400 mb-0">{{obj.applyForCourse}}</p>
+                                </h5>
+                            </div>
+                            <div class="right-reject-btn"
+                                *ngIf="obj.status == 'Reviewing' || obj.status == 'Unreviewed'">
+                                <button class="top_profile_sec_btn font-15 font-500 reject-btn" data-bs-toggle="modal"
+                                    data-bs-target="#submit_review_modal"
+                                    (click)="status='Rejected';index= i;submissionId=obj.submissionId">Reject</button>
+                                <button class="top_profile_sec_btn font-15 font-500" data-bs-toggle="modal"
+                                    data-bs-target="#submit_review_modal" (click)="status='Accepted';index=i;submissionId=obj.submissionId">Accept & Mark
+                                    Complete</button>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 mb_24">
+                            <h2 class="mb-0 font-17 font-500 secondary" [innerHTML]="obj.title"></h2>
+                        </div>
+
+                        <div class="col-md-12 mb_24">
+                            <div class="d-flex align-items-center gap_24">
+                                <h3 class="report_title font-17 font-600 secondary position-relative">Report</h3>
+                                <p class="mb-0 font-17 font-400 text_gray">{{obj.submissionDate |
+                                    date:'short'}}</p>
+                            </div>
+                            <ul class="submission_report ps-0">
+                                <li>{{obj.taskDescription || obj.description}} </li>
+                            </ul>
+                        </div>
+                        <div class="col-md-12 mb_24">
+                            <div class="d-flex align-items-center gap_24">
+                                <h3 class="report_title font-17 font-600 secondary position-relative">Description</h3>
+                                <!-- <p class="mb-0 font-17 font-400 text_gray">{{submitedTask.submissionDate | date:'short'}}</p> -->
+                            </div>
+                            <ul class="submission_report ps-0">
+                                <li>{{obj.review}} </li>
+                            </ul>
+                        </div>
+
+                        <div class="col-md-12"
+                            *ngIf="obj.submitFile!=null  || obj.submitFile!=undefined">
+                            <h3 class="admin-title font-17 font-600 secondary position-relative mb_20">Attachments</h3>
+                            <br>
+                            <form class="attachment_file1 d-inline-flex align-items-center position-relative">
+                                <!-- Instead of an input element, use an anchor (a) tag -->
+                                <a href="{{obj.submitFile}}" download="Assignment Files.zip"
+                                    class="font-15 font-700 secondary text-white attachment_file_text">
+                                    <i
+                                        class="fi fi-rr-paperclip-vertical secondary add_more position-absolute light mx-2"></i>
+                                    Attachments
+                                    <span class="mx-0 ms-2 font-15 font-400 text-white">{{'Download SubmitedFile'}}</span>
+                                </a>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- <div class="pagination"></div> -->
+
+            <div class="prev">
+                <i class="fi fi-rr-arrow-small-left lh-0 slider_icon"></i>
+            </div>
+            <div class="next" >
+                <i class="fi fi-rr-arrow-small-right lh-0 slider_icon"></i> 
+            </div>
+        </div>
+
+
+        <!-- Submissions TABLE -->
+        <h3 class="admin-title font-17 font-600 secondary position-relative">Submissions
+        </h3>
+
+        <div class="table_container" *ngIf="submitedAssignment.length>1">
+            <table class="table mb-0">
+                <thead style="background:#EDF9FB;">
+                    <tr class="table_heading">
+                        <th scope="col" class="font-15 font-600 secondary">Student Name</th>
+                        <th scope="col" class="font-15 font-600 secondary">Task</th>
+                        <th scope="col" class="font-15 font-600 secondary">Time</th>
+                        <th scope="col" class="font-15 font-600 secondary">Status</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-light">
+                    <tr *ngFor="let obj of submitedAssignment.slice(1)">
+                        <td class="d-flex align-items-center" style="gap:5px;">
+                            <img [src]="obj.profilePic" alt="" class="img-fluid" height="36" width="36">
+                            <h5 class="font-13 font-500 mb-0">{{obj.fullName}} <br>
+                                <p class="text_gray font-13 font-400 mb-0">{{obj.applyForCourse}}</p>
+                            </h5>
+                        </td>
+                        <td [innerHTML]="obj.taskNumber"></td>
+                        <td>{{obj.submissionDate |date:'short' }}</td>
+                        <td><span class="unread">{{obj.status}}</span></td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+
+    <div *ngIf="submitedAssignment.length==0">
+    <h6 class="text-center" style="color: #115e68;">No Submission here </h6>
+    </div>
+    <!-- DASHBOARD END -->
+
+    <!-- RIGHT SIDE START-->
+   
+    <!-- RIGHT SIDE END -->
+
+
+    <!-- MIDDLE CONTENT END -->
+
+
+</div>
+<!--DASHBOARD END -->
+
+<!-- Modal Create New Assignment start -->
+
+
+
+<!-- Modal submit reviews start -->
+<div class="modal fade" id="submit_review_modal" tabindex="-1" aria-labelledby="submit_review_modal" aria-hidden="true">
+    <div class="modal-dialog position-relative leave_modal">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="modal-header apply_title">
+                    <h1 class="modal-title fs-5 font-21 font-600 secondary modal_line position-relative"
+                        id="exampleModalLabel1">Submit Review</h1>
+                    <button type="button" class="close_btn" data-bs-dismiss="modal" aria-label="Close"
+                        style="top: -11%;">
+                        <i class="fi fi-rr-cross close_icon"></i>
+                    </button>
+                </div>
+
+                <div>
+                    <h4 class="sub-heading font-17 font-500 secondary">Remark/Comment</h4>
+                    <textarea class="form-control text_area" id="exampleFormControlTextarea1" rows="6"
+                        placeholder="Start Typing....." name="review" [(ngModel)]="review"></textarea>
+                </div>
+                <div class="apply_modal_buttons d-flex justify-content-between align-items-center">
+                    <button type="button" class="cancel_modal_btn" data-bs-dismiss="modal"
+                        aria-label="Close">Cancel</button>
+                    <a>
+                        <button type="button" class="apply_modal_btn" data-bs-dismiss="modal" aria-label="Close"
+                            (click)="updateSubmitAssignmentStatus(status)">Submit</button>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

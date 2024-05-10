@@ -1,0 +1,155 @@
+<div id="main" class="main dashboard_page">
+    <div class="profile d-flex mb-4">
+
+        <div class="profile_top_heading d-flex gap_24">
+            <h1 class="font-27 font-700 secondary mb-0">Fees</h1>
+        </div>
+
+        <app-profile-bar></app-profile-bar>
+    </div>
+
+    <!-- DASHBOARD START -->
+
+    <div class="scroll_dashboard">
+
+        <div class="assignment-stats">
+            <h3 class="admin-title font-17 font-600 secondary position-relative mb_20">Add Fees</h3>
+            <form [formGroup]="addFeesForm" class="mb_24">
+                <div class="row">
+                    <div class="col-md-4">
+                        <label for="" class="mb_6 font-17 font-500 secondary">Name</label>
+                        <select class="form-select" aria-label="Default select example" id="studentId" name="studentId"
+                            formControlName="studentId" (change)="onStudentChange($event)">
+                            <option value = "">Select Student Name</option>
+                           
+                            <option [value]="students.studentId" *ngFor="let students of student">{{ students.fullName
+                                }} ({{ students.studentId }}) </option>
+                            
+                        </select>
+                        <div style="margin-top: -17px;" *ngIf="isFieldInvalidForAddFeesDetailsForm('studentId')" class="text-danger">Name is
+                            required.</div>
+                                                                                                                                        
+                    </div>
+
+                    <div class="col-md-4">
+                        <label for="" class="mb_6 font-17 font-500 secondary">Roll No.</label>
+                        <input type="number" id="studentId" name="studentId" class="form-control input_text"
+                            [(ngModel)]="fees.studentId" placeholder="Roll no." formControlName="rollNo"
+                            readonly>
+                        <div *ngIf="isFieldInvalidForAddFeesDetailsForm('rollNo')" class="text-danger">Roll no is
+                            required.</div>
+                    </div>
+
+
+                    <div class="col-md-4 mb_20">
+                        <label for="email" class="mb_6 font-17 font-500 secondary">Email</label>
+                        <div class="input_icon position-relative">
+                            <input type="email" id="email" name="email" class="form-control input_text"
+                                [(ngModel)]="fees.email" placeholder="Enter Email" formControlName="email"
+                                readonly>
+                            <div *ngIf="isFieldInvalidForAddFeesDetailsForm('email')" class="text-danger">email is
+                                required.</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb_20">
+                        <label for="mobile" class="mb_6 font-17 font-500 secondary">Mobile No.</label>
+                        <div class="input_icon position-relative">
+                            <input type="text" id="mobile" name="mobile" class="form-control input_text"
+                                [(ngModel)]="fees.mobile" placeholder="Enter Mobile No."
+                                formControlName="mobile" readonly>
+                            <div *ngIf="isFieldInvalidForAddFeesDetailsForm('mobile')" class="text-danger">mobile no is
+                                required.</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="" class="mb_6 font-17 font-500 secondary">Course</label>
+                        <!-- <select class="form-select" aria-label="Default select example" id="courseId" name="courseId"
+                            formControlName="course" (change)="onCourseChange($event)">
+                            <option value="" selected="">Select Course</option>
+                            <option [value]="courses.courseId" *ngFor="let courses of course">{{courses.courseName}}
+                            </option>
+                        </select> -->
+                        <div class="input_icon position-relative">
+                            <input type="text" id="course" name="course" class="form-control input_text"
+                                [(ngModel)]="fees.courseName" placeholder="Enter Course"
+                                formControlName="course" readonly>
+
+                        <!-- <div style="margin-top: -17px;"  *ngIf="isFieldInvalidForAddFeesDetailsForm('course')" class="text-danger">course is
+                            required.</div> -->
+
+                            <!-- <div *ngIf="isFieldInvalidForAddFeesDetailsForm('course')" class="text-danger">course is
+                                required.</div> -->
+                        </div> 
+                         <div style="margin-top: -17px;"  *ngIf="isFieldInvalidForAddFeesDetailsForm('course')" class="text-danger">course is
+                            required.</div>
+
+                    </div>
+                    <div class="col-md-4 mb_20">
+                        <label for="" class="mb_6 font-17 font-500 secondary">Course Fees</label>
+                        <div class="input_icon position-relative">
+                            <input type="number" id="courseFees" name="courseFees" formControlName="courseFees"
+                                class="form-control input_text" placeholder="Enter Course Fees"
+                                [(ngModel)]="fees.courseFees" readonly>
+                            <div *ngIf="isFieldInvalidForAddFeesDetailsForm('courseFees')" class="text-danger">Course
+                                fees is required.</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb_20">
+                        <label for="" class="mb_6 font-17 font-500 secondary">Final Fees</label>
+                        <div class="input_icon position-relative">
+                            <input type="number" id="finalFees" name="finalFees" formControlName="finalFees"
+                                class="form-control input_text" placeholder="Enter Finial Fees"
+                                [(ngModel)]="fees.finalFees">
+                            <div *ngIf="isFieldInvalidForAddFeesDetailsForm('finalFees')" class="text-danger">Final
+                                Fees is required.</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb_20">
+                        <label for="" class="mb_6 font-17 font-500 secondary">Date</label>
+                        <div class="input_icon position-relative">
+                            <input type="date" id="date" name="date" formControlName="date"
+                                class="form-control input_text" [(ngModel)]="fees.date" placeholder="Enter Mobile No.">
+                            <div *ngIf="isFieldInvalidForAddFeesDetailsForm('date')" class="text-danger">Date is
+                                required.</div>
+                        </div>
+                    </div>
+                </div><!-- row -->
+                <div class="row text-center">
+                    <div class="col-md-12">
+                        <a class="fees_submit_btn font-17 font-500" data-bs-toggle="modal"
+                            (click)="addFees()">Submit</a>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+
+        <!-- RIGHT SIDE START-->
+        <app-right-side-bar></app-right-side-bar>
+        <!-- RIGHT SIDE END -->
+
+    </div>
+    <!--DASHBOARD END -->
+
+    <!-- Modal Admin Delete Modal Start -->
+    <div class="modal fade" id="payment-modal" tabindex="-1" aria-labelledby="payment-modal" aria-hidden="true">
+        <div class="modal-dialog position-relative leave_modal">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <button type="button" class="close_btn" data-bs-dismiss="modal" aria-label="Close"
+                        style="top: -23%;">
+                        <i class="fi fi-rr-cross close_icon"></i>
+                    </button>
+                    <i class="fi fi-rr-check-circle text-success fs-1 d-block text-center"></i>
+                    <p class="secondary font-21 font-500 text-center">Your Payment is Successful.
+                    </p>
+                    <div class="apply_modal_buttons text-center">
+                        <a routerLink="/admin/fees">
+                            <button type="button" class="apply_modal_btn font-15 font-500">Done</button>
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!-- Modal Admin Delete Modal End -->

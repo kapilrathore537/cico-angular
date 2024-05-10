@@ -1,0 +1,82 @@
+<div id="mySidebar" class="sidebar" onmouseover="toggleSidebar()" onmouseout="toggleSidebar()">
+  <div class="side-navbar">
+    <div class="logoleftbar"> <img src="assets/images/temp_img/Smart tracko.png" /></div>
+    <a routerLink="/student" [ngClass]="check == 'dashboard' ? 'active' : 'box-hover'"
+      (click)="getValueById(lsdv.value)">
+      <input #lsdv type="hidden" value="dashboard" />
+      <img src="assets/images/svg_img/New folder/Neutral-Dashboard.svg" class="material-icons" id="icon1" /><span
+        [ngClass]="check == 'dashboard' ? 'icon-text dashboard' : 'icon-text'">Dashboard</span></a>
+
+    <a routerLink="/student/study" [ngClass]="check == 'study' ? 'active' : 'box-hover'"
+      (click)="getValueById(lsdv1.value)"><input #lsdv1 type="hidden" value="study" /><img
+        src="assets/images/svg_img/New folder/Neutral-Study.svg" class="material-icons"><span
+        [ngClass]="check == 'study' ? 'icon-text dashboard' : 'icon-text'">Study Material</span></a>
+
+    <a routerLink="/student/mycourse" [ngClass]="check == 'mycourse' ? 'active' : 'box-hover'"
+      (click)="getValueById(lsdv2.value)"><input #lsdv2 type="hidden" value="mycourse" /><img
+        src="assets/images/svg_img/New folder/Neutral-Courses.svg" class="material-icons" id="icon2" /><span
+        [ngClass]="check == 'mycourse' ? 'icon-text dashboard' : 'icon-text'">My Courses</span></a>
+    <a routerLink="/student/taskAndAssignment" [ngClass]="check == 'taskAndAssignment' ? 'active' : 'box-hover'"
+      (click)="getValueById(lsdv3.value)"><input #lsdv3 type="hidden" value="taskAndAssignment" /><img
+        src="assets/images/svg_img/New folder/Neutral-Assignment.svg" class="material-icons" id="icon3" /><span
+        [ngClass]="
+          check == 'taskAndAssignment' ? 'icon-text dashboard' : 'icon-text'
+        ">Assignments</span></a>
+    <a routerLink="/student/task" [ngClass]="check == 'task' ? 'active' : 'box-hover'"
+      (click)="getValueById(lsdv4.value)"><input #lsdv4 type="hidden" value="task" /><img
+        src="assets/images/svg_img/New folder/Neutral-Task.svg" class="material-icons"><span [ngClass]="
+          check == 'task' ? 'icon-text dashboard' : 'icon-text'
+        ">Tasks</span>
+    </a>
+    <a [ngClass]="check == 'result' ? 'active' : 'box-hover'" (click)="getValueById(lsdv5.value)"><input #lsdv5
+        type="hidden" value="result" /><img src="assets/images/svg_img/New folder/Neutral-Statistics.svg"
+        class="material-icons" id="icon4" /><span
+        [ngClass]="check == 'result' ? 'icon-text dashboard' : 'icon-text'">Results & Statistics</span></a>
+    <a routerLink="/student/attendance" [ngClass]="check == 'attendance' ? 'active' : 'box-hover'"
+      (click)="getValueById(lsdv6.value)"><input #lsdv6 type="hidden" value="attendance" /><img
+        src="assets/images/svg_img/New folder/Neutral-Calender.svg" class="material-icons" id="icon5" /><span
+        [ngClass]="check == 'attendance' ? 'icon-text dashboard' : 'icon-text'">Attendance</span></a>
+
+    <a routerLink="/student/discussion" [ngClass]="check == 'discussion' ? 'active' : 'box-hover'"
+      (click)="getValueById(lsdv7.value)"><input #lsdv7 type="hidden" value="discussion" /><img
+        src="assets/images/svg_img/New folder/discussion.svg" class="material-icons" id="icon6" /><span
+        [ngClass]="check == 'discussion' ? 'icon-text dashboard' : 'icon-text'">Discussion Forum</span></a>
+
+    <a routerLink="/student/jobalert" [ngClass]="check == 'jobalert' ? 'active' : 'box-hover'"
+      (click)="getValueById(lsdv8.value)"><input #lsdv8 type="hidden" value="jobalert" /><img
+        src="assets/images/svg_img/New folder/Neutral-Jobs.svg" class="material-icons" id="icon7" /><span
+        [ngClass]="check == 'jobalert' ? 'icon-text dashboard' : 'icon-text'">Job Alert</span></a>
+    <a routerLink="/student/newsAndEvent" [ngClass]="check == 'newsAndEvent' ? 'active' : 'box-hover'"
+      (click)="getValueById(lsdv9.value)"><input #lsdv9 type="hidden" value="newsAndEvent" /><img
+        src="assets/images/svg_img/New folder/Neutral-News.svg" class="material-icons" id="icon8" /><span [ngClass]="
+          check == 'newsAndEvent' ? 'icon-text dashboard' : 'icon-text'
+        ">News & Events</span></a>
+    <a routerLink="/student/test" [ngClass]="check == 'test' ? 'active' : 'box-hover'"
+      (click)="getValueById(lsdv10.value)"><input #lsdv10 type="hidden" value="test" /><img
+        src="assets/images/svg_img/New folder/Neutral-News.svg" class="material-icons" id="icon8" /><span [ngClass]="
+            check == 'test' ? 'icon-text dashboard' : 'icon-text'
+          ">Test</span></a>
+
+  </div>
+
+  <div class="side-navbar">
+    <a [ngClass]="check == 'account' ? 'active' : 'box-hover'" (click)="getValueById(lsdv9.value)"
+      (click)="logout()"><input #lsdv9 type="hidden" value="account" /><img
+        src="assets/images/svg_img/New folder/Neutral-User.svg" class="material-icons" id="icon8" /><span
+        [ngClass]="check == 'account' ? 'icon-text dashboard' : 'icon-text'">Logout</span></a>
+    <!-- <a
+      routerLink="/student/taskAndAssignment"
+      [ngClass]="check == 'setting' ? 'active' : 'box-hover'"
+      (click)="getValueById(lsdv10.value)" 
+      ><input #lsdv10 type="hidden" value="setting" /><img
+        src="assets/images/svg_img/New folder/Neutral-Settings.svg"
+        class="material-icons"
+        id="icon9"
+      /><span
+        [ngClass]="check == 'setting' ? 'icon-text dashboard' : 'icon-text'"
+        >Settings</span
+      ></a
+    > -->
+  </div>
+
+</div>

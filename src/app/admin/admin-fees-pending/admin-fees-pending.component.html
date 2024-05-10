@@ -1,0 +1,220 @@
+<div id="main" class="main dashboard_page">
+  <div class="profile d-flex">
+    <h1 class="font-27 font-700 secondary mb-0">Fees</h1>
+
+    <app-profile-bar></app-profile-bar>
+  </div>
+
+  <!-- DASHBOARD START -->
+
+  <div class="scroll_dashboard mt-4">
+
+    <div class="row">
+
+      <div class="col-md-12">
+        <div class="fees-top-area">
+          <h3 class="admin-title font-17 font-600 secondary position-relative mb-0">Fees Pending List</h3>
+          <div class="right-side-dropdown-btn d-flex">
+            <div class="student-search me-2">
+              <input type="text" name="fullName" id="" placeholder="Search" class="gray-input-bg" style="height: 35px;"
+                [(ngModel)]="search" (ngModelChange)="searchByName()">
+            </div>
+            <div class="input_icon position-relative">
+              <input type="date" class="form-control input_text gray-input-bg font-15 fees-input" style="height: 35px;"
+                placeholder="Select Start Date" id="" name="startDate" value="" [(ngModel)]="startDate" required>
+            </div>
+            <h4 class="font-18 font-500 text_dark my-0 lh-0 d-flex align-items-center mx-1">To</h4>
+            <div class="input_icon position-relative">
+              <input type="date" class="form-control input_text gray-input-bg font-15 fees-input" style="height: 35px;"
+                placeholder="Select End Date" id="" name="endDate" value="" required [(ngModel)]="endDate">
+            </div>
+
+            <button class="fees_search_btn font-15 font-500 lh-0 me-2" (click)="findByGivenDate()">Search</button>
+
+            <div class="dropdown">
+              <a class="attendance_dropdown1 dropdown-toggle font-15 font-500 dark d-inline-flex align-items-center"
+                href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="height: 35px;">
+                Status
+              </a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" routerLink="/admin/fees">All</a></li>
+                <li><a class="dropdown-item" routerLink="/admin/pendingfees">Fees Pending</a></li>
+                <li><a class="dropdown-item" routerLink="/admin/payfees">Fees Pay</a></li>
+                <li><a class="dropdown-item" routerLink="/admin/feescompletedlist">Fees Complete</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="table_container">
+          <table class="table mb-0">
+            <thead style="background:#EDF9FB;">
+              <tr class="table_heading">
+                <th scope="col" class="font-15 font-600 secondary">Name</th>
+                <th scope="col" class="font-15 font-600 secondary">Roll No.</th>
+                <th scope="col" class="font-15 font-600 secondary">Course</th>
+                <th scope="col" class="font-15 font-600 secondary">Email</th>
+                <th scope="col" class="font-15 font-600 secondary">Phone Num</th>
+                <th scope="col" class="font-15 font-600 secondary">Fees Paid</th>
+                <th scope="col" class="font-15 font-600 secondary">Remaining Fees</th>
+                <th scope="col" class="font-15 font-600 secondary">Date</th>
+                <th scope="col" class="font-15 font-600 secondary">Pay Now</th>
+                <!-- <th scope="col" class="font-15 font-600 secondary">Action</th> -->
+              </tr>
+            </thead>
+            <tbody *ngFor="let fees of feeses">
+              <tr>
+                <td class="d-flex align-items-center pointer" style="gap:5px; border-bottom: 0;"
+                  routerLink="/admin/studentprofile/{{fees.studentId}}">
+                  <div class="person_image">
+                    <img [src]="fees.profilePic" alt="" class="img-fluid">
+                  </div>
+                  <h5 class="font-13 font-500 mb-0">{{fees.fullName}}<br>
+                  </h5>
+                </td>
+                <td>{{fees.studentId}}</td>
+                <td>{{fees.courseName}}</td>
+                <td>{{fees.email}}</td>
+                <td>{{fees.mobile}}</td>
+                <td>{{fees.feesPaid}}</td>
+                <td>{{fees.remainingFees}}</td>
+                <td>{{fees.updatedDate}}</td>
+                <td class="warning font-500 pointer" data-bs-toggle="modal" data-bs-target="#pay-modal"
+                  (click)="getFeesById(fees.feesId)" (click)="clearFessPayForm()">Pay Now</td>
+                <!-- <td><a routerLink="/admin/editfees/{{fees.feesId}}"><i
+                      class="fi fi-rr-file-edit line-height-0 warning fs-5 me-2"></i></a>
+                
+                </td> -->
+              </tr>
+
+            </tbody>
+          </table>
+          <mat-paginator *ngIf="feesList>=8" [length]="feesList" [pageSize]="8" aria-label="Select page"
+            (page)="onChangePage($event)">
+          </mat-paginator>
+
+
+
+        </div>
+
+      </div>
+    </div>
+    <!-- DASHBOARD END -->
+
+    <!-- RIGHT SIDE START-->
+    <app-right-side-bar></app-right-side-bar>
+    <!-- RIGHT SIDE END -->
+
+
+    <!-- MIDDLE CONTENT END -->
+
+
+
+    <!--DASHBOARD END -->
+
+
+    <!-- Modal Admin Pay Due Amount Modal Start -->
+    <div class="modal fade" id="pay-modal" tabindex="-1" aria-labelledby="pay-modal" aria-hidden="true">
+      <div class="modal-dialog position-relative leave_modal">
+        <div class="modal-content">
+          <div class="modal-body">
+            <div class="modal-header apply_title">
+              <h1 class="modal-title fs-5 font-21 font-600 secondary modal_line position-relative"
+                id="exampleModalLabel1">Pay Due Amount</h1>
+              <button type="button" class="close_btn" data-bs-dismiss="modal" aria-label="Close">
+                <i class="fi fi-rr-cross close_icon"></i>
+              </button>
+            </div>
+
+            <form [formGroup]="payFeesForm">
+              <div class="row">
+
+                <div class="col-md-12">
+                  <p class="mb-1">Your Remaining Amount is: <span
+                      [ngClass]="fees.remainingFees-feesPays.feesPayAmount == 0 ? 'text-success':'text-danger'">{{feesPays.feesPayAmount!=null
+                      ?fees.remainingFees-feesPays.feesPayAmount:fees.remainingFees}}/-</span> </p>
+                </div>
+
+                <div class="col-md-12 mb_18">
+                  <label for="" class="mb_6 font-15 font-500 secondary">Pay Amount</label>
+                  <div class="input_icon position-relative">
+                    <input type="number" id="feesPayAmount" name="feesPayAmount" class="form-control input_text"
+                      placeholder="Enter Pay Amount" [(ngModel)]="feesPays.feesPayAmount"
+                      formControlName="feesPayAmount">
+                    <div *ngIf="isFieldInvalidForPayFeesForm('feesPayAmount')" class="text-danger">Amount is
+                      required.</div>
+                    <div *ngIf="fees.remainingFees<feesPays.feesPayAmount" class="text-danger">Amount Pay is Greater
+                      than Remaining Fees.</div>
+                  </div>
+                </div>
+                <div class="col-md-12 mb_18">
+                  <label for="" class="mb_6 font-15 font-500 secondary">Date</label>
+                  <div class="input_icon position-relative">
+                    <input type="date" id="payDate" name="payDate" class="form-control input_text"
+                      [(ngModel)]="feesPays.payDate" formControlName="payDate">
+                    <div *ngIf="isFieldInvalidForPayFeesForm('payDate')" class="text-danger">Date is
+                      required.</div>
+                  </div>
+                </div>
+                <div class="col-md-12 mb_18">
+                  <label for="" class="mb_6 font-15 font-500 secondary">Reciept Number</label>
+                  <div class="input_icon position-relative">
+                    <input type="text" id="recieptNo" name="recieptNo" class="form-control input_text"
+                      placeholder="Dollop14709979" [(ngModel)]="feesPays.recieptNo" formControlName="recieptNo">
+                    <div *ngIf="isFieldInvalidForPayFeesForm('recieptNo')" class="text-danger">Reciept No is
+                      required.</div>
+                  </div>
+                </div>
+                <div class="col-md-12 mb_18">
+                  <label for="" class="mb_6 font-15 font-500 secondary">Description Box</label>
+                  <textarea name="description" class="form-control text_area" id="exampleFormControlTextarea1" rows="3"
+                    placeholder="Start Typing....." [(ngModel)]="feesPays.description"
+                    formControlName="description"></textarea>
+                  <div *ngIf="isFieldInvalidForPayFeesForm('description')" class="text-danger">Description is
+                    required.</div>
+                </div>
+
+
+              </div><!-- row -->
+            </form>
+            <div class="apply_modal_buttons d-flex justify-content-between align-items-center">
+              <button type="button" class="cancel_modal_btn font-15 font-500" data-bs-dismiss="modal"
+                aria-label="Close">Cancel</button>
+
+              <button type="button" class="apply_modal_btn font-15 font-500" (click)="feesPay()">Submit</button>
+
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Modal Admin Pay Due Amount Modal End -->
+
+    <!-- Modal Admin Delete Modal Start -->
+    <!-- <div class="modal fade" id="delete-modal" tabindex="-1" aria-labelledby="delete-modal"
+    aria-hidden="true">
+    <div class="modal-dialog position-relative leave_modal">
+      <div class="modal-content">
+          <div class="modal-body">
+              <button type="button" class="close_btn" data-bs-dismiss="modal" aria-label="Close"
+                  style="top: -23%;">
+                  <i class="fi fi-rr-cross close_icon"></i>
+              </button>
+
+              <p class="secondary font-21 font-500 text-center">Are You Sure You Want To Delete This Question?
+              </p>
+              <div class="apply_modal_buttons d-flex justify-content-between align-items-center">
+                  <a href="admin_fees_pending_list.html">
+                      <button type="button" class="cancel_modal_btn font-15 font-500 delete-icon-color">Yes,
+                          delete</button>
+                  </a>
+                  <a href="admin_fees_pending_list.html">
+                      <button type="button" class="apply_modal_btn font-15 font-500">No, Do not
+                          delete</button>
+                  </a>
+              </div>
+
+          </div>
+      </div>
+    </div> -->
+    <!-- Modal Admin Delete Modal End -->

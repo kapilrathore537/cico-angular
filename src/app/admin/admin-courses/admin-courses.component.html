@@ -1,0 +1,302 @@
+<div id="main" class="main dashboard_page">
+
+    <div class="profile d-flex mb-4">
+
+        <div class="profile_top_heading d-flex gap_24">
+            <h1 class="font-27 font-700 secondary mb-0">Courses</h1>
+            <button class="top_profile_sec_btn font-14 font-500 lh-1" data-bs-toggle="modal"
+                data-bs-target="#course-add-modal" (click)=" getAllSubjects()" (click)="getAllTechImages()"
+                (click)="clearValidationForm()">Create New</button>
+        </div>
+
+        <app-profile-bar></app-profile-bar>
+    </div>
+
+    <!-- DASHBOARD START -->
+
+    <div class="scroll_sec mt-0">
+        <div class="row">
+            <h3 class="font-21 font-600 secondary position-relative" *ngIf="  totalCourses == 0">
+                NO COURSES AVAILABLE
+            </h3>
+            <div class="col-md-3 bootstrap_cards"
+                *ngFor="let course of courseResponse;trackBy:trackById(course);let i = index">
+                <div class="admin-subject_card">
+                    <div class="admin-subject_card_top">
+                        <div class="admin-subject_name_card">
+                            <div class="admin-sub-left">
+                                <div class="admin-subject-image">
+                                    <img [src]="course.technologyStack.imageName">
+                                </div>
+                                <div class="subject-details">
+                                    <h3 class="subject_heading txt-dark mb-0">{{course.courseName}}</h3>
+                                    <p class="chapter-cout mb-0">{{course.batchesCount}} Batches {{course.subjectCount}}
+                                        Subjects</p>
+                                </div>
+                            </div>
+                        </div>
+                        <app-drop-down-delete-add-update [deleteModalId]="'#delete-modal'"
+                            [editModalId]="'#course-edit-modal'" [path]="'/admin/coursesbatches/'"
+                            [params]="{courseId:course.courseId}" [id]="course.courseId" [index]="i"
+                            (onClick)="onClick($event)"></app-drop-down-delete-add-update>
+                    </div><!-- subject_card_top -->
+
+                </div> <!-- subject_card -->
+            </div>
+
+        </div>
+    </div>
+    <!-- DASHBOARD END -->
+
+    <!-- RIGHT SIDE START-->
+    <app-right-side-bar></app-right-side-bar>
+    <!-- RIGHT SIDE END -->
+
+
+    <!-- MIDDLE CONTENT END -->
+
+
+</div>
+<!--DASHBOARD END -->
+
+<!-- Modal Delete Modal Start -->
+<div class="modal fade" id="delete-modal" tabindex="-1" aria-labelledby="delete-modal" aria-hidden="true">
+    <app-delete-modal [title]="'Course'" (onClick)="deleteCourse()"></app-delete-modal>
+</div>
+<!-- Modal Delete Modal End -->
+<!-- Modal Admin Course Add Modal Start -->
+<div class="modal fade" id="course-add-modal" tabindex="-1" aria-labelledby="course-add-modal" aria-hidden="true">
+    <div class="modal-dialog position-relative leave_modal">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="modal-header apply_title p-0">
+                    <h1 class="modal-title fs-5 font-21 font-600 secondary modal_line position-relative"
+                        id="exampleModalLabel1">Add Course</h1>
+
+                </div>
+
+                <form [formGroup]="addCourseForm">
+
+                    <div class="row">
+
+                        <div class="col-md-12 mb_18">
+                            <h6 class="mb-4 font-15 font-500 secondary">Selected Image :- {{imageName}}</h6>
+                            <div class="all-course-images d-flex flex-wrap">
+                                <div class="add-course-img" *ngFor="let image of techImages">
+                                    <img [ngClass]="imageName == image.technologyName ?'techImage-border':''"
+                                        [src]="image.imageName" alt="" (click)="courseRequest.technologyStack= image.id"
+                                        (click)="imageName = image.technologyName">
+                                </div>
+                            </div>
+                            <div *ngIf=" imageName == ''" class="text-danger">image is required.</div>
+                        </div>
+                        <div class="col-md-12 mb_18">
+                            <label for="" class="mb_6 font-15 font-500 secondary">Course Name</label>
+                            <div class="input_icon position-relative">
+
+
+                                <input type="text" id="" name="courseName" class="form-control input_text"
+                                    placeholder="Enter Course Name" [(ngModel)]="courseRequest.courseName"
+                                    formControlName="courseName">
+                                <div *ngIf="isFieldInvalidForAddCourseDetailsForm('courseName')" class="text-danger">
+                                    Course Name is
+                                    required.</div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 mb_18">
+                            <label for="" class="mb_6 font-15 font-500 secondary">Course Fees</label>
+                            <div class="input_icon position-relative">
+                                <input type="number" id="" name="courseFees" class="form-control input_text"
+                                    placeholder="Enter Course Fees" [(ngModel)]="courseRequest.courseFees"
+                                    formControlName="courseFees">
+                                <div *ngIf="isFieldInvalidForAddCourseDetailsForm('courseFees')" class="text-danger">
+                                    Course Fees is
+                                    required.</div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 mb_18">
+                            <label for="" class="mb_6 font-15 font-500 secondary">Course Duration (In Months)</label>
+                            <div class="input_icon position-relative">
+                                <input type="number" id="" name="duration" class="form-control input_text"
+                                    placeholder="Enter Course Duration" [(ngModel)]="courseRequest.duration"
+                                    formControlName="duration">
+                                <div *ngIf="isFieldInvalidForAddCourseDetailsForm('duration')" class="text-danger">
+                                    Duration is
+                                    required.</div>
+                            </div>
+                        </div>
+
+                        <h2 class="font-15 font-500 secondary">Subjects</h2>
+                        <div class="all-subjects-list mb_18">
+                            <div class="col-md-12 mb_18" *ngFor="let subject of subjects">
+                                <div class="input_icon position-relative input_text checkbox_area">
+                                    <div class="d-flex gap_5 align-items-center">
+                                        <img src="assets/images/temp_img/subject-img.png" alt="" width="24" height="24">
+                                        <h2 class="font-15 font-500 mb-0 secondary">{{ subject.subjectName }}</h2>
+                                    </div>
+                                    <input type="checkbox" name="subjectIds" [id]="'subject'+subject.subjectId"
+                                        [ngModel]="selectedSubjectIds[subject.subjectId]"
+                                        (ngModelChange)="checkboxChanged(subject.subjectId)" class="choose-subjects"
+                                        [value]="subject.subjectId" formControlName="subjectIds">
+
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div *ngIf="isFieldInvalidForAddCourseDetailsForm('subjectIds')" class="text-danger">Subject is
+                            required.</div>
+                        <div class="col-md-12 mb_18">
+                            <label for="" class="mb_6 font-15 font-500 secondary">Course Description</label>
+                            <div class="input_icon position-relative">
+                                <textarea type="number" id="" name="sortDescription" class="form-control input_text"
+                                    placeholder="Enter Course Description" [(ngModel)]="courseRequest.sortDescription"
+                                    formControlName="sortDescription"></textarea>
+                                <div *ngIf="isFieldInvalidForAddCourseDetailsForm('sortDescription')"
+                                    class="text-danger">Sort Description is
+                                    required.</div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 mb_18">
+                            <label for="" class="mb_6 font-15 font-500 secondary">If You Want To Make
+                                StarterCourse</label>
+                            <div class="input_icon position-relative">
+                                <input type="radio" name="isStarterCourse" value="true"
+                                    [(ngModel)]="courseRequest.isStarterCourse" formControlName="isStarterCourse"> Yes
+                                <input type="radio" name="isStarterCourse" value="false"
+                                    [(ngModel)]="courseRequest.isStarterCourse" formControlName="isStarterCourse"> No
+                                <div *ngIf="isFieldInvalidForAddCourseDetailsForm('isStarterCourse')"
+                                    class="text-danger"> Starter Course is
+                                    required.</div>
+                            </div>
+                        </div>
+
+                    </div><!-- row -->
+                </form>
+
+                <div class="apply_modal_buttons d-flex justify-content-between align-items-center">
+                    <button type="button" class="cancel_modal_btn font-15 font-500" data-bs-dismiss="modal"
+                        aria-label="Close" id="course-form-close">Cancel</button>
+                    <a>
+                        <button type="button" class="apply_modal_btn font-15 font-500" (click)="saveCourse()">Save
+                            Course</button>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Admin Course Add Modal End -->
+
+<!-- Modal Admin Course Edit Modal Start -->
+<div class="modal fade" id="course-edit-modal" tabindex="-1" aria-labelledby="course-edit-modal" aria-hidden="true">
+    <div class="modal-dialog position-relative leave_modal">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="modal-header apply_title p-0">
+                    <h1 class="modal-title fs-5 font-21 font-600 secondary modal_line position-relative"
+                        id="exampleModalLabel1">Edit Course</h1>
+                </div>
+
+                <form action="">
+                    <div class="row  " *ngIf="courseResponse1">
+                        <!-- <div class="col-md-12 mb_18">
+                                            <div class="subject_edit_media_attech d-flex align-items-center justify-content-center  position-relative" style="height: 120px;">
+                                                <input type="file" name="fileupload" value="fileupload" class="d-none"
+                                                    id="fileupload">
+                                                <label for="fileupload" class="font-17 font-500 d-flex">
+                                                    <i class="fi fi-rr-plus-small warning font-24 line-height-0"></i>
+                                                    Add Media</label>
+                                            </div>
+                                        </div> -->
+                        <div class="col-md-12 mb_18" *ngIf="courseResponse1.technologyStack">
+                            <h6 class="mb-4 font-15 font-500 secondary">Selected Image :-
+                                {{courseResponse1.technologyStack.technologyName}}</h6>
+                            <div class="all-course-images d-flex flex-wrap">
+                                <div class="add-course-img" *ngFor="let image of techImages">
+                                    <img [ngClass]="courseResponse1.technologyStack.imageName == image.technologyName ?'techImage-border':''"
+                                        [src]="image.imageName" alt="" (click)="courseResponse1.technologyStack = image"
+                                        (click)="imageName = image.technologyName">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 mb_18">
+                            <label for="" class="mb_6 font-15 font-500 secondary">Course Name</label>
+                            <div class="input_icon position-relative">
+                                <input type="text" id="" name="courseName" class="form-control input_text"
+                                    placeholder="Enter Course Name" [(ngModel)]="courseResponse1.courseName">
+                            </div>
+                        </div>
+                        <div class="col-md-12 mb_18">
+                            <label for="" class="mb_6 font-15 font-500 secondary">Course Fees</label>
+                            <div class="input_icon position-relative">
+                                <input type="number" id="" name="courseFees" class="form-control input_text"
+                                    placeholder="Enter Course Fees" [(ngModel)]="courseResponse1.courseFees">
+                            </div>
+                        </div>
+                        <div class="col-md-12 mb_18">
+                            <label for="" class="mb_6 font-15 font-500 secondary">Course Duration (In Months)</label>
+                            <div class="input_icon position-relative">
+                                <input type="number" id="" name="duration" class="form-control input_text"
+                                    placeholder="Enter Course Duration" [(ngModel)]="courseResponse1.duration">
+                            </div>
+                        </div>
+
+                        <h2 class="font-15 font-500 secondary">Subjects</h2>
+                        <div class="all-subjects-list mb_18">
+                            <div class="col-md-12 mb_18" *ngFor="let subject of subjects">
+                                <div class="input_icon position-relative input_text checkbox_area">
+                                    <div class="d-flex gap_5 align-items-center">
+                                        <img src="assets/images/temp_img/subject-img.png" alt="" width="24" height="24">
+                                        <h2 class="font-15 font-500 mb-0 secondary">{{subject.subjectName}}</h2>
+                                    </div>
+                                    <input type="checkbox" name="subjects"
+                                        [checked]="checkSubjectInCourse(subject.subjectId)"
+                                        (click)="addAndRemoveSubjectsFromCourse(subject)" class="choose-subjects">
+                                </div>
+                            </div>
+                        </div> <!-- all-subjects-list -->
+                        <div class="col-md-12 mb_18">
+                            <label for="" class="mb_6 font-15 font-500 secondary">Course Description</label>
+                            <div class="input_icon position-relative">
+                                <textarea type="number" id="" name="sortDescription" class="form-control input_text"
+                                    placeholder="Enter Course Description"
+                                    [(ngModel)]="courseResponse1.sortDescription"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-md-12 mb_18">
+                            <label for="" class="mb_6 font-15 font-500 secondary">If You Want To Make
+                                StarterCourse</label>
+                            <div class="input_icon position-relative">
+                                <div class="input_icon position-relative">
+                                    <div class="input_icon position-relative">
+                                        <input type="radio" id="isStarterCourseYes" name="isStarterCourse"
+                                            [value]="true" [checked]="courseResponse1.isStarterCourse"
+                                            (change)="courseResponse1.isStarterCourse = true"> Yes
+                                        <input type="radio" id="isStarterCourseNo" name="isStarterCourse"
+                                            [value]="false" [checked]="!courseResponse1.isStarterCourse"
+                                            (change)="courseResponse1.isStarterCourse = false"> No
+                                    </div>
+
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div><!-- row -->
+                </form>
+
+                <div class="apply_modal_buttons d-flex justify-content-between align-items-center">
+                    <button type="button" class="cancel_modal_btn font-15 font-500" data-bs-dismiss="modal"
+                        aria-label="Close" id="course-update-modal">Cancel</button>
+                    <a>
+                        <button type="button" class="apply_modal_btn font-15 font-500" (click)="updateCourse()">Update
+                            Course</button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

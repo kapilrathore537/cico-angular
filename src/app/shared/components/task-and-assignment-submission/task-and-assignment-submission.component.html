@@ -1,0 +1,72 @@
+<div class="task_summary" data-bs-toggle="modal" [attr.data-bs-target]="'#'+id"
+  *ngFor="let obj of submission;let i = index" (click)="taskSubmissionObj = obj">
+  <div class="d-flex align-items-center justify-content-between">
+    <h3 class="font-14 font-500 mb-1 text-black">{{title}} [{{obj.taskName?obj.taskName:obj.title}}] <b class="ms-1 font-500"
+        [ngClass]="{'text_light_green':obj.status == 'Accepted','text_light_red':obj.status=='Rejected','text_light_blue':(obj.status=='Unreviewed')||(obj.status=='Reviewing')}">{{obj.status}}</b>
+    </h3>
+
+
+    <h4 class="font-13 font-400 warning ms-auto mb-0 task_modal">View</h4>
+  </div>
+  <h3 class="font-14 font-500 mb-1 text-black" *ngIf="obj.taskNumber">
+    <b class="ms-1 font-500">Task  {{obj.taskNumber}}</b>
+  </h3>
+  <div class="d-flex align-items-center justify-content-between mb-1">
+    <h3 class="font-13 font-400 mb-0">Submission is {{obj.status}}</h3>
+    <h4 class="font-11 font-400 text_gray ms-auto mb-0 task_modal">
+      <ng-container *ngIf="dateFormatter(todayDate) === dateFormatter(obj.submissionDate); else otherDate">
+        Today {{ obj.submissionDate | date:'shortTime' }}
+      </ng-container>
+      <ng-template #otherDate>
+        {{ obj.submissionDate | date:' d MMM y h:mm a' }}
+      </ng-template>
+    </h4>
+
+  </div>
+</div>
+
+<div class="modal fade" [id]="id" tabindex="-1" aria-labelledby="exampleModalLabel1" aria-hidden="true">
+  <div class="modal-dialog position-relative assignment_modal" style="width: 514px;">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5 font-17 font-600 secondary modal_line position-relative mb-2"
+            id="exampleModalLabel1">
+            Submission Details</h1>
+          <button type="button" class="close_btn" data-bs-dismiss="modal" aria-label="Close" style="top: -15%;">
+            <i class="fi fi-rr-cross close_modal"></i>
+          </button>
+          <h3 class="font-15 font-500"
+            [ngClass]="{'text_light_green':taskSubmissionObj.status == 'Accepted','text_light_red':taskSubmissionObj.status=='Rejected','text_light_blue':(taskSubmissionObj.status=='Unreviewed')||(taskSubmissionObj.status=='Reviewing')}">
+            {{taskSubmissionObj.status}}</h3>
+        </div>
+        <div class="">
+          <div class="assignment">
+            <div class="question_ans">
+              <h3 class="font-17 font-500 secondary">Report</h3>
+              <ol class="ps-3">
+                <li class="font-17 font-400 text_dark">{{taskSubmissionObj.taskDescription ||
+                  taskSubmissionObj.description}}</li>
+              </ol>
+
+            </div>
+            <div class="question_ans" *ngIf="taskSubmissionObj.review!=null && taskSubmissionObj.review!=''">
+
+              <h3 class="font-17 font-500 secondary">Review</h3>
+              <ol class="ps-3">
+                <li class="font-17 font-400 text_dark">{{taskSubmissionObj.review}}</li>
+              </ol>
+            </div>
+            <form class="attachment_file1 d-flex align-items-center  position-relative attechment_file"
+              *ngIf="taskSubmissionObj.submittionFileName!=null && taskSubmissionObj.submittionFileName!=undefined">
+              <a  (click)="downloadFile(taskSubmissionObj.submittionFileName)"
+                class="font-15 font-400 text_gray  attachment_file_text">
+                <i class="fi fi-rr-paperclip-vertical secondary add_more position-absolute  mx-2"></i>
+                Download Submited File</a>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

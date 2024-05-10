@@ -1,0 +1,237 @@
+
+
+
+<!-- <button type="button"
+  class="btn-2 text-white font-12 font-400 d-flex flex-column align-items-center justify-content-center m-0"
+  data-bs-toggle="modal" data-bs-target="#dash_checkout_modal">
+  <img src="assets/images/svg_img/check-in.svg" class="mb-2 img-fluid">
+  CHECK IN
+</button> -->
+
+
+<div class="text-center" >
+
+  <img src="assets/images/svg_img/punch-btn.svg" alt="Punch Button" data-bs-toggle="modal" data-bs-target="#dash_checkout_modal">
+  <h4 class="light mb-0">{{ clock | async | date: "mediumTime" }}</h4>
+  <h5 class="light mb-0">{{formattedDate}}</h5>
+</div>
+  <div class="timestamps mt-2">
+  <div class="timestamicon">
+    <span class="img">
+      <img src="assets/images/svg_img/Vector.svg">
+    </span>
+    <h3 class="font-15 font-400 light mb-0 mt-1" *ngIf="checkInTime!=null">{{formattedCheckInTime}}</h3>
+    <h3 class="font-14 font-400 light mb-0 mt-1" *ngIf="checkInTime == null"> --:-- </h3>
+
+  </div>
+  <div class="timestamicon">
+    <span class="img">
+      <img src="assets/images/svg_img/Frame 156.svg">
+    </span>
+    <h3 class="font-15 font-400 light mb-0 mt-1" *ngIf="checkOutTime != null">{{formattedCheckOutTime}}</h3>
+    <h3 class="font-14 font-400 light mb-0 mt-1" *ngIf="checkOutTime == null"> --:-- </h3>
+
+  </div>
+  <div class="timestamicon">
+    <span class="img">
+      <img src="assets/images/svg_img/watch.svg">
+    </span>
+    <h3 class="font-15 font-400 light mb-0 mt-1"  *ngIf="checkInTime != null">{{totalHrs}}</h3>
+    <h3 class="font-14 font-400 light mb-0 mt-1" *ngIf="checkInTime == null"> --:--:--</h3>
+
+  </div>
+</div>
+<div class="modal fade" id="dash_checkout_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" *ngIf="message == 'SUCCESS'">
+  <div class="modal-dialog position-relative leave_modal">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="modal-header apply_title">
+          <h1 class="modal-title  font-21 font-600 secondary modal_line position-relative">Attendance {{ attendance.checkInDate | date : "dd MMM yyyy" }}
+          </h1>
+          <button type="button" class="close_btn" data-bs-dismiss="modal" aria-label="Close">
+            <i class="fi fi-rr-cross close_icon"></i>
+          </button>
+        </div>
+        <div class="attendance_heading d-flex justify-content-between align-items-center">
+          <div class="">
+            <h3 class="attendance_title font-17 font-500  secondary text-center">Check in</h3>
+            <h4 class="font-17 font-600 text_small">{{formattedCheckInTime }}</h4>
+          </div>
+          <div class="">
+            <h3 class="attendance_title font-17 font-500  secondary text-center">Duration</h3>
+            <h4 class="font-17 font-600 text_small"> {{totalHrs}} Hrs</h4>
+          </div>
+          <div class="">
+            <h3 class="attendance_title font-17 font-500  secondary text-center">Check Out</h3>
+            <h4 class="font-17 font-600 text_small">{{ formattedCheckOutTime }}</h4>
+            <h4 class="font-17 font-600 text_small" *ngIf="attendance.checkOutTime == null">--:--</h4>
+          </div>
+        </div>
+
+        <div class="attendance_image d-flex justify-content-between">
+          <img
+            class="imageSize"
+            src="assets/images/temp_img/Options 01 _Selected.png"
+            *ngIf="attendance.checkInImage == undefined"
+          />
+          <img
+            class="imageSize"
+            [src]="  attendance.checkInImage"
+            *ngIf="attendance.checkInImage != undefined"
+          />
+          <img
+            class="imageSize"
+            src="assets/images/temp_img/Options 01 _Selected.png"
+            *ngIf="attendance.checkOutImage == undefined"
+          />
+          <img
+            class="imageSize"
+            [src]="attendance.checkOutImage"
+            *ngIf="attendance.checkOutImage != undefined"
+          />
+        </div>
+
+        <!-- <div class="attendance_report">
+          <h4 class="sub-heading font-17 font-500 secondary">Report</h4>
+          <textarea class="form-control text_area" id="exampleFormControlTextarea1" rows="3"
+            placeholder="Start Typing....."></textarea>
+        </div>
+
+        <form class="attachment_file2 d-inline-flex align-items-center  position-relative">
+          <input type="file" name="fileupload" value="fileupload" class="d-none" id="fileupload">
+          <label for="fileupload" class="font-15 font-700 secondary text-white attachment_file_text">
+            <i class="fi fi-rr-paperclip-vertical secondary add_more position-absolute light mx-2"></i>
+            Attachments <span class="mx-0 ms-2 font-15 font-400 text-white">Assignment Files.zip</span></label>
+        </form> -->
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal attendance start -->
+<div
+  class="modal fade"
+  id="exampleModal3"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel3"
+  aria-hidden="true"
+>
+  <div class="modal-dialog position-relative leave_modal">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="modal-header apply_title">
+          <h1
+            class="modal-title font-21 font-600 secondary modal_line position-relative"
+          >
+            Attendance {{ attendance.checkInDate | date : "dd MMM yyyy" }}
+          </h1>
+          <button
+            type="button"
+            class="close_btn"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          >
+            <i class="fi fi-rr-cross close_modal"></i>
+          </button>
+        </div>
+        <div
+          class="attendance_heading d-flex justify-content-between align-items-center"
+        >
+          <div class="">
+            <h3 class="attendance_title font-17 font-500 secondary text-center">
+              Check in
+            </h3>
+            <h4 class="font-17 font-600 text_small">
+              {{ formattedCheckInTime }}
+            </h4>
+          </div>
+          <div class="">
+            <h3 class="attendance_title font-17 font-500 secondary text-center">
+              Duration
+            </h3>
+            <h4 class="font-17 font-600 text_small">
+              {{ attendance.workingHour }} Hrs
+            </h4>
+          </div>
+          <div class="">
+            <h3 class="attendance_title font-17 font-500 secondary text-center">
+              Check Out
+            </h3>
+            <h4 class="font-17 font-600 text_small">
+              {{ formattedCheckOutTime }}
+            </h4>
+          </div>
+        </div>
+
+        <div class="attendance_image d-flex justify-content-between">
+          <!-- <img class="imageSize" src="assets/images/temp_img/Options 01 _Selected.png">
+        <img class="imageSize" src="assets/images/temp_img/Options 01 _Selected.png"> -->
+          <img
+            class="imageSize"
+            src="assets/images/temp_img/Options 01 _Selected.png"
+            *ngIf="attendance.checkInImage == undefined"
+          />
+          <img
+            class="imageSize"
+            [src]=" attendance.checkInImage"
+            *ngIf="attendance.checkInImage != undefined"
+          />
+          <img
+            class="imageSize"
+            src="assets/images/temp_img/Options 01 _Selected.png"
+            *ngIf="attendance.checkOutImage == undefined"
+          />
+          <img
+            class="imageSize"
+            [src]="attendance.checkOutImage"
+            *ngIf="attendance.checkOutImage != undefined"
+          />
+        </div>
+
+        <div class="attendance_report">
+          <div class="question_ans">
+            <h3 class="font-17 font-500 secondary">Report</h3>
+            <ol class="ps-3">
+              <li class="font-17 font-400 text_dark">{{attendance.workReport}}</li>
+             
+            </ol>
+          </div> 
+        </div>
+
+        <form
+          class="attachment_file2 d-flex align-items-center position-relative"
+        >
+          <input
+            type="file"
+            name="fileupload"
+            value="fileupload"
+            class="d-none"
+            id="fileupload"
+          />
+          <label
+            for="fileupload"
+            class="font-15 font-700 secondary text-white attachment_file_text"
+          >
+            <i
+              class="fi fi-rr-paperclip-vertical secondary add_more position-absolute light mx-2"
+            ></i>
+            Attachments
+            <span class="mx-0 ms-2 font-15 font-400 text-white"
+              >Assignment Files.zip</span
+            ></label
+          >
+        </form>
+
+        <!-- <div
+          class="apply_modal_buttons d-flex justify-content-between align-items-center"
+        >
+          <button type="button" class="cancel_modal_btn">Cancel</button>
+          <button type="button" class="apply_modal_btn">Apply</button>
+        </div> -->
+      </div>
+    </div>
+  </div>
+</div>

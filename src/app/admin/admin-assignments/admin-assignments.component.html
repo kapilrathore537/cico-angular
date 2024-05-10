@@ -1,0 +1,339 @@
+<div id="main" class="main dashboard_page">
+    <div class="profile d-flex mb-4">
+
+        <div class="profile_top_heading d-flex gap_24">
+            <h1 class="font-27 font-700 secondary mb-0">Assignments</h1>
+            <button class="top_profile_sec_btn font-14 font-500" data-bs-toggle="modal"
+                data-bs-target="#create_assignment_modal" (click)="clearFormSubmission()">Create New</button>
+        </div>
+
+        <app-profile-bar></app-profile-bar>
+    </div>
+
+    <!-- DASHBOARD START -->
+
+    <div class="scroll_dashboard">
+
+        <div class="row">
+            <div class="col-md-6 mb-4">
+                <div class="assignment-stats">
+                    <h3 class="admin-title font-17 font-600 secondary position-relative">Stats</h3>
+                    <div class="assignment-stats-area">
+                        <div class="assignment-chart">
+                            <div class="Present tool_tip" [style.width]="totalSubmitted+'%'">
+                                <span class="tooltiptext">
+                                    <span class="tip-box" style="background: #8079FF;"></span>Submited
+                                    {{totalSubmitted}}%
+                                </span>
+                            </div>
+                            <div class="Absent tool_tip_absent" [style.width]="reveiwed+'%'">
+                                <span class="tooltiptext_absent">
+                                    <span class="tip-box" style="background: #49CF9F;"></span>Reviewed {{reveiwed}}%
+                                </span>
+                            </div>
+                            <div class="Leave tool_tip_leave" [style.width]="unReveiwed+'%'">
+                                <span class="tooltiptext_leave">
+                                    <span class="tip-box" style="background: #F6C453;"></span>Unreviewed {{unReveiwed}}%
+                                </span>
+                            </div>
+                            <!-- <div class="our_due" [style.width]="presentWidth"></div> -->
+                        </div>
+                        <div class="chart-detail-bottom justify-content-center">
+                            <div class="submitted-value">
+                                <p>Submited</p>
+                                <h2 class="font-14 font-600 text_dark"> <span
+                                        class="purple-small-box"></span>{{totalSubmitted}}%</h2>
+                            </div>
+                            <div class="pending-value">
+                                <p>Reviewed</p>
+                                <h2 class="font-14 font-600 text_dark"> <span
+                                        class="purple-small-box"></span>{{reveiwed}}%</h2>
+                            </div>
+                            <div class="approve-value">
+                                <p>Unreviewed</p>
+                                <h2 class="font-14 font-600 text_dark"> <span
+                                        class="purple-small-box"></span>{{unReveiwed}}%</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="attendance_dropdown d-flex justify-content-between align-items-center">
+                    <h3 class="admin-title font-17 font-600 secondary position-relative">Active Assignments</h3>
+                    <div class="right-side-dropdown-btn d-flex">
+                        <div class="dropdown">
+                            <a class="attendance_dropdown1 dropdown-toggle font-15 font-500 dark" id="course1" href="#"
+                                role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Course
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" *ngFor="let course of courses"
+                                        (click)="courseFilterByCourseIdAndSubjectId(course,0)">{{course.courseName}}</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="dropdown">
+                            <a class="attendance_dropdown1 dropdown-toggle font-15 font-500 dark" id="subject1"
+                                role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Subject
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" *ngFor="let subject of subjectes"
+                                        (click)="selectCourseSubject(subject)"
+                                        (click)="courseFilterByCourseIdAndSubjectId(course,subjectId)">
+                                        {{subject.subjectName}}</a></li>
+                                <!-- <li><a class="dropdown-item" href="#">February</a></li>
+                                <li><a class="dropdown-item" href="#">March</a></li> -->
+                            </ul>
+                        </div>
+                        <!-- <div class="dropdown">
+                            <a class="attendance_dropdown1 dropdown-toggle font-15 font-500 dark" href="#" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                Status
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#">January</a></li>
+                                <li><a class="dropdown-item" href="#">February</a></li>
+                                <li><a class="dropdown-item" href="#">March</a></li>
+                            </ul>
+                        </div> -->
+                    </div>
+
+
+                </div>
+                <div class="table_container">
+                    <table class="table mb-0 admin-table">
+                        <thead style="background:#EDF9FB;">
+                            <tr class="table_heading">
+                                <th scope="col" class="font-15 font-600 secondary">Assignment</th>
+                                <th scope="col" class="font-15 font-600 secondary">Status</th>
+                                <th scope="col" class="font-15 font-600 secondary">Summited</th>
+                                <th scope="col" class="font-15 font-600 secondary">Reviewed</th>
+                                <th scope="col" class="font-15 font-600 secondary">Unreviewed</th>
+                                <!-- <th scope="col" class="font-15 font-600 secondary">Over Due</th> -->
+                            </tr>
+                        </thead>
+                        <tbody class="bg-light">
+                            <tr class="pointer" *ngFor="let obj of taskSubmissionStatus ;let i=index">
+                                <td>
+                                    <h5 class="font-15 font-500 mb-0"
+                                        routerLink="/admin/createassignments/{{obj.assignmentId}}"
+                                        *ngIf="!isDuplicateAssignment(obj.assignmentTitle, i)">{{obj.assignmentTitle}}
+                                    </h5>
+                                    <p class="text_gray font-12 font-400 mb-0 " *ngIf="obj.taskNumber">Task
+                                        {{obj.taskNumber}}</p>
+                                </td>
+                                <td class="txt_color_blue" [ngClass]="obj.status==false?'success':' text-danger'"
+                                    (click)="activateTask(obj)">
+                                    <div class="td">{{obj.status==false?' Active':'Inactive'}}</div>
+                                </td>
+                                <td class="txt_color_purple ">{{obj.totalSubmitted}}</td>
+                                <td class="txt_color_light_green">{{obj.reveiwed}}</td>
+                                <td class="txt_color_yellow">{{obj.unReveiwed}}</td>
+
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+
+                <app-pagination [paginationManager]="assignmentPagination" (eventEmit)="getAllData($event)"
+                    [type]="'Assignment'" [pageRequest]="assignmentPageRequest"></app-pagination>
+            </div>
+
+            <div class="col-md-6 mb-4">
+                <div class="attendance_dropdown d-flex justify-content-between align-items-center">
+                    <h3 class="admin-title font-17 font-600 secondary position-relative">Submissions (Recent)
+                    </h3>
+                    <div class="right-side-dropdown-btn d-flex">
+                        <div class="dropdown">
+                            <a class="attendance_dropdown1 dropdown-toggle font-15 font-500 dark" id="course2"
+                                role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Course
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" *ngFor="let course of courses"
+                                        (click)="getAllSubmitedAssignments(course,0,'NOT_CHECKED_WITH_IT')">{{course.courseName}}</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="dropdown">
+                            <a class="attendance_dropdown1 dropdown-toggle font-15 font-500 dark" id="subject2"
+                                role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Subject
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" *ngFor="let subject of subjectes"
+                                        (click)="selectCourseSubject(subject)"
+                                        (click)="getAllSubmitedAssignments(course,subjectId,'NOT_CHECKED_WITH_IT')">
+                                        {{subject.subjectName}}</a></li>
+                            </ul>
+                        </div>
+                        <div class="dropdown">
+                            <a class="attendance_dropdown1 dropdown-toggle font-15 font-500 dark" id="status2"
+                                role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Status
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item"
+                                        (click)="getAllSubmitedAssignments(course,subjectId,'Accepted')">Accepted</a>
+                                </li>
+                                <li><a class="dropdown-item"
+                                        (click)="getAllSubmitedAssignments(course,subjectId,'Unreviewed')">Unreviewed</a>
+                                </li>
+                                <li><a class="dropdown-item"
+                                        (click)="getAllSubmitedAssignments(course,subjectId,'Rejected')">Rejected</a>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="table_container mt_20">
+                    <table class="table mb-0">
+                        <thead style="background:#EDF9FB;">
+                            <tr class="table_heading">
+                                <th scope="col" class="font-15 font-600 secondary">Student Name</th>
+                                <th scope="col" class="font-15 font-600 secondary">Assignment</th>
+                                <th scope="col" class="font-15 font-600 secondary">Time</th>
+                                <th scope="col" class="font-15 font-600 secondary">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-light">
+                            <tr *ngFor="let obj of submitedAssignments" class="pointer"  (click)="pageRanderWithObj(obj,obj.assignmentId)">
+                                <td>
+                                    <a class="d-flex align-items-center gap_5"
+                                       >
+                                        <div class="person_image">
+                                            <img [src]="obj.profilePic" alt="" class="img-fluid">
+                                        </div>
+                                        <h5 class="font-13 font-500 mb-0 text_dark">{{obj.fullName}}<br>
+                                            <p class="text_gray font-13 font-400 mb-0">{{obj.applyForCourse}}
+                                            </p>
+                                        </h5>
+                                    </a>
+                                </td>
+                                <!-- <td>{{obj.title}}</td> -->
+
+                                <td>
+                                    <div class="d-flex align-items-center gap_5">
+                                        <h5 class="font-13 font-500 mb-0 text_dark">{{obj.title}}<br>
+                                            <p class="text_dark font-13 font-400 mb-0">Task {{obj.taskNumber}}
+                                            </p>
+                                        </h5>
+                                    </div>
+                                </td>
+
+
+
+                                <td>{{obj.submissionDate | date:'short'}}</td>
+                                <td
+                                    [ngClass]="{'active_txt_blue':(obj.status=='Reviewing')||(obj.status=='Unreviewed'),'active_txt_orange':obj.status=='Rejected','active_txt_green':obj.status=='Accepted'}">
+                                    {{obj.status}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <app-pagination [paginationManager]="assignmentSubmissionPagination" (eventEmit)="getAllData($event)"
+                    [type]="'AssignmentSubmission'" [pageRequest]="assignmentSubmissionPageRequest"></app-pagination>
+            </div>
+
+
+        </div>
+    </div>
+    <!-- DASHBOARD END -->
+
+    <!-- RIGHT SIDE START-->
+    <app-right-side-bar></app-right-side-bar>
+    <!-- RIGHT SIDE END -->
+
+
+    <!-- MIDDLE CONTENT END -->
+
+
+</div>
+<!--DASHBOARD END -->
+
+
+<!-- Modal Create New Assignment start -->
+<div class="modal fade" id="create_assignment_modal" tabindex="-1" aria-labelledby="exampleModalLabel1"
+    aria-hidden="true">
+    <div class="modal-dialog position-relative leave_modal">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="modal-header apply_title p-3">
+                    <h1 class="modal-title fs-5 font-21 font-600 secondary modal_line position-relative"
+                        id="exampleModalLabel1">Assignment Details</h1>
+                    <button type="button" class="close_btn" data-bs-dismiss="modal" aria-label="Close"
+                        (click)="clearFormSubmission()">
+                        <i class="fi fi-rr-cross close_icon"></i>
+                    </button>
+                </div>
+
+                <form [formGroup]="submissionForm">
+                    <div class="row">
+                        <div class="form-group">
+                            <div class="col-md-12 mb_18">
+                                <label for="" class="mb_6 font-15 font-500 secondary">Assignment
+                                    Title</label>
+                                <div class="input_icon position-relative">
+                                    <input type="text" id="title" name="title" class="form-control input_text"
+                                        placeholder="Enter Assingnment Title" [(ngModel)]="assignmentRequest.title"
+                                        formControlName="title">
+                                </div>
+                                <div *ngIf=" isFieldInvalidForSubmissionForm('title')" class="text-danger">
+                                    title is required.</div>
+                            </div>
+
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-12 mb_24">
+                                <div class="input_icon position-relative">
+                                    <label for="" class="mb_6 font-17 font-500 secondary">Course</label>
+                                    <select class="form-select form-control " name="courseId"
+                                        [(ngModel)]="assignmentRequest.courseId" aria-label="Default select example"
+                                        (change)="getCourseSubject(assignmentRequest.courseId)"
+                                        formControlName="courseId">
+                                        <option value="">Select Course</option>
+                                        <option selected="" [value]="course.courseId" *ngFor="let course of courses">
+                                            {{course.courseName}}</option>
+                                    </select>
+                                    <div style="margin-top: -17px;" *ngIf=" isFieldInvalidForSubmissionForm('courseId')"
+                                        class="text-danger">
+                                        course is required.</div>
+                                </div>
+
+
+                            </div>
+
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-12 mb_24">
+                                <div class="input_icon position-relative">
+                                    <label for="" class="mb_6 font-17 font-500 secondary">Subject</label>
+                                    <select class="form-select   form-control" name="subjectId"
+                                        [(ngModel)]="assignmentRequest.subjectId" aria-label="Default select example"
+                                        formControlName="subjectId">
+                                        <option [value]="">Select Subject</option>
+                                        <option [value]="subject.subjectId" *ngFor="let subject of subjectes">
+                                            {{subject.subjectName}}</option>
+                                    </select>
+                                    <div style="margin-top: -17px;"
+                                        *ngIf=" isFieldInvalidForSubmissionForm('subjectId')" class="text-danger">
+                                        subject is required.</div>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                    </div><!-- row -->
+                </form>
+                <!-- <h6 *ngIf="message!=''" style="color: red;">{{message}}</h6> -->
+                <a class="apply_modal_buttons d-flex justify-content-center align-items-center mt-2">
+                    <button type="button" class="apply_modal_btn" (click)="createAssingment()">Create</button>
+                </a>
+
+            </div>
+        </div>
+    </div>
+</div>

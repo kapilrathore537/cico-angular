@@ -1,0 +1,30 @@
+.imageSize{
+  width: 150px;
+  height: 150px;
+}
+ 
+.punch_btn {
+    background-color: #49bfcf;
+    border-radius: 6px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    width: 25%;
+    min-height: 400px;
+    padding: 20px;
+  }
+  .timestamps {
+    display: flex;
+    gap: 24px;
+    justify-content: space-between;
+    width: 100%;
+  }
+  .timestamicon {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    // width: 30%;
+    text-align: center;
+  }

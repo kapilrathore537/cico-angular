@@ -1,0 +1,30 @@
+<!-- <nav aria-label="Page navigation example" class="table-pagination">
+        <ul class="pagination">
+                <li class="p-2  mx-2 ms-0 "><a class="fs-16 fw-500 secondary "
+                                [ngClass]="paginationManager.first?'theading ':' cur-point'"
+                                (click)="ManageNextPrev(false)">Previous</a>
+                </li>
+                <li class="page-item cur-point" *ngFor="let b1 of paginationManager.showButtons ;"
+                        (click)="setPage(b1-1)"><a class="page-link text_orange "
+                                [ngClass]="pageRequest.pageNumber==b1-1?'active':''" id="{{b1}}"
+                                href="javascript:void(0)">{{b1}}</a>
+                </li>
+                <li class="p-2  mx-0 ms-2"><a class="fs-16 fw-500 secondary"
+                                [ngClass]="paginationManager.last?'theading':' cur-point'"
+                                (click)="ManageNextPrev(true)">Next</a>
+                </li>
+        </ul>
+</nav>
+
+
+ -->
+
+
+<nav aria-label="Page navigation example" class="table-pagination">
+        <ul class="pagination">
+            <li class="p-2  mx-2 ms-0"><a class="fs-16 fw-500 secondary" [ngClass]="paginationManager.first?'theading disable-click ':' cur-point'"  (click)="ManageNextPrev(false)">Previous</a></li>
+            <li class="page-item cur-point" *ngFor="let b of paginationManager.showButtons ;"  (click)="setPage(b)"><a class="page-link" [ngClass]="pageRequest.pageNumber==b-1?'page-active':''" id="{{b}}" href="javascript:void(0)">{{b}}</a></li>
+              <li class=""  *ngIf="paginationManager.totalPages>paginationManager.showButtons[paginationManager.showButtons.length-1]"  ><a class="page-link"  href="javascript:void(0)" (click)="setPage(paginationManager.showButtons[paginationManager.showButtons.length-1]+1)">...</a></li>
+            <li class="p-2  mx-0 ms-2"><a class="fs-16 fw-500 secondary"  href="javascript:void(0)"  [ngClass]="paginationManager.last?'theading disable-click':' cur-point'"   (click)="ManageNextPrev(true)">Next</a></li>
+        </ul>
+      </nav>

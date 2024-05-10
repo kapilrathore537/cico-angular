@@ -1,0 +1,113 @@
+<div id="main" class="main dashboard_page">
+    <div class="profile d-flex mb-4">
+
+        <h1 class="font-27 font-700 secondary mb-0">News & Events</h1>
+
+
+        <app-profile-bar></app-profile-bar>
+    </div>
+
+
+    <!-- DASHBOARD START -->
+
+    <div class="scroll_dashboard">
+
+        <form>
+            <div class="assignment-stats">
+
+                <div class="row mb-3">
+                    <div class="col-md-8 col-lg-6">
+                        <label for="" class="mb_6 font-17 font-500 secondary">title</label>
+                        <div class="input_icon position-relative">
+                            <input type="text" id="title" name="title" class="form-control input_text"
+                                placeholder="Day1" [(ngModel)]="newsAndEventRequest.title">
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mb-4">
+                    <div class="col-md-8 col-lg-6">
+                        <label for="" class="mb_6 font-17 font-500 secondary">shortDescriptoin</label>
+                        <div class="input_icon position-relative">
+                            <input type="text" id="shortDescriptoin" name="shortDescriptoin"
+                                class="form-control input_text" placeholder="2"
+                                [(ngModel)]="newsAndEventRequest.shortDescription">
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mb-4">
+                    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12" *ngIf="imagePreview != ''">
+                        <div
+                            class="profile_change d-flex justify-content-center align-items-center mb-4 position-relative mx-auto">
+
+                            <div class="profile_edits">
+                                <div class="profile_buttons d-flex align-items-end">
+
+                                    <i class="fi fi-rr-trash light font-24 line-height-0 hover-delete-icon"  (click)="removeImage()"
+                                       ></i>
+                                </div>
+                            </div>
+
+                            <input id="file" type="file" onchange="loadFile(event)" class="d-none">
+                            <img [src]="imagePreview" class="profile_image" id="output">
+                        </div>
+                        <h3 class="font-15 font-500 assignment_sub_heading mt-1 mb-0">{{imageName}}
+                        </h3>
+                    </div>
+
+                    <div class="col-md-3">
+                        <form>
+                            <div
+                                class="attachment_file2 d-flex align-items-center justify-content-center  position-relative add-attechment add-media-attech">
+                                <input type="file" name="image" formControlName="image" (change)="addImage($event)"
+                                    value="fileName" class="form-control d-none" id="image">
+                                <label for="image" class="font-17 font-500 d-flex">
+                                    <i class="fi fi-rr-plus-small warning font-24 line-height-0"></i>
+                                    Add Media</label>
+                            </div>
+                            <!-- <div *ngIf="isFieldInvalidForNewsAndEventDetailsForm('image')"
+                            class="text-danger">Image is required.</div> -->
+
+                        </form>
+
+                    </div>
+                </div>
+
+                <div class="row mb_24">
+                    <div class="col-md-8 col-lg-6">
+                        <label for="" class="mb_6 font-17 font-500 secondary">Job BriefDescription</label>
+                        <textarea class="form-control text_area" id="exampleFormControlTextarea1" row mb-3s="3"
+                            placeholder="Start Typing....." name="briefDescription"
+                            [(ngModel)]="newsAndEventRequest.briefDescription"></textarea>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <a class="top_profile_sec_btn font-14 font-500" (click)="updateNewsAndEvent()">Publish
+                            Now</a>
+                    </div>
+                </div>
+
+            </div><!-- row -->
+        </form>
+    </div>
+
+
+    <!-- DASHBOARD END -->
+
+    <!-- RIGHT SIDE START-->
+    <app-right-side-bar></app-right-side-bar>
+    <!-- RIGHT SIDE END -->
+
+
+    <!-- MIDDLE CONTENT END -->
+
+
+</div>
+<!--DASHBOARD END -->
+
+<!-- Modal Delete Modal Start -->

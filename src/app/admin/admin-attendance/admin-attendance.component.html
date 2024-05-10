@@ -1,0 +1,596 @@
+<div id="main" class="main dashboard_page">
+  <div class="profile d-flex mb-4">
+    <h1 class="font-27 font-700 secondary mb-0">Attendance</h1>
+    <app-profile-bar></app-profile-bar>
+  </div>
+
+  <!-- DASHBOARD START -->
+
+  <div class="scroll_dashboard">
+    <div class="row  mb_20">
+
+      <div class="col-md-6 today_attendance mb-4">
+        <h3 class="admin-title font-17 font-600 secondary position-relative">Today’s Attendance</h3>
+        <div class="attendance-area position-relative">
+          <!--The content below is only a placeholder and can be replaced.-->
+          <div class="col-md-12">
+            <div id="chart" class="chartmargin d-flex justify-content-center">
+              <apx-chart [colors]="chartOptions.colors" [series]="chartOptions.series" [chart]="chartOptions.chart"
+                [labels]="chartOptions.labels" [responsive]="chartOptions.responsive" [legend]="chartOptions.legend"
+                [stroke]="chartOptions.stroke"></apx-chart>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="col-md-6 admin-attendance-chart mb-4">
+        <div class="d-flex justify-content-between align-items-center">
+          <h3 class="admin-title font-17 font-600 secondary position-relative mb-0">Attendance</h3>
+          <div class="dropdown">
+            <a class="attendance_dropdown1 dropdown-toggle font-15 font-500 dark" href="#" role="button"
+              data-bs-toggle="dropdown" aria-expanded="false">
+              {{currentMonth}}
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" (click)="getMonthWiseAttendanceDataForChart(1)">January</a></li>
+              <li><a class="dropdown-item" (click)="getMonthWiseAttendanceDataForChart(2)">February</a></li>
+              <li><a class="dropdown-item" (click)="getMonthWiseAttendanceDataForChart(3)">March</a></li>
+              <li><a class="dropdown-item" (click)="getMonthWiseAttendanceDataForChart(4)">April</a></li>
+              <li><a class="dropdown-item" (click)="getMonthWiseAttendanceDataForChart(5)">May</a></li>
+              <li><a class="dropdown-item" (click)="getMonthWiseAttendanceDataForChart(6)">June</a></li>
+              <li><a class="dropdown-item" (click)="getMonthWiseAttendanceDataForChart(7)">July</a></li>
+              <li><a class="dropdown-item" (click)="getMonthWiseAttendanceDataForChart(8)">August</a></li>
+              <li><a class="dropdown-item" (click)="getMonthWiseAttendanceDataForChart(9)">September</a></li>
+              <li><a class="dropdown-item" (click)="getMonthWiseAttendanceDataForChart(10)">October</a></li>
+              <li><a class="dropdown-item" (click)="getMonthWiseAttendanceDataForChart(11)">November </a></li>
+              <li><a class="dropdown-item" (click)="getMonthWiseAttendanceDataForChart(12)">December </a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="assignment-area" style="min-height: 359px;">
+          <!-- <div class="chart-detail">
+            
+          </div> -->
+          <div class="assignment-chart">
+            <div class="Present tool_tip" [style.width]="presentWidth+'%'">
+              <span class="tooltiptext">
+                <span class="tip-box" style="background: #0d00ff;"></span>Present {{presentWidth}}%
+            </span>
+            </div>
+            <div class="Absent tool_tip_absent" [style.width]="absentWidth+'%'">
+              <span class="tooltiptext_absent">
+                <span class="tip-box" style="background: #dd6319;"></span>Absent {{absentWidth}}%
+            </span>
+            </div>
+            <div class="Leave tool_tip_leave" [style.width]="leaveWidth+'%'">
+              <span class="tooltiptext_leave">
+                <span class="tip-box" style="background: #f9dd04;"></span>Leave {{leaveWidth}}%
+            </span>
+            </div>
+            <!-- <div class="our_due" [style.width]="presentWidth"></div> -->
+          </div>
+          <div class="chart-detail-bottom justify-content-center">
+            <div class="submitted-value">
+              <p>Present</p>
+              <h2 class="font-14 font-600 text_dark"> <span class="purple-small-box"></span>{{presentWidth}}%</h2>
+            </div>
+            <div class="pending-value">
+              <p>Absent</p>
+              <h2 class="font-14 font-600 text_dark"> <span class="purple-small-box"></span>{{absentWidth}}%</h2>
+            </div>
+            <div class="approve-value">
+              <p>Leave</p>
+              <h2 class="font-14 font-600 text_dark"> <span class="purple-small-box"></span>{{leaveWidth}}%</h2>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="row">
+      <div class="col-md-3 mb-4">
+        <div class="d-flex justify-content-between align-items-center mb_12">
+          <h3 class="admin-title font-17 font-600 secondary position-relative">{{attendanceFilter}} Today</h3>
+          <div class="dropdown">
+            <a class="attendance_dropdown1 dropdown-toggle font-15 font-500 dark" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Filter
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" (click)="getTodayAttendanceFilter('Present')" >Present</a></li>
+              <li><a class="dropdown-item" (click)="getTodayAttendanceFilter('Absent')" >Absent</a></li>
+              <li><a class="dropdown-item" (click)="getTodayAttendanceFilter('Early Checkout')"  >Early Checkout</a></li>
+            </ul>
+          </div>
+         </div>
+         <table class="scrollable">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Phone Number</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let obj of absentData" routerLink="/admin/studentprofile/{{obj.studentId}}">
+              <td class="d-flex align-items-center pointer" style="gap:5px;" >
+                <img [src]="obj.profilePic" alt="" class="img-fluid imagestudent">
+
+                <h5 class="font-13 font-500 mb-0">{{obj.fullName}}<br>
+                  <p class="text_gray font-13 font-400 mb-0">{{obj.applyForCourse}}</p>
+                </h5>
+              </td>
+              <td style="font-size: 13px; font-weight: 400;">{{obj.mobile}}
+                <br>
+                <p class="text_gray font-13 font-400 mb-0" *ngIf="obj.checkInTime!=undefined">{{changeTimeFormat(obj.checkInTime)}}</p></td>
+            </tr>
+            <h1  class="font-15 font-600 secondary position-relative" 
+            *ngIf="absentData.length==0 "><br>NO DATA AVAILABLE !!!</h1>
+          </tbody>
+        </table>
+        <!-- <div class="table_container">
+          <table class="table mb-0 table_admin_side">
+            <tr>
+              <td style="padding: 0;">
+                <table style="background:#fbfefe; width: 100%;">
+                    <tr class="">
+                      <td scope="col" class="font-15 font-600 secondary">Name
+                      </td>
+                      <td scope="col" class="font-15 font-600 secondary">Phone Number
+                      </td>
+      
+                    </tr>
+                </table>
+              </td>
+            </tr>
+          <br>
+
+            <h1  class="font-15 font-600 secondary position-relative" 
+            *ngIf="absentData.length==0">NO ABSENT DATA FOUND !!!</h1>
+            <div class="table_scroll" style="height: 511px;">
+            <table>
+              <tbody class="bg-light">
+                <tr *ngFor="let obj of absentData" routerLink="/admin/studentprofile/{{obj.studentId}}">
+                  <td class="d-flex align-items-center pointer" style="gap:5px;" >
+                    <img [src]="imageUrl+obj.profilePic" alt="" class="img-fluid imagestudent">
+  
+                    <h5 class="font-13 font-500 mb-0">{{obj.fullName}}<br>
+                      <p class="text_gray font-13 font-400 mb-0">{{obj.applyForCourse}}</p>
+                    </h5>
+                  </td>
+                  <td>{{obj.mobile}}</td>
+                </tr>
+              </tbody>
+            </table>
+            </div>
+          </table>
+        </div> -->
+        <nav aria-label="Page navigation example" class="table-pagination"  *ngIf="absentData.length>=absentPageRequest.pageSize" >
+                      
+          <ul class="pagination">
+              <li class="p-2  mx-2 ms-0 "><a class="fs-16 fw-500 secondary "  [ngClass]="absentPageManager.first?'theading ':' cur-point'"  (click)="absentManageNextPrev(false)">Previous</a></li>
+              <li class="page-item cur-point" *ngFor="let b of absentPageManager.showButtons ;"  (click)="absentPageGet(b-1)"><a class="page-link text_orange " [ngClass]="absentPageRequest.pageNumber==b-1?'active':''" id="{{b}}" href="javascript:void(0)">{{b}}</a>
+              </li>
+              <!-- <li class="page-item "><a class="page-link" >2</a></li>
+              <li class="page-item "><a class="page-link" >3</a></li>
+              <li class="page-item "><a class="page-link" >4</a></li>
+              <li class="page-item "><a class="page-link" >5</a></li> -->
+              <li class="p-2  mx-0 ms-2"><a class="fs-16 fw-500 secondary"  [ngClass]="absentPageManager.last?'theading':' cur-point'"   (click)="absentManageNextPrev(true)">Next</a></li>
+          </ul>
+      </nav>
+      </div>
+     
+
+      <div class="col-md-4 mb-4">
+        <div class="d-flex justify-content-between align-items-center mb_12">
+          <h3 class="admin-title font-17 font-600 secondary position-relative">On Leave</h3>
+          <!-- <div class="dropdown">
+            <a class="attendance_dropdown1 dropdown-toggle font-15 font-500 dark" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Course
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#">January</a></li>
+              <li><a class="dropdown-item" href="#">February</a></li>
+              <li><a class="dropdown-item" href="#">March</a></li>
+            </ul>
+          </div> -->
+         </div>
+         <table class="scrollable">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>From</th>
+              <th>To</th>
+
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let obj of leavesData">
+              <td class="d-flex align-items-center pointer" style="gap:5px;" routerLink="/admin/studentprofile/{{obj.studentId}}">
+                <img [src]="obj.profilePic" alt="" class="img-fluid imagestudent">
+                <h5 class="font-13 font-500 mb-0">{{obj.name}}<br>
+                  <p class="text_gray font-13 font-400 mb-0">{{obj.applyForCourse}}</p>
+                </h5>
+              </td>
+
+              <td>{{obj.leaveDate|date}}</td>
+              <td>{{obj.leaveEndDate|date}}</td>
+            </tr>
+            <h1  class="font-15 font-600 secondary position-relative" 
+            *ngIf="totaOnleaves==0"><br>NO LEAVES DATA AVAILABLE !!!</h1>
+          </tbody>
+        </table>
+        <!-- <div class="table_container">
+          <table class="table mb-0">
+            <thead style="background:#fbfefe;">
+              <tr class="table_heading">
+                <th scope="col" class="font-15 font-600 secondary">Name</th>
+                <th scope="col" class="font-15 font-600 secondary">From</th>
+                <th scope="col" class="font-15 font-600 secondary">To</th>
+              </tr>
+            </thead>
+            <br>
+
+            <h1  class="font-15 font-600 secondary position-relative" 
+            *ngIf="leavesData.length==0">NO LEAVES DATA FOUND !!!</h1>
+            <div class="table_scroll" style="height: 511px;">
+            <tbody class="bg-light">
+              <tr *ngFor="let obj of leavesData">
+                <td class="d-flex align-items-center pointer" style="gap:5px;" routerLink="/admin/studentprofile/{{obj.studentId}}">
+                  <img [src]="imageUrl+obj.profilePic" alt="" class="img-fluid imagestudent">
+                  <h5 class="font-13 font-500 mb-0">{{obj.name}}<br>
+                    <p class="text_gray font-13 font-400 mb-0">{{obj.applyForCourse}}</p>
+                  </h5>
+                </td>
+
+                <td>{{obj.leaveDate|date}}</td>
+                <td>{{obj.leaveEndDate|date}}</td>
+              </tr>
+            </tbody>
+            </div>
+          </table>
+        </div> -->
+
+        <nav aria-label="Page navigation example" class="table-pagination"  *ngIf="leavesData.length>=absentPageRequest.pageSize" >
+                      
+          <ul class="pagination">
+              <li class="p-2  mx-2 ms-0 "><a class="fs-16 fw-500 secondary "  [ngClass]="leavesPageManager.first?'theading ':' cur-point'"  (click)="leavesManageNextPrev(false)">Previous</a></li>
+              <li class="page-item cur-point" *ngFor="let b of leavesPageManager.showButtons ;"  (click)="leavestPageGet(b-1)"><a class="page-link text_orange " [ngClass]="leavesPageRequest.pageNumber==b-1?'active':''" id="{{b}}" href="javascript:void(0)">{{b}}</a>
+              </li>
+              <!-- <li class="page-item "><a class="page-link" >2</a></li>
+              <li class="page-item "><a class="page-link" >3</a></li>
+              <li class="page-item "><a class="page-link" >4</a></li>
+              <li class="page-item "><a class="page-link" >5</a></li> -->
+              <li class="p-2  mx-0 ms-2"><a class="fs-16 fw-500 secondary"  [ngClass]="leavesPageManager.last?'theading':' cur-point'"   (click)="leavesManageNextPrev(true)">Next</a></li>
+          </ul>
+      </nav>
+      </div>
+
+      <div class="col-md-5 mb-4">
+        <div class="d-flex justify-content-between">
+          <h3 class="admin-title font-17 font-600 secondary position-relative mb_20">Leave Requests</h3>
+          <a routerLink="/admin/leaverequest" class="secondary font-13 font-500 mb-0">View All</a>
+        </div>
+
+        <table class="scrollable">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Duration</th>
+              <th>Action</th>
+
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let obj of leavesRequestData">
+              <td class="d-flex pointer" style="gap:5px;" routerLink="/admin/studentprofile/{{obj.studentId}}">
+                <img [src]="obj.profilePic" alt="" class="img-fluid imagestudent">
+                <h5 class="font-13 font-500 mb-0">{{obj.fullName}} <br>
+                  <p class="text_gray font-13 font-400 mb-0">{{obj.applyForCourse}}</p>
+                </h5>
+              </td>
+              <td>
+                <p class="mb-0 font-13 font-400">{{obj.leaveTypeName}} {{obj.leaveDuration}} Days </p>
+                <p class="mb-0 font-13 font-400">{{ obj.leaveDate }} - {{ obj.leaveEndDate }}</p>
+                <p class="mb-0 font-13 font-400"> {{obj.leaveReason}}</p>
+
+              </td>
+              <td>                 
+                <h3 class="active_approved_btn font-13 font-400 border-radius12 text-light text-center pointer" (click)="approveStudentLeaveReqeust(obj.studentId,obj.leaveId,'approve') ">Approved</h3>
+                <h5 class="warning font-13 font-500 mb-0 pointer"(click)="approveStudentLeaveReqeust(obj.studentId,obj.leaveId,'deny')" >Deny</h5>
+              </td>
+            </tr>
+            <h1  class="font-15 font-600 secondary position-relative" 
+            *ngIf="totalLeavesRequests==0"><br>NO LEAVES REQUESTS DATA AVAILABLE !!!</h1>
+          </tbody>
+        </table>
+        
+        <!-- <div class="table_container table_scroll" style="height: 530px;">
+          <table class="table mb-0 table_admin_side">
+            <thead style="background:#fbfefe;">
+              <tr class="table_heading">
+                <th scope="col" class="font-15 font-600 secondary">Name</th>
+                <th scope="col" class="font-15 font-600 secondary">Duration</th>
+                <th scope="col" class="font-15 font-600 secondary">Action</th>
+              </tr>
+            </thead>
+            <br>
+
+
+            <h1  class="font-15 font-600 secondary position-relative" 
+            *ngIf="leavesRequestData.length==0">NO LEAVE REQUESTS DATA FOUND !!!</h1>
+
+
+            <div class="table_scroll" style="height: 511px;">
+
+            <tbody class="bg-light">
+
+              <tr *ngFor="let obj of leavesRequestData">
+                <td class="d-flex align-items-center pointer" style="gap:5px;" routerLink="/admin/studentprofile/{{obj.studentId}}">
+                  <img [src]="imageUrl+obj.profilePic" alt="" class="img-fluid imagestudent">
+                  <h5 class="font-13 font-500 mb-0">{{obj.fullName}} <br>
+                    <p class="text_gray font-13 font-400 mb-0">{{obj.applyForCourse}}</p>
+                  </h5>
+                </td>
+                <td>
+                  <p class="mb-0">{{obj.leaveTypeName}} {{obj.leaveDuration}} Days </p>
+                  <p class="mb-0">{{ obj.leaveDate }} - {{ obj.leaveEndDate }}</p>
+                  <p class="mb-0"> {{obj.leaveReason}}</p>
+
+                </td>
+                <td>                 
+                  <h3 class="active_approved_btn font-13 font-400 border-radius12 text-light text-center" (click)="approveStudentLeaveReqeust(obj.studentId,obj.leaveId,'approve') ">Approved</h3>
+                  <h5 class="warning font-13 font-500 mb-0 text-center"(click)="approveStudentLeaveReqeust(obj.studentId,obj.leaveId,'deny')" >Deny</h5>
+                </td>
+              </tr>
+            </tbody>
+            </div>
+          </table>
+        </div> -->
+        <nav aria-label="Page navigation example" class="table-pagination"  *ngIf="leavesRequestData.length>=absentPageRequest.pageSize" >
+                      
+          <ul class="pagination">
+              <li class="p-2  mx-2 ms-0 "><a class="fs-16 fw-500 secondary "  [ngClass]="leavesRequestPageManager.first?'theading ':' cur-point'"  (click)="leavesRequestManageNextPrev(false)">Previous</a></li>
+              <li class="page-item cur-point" *ngFor="let b of leavesRequestPageManager.showButtons ;"  (click)="leavestRequestPageGet(b-1)"><a class="page-link text_orange " [ngClass]="leavesRequestPageRequest.pageNumber==b-1?'active':''" id="{{b}}" href="javascript:void(0)">{{b}}</a>
+              </li>
+              <!-- <li class="page-item "><a class="page-link" >2</a></li>
+              <li class="page-item "><a class="page-link" >3</a></li>
+              <li class="page-item "><a class="page-link" >4</a></li>
+              <li class="page-item "><a class="page-link" >5</a></li> -->
+              <li class="p-2  mx-0 ms-2"><a class="fs-16 fw-500 secondary"  [ngClass]="leavesRequestPageManager.last?'theading':' cur-point'"   (click)="leavesRequestManageNextPrev(true)">Next</a></li>
+          </ul>
+      </nav>
+      </div>
+     
+    </div>
+  </div>
+  <!-- DASHBOARD END -->
+
+  <!-- RIGHT SIDE START-->
+  <app-right-side-bar></app-right-side-bar>
+  <!-- RIGHT SIDE END -->
+
+
+  <!-- MIDDLE CONTENT END -->
+
+
+</div>
+<!--DASHBOARD END -->
+
+
+<!-- Start Dashboard Check Out Modal -->
+
+<div class="modal fade" id="dash_checkout_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog position-relative leave_modal">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="modal-header apply_title">
+          <h1 class="modal-title  font-21 font-600 secondary modal_line position-relative">Attendance 18 Jan, 2023
+          </h1>
+          <button type="button" class="close_btn" data-bs-dismiss="modal" aria-label="Close">
+            <i class="fi fi-rr-cross close_icon"></i>
+          </button>
+        </div>
+        <div class="attendance_heading d-flex justify-content-between align-items-center">
+          <div class="">
+            <h3 class="attendance_title font-17 font-500  secondary text-center">Check in</h3>
+            <h4 class="font-17 font-600 text_small">09:03:24 AM</h4>
+          </div>
+          <div class="">
+            <h3 class="attendance_title font-17 font-500  secondary text-center">Duration</h3>
+            <h4 class="font-17 font-600 text_small">00:00 Hrs</h4>
+          </div>
+          <div class="">
+            <h3 class="attendance_title font-17 font-500  secondary text-center">Check Out</h3>
+            <h4 class="font-17 font-600 text_small">06:08:32 PM</h4>
+          </div>
+        </div>
+
+        <div class="attendance_image d-flex justify-content-between">
+          <img src="assets/images/temp_img/Options 01 _Selected.png">
+          <img src="assets/images/temp_img/Options 01 _Selected.png">
+        </div>
+
+        <div class="attendance_report">
+          <h4 class="sub-heading font-17 font-500 secondary">Report</h4>
+          <textarea class="form-control text_area" id="exampleFormControlTextarea1" rows="3"
+            placeholder="Start Typing....."></textarea>
+        </div>
+
+        <form class="attachment_file2 d-inline-flex align-items-center  position-relative">
+          <input type="file" name="fileupload" value="fileupload" class="d-none" id="fileupload">
+          <label for="fileupload" class="font-15 font-700 secondary text-white attachment_file_text">
+            <i class="fi fi-rr-paperclip-vertical secondary add_more position-absolute light mx-2"></i>
+            Attachments <span class="mx-0 ms-2 font-15 font-400 text-white">Assignment Files.zip</span></label>
+        </form>
+
+        <div class="apply_modal_buttons d-flex justify-content-between align-items-center">
+          <button type="button" class="cancel_modal_btn">Cancel</button>
+          <button type="button" class="apply_modal_btn">Apply</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- End Dashboard Check Out Modal -->
+
+<!-- Assignment  Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog position-relative assignment_modal">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5 font-21 font-700 secondary modal_line position-relative" id="exampleModalLabel">
+            Assignment - 1</h1>
+          <button type="button" class="close_btn" data-bs-dismiss="modal" aria-label="Close">
+            <i class="fi fi-rr-cross close_modal"></i>
+          </button>
+          <button type="button" class="submit_buttons font-14 font-500 text-white" data-bs-toggle="modal"
+            data-bs-target="#submit_button">Submit</button>
+        </div>
+        <div class="">
+          <div class="assignment">
+            <div class="question_ans">
+              <h3 class="font-17 font-600">Question - 1</h3>
+              <h4 class="font-17 font-400">How would you reverse the order of elements in an array in Java without
+                using any built-in methods or additional data structures?</h4>
+            </div>
+            <div class="row advertisement">
+              <div class="col-md-3 bootstrap_cards">
+                <h3 class="font-15 font-700  assignment_sub_heading">Video 1</h3>
+                <div class="assinment_image video-img">
+                  <video src="assets/images/temp_img/pexels-max-fischer-5198159-3840x2160-50fps.mp4" autoplay controls
+                    height="" width="270"></video>
+                </div>
+              </div>
+              <div class="col-md-3 bootstrap_cards">
+                <h3 class="font-15 font-700  assignment_sub_heading">Image 1</h3>
+                <div class="assinment_image">
+                  <img src="assets/images/temp_img/modal.png" class="img-fluid">
+                </div>
+              </div>
+
+              <div class="col-md-3 bootstrap_cards">
+                <h3 class="font-15 font-700  assignment_sub_heading">Image 2</h3>
+                <div class="assinment_image">
+                  <img src="assets/images/temp_img/modal.png" class="img-fluid">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="assignment">
+            <h3 class="font-17 font-700 list_bottom1">Hints:-</h3>
+            <ul class="font-17 list_bottom mb-0">
+              <li>How would you reverse the order of elements in an array in Java without using any built-in methods
+                or additional data structures?</li>
+              <li>How would you reverse the order of elements in an array in Java without using any built-in methods
+                or additional data structures?</li>
+              <li>How would you reverse the order of elements in an array in Java without using any built-in methods
+                or additional data structures?</li>
+            </ul>
+          </div>
+
+          <form class="attachment_file1 d-inline-flex align-items-center  position-relative">
+            <input type="file" name="fileupload" value="fileupload" class="d-none" id="fileupload">
+            <label for="fileupload" class="font-15 font-700 secondary text-white attachment_file_text">
+              <i class="fi fi-rr-paperclip-vertical secondary add_more position-absolute light mx-2"></i>
+              Attachments <span class="mx-0 ms-2 font-15 font-400 text-white">Assignment Files.zip</span></label>
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- end Assignment  modal -->
+
+
+<!-- Dashboard Updates  Modal -->
+<div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel1" aria-hidden="true">
+  <div class="modal-dialog position-relative assignment_modal" style="width: 514px;">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5 font-17 font-600 secondary modal_line position-relative mb-2"
+            id="exampleModalLabel1">
+            Submission Details</h1>
+          <button type="button" class="close_btn" data-bs-dismiss="modal" aria-label="Close" style="top: -15%;">
+            <i class="fi fi-rr-cross close_modal"></i>
+          </button>
+          <h3 class="text_light_blue font-15 font-500">Reviewing</h3>
+        </div>
+        <div class="">
+          <div class="assignment">
+            <div class="question_ans">
+              <h3 class="font-17 font-500 secondary">Report</h3>
+              <ol class="ps-3">
+                <li class="font-17 font-400 text_dark">as and concepts into visually engaging infographics and
+                  illustrations.</li>
+                <li class="font-17 font-400 text_dark">Maintain a high level of creativity</li>
+              </ol>
+            </div>
+            <form class="attachment_file1 d-inline-flex align-items-center  position-relative attechment_file">
+              <input type="file" name="fileupload" value="fileupload" class="d-none" id="fileupload">
+              <label for="fileupload" class="font-15 font-400 text_gray  attachment_file_text">
+                <i class="fi fi-rr-paperclip-vertical secondary add_more position-absolute  mx-2"></i>
+                File_name.pdf</label>
+            </form>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- end dashboard updates modal -->
+
+  <!-- Modal submit button start -->
+  <div class="modal fade" id="submit_button" tabindex="-1" aria-labelledby="submit_button" aria-hidden="true">
+    <div class="modal-dialog position-relative leave_modal">
+      <div class="modal-content">
+        <div class="modal-body">
+          <div class="modal-header apply_title">
+            <h1 class="modal-title  font-21 font-600 secondary modal_line position-relative">Submit Assignment</h1>
+            <button type="button" class="close_btn1" data-bs-dismiss="modal" aria-label="Close">
+              <i class="fi fi-rr-cross close_icon"></i>
+            </button>
+          </div>
+          <div class="form_input">
+            <h5 class="sub-heading font-17 font-500 secondary mb-1">Discription</h5>
+            <div class="">
+              <textarea class="form-control text_area" id="exampleFormControlTextarea1" rows="3"
+                placeholder="Input Text Here"></textarea>
+            </div>
+          </div>
+
+          <h4 class="sub-heading font-17 font-500 secondary mb-1">Heading</h4>
+          <form class="select_file d-flex align-items-center  file position-relative">
+            <input type="file" name="fileupload" value="fileupload" class="d-none" id="fileupload">
+            <label for="fileupload" class="font-15 font-400 secondary w-75">Select A File</label>
+            <button type="button" class="submit_btn0 ms-auto">
+              <i class="fi fi-rr-upload mx-1 mb-0 lh-0"></i><a type="btn" value=""
+                class=" font-15 font-400 text-white">Upload File</a>
+            </button>
+          </form>
+
+          <div class="file_option">
+            <div class=" d-flex file_name">
+              <i class="fi fi-rr-paperclip-vertical secondary add_more"></i>
+              <i class="fi fi-rr-trash secondary delete"></i>
+              <h3 class="font-15 font-400 dark mx-1 mb-0">File_name.pdf</h3>
+            </div>
+
+          </div>
+
+
+          <div class="apply_modal_buttons d-inline-flex justify-content-between align-items-center">
+            <button type="button" class="cancel_modal_btn">Save Draft</button>
+            <button type="button" class="apply_modal_btn">Submit</button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>

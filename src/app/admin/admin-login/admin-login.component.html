@@ -1,0 +1,21 @@
+<div class="login-page">
+    <h1 class="qr_heading1 text-center heading-1 font-600 warning mb-2">Welcome to</h1>
+    <img src="assets/images/temp_img/Logo.png" alt="" class="mb-4">
+<div class="login_box1">
+    <h3 class="secondary font-32 font-600 mb-0">Log In</h3>
+        <form class="form" #f="ngForm">
+            <div class="form-group">
+                <label for="email" class="secondary font-18 font-600 user">Admin ID</label>
+                <input type="email" class="form-control1" id="email" placeholder="Enter Your Admin ID" name="adminId" autofocus ngModel>
+            </div>
+            <div class="form-group">
+            <label for="pwd" class="secondary font-18 font-600 user">Password</label>
+            <input type="password" class="form-control1" id="pwd" placeholder="Enter Your Password" name="password" ngModel>
+            </div>
+            <h4 class="secondary font-18 font-600 text-end forgate_password mb-0">Forget Password</h4>
+        </form>
+    <button class="btn1 mx-auto" (click)="logIn(f.value)">
+      <a type="button" class="font-21 font-600">Log In</a>
+    </button>
+</div>
+</div>

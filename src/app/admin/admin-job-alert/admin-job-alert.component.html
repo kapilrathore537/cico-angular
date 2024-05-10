@@ -1,0 +1,125 @@
+<div id="main" class="main job_alertpage">
+  <div class="profile d-flex mb-4">
+    <div class="profile_top_heading d-flex gap_24">
+      <h1 class="font-27 font-700 secondary mb-0">Job Alerts</h1>
+      <a routerLink="/admin/createjob">
+        <button class="top_profile_sec_btn font-14 font-500">
+          Post New Job
+        </button>
+      </a>
+    </div>
+    <app-profile-bar></app-profile-bar>
+  </div>
+
+  <div class="scroll_section">
+    <!-- INTERBSHIP CARD START -->
+    <h3 class="Enrolled font-21 font-600 secondary position-relative">Internships</h3>
+    <div class="row">
+      <h3 class="Enrolled font-21 font-600 secondary" *ngIf="length==0">No Internships Found!!!!</h3>
+      <div class="col-md-3 bootstrap_cards" *ngFor="let obj of internshipJobs;let i = index">
+          <div class="internship_container">
+            <div class="container_top  jobaleart_card">
+              
+              <i class="fi fi-ss-menu-dots-vertical meat-dot  text_gray" id="meat_dot" onclick="meat_dot(this)"></i>
+              
+              <div class="meat-dot-dropdown" style="display: none;">
+                <a routerLink="/admin/editjob/{{obj.jobId}}" class="mb-1 secondary d-flex align-items-center gap_5"><i class="fi fi-rr-file-edit line-height-0"></i> Edit</a>
+                <p class="mb-0 delete-icon-color d-flex align-items-center gap_5" data-bs-toggle="modal"
+                 data-bs-target="#delete-modal" (click)="jobId=obj.jobId"><i class="fi fi-rr-trash line-height-0" ></i> Delete</p>
+                 <!-- <p class="mb-0 delete-icon-color d-flex align-items-center gap_5 dropdown-padding pointer"
+                  data-bs-toggle="modal" data-bs-target="#delete-modal" (click)="jobId=obj.jobId"><i
+                      class="fi fi-rr-trash line-height-0"></i> Delete</p> -->
+              </div>
+
+              <div class="d-flex align-items-center jobalert_card">
+              <div class="job-image">
+              <img
+              [src]="obj.technologyStack.imageName">
+              </div>
+              <div class="internship_title">
+                <h3 class="font-17 font-600 title_1">Job Title : {{obj.jobTitle}}</h3>
+                <h4 class="font-14 font-400 sub_title1">CompanyName : {{obj.companyName}}</h4>
+                <h4 class="font-14 font-400 mb-0">Job Package up to :{{obj.jobPackage}} LPA</h4>
+              </div>
+              </div>
+
+            </div>
+            <h4 class="Requirement_text font-13 font-400">{{ showFullMessage && numberOfJob == (i+1) && jobId == obj.jobId ? obj.jobDescription : (obj.jobDescription | slice:0:50) }}<a class="read-color" (click)="toggleShowMore(i+1,obj.jobId)">{{ showFullMessage && numberOfJob == (i+1) && jobId == obj.jobId? '...read less' : ' read more...' }}</a></h4>
+          </div>
+
+      </div>
+
+    </div>
+    <!-- INTERNSHIP CARD END -->
+
+    <!-- JOB CARD START -->
+    <h3 class="Enrolled font-21 font-600 secondary position-relative">Jobs</h3>
+    <div class="row">
+      <h3 class="Enrolled font-21 font-600 secondary " *ngIf="joblength==0">No Jobs Found!!!!</h3>
+      <div class="col-md-3 bootstrap_cards" *ngFor="let obj of jobs;let i = index">
+        <div class="internship_container">
+          <div class="container_top d-flex align-items-center justify-content-between jobaleart_card">
+            <i class="fi fi-ss-menu-dots-vertical meat-dot  text_gray" id="meat_dot" onclick="meat_dot(this)"></i>
+
+            <div class="meat-dot-dropdown" style="display: none;">
+              <a routerLink="/admin/editjob/{{obj.jobId}}" class="mb-1 secondary d-flex align-items-center gap_5"><i class="fi fi-rr-file-edit line-height-0"></i> Edit</a>
+              <p class="mb-0 delete-icon-color d-flex align-items-center gap_5" data-bs-toggle="modal"
+              data-bs-target="#delete-modal" (click)="jobId=obj.jobId"><i class="fi fi-rr-trash line-height-0" ></i> Delete</p>
+            </div>
+            <div class="d-flex align-items-center jobalert_card">
+            <div class="job-image">
+              <img [src]="obj.technologyStack.imageName">
+              </div>
+            <div class="internship_title">
+              <h3 class="font-17 font-600 title_1">Job Title : {{obj.jobTitle}}</h3>
+              <h4 class="font-14 font-400 sub_title1">CompanyName : {{obj.companyName}}</h4>
+              <h4 class="font-14 font-400 mb-0">Job Package up to :{{obj.jobPackage}}LPA</h4>
+            </div>
+            </div>
+
+          </div>
+          <h4 class="Requirement_text font-13 font-400">{{ showFullMessage && numberOfJob == (i+1) && jobId == obj.jobId ? obj.jobDescription : (obj.jobDescription | slice:0:50) }}<a class="read-color" (click)="toggleShowMore(i+1,obj.jobId)">{{ showFullMessage && numberOfJob == (i+1) && jobId == obj.jobId? '...read less' : ' read more...' }}</a></h4>
+        </div>
+    </div>
+
+
+   
+    </div>
+    <!-- JOB CARD END -->
+  </div>
+
+</div>
+<!-- MIDDLE CONTENT END -->
+
+<!-- RIGHT SIDE START-->
+<app-right-side-bar></app-right-side-bar>
+<!-- DASHBOARD END -->
+
+
+<!-- Modal Delete Modal Start -->
+<div class="modal fade" id="delete-modal" tabindex="-1" aria-labelledby="delete-modal" aria-hidden="true">
+  <div class="modal-dialog position-relative leave_modal">
+      <div class="modal-content">
+          <div class="modal-body">
+              <button type="button" class="close_btn" data-bs-dismiss="modal" aria-label="Close"
+                  style="top: -23%;">
+                  <i class="fi fi-rr-cross close_icon"></i>
+              </button>
+
+              <p class="secondary font-21 font-500 text-center">Are You Sure You Want To Delete This Course?
+              </p>
+              <div class="apply_modal_buttons d-flex justify-content-between align-items-center">
+                  <a >
+                      <button type="button" data-bs-dismiss="modal" aria-label="Close" class="cancel_modal_btn font-15 font-500 delete-icon-color pointer" (click)="deleteJob(jobId)">Yes,
+                          delete</button>
+                  </a>
+                  <a >
+                      <button type="button" data-bs-dismiss="modal" aria-label="Close" class="apply_modal_btn font-15 font-500 pointer">No, Do not
+                          delete</button>
+                  </a>
+              </div>
+
+          </div>
+      </div>
+  </div>
+</div>

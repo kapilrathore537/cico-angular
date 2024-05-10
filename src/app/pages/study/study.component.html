@@ -1,0 +1,51 @@
+
+  <div id="main" class="main mycourse_page subject_page">
+    <div class="profile mb-0 d-flex mb-4">
+      <h1 class="font-27 font-700 secondary mb-0">Study</h1>
+     <app-profile-bar></app-profile-bar>
+    </div>
+
+    <!-- SUBJECT START -->
+    <div class="dashboard_title">
+      <nav aria-label="breadcrumb" class="font-17 font-600 light-black mb-0 lh-36">
+        <ol class="breadcrumb mb-0 mb-3">
+          <li class="breadcrumb-item"><a routerLink="/student" class="gray-light">Home</a></li>
+          <li class="breadcrumb-item  light-black" aria-current="page">Subjects</li>
+        </ol>
+      </nav>
+    </div>
+    <div class="scroll_sec mt-0">
+
+      <div class="row">
+        <div class="col-md-3 bootstrap_cards" *ngFor="let obj of subjects">
+          <a routerLink="/student/chapter/{{obj.subjectId}}">
+            <div class="subject_card">
+              <div class="subject_card_top">
+                <div class="subject_name_card">
+                  <img class="image-size" src="{{obj.technologyStack.imageName}}">
+                  <div class="subject_name">
+                    <h3 class="subject_heading txt-dark mb-0">{{obj.subjectName}}</h3>
+                    <!-- <p class="chapter-cout mb-0">{{obj.chapterCount}}Chapters</p> -->
+                  </div>
+                </div>  
+                <span class="right_arrow d-flex justify-content-center align-items-center ms-auto">
+                  <img src="assets/images/svg_img/rightarrow.svg">
+                </span>
+              </div><!-- subject_card_top -->
+              <div class="progress_bar_value">
+                <p class="mb-0">{{obj.chapterCompleted}}/{{obj.chapterCount}}  Chapters Completed</p>
+                <h5 class="mb-0">{{calculatePercentages(obj.chapterCompleted,obj.chapterCount) }} %</h5>
+              </div>
+              <div class="progress">
+                <div class="progress-bar ProgressW bg-success-custom" role="progressbar" [style.width]="calculatePercentages(obj.chapterCompleted,obj.chapterCount)+'%'" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+              </div>
+              
+            </div> <!-- subject_card -->
+          </a>         
+        </div>
+        </div>
+      </div>
+    <!-- SUBJECT END -->
+    <app-right-side-bar></app-right-side-bar>
+
+   

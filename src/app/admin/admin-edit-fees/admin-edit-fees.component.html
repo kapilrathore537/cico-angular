@@ -1,0 +1,128 @@
+<div id="main" class="main dashboard_page">
+    <div class="profile d-flex mb-4">
+
+        <div class="profile_top_heading d-flex gap_24">
+            <h1 class="font-27 font-700 secondary mb-0">Fees</h1>
+        </div>
+
+        <app-profile-bar></app-profile-bar>
+    </div>
+
+    <!-- DASHBOARD START -->
+    <div class="scroll_dashboard">
+        <div class="assignment-stats">
+            <h3 class="admin-title font-17 font-600 secondary position-relative mb_20">Edit Fees</h3>
+            <form [formGroup]="updateFeesForm" class="mb_24">
+                <div class="row">
+                    <div class="col-md-4">
+                        <label for="" class="mb_6 font-17 font-500 secondary"> Full Name</label>
+                        <input type="text" id="fullName" name="fullName"  class="form-control input_text"  placeholder="Full Name" 
+                        [(ngModel)]="fees.fullName" formControlName="fullName"
+                        readonly>
+                        <div  *ngIf="isFieldInvalidForUpdateFeesDetailsForm('fullName')" class="text-danger">Name is
+                            required.</div>
+                      </div>
+                      
+                      <div class="col-md-4">
+                        <label for="" class="mb_6 font-17 font-500 secondary">Email</label>
+                        <input type="email" id="email" name="email" class="form-control input_text"  placeholder="email"
+                        [(ngModel)]="fees.email" formControlName="email"
+                         readonly>
+                         <div  *ngIf="isFieldInvalidForUpdateFeesDetailsForm('email')" class="text-danger">Email is
+                            required.</div>
+                      
+                      </div>
+                      
+                      
+                    <div class="col-md-4 mb_20">
+                        <label for="email" class="mb_6 font-17 font-500 secondary">Mobile No.</label>
+                        <div class="input_icon position-relative">
+                            <input type="text" id="mobile" name="mobile" class="form-control input_text"
+                             placeholder="Enter Email"
+                             [(ngModel)]="fees.mobile" formControlName="mobile"
+                              readonly>
+                              <div  *ngIf="isFieldInvalidForUpdateFeesDetailsForm('mobile')" class="text-danger">Mobile No is
+                                required.</div>
+                          
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb_20">
+                        <label for="mobile" class="mb_6 font-17 font-500 secondary">Course</label>
+                        <div class="input_icon position-relative">
+                            <input type="text" id="courseName" name="courseName" class="form-control input_text"
+
+                              placeholder="Enter courseName"
+                              [(ngModel)]="fees.courseName" formControlName="courseName"
+                               readonly>
+                               <div  *ngIf="isFieldInvalidForUpdateFeesDetailsForm('courseName')" class="text-danger">Course Name is
+                                required.</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="" class="mb_6 font-17 font-500 secondary">Final Fees</label>
+                        <div class="input_icon position-relative">
+                            <input type="text" id="finalFees" name="finalFees" class="form-control input_text"
+                                placeholder="Enter Course Fees" [(ngModel)]="fees.finalFees"  formControlName="finalFees">
+                                <div  *ngIf="isFieldInvalidForUpdateFeesDetailsForm('finalFees')" class="text-danger">Final Fees is
+                                    required.</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb_20">
+                        <label for="" class="mb_6 font-17 font-500 secondary">Paid Fees</label>
+                        <div class="input_icon position-relative">
+                            <input type="text" id="feesPaid" name="feesPaid" class="form-control input_text"
+                                placeholder="Enter Course Fees" [(ngModel)]="fees.feesPaid" (input)="updateRemainingFees()" formControlName="feesPaid">
+                                <div  *ngIf="isFieldInvalidForUpdateFeesDetailsForm('feesPaid')" class="text-danger">Fees Paid is
+                                    required.</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb_20">
+                        <label for="" class="mb_6 font-17 font-500 secondary">Remainig Fees</label>
+                        <div class="input_icon position-relative">
+                            <input type="text" id="remainingFees" name="remainingFees" class="form-control input_text"
+                                placeholder="Enter Finial Fees" [(ngModel)]="fees.remainingFees" formControlName="remainingFees" readonly>
+                                <div  *ngIf="isFieldInvalidForUpdateFeesDetailsForm('remainingFees')" class="text-danger">RemainingFees is
+                                    required.</div>
+                        </div>
+                    </div>
+                    
+                </div><!-- row -->
+                <div class="row text-center">
+                    <div class="col-md-12">
+                        <a (click)="updateFees()" class="fees_submit_btn font-17 font-500" data-bs-toggle="modal">Update</a>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+
+        <!-- RIGHT SIDE START-->
+        <app-right-side-bar></app-right-side-bar>
+        <!-- RIGHT SIDE END -->
+
+    </div>
+    <!--DASHBOARD END -->
+
+        <!-- Modal Admin Delete Modal Start -->
+<div class="modal fade" id="payment-modal" tabindex="-1" aria-labelledby="payment-modal"
+aria-hidden="true">
+<div class="modal-dialog position-relative leave_modal">
+<div class="modal-content">
+  <div class="modal-body">
+      <button type="button" class="close_btn" data-bs-dismiss="modal" aria-label="Close"
+          style="top: -23%;">
+          <i class="fi fi-rr-cross close_icon"></i>
+      </button>
+      <i class="fi fi-rr-check-circle text-success fs-1 d-block text-center"></i>
+      <p class="secondary font-21 font-500 text-center">Your Payment is Successful.
+      </p>
+      <div class="apply_modal_buttons text-center">
+          <a routerLink="/admin/fees">
+              <button type="button" class="apply_modal_btn font-15 font-500">Done</button>
+          </a>
+      </div>
+
+  </div>
+</div>
+</div>
+<!-- Modal Admin Delete Modal End -->

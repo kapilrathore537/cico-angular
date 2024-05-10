@@ -1,0 +1,166 @@
+<div id="main" class="main dashboard_page">
+    <div class="profile d-flex mb-4">
+
+        <div class="profile_top_heading d-flex gap_24">
+            <h1 class="font-27 font-700 secondary mb-0">Student</h1>
+            <a routerLink="/admin/studentregistration" class="top_profile_sec_btn font-14 font-500 lh-1">Register
+                student</a>
+        </div>
+
+        <app-profile-bar></app-profile-bar>
+    </div>
+
+    <!-- DASHBOARD START -->
+
+    <div class="scroll_dashboard">
+
+        <div class="row">
+
+            <div class="col-md-12">
+                <div class="attendance_dropdown d-flex justify-content-between align-items-center">
+                    <h3 class="admin-title font-17 font-600 secondary position-relative">Student</h3>
+                    <div class="right-side-dropdown-btn d-flex">
+                        <div class="student-search">
+                            <input type="text" name="fullNmae" id="" placeholder="Search" class="gray-input-bg"
+                                [(ngModel)]="search" (ngModelChange)="searchStudentByName(0,15)">
+                        </div>
+
+                        <!-- <div class="dropdown">
+                          <a class="attendance_dropdown1 dropdown-toggle font-15 font-500 dark" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Status
+                          </a>
+                          <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" >Completed</a></li>
+                            <li><a class="dropdown-item" >February</a></li>
+                            <li><a class="dropdown-item" >March</a></li>
+                          </ul>
+                        </div> -->
+                    </div>
+                </div>
+                <div class="table_container">
+                    <table class="table mb-0">
+                        <thead style="background:#EDF9FB;">
+                            <tr class="table_heading">
+                                <th scope="col" class="font-15 font-600 secondary">Name</th>
+                                <th scope="col" class="font-15 font-600 secondary">Course</th>
+                                <th scope="col" class="font-15 font-600 secondary">Joining on</th>
+                                <th scope="col" class="font-15 font-600 secondary">Email</th>
+                                <th scope="col" class="font-15 font-600 secondary">Phone Num</th>
+                                <th scope="col" class="font-15 font-600 secondary">Actions</th>
+
+                            </tr>
+                        </thead>
+                        <tbody class="bg-light" *ngFor="let student of students">
+                            <tr>
+                                <td>
+                                    <a routerLink="/admin/studentprofile/{{student.studentId}}"
+                                        class="font-13 font-500 mb-0 text_gray d-flex align-items-center"
+                                        style="gap:5px;">
+                                        <img [src]="student.profilePic" alt="" class="img-fluid imagestudent">
+                                        {{student.fullName }}
+                                    </a>
+                                </td>
+                                <td>{{student.applyForCourse}}</td>
+                                <td>{{student.joinDate}}</td>
+                                <td>{{student.email}}</td>
+                                <td>{{student.mobile}}</td>
+                                <td (click)="newStudent=student;courseId=0">
+                                    <p class="mb-0 warning d-flex align-items-center gap_5 dropdown-padding pointer"
+                                        data-bs-toggle="modal" data-bs-target="#course-edit-modal"><i
+                                            class="fi fi-rr-file-edit line-height-0"
+                                            (click)="setCourse(student.courseResponse)">Upgrade</i> </p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <mat-paginator *ngIf="totalStudent>=15" [length]="totalStudent" [pageSize]="15"
+                        aria-label="Select page" (page)="onChangePage($event)">
+                    </mat-paginator>
+                    <!-- {{students |json}} -->
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    <!-- DASHBOARD END -->
+
+    <!-- RIGHT SIDE START-->
+    <app-right-side-bar></app-right-side-bar>
+    <!-- RIGHT SIDE END -->
+
+
+    <!-- MIDDLE CONTENT END -->
+
+
+</div>
+<!--DASHBOARD END -->
+<div class="modal fade" id="course-edit-modal" tabindex="-1" aria-labelledby="course-edit-modal" aria-hidden="true">
+    <div class="modal-dialog position-relative leave_modal">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="modal-header apply_title">
+                    <h1 class="modal-title fs-5 font-21 font-600 secondary modal_line position-relative"
+                        id="exampleModalLabel1">Edit Course</h1>
+                    <button type="button" class="close_btn" data-bs-dismiss="modal" aria-label="Close">
+                        <i class="fi fi-rr-cross close_icon"></i>
+                    </button>
+                </div>
+
+                <form action="">
+                    <div class="row">
+
+
+                        <div class="col-md-12 mb_18">
+                            <label for="" class="mb_6 font-15 font-500 secondary">Student Name</label>
+                            <div class="input_icon position-relative">
+                                <input type="text" id="fullName" name="fullName" class="form-control input_text"
+                                    placeholder="Enter Full Name" [(ngModel)]="newStudent.fullName" readonly>
+                            </div>
+                        </div>
+                        <div class="col-md-12 mb_18">
+                            <label for="" class="mb_6 font-15 font-500 secondary">Current Course</label>
+                            <div class="input_icon position-relative">
+                                <input type="text" id="applyForCourse" name="applyForCourse"
+                                    class="form-control input_text" placeholder="Enter Current Course "
+                                    [(ngModel)]="newStudent.applyForCourse" readonly>
+                            </div>
+                        </div>
+                        <!-- <div class="col-md-12 mb_18">
+                            <label for="" class="mb_6 font-15 font-500 secondary">Course Duration (In Months)</label>
+                            <div class="input_icon position-relative">
+                                <input type="text" id="" name="duration" class="form-control input_text"
+                                    placeholder="Enter Course Duration">
+                            </div>
+                        </div> -->
+
+
+                    </div> <!-- all-subjects-list -->
+
+                    <h2 class="font-15 font-500 secondary">Courses</h2>
+
+                    <div class="all-subjects-list mb_18">
+                        <div class="col-md-12 mb_18" *ngFor="let course of courseResponse">
+                            <div class="input_icon position-relative input_text checkbox_area">
+                                <div class="d-flex gap_5 align-items-center">
+                                    <img [src]="course.technologyStack.imageName" alt="" width="24" height="24">
+                                    <h2 class="font-15 font-500 mb-0 secondary">{{course.courseName}}</h2>
+                                </div>
+                                <input type="radio" [checked]="check(course.courseId)" name="course"
+                                    class="choose-courses" (click)="selectCourse(course.courseId)">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <div class="apply_modal_buttons d-flex justify-content-between align-items-center">
+                    <button type="button" class="cancel_modal_btn font-15 font-500" data-bs-dismiss="modal"
+                        aria-label="Close">Cancel</button>
+
+                    <button type="button" class="apply_modal_btn font-15 font-500" (click)="upgradeCourseOfStudent()"
+                        data-bs-dismiss="modal" aria-label="Close">Update Course</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

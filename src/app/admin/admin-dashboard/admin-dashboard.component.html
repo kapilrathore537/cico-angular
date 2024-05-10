@@ -1,0 +1,479 @@
+<div id="main" class="main dashboard_page">
+  <div class="profile d-flex mb-4">
+    <h1 class="font-27 font-700 secondary mb-0">Dashboard</h1>
+   <app-profile-bar></app-profile-bar>
+  </div>
+
+  <div class="scroll_dashboard">
+    <div class="row mb_20">
+
+      <div class="col-md-4 admin-dash-attendance mb-4">
+        <h3 class="admin-title font-17 font-600 secondary position-relative">Attendance</h3>
+        <div class="attendance-area position-relative">
+          <div id="chart" class="chartmargin d-flex justify-content-center">
+            <apx-chart [colors]="attendanceOptions.colors" [series]="attendanceOptions.series" [chart]="attendanceOptions.chart"
+              [labels]="attendanceOptions.labels" [responsive]="attendanceOptions.responsive" [legend]="attendanceOptions.legend"
+              [stroke]="attendanceOptions.stroke"></apx-chart>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4 admin-dash-assignment mb-4">
+        <h3 class="admin-title font-17 font-600 secondary position-relative">Assignments</h3>
+        <div class="assignment-area">
+          <div class="assignment-chart">
+            <div class="Present tool_tip" [style.width]="totalSubmitted+'%'">
+              <span class="tooltiptext">
+                <span class="tip-box" style="background: #8079FF;"></span>Submited {{totalSubmitted}}
+            </span>
+            </div>
+            <div class="Absent tool_tip_absent" [style.width]="reveiwed+'%'">
+              <span class="tooltiptext_absent">
+                <span class="tip-box" style="background:  #49CF9F;"></span>Reviewed {{reveiwed}}
+            </span>
+            </div>
+            <div class="Leave tool_tip_leave" [style.width]="unReveiwed+'%'">
+              <span class="tooltiptext_leave">
+                <span class="tip-box" style="background: #F6C453;"></span>Unreviewed {{unReveiwed}}
+            </span>
+            </div>
+            <!-- <div class="our_due" [style.width]="presentWidth"></div> -->
+          </div>
+          <div class="chart-detail-bottom justify-content-center">
+            <div class="submitted-value">
+              <p>Submited</p>
+              <h2 class="font-14 font-600 text_dark"> <span class="purple-small-box"></span>{{totalSubmitted}}%</h2>
+            </div>
+            <div class="pending-value">
+              <p>Reviewed</p>
+              <h2 class="font-14 font-600 text_dark"> <span class="purple-small-box"></span>{{reveiwed}}%</h2>
+            </div>
+            <div class="approve-value">
+              <p>Unreviewed</p>
+              <h2 class="font-14 font-600 text_dark"> <span class="purple-small-box"></span>{{unReveiwed}}%</h2>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 admin-dash-fees mb-4">
+        <h3 class="admin-title font-17 font-600 secondary position-relative">Fees</h3>
+        <div class="fees-area d-flex align-items-center justify-content-center">
+
+          <div id="chart">
+            <apx-chart
+              [series]="feesPieOptions.series"
+              [chart]="feesPieOptions.chart"
+              [responsive]="feesPieOptions.responsive"
+              [legend]="feesPieOptions.legend"
+              [colors]="feesPieOptions.colors"
+              [stroke]="feesPieOptions.stroke"
+              [labels]="feesPieOptions.labels"
+            ></apx-chart>
+          </div>
+
+          <!-- <div class="fees-details w-100">
+            <div class="d-flex align-items-center justify-content-between">
+              <span class="left-color-border bg-total-red"><span class="ms-3"> Total</span></span> 
+              <p class="mb-0 font-15">{{totalFees}}</p>
+              
+            </div>
+            <div class="d-flex align-items-center justify-content-between my-2">
+              <span class="left-color-border bg-collect-green"><span class="ms-3"> Collected</span></span> 
+              <p class="mb-0 font-15">{{collectedFees}}</p>
+            </div>
+            <div class="d-flex align-items-center justify-content-between">
+              <span class="left-color-border bg-pending-yellow"><span class="ms-3"> Pending</span></span> 
+              <p class="mb-0 font-15">{{pendingFees}}</p>
+            </div>
+          </div> -->
+        </div>
+      </div>
+
+    </div>
+
+    <div class="barchart-section mb_20">
+      <div class="row">
+        <div class="col-lg-6 col-md-6 mb-4 mb-md-3 mb-0 mb-md-3">
+          <div class="d-flex justify-content-between align-items-center mb_12">
+            <h3 class="admin-title font-17 font-600 secondary position-relative">Admissions</h3>
+
+            <!-- <label for="year">Select a Year:</label> -->
+<select class="attendance_dropdown1 border-0 font-15 font-500" id="year" name="year" [(ngModel)]="admissionYear" (change)="getAdmissinonDataByWiseForYear(admissionYear)">
+  <option *ngFor="let year of years" >{{ year }}</option>
+</select>
+
+            <!-- <div class="dropdown">
+              <a class="attendance_dropdown1 dropdown-toggle font-15 font-500 dark" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Month
+              </a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">January</a></li>
+                <li><a class="dropdown-item" href="#">February</a></li>
+                <li><a class="dropdown-item" href="#">March</a></li>
+              </ul>
+            </div> -->
+           </div>
+          <div class="attendance-charbar">
+            <div id="chart">
+              <apx-chart
+                [series]="admissinonOptions.series"
+                [chart]="admissinonOptions.chart"
+                [dataLabels]="admissinonOptions.dataLabels"
+                [plotOptions]="admissinonOptions.plotOptions"
+                [xaxis]="admissinonOptions.xaxis"
+                [colors]="admissinonOptions.colors"
+                [yaxis]="admissinonOptions.yaxis"
+              ></apx-chart>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-6 col-md-6 mb-4 mb-md-3 mb-0 mb-md-3 ">
+          <div class="d-flex justify-content-between align-items-center mb_12">
+            <h3 class="admin-title font-17 font-600 secondary position-relative">Fee Collection</h3>
+            <select class="attendance_dropdown1 border-0 font-15 font-500" id="year" name="year" [(ngModel)]="feesYear" (change)="getFeesCollectionMonthAndYearWise(feesYear)" >
+              <option *ngFor="let year of years" [value]="year" >{{ year }}</option>
+            </select>
+            <!-- <div class="dropdown">
+              <a class="attendance_dropdown1 dropdown-toggle font-15 font-500 dark" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Month
+              </a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">January</a></li>
+                <li><a class="dropdown-item" href="#">February</a></li>
+                <li><a class="dropdown-item" href="#">March</a></li>
+              </ul>
+            </div>-->
+           </div> 
+          <div class="attendance-charbar">
+            <div id="chart">
+              <apx-chart
+                [series]="feesOptions.series"
+                [chart]="feesOptions.chart"
+                [dataLabels]="feesOptions.dataLabels"
+                [plotOptions]="feesOptions.plotOptions"
+                [xaxis]="feesOptions.xaxis"
+                [colors]="feesOptions.colors"
+                [yaxis]="feesOptions.yaxis"
+              ></apx-chart>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6 mb-4">
+        <h3 class="admin-title font-17 font-600 secondary position-relative mb_20">New Students</h3>
+        <div class="table_container">
+          <table class="table mb-0">
+            <thead style="background:#EDF9FB;">
+              <tr class="table_heading">
+                <th scope="col" class="font-15 font-600 secondary">Name</th>
+                <th scope="col" class="font-15 font-600 secondary">Course</th>
+                <th scope="col" class="font-15 font-600 secondary">Joining on</th>
+                <th scope="col" class="font-15 font-600 secondary">Fee</th>
+                <th scope="col" class="font-15 font-600 secondary">Phone Number</th>
+              </tr>
+            </thead>
+            <tbody class="bg-light">
+              <tr *ngFor="let student of students">
+                <td class="d-flex align-items-center pointer" style="gap:5px;" routerLink="/admin/studentprofile/{{student.studentId}}"><img
+                    [src]="student.profilePic" alt="" class="img-fluid imagestudent">{{student.fullName}}</td>
+                <td>{{student.applyForCourse}}</td>
+                <td>{{student.joinDate}}</td>
+                <td>{{student.finalFees}}</td>
+                <td>{{student.mobile}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="col-md-6 mb-4">
+        <h3 class="admin-title font-17 font-600 secondary position-relative mb_20">Upcoming Dues</h3>
+        <div class="table_container">
+          <table class="table mb-0">
+            <thead style="background:#EDF9FB;">
+              <tr class="table_heading">
+                <th scope="col" class="font-15 font-600 secondary">Name</th>
+                <th scope="col" class="font-15 font-600 secondary">Course</th>
+                <th scope="col" class="font-15 font-600 secondary">Due on</th>
+                <th scope="col" class="font-15 font-600 secondary">Amount</th>
+                <th scope="col" class="font-15 font-600 secondary">Status</th>
+              </tr>
+            </thead>
+            <tbody class="bg-light" *ngFor="let fees of feeses">
+              <tr>
+                <td class="d-flex align-items-center pointer" style="gap:5px; border-bottom: 0;" routerLink="/admin/studentprofile/{{fees.studentId}}"><img
+                  [src]="fees.profilePic" alt="" class="img-fluid imagestudent">{{fees.fullName}}</td>
+                <td>{{fees.courseName}}</td>
+                <td>{{fees.date}}</td>
+                <td>{{fees.remainingFees}}</td>
+                <td>Pending</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <h3 class="admin-title font-17 font-600 secondary position-relative mt-4 mb_20">Recent Collections</h3>
+        <div class="table_container">
+          <table class="table mb-0">
+            <thead style="background:#EDF9FB;" >
+              <tr class="table_heading">
+                <th scope="col" class="font-15 font-600 secondary">Name</th>
+                <th scope="col" class="font-15 font-600 secondary">Course</th>
+                <th scope="col" class="font-15 font-600 secondary">Due on</th>
+                <th scope="col" class="font-15 font-600 secondary">Amount</th>
+                <th scope="col" class="font-15 font-600 secondary">Status</th>
+              </tr>
+            </thead>
+            <tbody class="bg-light" *ngFor="let feesPay of feesPays">
+              <tr>
+                <td class="d-flex align-items-center pointer" style="gap:5px; border-bottom: 0;" routerLink="/admin/studentprofile/{{feesPay.feesPay.studentId}}"><img
+                  [src]="feesPay.feesPay.profilePic" alt="" class="img-fluid imagestudent">{{feesPay.feesPay.fullName}}</td>
+                <td>{{feesPay.feesPay.courseName}}</td>
+                <td>{{feesPay.payDate}}</td>
+                <td>{{feesPay.feesPayAmount}}</td>
+                <td>Pending</td>
+              </tr>
+             
+
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <!-- DASHBOARD END -->
+
+  <!-- RIGHT SIDE START-->
+  <app-right-side-bar></app-right-side-bar>
+  <!-- RIGHT SIDE END -->
+
+
+  <!-- MIDDLE CONTENT END -->
+
+
+</div>
+<!--DASHBOARD END -->
+
+
+<!-- Start Dashboard Check Out Modal -->
+
+<div class="modal fade" id="dash_checkout_modal" tabindex="-1" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog position-relative leave_modal">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="modal-header apply_title">
+          <h1 class="modal-title  font-21 font-600 secondary modal_line position-relative">Attendance 18 Jan, 2023
+          </h1>
+          <button type="button" class="close_btn" data-bs-dismiss="modal" aria-label="Close">
+            <i class="fi fi-rr-cross close_icon"></i>
+          </button>
+        </div>
+        <div class="attendance_heading d-flex justify-content-between align-items-center">
+          <div class="">
+            <h3 class="attendance_title font-17 font-500  secondary text-center">Check in</h3>
+            <h4 class="font-17 font-600 text_small">09:03:24 AM</h4>
+          </div>
+          <div class="">
+            <h3 class="attendance_title font-17 font-500  secondary text-center">Duration</h3>
+            <h4 class="font-17 font-600 text_small">00:00 Hrs</h4>
+          </div>
+          <div class="">
+            <h3 class="attendance_title font-17 font-500  secondary text-center">Check Out</h3>
+            <h4 class="font-17 font-600 text_small">06:08:32 PM</h4>
+          </div>
+        </div>
+
+        <div class="attendance_image d-flex justify-content-between">
+          <img src="assets/images/temp_img/Options 01 _Selected.png">
+          <img src="assets/images/temp_img/Options 01 _Selected.png">
+        </div>
+
+        <div class="attendance_report">
+          <h4 class="sub-heading font-17 font-500 secondary">Report</h4>
+          <textarea class="form-control text_area" id="exampleFormControlTextarea1" rows="3"
+            placeholder="Start Typing....."></textarea>
+        </div>
+
+        <form class="attachment_file2 d-inline-flex align-items-center  position-relative">
+          <input type="file" name="fileupload" value="fileupload" class="d-none" id="fileupload">
+          <label for="fileupload" class="font-15 font-700 secondary text-white attachment_file_text">
+            <i class="fi fi-rr-paperclip-vertical secondary add_more position-absolute light mx-2"></i>
+            Attachments <span class="mx-0 ms-2 font-15 font-400 text-white">Assignment Files.zip</span></label>
+        </form>
+
+        <div class="apply_modal_buttons d-flex justify-content-between align-items-center">
+          <button type="button" class="cancel_modal_btn">Cancel</button>
+          <button type="button" class="apply_modal_btn">Apply</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- End Dashboard Check Out Modal -->
+
+<!-- Assignment  Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog position-relative assignment_modal">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5 font-21 font-700 secondary modal_line position-relative"
+            id="exampleModalLabel">
+            Assignment - 1</h1>
+          <button type="button" class="close_btn" data-bs-dismiss="modal" aria-label="Close">
+            <i class="fi fi-rr-cross close_modal"></i>
+          </button>
+          <button type="button" class="submit_buttons font-14 font-500 text-white" data-bs-toggle="modal"
+            data-bs-target="#submit_button">Submit</button>
+        </div>
+        <div class="">
+          <div class="assignment">
+            <div class="question_ans">
+              <h3 class="font-17 font-600">Question - 1</h3>
+              <h4 class="font-17 font-400">How would you reverse the order of elements in an array in Java without
+                using any built-in methods or additional data structures?</h4>
+            </div>
+            <div class="row advertisement">
+              <div class="col-md-3 bootstrap_cards">
+                <h3 class="font-15 font-700  assignment_sub_heading">Video 1</h3>
+                <div class="assinment_image video-img">
+                  <video src="assets/images/temp_img/pexels-max-fischer-5198159-3840x2160-50fps.mp4" autoplay
+                    controls height="" width="270"></video>
+                </div>
+              </div>
+              <div class="col-md-3 bootstrap_cards">
+                <h3 class="font-15 font-700  assignment_sub_heading">Image 1</h3>
+                <div class="assinment_image">
+                  <img src="assets/images/temp_img/modal.png" class="img-fluid">
+                </div>
+              </div>
+
+              <div class="col-md-3 bootstrap_cards">
+                <h3 class="font-15 font-700  assignment_sub_heading">Image 2</h3>
+                <div class="assinment_image">
+                  <img src="assets/images/temp_img/modal.png" class="img-fluid">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="assignment">
+            <h3 class="font-17 font-700 list_bottom1">Hints:-</h3>
+            <ul class="font-17 list_bottom mb-0">
+              <li>How would you reverse the order of elements in an array in Java without using any built-in methods
+                or additional data structures?</li>
+              <li>How would you reverse the order of elements in an array in Java without using any built-in methods
+                or additional data structures?</li>
+              <li>How would you reverse the order of elements in an array in Java without using any built-in methods
+                or additional data structures?</li>
+            </ul>
+          </div>
+
+          <form class="attachment_file1 d-inline-flex align-items-center  position-relative">
+            <input type="file" name="fileupload" value="fileupload" class="d-none" id="fileupload">
+            <label for="fileupload" class="font-15 font-700 secondary text-white attachment_file_text">
+              <i class="fi fi-rr-paperclip-vertical secondary add_more position-absolute light mx-2"></i>
+              Attachments <span class="mx-0 ms-2 font-15 font-400 text-white">Assignment Files.zip</span></label>
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- end Assignment  modal -->
+
+
+<!-- Dashboard Updates  Modal -->
+<div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel1" aria-hidden="true">
+  <div class="modal-dialog position-relative assignment_modal" style="width: 514px;">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5 font-17 font-600 secondary modal_line position-relative mb-2"
+            id="exampleModalLabel1">
+            Submission Details</h1>
+          <button type="button" class="close_btn" data-bs-dismiss="modal" aria-label="Close" style="top: -15%;">
+            <i class="fi fi-rr-cross close_modal"></i>
+          </button>
+          <h3 class="text_light_blue font-15 font-500">Reviewing</h3>
+        </div>
+        <div class="">
+          <div class="assignment">
+            <div class="question_ans">
+              <h3 class="font-17 font-500 secondary">Report</h3>
+              <ol class="ps-3">
+                <li class="font-17 font-400 text_dark">as and concepts into visually engaging infographics and
+                  illustrations.</li>
+                <li class="font-17 font-400 text_dark">Maintain a high level of creativity</li>
+              </ol>
+            </div>
+            <form class="attachment_file1 d-inline-flex align-items-center  position-relative attechment_file">
+              <input type="file" name="fileupload" value="fileupload" class="d-none" id="fileupload">
+              <label for="fileupload" class="font-15 font-400 text_gray  attachment_file_text">
+                <i class="fi fi-rr-paperclip-vertical secondary add_more position-absolute  mx-2"></i>
+                File_name.pdf</label>
+            </form>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- end dashboard updates modal -->
+
+  <!-- Modal submit button start -->
+  <div class="modal fade" id="submit_button" tabindex="-1" aria-labelledby="submit_button" aria-hidden="true">
+    <div class="modal-dialog position-relative leave_modal">
+      <div class="modal-content">
+        <div class="modal-body">
+          <div class="modal-header apply_title">
+            <h1 class="modal-title  font-21 font-600 secondary modal_line position-relative">Submit Assignment</h1>
+            <button type="button" class="close_btn1" data-bs-dismiss="modal" aria-label="Close">
+              <i class="fi fi-rr-cross close_icon"></i>
+            </button>
+          </div>
+          <div class="form_input">
+            <h5 class="sub-heading font-17 font-500 secondary mb-1">Discription</h5>
+            <div class="">
+              <textarea class="form-control text_area" id="exampleFormControlTextarea1" rows="3"
+                placeholder="Input Text Here"></textarea>
+            </div>
+          </div>
+
+          <h4 class="sub-heading font-17 font-500 secondary mb-1">Heading</h4>
+          <form class="select_file d-flex align-items-center  file position-relative">
+            <input type="file" name="fileupload" value="fileupload" class="d-none" id="fileupload">
+            <label for="fileupload" class="font-15 font-400 secondary w-75">Select A File</label>
+            <button type="button" class="submit_btn0 ms-auto">
+              <i class="fi fi-rr-upload mx-1 mb-0 lh-0"></i><a type="btn" value=""
+                class=" font-15 font-400 text-white">Upload File</a>
+            </button>
+          </form>
+
+          <div class="file_option">
+            <div class=" d-flex file_name">
+              <i class="fi fi-rr-paperclip-vertical secondary add_more"></i>
+              <i class="fi fi-rr-trash secondary delete"></i>
+              <h3 class="font-15 font-400 dark mx-1 mb-0">File_name.pdf</h3>
+            </div>
+
+          </div>
+
+
+          <div class="apply_modal_buttons d-inline-flex justify-content-between align-items-center">
+            <button type="button" class="cancel_modal_btn">Save Draft</button>
+            <button type="button" class="apply_modal_btn">Submit</button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>

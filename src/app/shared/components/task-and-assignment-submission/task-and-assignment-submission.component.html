@@ -57,13 +57,15 @@
                 <li class="font-17 font-400 text_dark">{{taskSubmissionObj.review}}</li>
               </ol>
             </div>
-            <form class="attachment_file1 d-flex align-items-center  position-relative attechment_file"
-              *ngIf="taskSubmissionObj.submittionFileName!=null && taskSubmissionObj.submittionFileName!=undefined">
-              <a  (click)="downloadFile(taskSubmissionObj.submittionFileName)"
-                class="font-15 font-400 text_gray  attachment_file_text">
-                <i class="fi fi-rr-paperclip-vertical secondary add_more position-absolute  mx-2"></i>
-                Download Submited File</a>
-            </form>
+           <a href="{{taskSubmissionObj.submittionFileName}}">
+            <div class="attachment_file1 d-flex align-items-center  position-relative attechment_file"
+            *ngIf="taskSubmissionObj.submittionFileName!=null && taskSubmissionObj.submittionFileName!=undefined">
+            <a 
+              class="font-15 font-400 text_gray  attachment_file_text">
+              <i class="fi fi-rr-paperclip-vertical secondary add_more position-absolute  mx-2"></i>
+              Download Submited File</a>
+        </div>
+           </a>
           </div>
         </div>
       </div>

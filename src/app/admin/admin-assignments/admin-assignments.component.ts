@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router, Routes } from '@angular/router';
 import { AssignmentSubmission } from 'src/app/entity/assignment-submission';
@@ -22,7 +22,7 @@ import { AppUtils } from 'src/app/utils/app-utils';
   templateUrl: './admin-assignments.component.html',
   styleUrls: ['./admin-assignments.component.scss']
 })
-export class AdminAssignmentsComponent implements OnInit {
+export class AdminAssignmentsComponent implements OnInit, AfterViewInit {
   assignmentRequest: AssignmentRequest = new AssignmentRequest;
   courses: Course[] = [];
   subjectes: SubjectResponse[] = [];
@@ -63,14 +63,26 @@ export class AdminAssignmentsComponent implements OnInit {
     });
   }
 
+
   ngOnInit(): void {
 
     this.getAllCourses();
-    this.getAllSubmitedAssignments(new Course, 0, 'NOT_CHECKED_WITH_IT');
+
     //    this.getAllSubmissionAssignmentStatus()
-    this.getOverAllAssignmentTaskStatus()
+    this.getOverAllAssignmentTaskStatus();
     this.courseFilterByCourseIdAndSubjectId(new Course, 0)
-    this.getAllSubject()
+    this.getAllSubject();
+  }
+
+  ngAfterViewInit(): void {
+    this.allSubmissions();
+  }
+
+
+  public allSubmissions() {
+    let el = document.getElementById('course2');
+    el!.innerHTML = 'All'
+    this.getAllSubmitedAssignments(new Course, 0, 'NOT_CHECKED_WITH_IT');
   }
 
   public getAllCourses() {

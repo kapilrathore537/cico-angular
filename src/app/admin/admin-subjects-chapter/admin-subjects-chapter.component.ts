@@ -221,7 +221,6 @@ export class AdminSubjectsChapterComponent implements AfterViewInit {
   }
 
   public addExam() {
-
     if (this.examForm.invalid) {
       this.ExamsubmissionFormFun();
       return;
@@ -441,11 +440,10 @@ export class AdminSubjectsChapterComponent implements AfterViewInit {
     }
   }
 
-
   clearExam() {
     this.examForm.reset();
     this.exam = new Exam();
-    this.isExam = 'Add'
+    this.isExam = 'add'
     this.changeFormName('Add Exam');
     this.isScheduleFieldOpen = true;
   }
@@ -460,6 +458,7 @@ export class AdminSubjectsChapterComponent implements AfterViewInit {
   }
   addUpdateExams() {
     if (this.isExam == 'edit') {
+
       if (this.examForm.invalid) {
         AppUtils.submissionFormFun(this.examForm);
         return;

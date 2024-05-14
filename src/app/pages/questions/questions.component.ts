@@ -60,6 +60,8 @@ export class QuestionsComponent implements AfterViewInit {
     }
   }
 
+
+
   ngOnInit() {
     this.activateRouter.queryParams.subscribe((params: any) => {
       if (params['type'] == Exam.subjectExam) {
@@ -70,6 +72,11 @@ export class QuestionsComponent implements AfterViewInit {
       this.type = params['type'];
       this.subjectId = params['subjectId'];
     });
+
+    window.history.pushState(null, "", window.location.href);
+    window.onpopstate = function () {
+      window.history.pushState(null, "", window.location.href);
+    };
   }
 
 
@@ -85,7 +92,7 @@ export class QuestionsComponent implements AfterViewInit {
         this.toggleFullScreen()
         setTimeout(() => {
           this.timer();
-        
+
         }, 500);
       },
       error: (err: any) => {
@@ -243,7 +250,6 @@ export class QuestionsComponent implements AfterViewInit {
 
   toggleFullScreen() {
     const element = document.documentElement;
-
     if (!this.isFullScreen) {
       // Enter fullscreen mode
       if (element.requestFullscreen) {
@@ -312,8 +318,6 @@ export class QuestionsComponent implements AfterViewInit {
         // this.router.navigate(['/student/chapterDetails/' + this.chapterId])
         this.timerSubscription?.unsubscribe();
         //  this.submittion();
-
-        alert(this.type)
         this.type == Exam.subjectExam ? this.SubjectExamsubmittion() : this.submittion();
       }
     })

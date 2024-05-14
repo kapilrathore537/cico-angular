@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
@@ -9,6 +10,7 @@ import { AssignmentServiceService } from 'src/app/service/assignment.service';
 import { TaskServiceService } from 'src/app/service/task-service.service';
 import { ToastService } from 'src/app/service/toast.service';
 import { UtilityServiceService } from 'src/app/service/utility-service.service';
+import { AppUtils } from 'src/app/utils/app-utils';
 
 @Component({
   selector: 'app-admin-edit-task',
@@ -24,6 +26,7 @@ export class AdminEditTaskComponent implements OnInit {
   updatingImages: File[] = []
   temp = new TaskQuestion();
   taskId!: number;
+  taskForm!: FormGroup
 
   public Editor = ClassicEditor;
   type: string = ''
@@ -34,7 +37,12 @@ export class AdminEditTaskComponent implements OnInit {
     private taskService: TaskServiceService,
     private activateRoute: ActivatedRoute,
     private assignmentService: AssignmentServiceService,
-    private sanitizer: DomSanitizer) {
+    private sanitizer: DomSanitizer,
+    private formBuilder: FormBuilder) {
+
+    this.taskForm = this.formBuilder.group({
+      question: ['', Validators.required]
+    })
   }
 
   updateVideoUrl() {
@@ -148,10 +156,15 @@ export class AdminEditTaskComponent implements OnInit {
   }
 
   updateQuestion() {
-    if (this.type == "assignmentQuestion") {
-      this.updateAssignmenQuestion();
+    if (this.taskForm.invalid) {
+      AppUtils.submissionFormFun(this.taskForm)
+      return
     } else {
-      this.taskQuestionUpdate();
+      if (this.type == "assignmentQuestion") {
+        this.updateAssignmenQuestion();
+      } else {
+        this.taskQuestionUpdate();
+      }
     }
   }
 

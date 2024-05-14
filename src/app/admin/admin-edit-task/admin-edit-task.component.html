@@ -1,7 +1,7 @@
 <div id="main" class="main main_news">
   <div class="profile d-flex mb-4">
     <div class="assign-detail-heading">
-      <h1 class="font-27 font-700 secondary mb-0">Assignment Name </h1>
+      <h1 class="font-27 font-700 secondary mb-0">Edit task </h1>
       <!-- <a href="admin_create_assignment.html">
         <button type="button" class="submit_buttons font-14 font-500 text-white d-inline-flex">Done</button>
       </a> -->
@@ -15,7 +15,7 @@
       <div class="col-md-12 mb_24">
         <div class="edit-task-area">
           <div class="question_ans mt-0">
-            <h3 class="font-19 font-500 mb-0 secondary">Question - 1</h3>
+            <h3 class="font-19 font-500 mb-0 secondary"></h3>
           </div> <!-- question_ans -->
 
           <div class="row">
@@ -95,12 +95,19 @@
 
               </div>
             </div>
-            <div class="que-hint">
-              <h4 class="sub-heading font-17 font-500 secondary">Question, Hints and Instructions</h4>
-              <!-- <textarea class="form-control text_area" id="exampleFormControlTextarea1" rows="3"
-                placeholder="Start Typing....."></textarea> -->
-              <ckeditor [editor]="Editor" [(ngModel)]="question.question"> </ckeditor>
+            
+            <form  [formGroup]="taskForm">
+
+            <div class="form-group">
+              <div class="que-hint">
+                <h4 class="sub-heading font-17 font-500 secondary">Question, Hints and Instructions</h4>
+                <!-- <textarea class="form-control text_area" id="exampleFormControlTextarea1" rows="3"
+                  placeholder="Start Typing....."></textarea> -->
+                <ckeditor [editor]="Editor" [(ngModel)]="question.question" formControlName="question" name="question"> </ckeditor>
+                <div *ngIf="taskForm.get('question')?.hasError('required') && taskForm.get('question')?.touched"><h6 class="text-danger ">Field  is required.</h6></div>
+              </div>
             </div>
+            </form>
 
             <div class="edit-delete-que mt-5">
               <span class="d-flex align-items-center gap_5 font-17 font-500 secondary pointer  discart-button" data-bs-toggle="modal" 

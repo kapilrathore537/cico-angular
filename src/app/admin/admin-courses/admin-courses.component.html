@@ -134,9 +134,12 @@
                                         <img src="assets/images/temp_img/subject-img.png" alt="" width="24" height="24">
                                         <h2 class="font-15 font-500 mb-0 secondary">{{ subject.subjectName }}</h2>
                                     </div>
-                                    <input type="checkbox" name="subjectIds" [id]="'subject'+subject.subjectId"
-                                        [ngModel]="selectedSubjectIds[subject.subjectId]"
+                                    <!-- <input type="checkbox" name="subjectIds" [id]="'subject'+subject.subjectId"
+                                        [(ngModel)]="selectedSubjectIds[subject.subjectId]"
                                         (ngModelChange)="checkboxChanged(subject.subjectId)" class="choose-subjects"
+                                        [value]="subject.subjectId" formControlName="subjectIds"> -->
+                                    <input type="checkbox" name="subjectIds" [id]="'subject'+subject.subjectId"
+                                        (change)="checkboxChanged($event, subject.subjectId)" class="choose-subjects"
                                         [value]="subject.subjectId" formControlName="subjectIds">
 
                                 </div>
@@ -178,8 +181,17 @@
                     <button type="button" class="cancel_modal_btn font-15 font-500" data-bs-dismiss="modal"
                         aria-label="Close" id="course-form-close">Cancel</button>
                     <a>
-                        <button type="button" class="apply_modal_btn font-15 font-500" (click)="saveCourse()">Save
-                            Course</button>
+                        <button type="button" class="apply_modal_btn font-15 font-500" (click)="saveCourse()">
+                            <div *ngIf="!loading;else spinner">
+                                Save course
+                            </div>
+
+                            <ng-template #spinner>
+                                <div class="spinner-border text-light" role="status">
+                                    <span class="sr-only"></span>
+                                </div>
+                            </ng-template>
+                        </button>
                     </a>
                 </div>
 
@@ -292,8 +304,16 @@
                     <button type="button" class="cancel_modal_btn font-15 font-500" data-bs-dismiss="modal"
                         aria-label="Close" id="course-update-modal">Cancel</button>
                     <a>
-                        <button type="button" class="apply_modal_btn font-15 font-500" (click)="updateCourse()">Update
-                            Course</button>
+                        <button type="button" class="apply_modal_btn font-15 font-500" (click)="updateCourse()">
+                            <div *ngIf="!loading;else spinner">
+                                Update course
+                            </div>
+                            <ng-template #spinner>
+                                <div class="spinner-border text-light" role="status">
+                                    <span class="sr-only"></span>
+                                </div>
+                            </ng-template>
+                        </button>
                     </a>
                 </div>
             </div>

@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import * as io from 'socket.io-client';
+// import { BehaviorSubject, Observable, Subject } from 'rxjs';
+// import * as io from 'socket.io-client';
 
 @Injectable({
   providedIn: 'root'
@@ -9,53 +9,53 @@ import * as io from 'socket.io-client';
 
 export class ChatmessageService {
  
-    public invitation_Request = new BehaviorSubject<any>(null);
+    // public invitation_Request = new BehaviorSubject<any>(null);
     
   
-    constructor( private httpClient: HttpClient) { }
-    private invitationSubject: Subject<any> = new Subject<any>();
+    // constructor( private httpClient: HttpClient) { }
+    // private invitationSubject: Subject<any> = new Subject<any>();
   
-    private socket: any;
-    private url: string = 'ws://localhost:8085';
+    // private socket: any;
+    // private url: string = 'ws://localhost:8085';
   
-    connect(): void {
-      const email = "rohan.dollop@gmail.com";
-      this.socket = io(this.url, {
-        path: '/socket.io',
-        transports: ['websocket'],
+    // connect(): void {
+    //   const email = "rohan.dollop@gmail.com";
+    //   this.socket = io(this.url, {
+    //     path: '/socket.io',
+    //     transports: ['websocket'],
   
-        query: {
-          room: email,
-        }
-      });
+    //     query: {
+    //       room: email,
+    //     }
+    //   });
   
-      this.socket.on('connect', (data: any) => {
-        console.log('Connected from WebSocket server');
+    //   this.socket.on('connect', (data: any) => {
+    //     console.log('Connected from WebSocket server');
   
-      });
+    //   });
 
-      this.socket.on('get_message', (data: any) => {
-        console.log('Socket Data :: '+data);
+    //   this.socket.on('get_message', (data: any) => {
+    //     console.log('Socket Data :: '+data);
   
-      });
+    //   });
   
 
   
-      this.socket.on('disconnect', () => {
-        console.log('Disconnected from WebSocket server');
-      });
-    }
+    //   this.socket.on('disconnect', () => {
+    //     console.log('Disconnected from WebSocket server');
+    //   });
+    // }
   
-    sendMessage(message: any, typeEvent: any) {
-      this.socket.emit(typeEvent, message);
-    }
+    // sendMessage(message: any, typeEvent: any) {
+    //   this.socket.emit(typeEvent, message);
+    // }
   
-    disConnect(): void {
-      if (this.socket) {
-        this.socket.disconnect();
-        console.log('Disconnected from WebSocket server');
-      }
-    }
+    // disConnect(): void {
+    //   if (this.socket) {
+    //     this.socket.disconnect();
+    //     console.log('Disconnected from WebSocket server');
+    //   }
+    // }
   
   
     // getMessages() {

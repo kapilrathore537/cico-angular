@@ -67,6 +67,7 @@ import { AdminChapterResultComponent } from './admin/admin-chapter-result/admin-
 import { TestComponent } from './pages/test/test.component';
 
 
+
 const routes: Routes = [
   { path: '', component: LoginQRComponent, pathMatch: 'full' },
   { path: 'login', component: AdminLoginComponent, pathMatch: 'full' },
@@ -97,7 +98,7 @@ const routes: Routes = [
 
   { path: 'result', component: ResultComponent, pathMatch: 'full' },
   { path: 'review', component: ReviewComponent, pathMatch: 'full' },
-  { path: 'questions', component: QuestionsComponent, pathMatch: 'full' },
+  { path: 'questions', component: QuestionsComponent, pathMatch: 'full'},
 
   {
     path: 'admin', component: AdminPanelComponent, canActivate: [AdminGuardGuard], children: [

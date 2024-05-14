@@ -20,10 +20,10 @@
         <div class="d-flex justify-content-between align-items-center">
             <div class="subjects_tabs">
                 <h2 id="subject_topic" class="tabs_heading warning tabs_heading_border_active"
-                    onclick="subject_topic()">Subject Chapters
+                    onclick="subject_topic()">Subject Chapter
                 </h2>`
-                <h2 id="subject_test" class="tabs_heading text_gray" onclick="subject_test()">Subject questions</h2>
-                <h2 id="subject_exam" class="tabs_heading text_gray" onclick="subject_exam()">Subject exams
+                <h2 id="subject_test" class="tabs_heading text_gray" onclick="subject_test()">Subject question</h2>
+                <h2 id="subject_exam" class="tabs_heading text_gray" onclick="subject_exam()">Subject exam
                 </h2>
             </div>
             <a routerLink="/admin/subject"
@@ -375,7 +375,7 @@
                             <div class="input_icon position-relative"><input [min]="1"
                                     [max]="questions.length+totalChapterExamQuestion"
                                     formControlName="totalQuestionForTest" [(ngModel)]="exam.totalQuestionForTest"
-                                    type="number" name="totalQuestionForTest" placeholder="Enter total question"
+                                    type="number" name="totalQuestionForTest" placeholder="Enter total question "
                                     class="form-control input_text   "></div>
 
                             <div *ngIf="examForm.get('totalQuestionForTest')?.hasError('required') && examForm.get('totalQuestionForTest')?.touched"
@@ -395,7 +395,7 @@
                             <h4 class="sub-heading font-17 font-500 text_gray">Passing Marks </h4>
                             <div class="input_icon position-relative"><input formControlName="passingMarks"
                                     [(ngModel)]="exam.passingMarks" _ngcontent-xnu-c70="" type="number" id=""
-                                    name="passingMarks" placeholder="Enter passing marks"
+                                    name="passingMarks" placeholder="Enter passin marks"
                                     class="form-control input_text   "></div>
                             <div *ngIf="isFieldInvalidForExamForm('passingMarks')" class="text-danger">
                                 {{appUtil.requiredField}}</div>

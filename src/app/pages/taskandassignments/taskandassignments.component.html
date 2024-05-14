@@ -29,10 +29,11 @@
                   Status
                 </a>
                 <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" (click)="getSubmitedAssignment()">All</a></li>
-                  <li><a class="dropdown-item" (click)="getSubmitedAssignment('Accepted')">Completed</a></li>
+                  <li><a class="dropdown-item" (click)="getSubmitedAssignment('')">All</a></li>
+                  <li><a class="dropdown-item" (click)="getSubmitedAssignment('Accepted')">Accepted</a></li>
                   <li><a class="dropdown-item" (click)="getSubmitedAssignment('Rejected')">Rejected</a></li>
                   <li><a class="dropdown-item" (click)="getSubmitedAssignment('Reviewing')">Reviewing</a></li>
+                  <li><a class="dropdown-item" (click)="getSubmitedAssignment('Unreviewed')">Unreviewed</a></li>
                 </ul>
               </div>
 

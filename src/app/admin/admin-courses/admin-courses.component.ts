@@ -15,6 +15,7 @@ import { SubjectResponse } from 'src/app/payload/subject-response';
 import { AppUtils } from 'src/app/utils/app-utils';
 import { ToastrService } from 'ngx-toastr';
 import { ToastService } from 'src/app/service/toast.service';
+import { log } from 'console';
 
 @Component({
   selector: 'app-admin-courses',
@@ -39,7 +40,8 @@ export class AdminCoursesComponent implements OnInit {
   totalCourses = 0;
   course: Course = new Course();
   courseId: number = 0
-  imageName: string | undefined
+  imageName: string | undefined;
+  loading: boolean = false;
 
 
   courseresponseobj: Coursereponse = new Coursereponse()
@@ -69,15 +71,22 @@ export class AdminCoursesComponent implements OnInit {
 
   }
 
-  checkboxChanged(subjectId: number) {
-    const index = this.courseRequest.subjectIds.indexOf(subjectId);
-    if (index === -1) {
-      this.courseRequest.subjectIds.push(subjectId);
+  // checkboxChanged(subjectId: number) {
+  //   const index = this.courseRequest.subjectIds.indexOf(subjectId);
+  //   if (index === -1) {
+  //     this.courseRequest.subjectIds.push(subjectId);
+  //   } else {
+  //     this.courseRequest.subjectIds.splice(index, 1);
+  //   }
+  // }
+
+  checkboxChanged(event: any, subjectId: number) {
+    if (event.target.checked) {
+      this.selectedSubjectIds.push(subjectId);
     } else {
-      this.courseRequest.subjectIds.splice(index, 1);
+      this.selectedSubjectIds = this.selectedSubjectIds.filter(id => id !== subjectId);
     }
   }
-
 
   isFieldInvalidForAddCourseDetailsForm(fieldName: string): boolean {
     const field = this.addCourseForm.get(fieldName);
@@ -93,20 +102,22 @@ export class AdminCoursesComponent implements OnInit {
     if (this.addCourseForm.invalid && this.imageName == '') {
       this.addCourseForm.markAllAsTouched();
       return;
+    } else {
+      this.loading = true
+      this.courseRequest.subjectIds = this.selectedSubjectIds
+      this.courseService.saveCourse(this.courseRequest).subscribe({
+        next: (data: any) => {
+          this.loading = false
+          this.getAllCourses();
+          this.selectedSubjectIds = []
+          this.toast.showSuccess(data.message, 'Success')
+          AppUtils.modelDismiss('course-form-close')
+        },
+        error: (err: any) => {
+          this.toast.showError(err.error.message, 'Error')
+        }
+      })
     }
-
-
-    this.courseService.saveCourse(this.courseRequest).subscribe({
-      next: (data: any) => {
-        this.getAllCourses();
-        this.courseRequest = new CourseRequest();
-        this.toast.showSuccess(data.message, 'Success')
-        AppUtils.modelDismiss('course-form-close')
-      },
-      error: (err: any) => {
-        this.toast.showError(err.error.message, 'Error')
-      }
-    })
   }
 
   public getAllCourses() {
@@ -154,15 +165,16 @@ export class AdminCoursesComponent implements OnInit {
     this.courseUpdate.technologyStack = this.courseResponse1.technologyStack.id
     this.courseUpdate.subjectIds = []
     this.courseUpdate.subjectIds = this.courseResponse1.subjectResponse.map(obj => obj.subjectId) as number[]
-
+    this.loading = true
 
     this.courseService.updatCourse(this.courseUpdate).subscribe({
 
       next: (data: any) => {
-        this.courseRequest = new CourseRequest()
+        this.courseRequest = new CourseRequest();
         this.getAllCourses();
         this.toast.showSuccess(data.message, 'Success')
         AppUtils.modelDismiss('course-update-modal')
+        this.loading = false
       },
       error: (err: any) => {
         this.toast.showError(err.error.message, 'Error')
@@ -202,6 +214,7 @@ export class AdminCoursesComponent implements OnInit {
   public clearValidationForm() {
     this.imageName = '';
     this.addCourseForm.reset();
+    this.courseRequest = new CourseRequest();
   }
 
 

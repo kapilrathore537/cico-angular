@@ -15,6 +15,7 @@ import { ToastService } from 'src/app/service/toast.service';
 import { LoaderServiceService } from 'src/app/service/loader-service.service';
 import { DiscussionFormEnum } from 'src/app/enum/discussion-form-enum';
 import { defaultUrlMatcher } from '@angular/router';
+import { ChatmessageService } from 'src/app/service/chatmessage.service';
 
 @Component({
   selector: 'app-discussion-forum',
@@ -44,8 +45,13 @@ export class DiscussionForumComponent implements OnInit {
     private studentService: StudentService,
     private webSocketService: WebsocketServiceDiscussionFormService,
     private toast: ToastService,
-    private loaderService: LoaderServiceService
-  ) { }
+    private loaderService: LoaderServiceService,
+    private chatServiceSocketIo: ChatmessageService
+  ) {
+
+    const message = { 'name': 'rohan', 'text': 'I am rohan', 'type': 'saveData' };
+    this.chatServiceSocketIo.sendMessage(message, 'send_message');
+  }
 
   ngOnInit(): void {
     this.getAllForms()

@@ -7,7 +7,7 @@ export class AppUtils {
 
     static routerInstance: Router;
 
-    public static requiredField ='Field is required.'
+    public static requiredField = 'Field is required.'
 
     constructor(public router: Router, public http: HttpClient) {
         AppUtils.routerInstance = router;
@@ -19,8 +19,7 @@ export class AppUtils {
 
 
     public static modelDismiss(id: any) {
-        let element = document.getElementById(id);
-        element?.click();
+        document.getElementById(id)?.click()
     }
     public static calculatePercentages(num1: number, num2: number) {
         return (num2 == 0) ? 0 : Math.floor(num1 / num2 * 100)

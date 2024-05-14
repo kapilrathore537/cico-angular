@@ -223,9 +223,7 @@ export class AdminSubjectsChapterComponent implements AfterViewInit {
   public addExam() {
 
     if (this.examForm.invalid) {
-      console.log(this.examForm);
       this.ExamsubmissionFormFun();
-      alert('invalid')
       return;
     } else {
       this.exam.examType = this.examType
@@ -289,16 +287,15 @@ export class AdminSubjectsChapterComponent implements AfterViewInit {
     this.subjectService.updateSubjectExam(this.exam).subscribe({
       next: (data: any) => {
         this.toast.showSuccess(data.message, 'Success');
-        AppUtils.modelDismiss('close-exam-edit-form')
-
         if (data.exam.examType == "NORMALEXAM") {
           this.normlaExam = this.normlaExam.map(obj => (obj.examId == data.exam.examId ? data.exam : obj))
         } else if (data.exam.examType == "SCHEDULEEXAM")
           this.scheduleExam = this.scheduleExam.map(obj => (obj.examId == data.exam.examId ? data.exam : obj))
 
-        this.examForm.reset()
-        this.updateExam = new Exam();
-        this.exam = new Exam();
+        // this.examForm.reset()
+        // this.updateExam = new Exam();
+        // this.exam = new Exam();
+        AppUtils.modelDismiss('exam_modal_close')
       },
       error: (er: any) => {
         this.toast.showError(er.error.message, 'Error')
@@ -395,7 +392,7 @@ export class AdminSubjectsChapterComponent implements AfterViewInit {
   public setQuestion(id: number, index: number) {
     this.questionIndex = index;
     this.questionId = id;
-    this.isEdit = true
+    this.isEdit = true;
     this.question = { ...this.questions.find(obj => obj.questionId === id) as QuestionResponse }
     document.getElementById('addQuestion')!.innerText = 'Update Question'
   }
@@ -448,20 +445,17 @@ export class AdminSubjectsChapterComponent implements AfterViewInit {
   clearExam() {
     this.examForm.reset();
     this.exam = new Exam();
-
-    this.isScheduleFieldOpen = true
+    this.isExam = 'Add'
+    this.changeFormName('Add Exam');
+    this.isScheduleFieldOpen = true;
   }
 
-  scheduleDiv: any
   isScheduleFieldOpen: boolean = true;
 
   openScheduleFieldForEdit() {
     this.addScheduleFormField();
-    this.isScheduleFieldOpen = false
-    // this.scheduleDiv = { ...document.getElementById('scheduleOption') }
-    // setTimeout(() => {
-    //   document.getElementById('scheduleOption')?.remove()
-    // }, 20);
+    this.isScheduleFieldOpen = false;
+    this.changeFormName('Update  Schedule Exam')
 
   }
   addUpdateExams() {
@@ -484,10 +478,12 @@ export class AdminSubjectsChapterComponent implements AfterViewInit {
     var checkbox = document.querySelector('input[type="checkbox"]') as HTMLInputElement;
     this.isScheduleForm = checkbox!.checked
     if (checkbox!.checked) {
-      this.addScheduleFormField()
+      this.addScheduleFormField();
       this.exam.examType = 'SCHEDULEEXAM'
+      this.changeFormName('Add Schedule Exam');
     } else {
-      this.removeScheduleFormField()
+      this.removeScheduleFormField();
+      this.changeFormName('Add  Exam');
       this.exam.examType = 'NORMALEXAM'
     }
   }
@@ -495,26 +491,21 @@ export class AdminSubjectsChapterComponent implements AfterViewInit {
   removeScheduleFormField() {
     this.examForm.removeControl('examStartTime');
     this.examForm.removeControl('scheduleTestDate');
+    // this.isScheduleFieldOpen = false;
+    this.changeFormName('Update Exam');
+
+  }
+  changeFormName(type: string) {
+    document.getElementById('addExam')!.innerText = type
   }
 
   addScheduleFormField() {
-    // this.examForm = this.formBuilder.group({
-    //   totalQuestionForTest: ['', Validators.required],
-    //   examTimer: ['', Validators.required],
-    //   examName: ['', Validators.required],
-    //   passingMarks: ['', Validators.required],
-    //   examStartTime: ['', Validators.required],
-    //   scheduleTestDate: ['', Validators.required],
-    // })
-
     this.examForm.addControl('examStartTime', this.formBuilder.control('', Validators.required));
     this.examForm.addControl('scheduleTestDate', this.formBuilder.control('', Validators.required));
-
   }
 
   onClick(event: any) {
     if (event.type == "getData") {
-
       this.getChapterById(event.id)
     } else if (event.type == "delete") {
       this.chapterId = event.id;
@@ -524,6 +515,8 @@ export class AdminSubjectsChapterComponent implements AfterViewInit {
 
 
   onClickForExam(event: any) {
+
+    this.openScheduleFieldForEdit()
     if (event.type == "getData") {
       this.isExam = 'edit'
       if (event.examType == "SCHEDULEEXAM")

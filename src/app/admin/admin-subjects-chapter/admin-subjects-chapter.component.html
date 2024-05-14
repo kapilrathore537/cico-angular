@@ -2,11 +2,11 @@
     <div class="profile d-flex mb-4">
         <div class="profile_top_heading d-flex gap_24">
             <h1 class="font-27 font-700 secondary mb-0">Chapters</h1>
-            <button class="top_profile_sec_btn font-14 font-500 lh-1" id="topic_create_new" data-bs-toggle="modal"
-                data-bs-target="#subject-subadd-modal" (click)="clearChapterForm()">Create New</button>
-            <button class="top_profile_sec_btn font-14 font-500 lh-1" id="add-exam" data-bs-toggle="modal"
-                data-bs-target="#exam_add_modal" style="display: none;" (click)="clearExam()" (click)="isExam='Add'">Add Exam</button>
-            <button class="top_profile_sec_btn font-14 font-500 lh-1" id="test_add_ques" data-bs-toggle="modal"
+            <button class="top_profile_sec_btn font-14 font-500 lh-1 pointer" id="topic_create_new" data-bs-toggle="modal"
+                data-bs-target="#subject-subadd-modal" (click)="clearChapterForm()">Add Chapter</button>
+            <button class="top_profile_sec_btn font-14 font-500 lh-1 pointer" id="add-exam" data-bs-toggle="modal"
+                data-bs-target="#exam_add_modal" style="display: none;" (click)="clearExam()">Add Exam</button>
+            <button class="top_profile_sec_btn font-14 font-500 lh-1 pointer" id="test_add_ques" data-bs-toggle="modal"
                 data-bs-target="#subject-testques-modal" style="display: none;" (click)="clearQuestionForm()">Add
                 Question</button>
         </div>
@@ -20,10 +20,10 @@
         <div class="d-flex justify-content-between align-items-center">
             <div class="subjects_tabs">
                 <h2 id="subject_topic" class="tabs_heading warning tabs_heading_border_active"
-                    onclick="subject_topic()">Subject Chapters
+                    onclick="subject_topic()">Subject Chapter's
                 </h2>`
-                <h2 id="subject_test" class="tabs_heading text_gray" onclick="subject_test()">Subject question</h2>
-                <h2 id="subject_exam" class="tabs_heading text_gray" onclick="subject_exam()">Subject exam
+                <h2 id="subject_test" class="tabs_heading text_gray" onclick="subject_test()">Subject question's</h2>
+                <h2 id="subject_exam" class="tabs_heading text_gray" onclick="subject_exam()">Subject exam's
                 </h2>
             </div>
             <a routerLink="/admin/subject"
@@ -166,7 +166,7 @@
                                 </div>
                             </div>
                             <app-drop-down-delete-add-update [examType]="'SCHEDULEEXAM'"
-                                [editModalId]="'#exam_add_modal'" [deleteModalId]="'#delete-exam-modal'" (click)="openScheduleFieldForEdit()"
+                                [editModalId]="'#exam_add_modal'" [deleteModalId]="'#delete-exam-modal'" 
                                 [path]="'/admin/result/'" [params]="{subjectExamId:obj.examId,type:'subjectExam'}"
                                 [id]="obj.examId" [index]="i"
                                 (onClick)="onClickForExam($event)"></app-drop-down-delete-add-update>
@@ -346,7 +346,7 @@
                 <div class="modal-header apply_title">
                     <h1 class="modal-title fs-5 font-21 font-600 secondary modal_line position-relative" id="addExam">
                         Add Exam</h1>
-                    <button type="button" class="close_btn" data-bs-dismiss="modal" aria-label="Close"
+                    <button type="button" class="close_btn" data-bs-dismiss="modal" aria-label="Close" 
                         id="close-exam-add-form" (click)="clearExamForm()">
                         <i class="fi fi-rr-cross close_icon"></i>
                     </button>
@@ -411,7 +411,7 @@
                         </div>
 
                         <div class="row" id="scheduleOption" *ngIf="isScheduleFieldOpen">
-                            <div class="col-md-6  mb_18">
+                            <div class="col-md-4  mb_18">
                                 <h4 class="sub-heading font-17 font-500 text_gray">Schedule Test (Optional) </h4>
                             </div>
                             <div class="col-md-2  mb_18">
@@ -459,8 +459,8 @@
 
 
                 <div class="apply_modal_buttons d-flex justify-content-center align-items-center">
-                    <!-- <button type="button" class="cancel_modal_btn font-15 font-500" data-bs-dismiss="modal"
-                        aria-label="Close" (click)="cancel()">Cancel</button> -->
+                    <button type="button" class="cancel_modal_btn font-15 font-500" data-bs-dismiss="modal" id="exam_modal_close"
+                        aria-label="Close" (click)="cancel()">Cancel</button>
                     <a>
                         <button type="button" class="apply_modal_btn font-15 font-500"
                             (click)="addUpdateExams()">Create</button>

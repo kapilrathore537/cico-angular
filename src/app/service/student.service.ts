@@ -170,7 +170,7 @@ export class StudentService {
 
 
   public allStudent() {
-    return this.http.get(`${this.studentUrl}/allStudent`);
+    return this.http.get(`${this.studentUrl}/allFeesRemainingStudent`);
   }
 
   public getAllStudentNotCompleteFees() {

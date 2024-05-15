@@ -49,7 +49,7 @@
               <!-- TASK ACCORDION  START-->
               <div class="left-tasks" *ngFor="let task of toDoAssignment.taskQuestion;let i=index">
                 <div class="task_summary d-flex align-items-center justify-content-between mb-0">
-                  <h3 class="font-15 font-500 mb-0">Task </h3>
+                  <h3 class="font-15 font-500 mb-0">Task {{task.taskNumber}} </h3>
                   <h4 class="font-13 font-500 warning ms-auto mb-0 task_modal" data-bs-toggle="modal"
                     (click)="pageRenderUsingRouterLink('/student/assignmentdetails',task.questionId)">View</h4>
                 </div>
@@ -60,9 +60,10 @@
         <h6 *ngIf="toDoAssignment==null">{{message}}</h6>
         <div class="col-md-4">
          
-            <app-shared-task [tasks]="tasks" [taskIndexing]="taskIndexing"></app-shared-task>
-            <app-pagination (eventEmit)="getAllData($event)" [type]="'task'" [paginationManager]="TaskpageManager"
-              [pageRequest]="TaskPageRequest"></app-pagination>
+            <app-shared-task [tasks]="tasks" [taskIndexing]="taskIndexing"(eventEmit)="getAllData($event)" [type]="'task'" [paginationManager]="TaskpageManager"
+            [pageRequest]="TaskPageRequest"></app-shared-task>
+            <!-- <app-pagination *ngIf="TaskpageManager.totalElements >TaskPageRequest.pageSize" (eventEmit)="getAllData($event)" [type]="'task'" [paginationManager]="TaskpageManager"
+              [pageRequest]="TaskPageRequest"></app-pagination> -->
          
         </div>
         <div class="col-md-4">
@@ -115,16 +116,17 @@
           <div class="all_summary assignment-updates" *ngIf="AssignmentsSubmissionIsactive==true">
 
             <app-task-and-assignment-submission
-              [submission]="assignmentSubmissionsList" [title]="'Assignment'"></app-task-and-assignment-submission>
-            <app-pagination [paginationManager]="assignmentSubmissionPagination" (eventEmit)="getAllData($event)"
-              [type]="'AssignmentSubmission'" [pageRequest]="assignmentSubmissionPageRequest"></app-pagination>
+              [submission]="assignmentSubmissionsList" [title]="'Assignment'" [paginationManager]="assignmentSubmissionPagination" (eventEmit)="getAllData($event)"
+              [type]="'AssignmentSubmission'" [pageRequest]="assignmentSubmissionPageRequest"></app-task-and-assignment-submission>
+            <!-- <app-pagination  *ngIf="assignmentSubmissionPagination.totalElements>assignmentSubmissionPageRequest.pageSize"  ></app-pagination> -->
           </div>
 
 
           <div class="all_summary assignment-updates" *ngIf="taskSubmissionIsActive==true">
-            <app-task-and-assignment-submission [submission]="taskSubmissionList" [title]="'Task'"></app-task-and-assignment-submission>
-            <app-pagination [paginationManager]="submissioTaskpageManager" (eventEmit)="getAllData($event)"
-              [type]="'taskSubmission'" [pageRequest]="submissioTaskPageRequest"></app-pagination>
+            <app-task-and-assignment-submission [submission]="taskSubmissionList" [title]="'Task'" [paginationManager]="submissioTaskpageManager" (eventEmit)="getAllData($event)"
+            [type]="'taskSubmission'" [pageRequest]="submissioTaskPageRequest"></app-task-and-assignment-submission>
+            <!-- <app-pagination *ngIf="submissioTaskpageManager.totalElements>submissioTaskPageRequest.pageSize" [paginationManager]="submissioTaskpageManager" (eventEmit)="getAllData($event)"
+              [type]="'taskSubmission'" [pageRequest]="submissioTaskPageRequest"></app-pagination> -->
           </div>
           
 

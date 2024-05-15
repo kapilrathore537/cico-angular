@@ -1,13 +1,15 @@
 import { DatePipe } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { PaginationManager } from 'src/app/entity/pagination-manager';
 import { StudentTaskSubmittion } from 'src/app/entity/student-task-submittion';
+import { PageRequest } from 'src/app/payload/page-request';
 import { AppUtils } from 'src/app/utils/app-utils';
 
 @Component({
   selector: 'app-task-and-assignment-submission',
   templateUrl: './task-and-assignment-submission.component.html',
   styleUrls: ['./task-and-assignment-submission.component.scss'],
-  providers:[AppUtils]
+  providers: [AppUtils]
 })
 export class TaskAndAssignmentSubmissionComponent implements OnInit {
 
@@ -20,7 +22,7 @@ export class TaskAndAssignmentSubmissionComponent implements OnInit {
   ngOnInit(): void {
 
   }
-  constructor(private datePipe: DatePipe,private appUtil:AppUtils) {
+  constructor(private datePipe: DatePipe, private appUtil: AppUtils) {
 
   }
 
@@ -29,5 +31,32 @@ export class TaskAndAssignmentSubmissionComponent implements OnInit {
   }
   downloadFile(fileName: string) {
     this.appUtil.downloadFile(fileName, 'task', true)
+  }
+
+
+
+  @Input() paginationManager !: PaginationManager
+  @Input() pageRequest!: PageRequest
+  @Input() data: any
+  @Input() type !: string
+  @Output() eventEmit = new EventEmitter<any>();
+
+  getAllData() {
+    this.eventEmit.emit({ 'method': 'getAllData', 'type': this.type })
+  }
+  ManageNextPrev(isNext: boolean) {
+    if (isNext)
+      this.pageRequest.pageNumber++;
+    else
+      this.pageRequest.pageNumber--;
+    if (this.pageRequest.pageNumber >= 0 && this.pageRequest.pageNumber < this.paginationManager.totalPages)
+      this.getAllData();
+  }
+  // get pages
+  setPage(page: any) {
+    if (page - 1 != this.pageRequest.pageNumber) {
+      this.pageRequest.pageNumber = page - 1;
+      this.getAllData();
+    }
   }
 }

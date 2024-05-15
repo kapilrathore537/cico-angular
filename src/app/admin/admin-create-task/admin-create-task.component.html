@@ -2,9 +2,9 @@
     <div class="profile d-flex mb-4">
         <div class="assign-detail-heading">
             <h1 class="font-27 font-700 secondary mb-0">Create Task</h1>
-            <a  class="submit_buttons font-14 font-500  text-white d-inline-flex" (click)="submitTask()">Done </a>
+            <a class="submit_buttons font-14 font-500  text-white d-inline-flex" (click)="submitTask()">Done </a>
         </div>
-       <app-profile-bar></app-profile-bar>
+        <app-profile-bar></app-profile-bar>
     </div>
 
     <div class="scroll_section">
@@ -20,22 +20,25 @@
                         <div class="col-md-4 mb_24">
                             <label for="" class="mb_6 font-17 font-500 secondary">Task Name</label>
                             <div class="input_icon position-relative">
-                                <input type="text" id="" name="taskName" class="form-control input_text gray-input-bg enabled_inp" [(ngModel)]="task.taskName"
-                                     disabled="disabled">
+                                <input type="text" id="" name="taskName"
+                                    class="form-control input_text gray-input-bg enabled_inp"
+                                    [(ngModel)]="task.taskName" disabled="disabled">
                             </div>
                         </div>
                         <div class="col-md-4 mb_24">
                             <label for="" class="mb_6 font-17 font-500 secondary">Course</label>
                             <div class="input_icon position-relative">
-                                <input type="text" id="" name="courseName" class="form-control input_text gray-input-bg enabled_inp" [(ngModel)]="task.course.courseName"
-                                    disabled="disabled">
+                                <input type="text" id="" name="courseName"
+                                    class="form-control input_text gray-input-bg enabled_inp"
+                                    [(ngModel)]="task.course.courseName" disabled="disabled">
                             </div>
                         </div>
                         <div class="col-md-4 mb_24">
                             <label for="" class="mb_6 font-17 font-500 secondary">Subject</label>
                             <div class="input_icon position-relative">
-                                <input type="text" id="" name="subjectName" class="form-control input_text gray-input-bg enabled_inp" [ngModel]="task.subject.subjectName"
-                                   disabled="disabled">
+                                <input type="text" id="" name="subjectName"
+                                    class="form-control input_text gray-input-bg enabled_inp"
+                                    [ngModel]="task.subject.subjectName" disabled="disabled">
                             </div>
                         </div>
 
@@ -61,7 +64,7 @@
                     </div><!-- row -->
                 </form>
             </div><!-- col-md-12 -->
-            <div class="col-md-12" >
+            <div class="col-md-12">
                 <h3 class="admin-title font-17 font-600 secondary position-relative mb_20">Assignment Questions</h3>
                 <div class="edit-task-area mb_20" *ngFor="let obj of task.taskQuestion;let i=index">
 
@@ -73,34 +76,37 @@
                                 <p class="mb-0 font-17 font-500 secondary d-flex align-items-center gap_5 pointer"><i
                                         class="fi fi-rr-add line-height-0"></i>Show More</p>
                             </div>
-                            <div class="show_less"  (click)="toggleQuestion(i)" [hidden]="!expandedQuestions[i]">
+                            <div class="show_less" (click)="toggleQuestion(i)" [hidden]="!expandedQuestions[i]">
                                 <p class="mb-0 font-17 font-500 secondary d-flex align-items-center gap_5 pointer"><i
                                         class="fi fi-rr-minus-circle line-height-0"></i>Show Less</p>
                             </div>
-                        </div>  <!-- show-less-question -->
+                        </div> <!-- show-less-question -->
                         <div id="hideQuestion" id="hideQuestion" [hidden]="!expandedQuestions[i]">
                             <div class="row">
-                                <input id="file" type="file" onchange="loadFile(event)"  class="d-none">
-                                <div class="col-md-3 col-sm-6 col-xs-12" *ngIf="obj.videoUrl!=null && obj.videoUrl!='' && obj.videoUrl!=undefined">
+                                <input id="file" type="file" onchange="loadFile(event)" class="d-none">
+                                <div class="col-md-3 col-sm-6 col-xs-12"
+                                    *ngIf="obj.videoUrl!=null && obj.videoUrl!='' && obj.videoUrl!=undefined">
                                     <h3 class="font-15 font-700  assignment_sub_heading">Video 1</h3>
-                                   <div class="assinment_image video-img">
-                                     <!-- <video src="{{obj.videoUrl}}"  controls
+                                    <div class="assinment_image video-img">
+                                        <!-- <video src="{{obj.videoUrl}}"  controls
                                        height="" width="270" type="video/mp4"></video> -->
 
-                                       <div>
-                                        <iframe controls height="" width="270" [src]="obj.videoUrl | safe" frameborder="0"  allowfullscreen></iframe>
-                                      </div>
-                                   </div>
-                                  </div>
-                                <div class="col-md-3 col-sm-6 col-xs-12" *ngFor="let image of obj.questionImages;let i =index">
-                                    <div class="assinment_image" >
-                                    <img [src]="image" class="img-fluid">
+                                        <div>
+                                            <iframe controls height="" width="270" [src]="obj.videoUrl | safe"
+                                                frameborder="0" allowfullscreen></iframe>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 col-sm-6 col-xs-12"
+                                    *ngFor="let image of obj.questionImages;let i =index">
+                                    <div class="assinment_image">
+                                        <img [src]="image" class="img-fluid">
                                     </div>
                                     <h3 class="font-15 font-500 assignment_sub_heading mt-1">Attachment Title Here
                                     </h3>
                                 </div>
                             </div>
-                          
+
                             <h4 class="font-17 font-400 write-que" [innerHTML]="obj.question"></h4>
                             <!-- <div class="assignment mb-0">
                                 <h3 class="font-17 font-700 list_bottom1">Hints:-</h3>
@@ -121,10 +127,12 @@
                             </div> -->
                             <div class="edit-delete-que mt-5">
                                 <span class="d-flex align-items-center gap_5 font-17 font-500 delete-icon-color"
-                                    data-bs-toggle="modal" data-bs-target="#delete-modal" (click)="questionIndex=i;setQuestionId(obj.questionId)"><i
+                                    data-bs-toggle="modal" data-bs-target="#delete-modal"
+                                    (click)="questionIndex=i;setQuestionId(obj.questionId)"><i
                                         class="fi fi-rr-trash line-height-0"></i>
                                     Delete</span>
-                                <span class="d-flex align-items-center gap_5 font-17 font-500 secondary pointer" (click)="pageRenderUsingRouterLink('/admin/editetask/', obj.questionId)"><i
+                                <span class="d-flex align-items-center gap_5 font-17 font-500 secondary pointer"
+                                    (click)="pageRenderUsingRouterLink('/admin/editetask/', obj.questionId)"><i
                                         class="fi fi-rr-file-edit line-height-0"></i> Edit</span>
                             </div>
                         </div>
@@ -135,34 +143,39 @@
             <div class="col-md-12 mb_24">
                 <div class="edit-task-area">
                     <div class="question_ans mt-0">
-                        <h3 class="font-19 font-500 mb-0 secondary">Question -</h3>
+                        <h3 class="font-19 font-500 mb-0 secondary">Add question here </h3>
                     </div> <!-- question_ans -->
 
                     <div class="row">
-                        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12" *ngFor="let image of imagePreview;let i=index">
-                            <div class="profile_change d-flex justify-content-center align-items-center mb-4 position-relative mx-auto">
+                        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12"
+                            *ngFor="let image of imagePreview;let i=index">
+                            <div
+                                class="profile_change d-flex justify-content-center align-items-center mb-4 position-relative mx-auto">
 
                                 <div class="profile_edits">
-                                  <div class="profile_buttons d-flex align-items-end"> 
-                                    <i class="fi fi-rr-trash light font-24 line-height-0 hover-delete-icon" (click)="deleteImage(i)"></i>
-                                  </div>
+                                    <div class="profile_buttons d-flex align-items-end">
+                                        <i class="fi fi-rr-trash light font-24 line-height-0 hover-delete-icon"
+                                            (click)="deleteImage(i)"></i>
+                                    </div>
                                 </div>
-                                
-                                <input id="file" type="file" onchange="loadFile(event)"  class="d-none">
-                                <img [src]="image" class="profile_image" id="output" >
-                              </div>
+
+                                <input id="file" type="file" onchange="loadFile(event)" class="d-none">
+                                <img [src]="image" class="profile_image" id="output">
+                            </div>
                             <h3 class="font-15 font-500 assignment_sub_heading mt-1 mb-0">{{imageName[i]}}
                             </h3>
                         </div>
 
 
                         <div class="col-lg-4 col-md-4">
-                            <form [formGroup]="secondTaskForm" >
-                                <div class="attachment_file2 d-flex align-items-center justify-content-center  position-relative add-attechment add-media-attech">
-                                <input type="file" name="image" (change)="addImageFile($event)" value="image" class="form-control d-none" id="image">
-                                <label for="image" class="font-17 font-500 d-flex">
-                                  <i class="fi fi-rr-plus-small warning font-24 line-height-0"></i>
-                                  Add Media</label>
+                            <form [formGroup]="secondTaskForm">
+                                <div
+                                    class="attachment_file2 d-flex align-items-center justify-content-center  position-relative add-attechment add-media-attech">
+                                    <input type="file" name="image" (change)="addImageFile($event)" value="image"
+                                        class="form-control d-none " id="image">
+                                    <label for="image" class="font-17 font-500 d-flex pointer">
+                                        <i class="fi fi-rr-plus-small warning font-24 line-height-0"></i>
+                                        Add Media</label>
                                 </div>
                                 <!-- <div  *ngIf="isFieldInvalidForTaskForm('image')" class="text-danger">image is
                                     required.</div> -->
@@ -174,22 +187,23 @@
                         <label for="" class="mb_6 font-17 font-500 secondary">Add Video-URL</label>
                         <div class="input_icon position-relative">
                             <input type="text" class="form-control input_text gray-input-bg enabled_inp"
-                                placeholder="VIDEO-URL"  [(ngModel)]="taskQuestion.videoUrl">
+                                placeholder="VIDEO-URL" [(ngModel)]="taskQuestion.videoUrl">
                         </div>
                         {{taskQuestion.videoUrl}}
                         <!-- <div  *ngIf="isFieldInvalidForTaskForm('videoUrl')" class="text-danger">Video url is
                             required.</div> -->
-                    </div> 
-                    <form [formGroup]="secondTaskForm">
-                   
-                    <div class="que-hint">
-                        <h4 class="sub-heading font-17 font-500 secondary">Question, Hints and Instructions</h4>
-                        <!-- <textarea class="form-control text_area" id="exampleFormControlTextarea1" rows="3"
-                            placeholder="Start Typing....."></textarea> -->
-                            <ckeditor  [editor]="Editor" name="question" formControlName="question" [(ngModel)]="taskQuestion.question"> </ckeditor>
-                            <div  *ngIf="isFieldInvalidForSecondTaskForm('question')" class="text-danger">Question is
-                                required.</div>
                     </div>
+                    <form [formGroup]="secondTaskForm">
+
+                        <div class="que-hint">
+                            <h4 class="sub-heading font-17 font-500 secondary">Question, Hints and Instructions</h4>
+                            <!-- <textarea class="form-control text_area" id="exampleFormControlTextarea1" rows="3"
+                            placeholder="Start Typing....."></textarea> -->
+                            <ckeditor [editor]="Editor" name="question" formControlName="question"
+                                [(ngModel)]="taskQuestion.question"> </ckeditor>
+                            <div *ngIf="isFieldInvalidForSecondTaskForm('question')" class="text-danger">Question is
+                                required.</div>
+                        </div>
                     </form>
                     <!-- <div class="edit-delete-que mt-5">
                         <span class="d-flex align-items-center gap_5 font-17 font-500 secondary pointer"
@@ -202,10 +216,22 @@
 
             </div><!-- col-md-12 -->
 
-            <div class="col-md-12 mb_24 text-center">
-                <div class="add-que">
-                    <i class="fi fi-rr-plus-small warning font-36 line-height-0"></i>
-                    <h5 class="font-17 font-500 warning mb-0" (click)="addTaskQuestion()">Add Question</h5>
+            <div class="col-md-12 mb_24 text-center ">
+                <div [class]="!loading?'add-que button-hover pointer':'add-que button-hover1 pointer'"
+                    (click)="addTaskQuestion()">
+                    <!-- <i class="fi fi-rr-plus-small warning font-36 line-height-0"></i>
+                    <h5 class="font-17 font-500 warning mb-0">Add Question</h5> -->
+
+                    <div *ngIf="!loading;else spinner">
+                        <i class="fi fi-rr-plus-small warning font-36 line-height-0"></i>
+                        <h5 class="font-17 font-500 warning mb-0">Add Question</h5>
+                    </div>
+
+                    <ng-template #spinner>
+                        <div class="spinner-border text-light" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                    </ng-template>
                 </div>
             </div><!-- col-md-12 -->
 
@@ -215,11 +241,13 @@
 
             <div class="col-md-12">
                 <form
-                    class="attachment_file2 d-inline-flex align-items-center  position-relative mb-2 add-attechment">
-                    <input type="file" name="attachment" value="attachment" (change)="addAttachmentFile($event)" class="d-none" id="attachment">
+                    class=" button-hover attachment_file2 d-inline-flex align-items-center  position-relative mb-2 add-attechment">
+                    <input type="file" name="attachment" value="attachment" (change)="addAttachmentFile($event)"
+                        class="d-none" id="attachment">
                     <label for="attachment" class="font-17 font-500 d-flex">
                         <i class="fi fi-rr-plus-small warning font-24 line-height-0"></i>
-                        Add Attachments</label>
+                        <h5>Add Attachments</h5>
+                    </label>
                 </form><br>
                 <!-- <div class="add-que mb-2" style="padding: 16px 12px;" *ngI>
                     <i class="fi fi-rr-file-zipper warning font-24 line-height-0"></i>
@@ -230,12 +258,11 @@
                     <i class="fi fi-rr-file-zipper warning font-25 line-height-0"></i>
                     <h5 class="font-17 font-500 warning mb-0">{{attachmentInfo.name}} ({{attachmentInfo.size}} mb)</h5>
                     <span data-bs-toggle="modal" data-bs-target="#delete-modal1"><i
-                        class="fi fi-rr-trash line-height-0 font-24 ms-3 delete-icon-color"></i></span>
+                            class="fi fi-rr-trash line-height-0 font-24 ms-3 delete-icon-color"></i></span>
                 </div>
-             
+
             </div><!-- col-md-12 -->
             <h6 style="color: red;" *ngIf="at">required</h6>
-
         </div>
     </div>
 </div>
@@ -254,96 +281,101 @@
     <div class="modal-dialog position-relative leave_modal">
         <div class="modal-content">
             <div class="modal-body">
-             
-    
+
+
                 <p class="secondary font-21 font-500 text-center">Are You Sure You Want To Delete This Question?</p>
                 <div class="apply_modal_buttons d-flex justify-content-between align-items-center">
-                    <a >
-                        <button type="button" class="cancel_modal_btn font-15 font-500 delete-icon-color" (click)="deleteTaskQuestion()">Yes,
+                    <a>
+                        <button type="button" class="cancel_modal_btn font-15 font-500 delete-icon-color"
+                            (click)="deleteTaskQuestion()">Yes,
                             delete</button>
                     </a>
                     <a>
-                        <button type="button" class="apply_modal_btn font-15 font-500" data-bs-dismiss="modal" aria-label="Close"  id="delete-task-modal">No, Do not delete</button>
+                        <button type="button" class="apply_modal_btn font-15 font-500" data-bs-dismiss="modal"
+                            aria-label="Close" id="delete-task-modal">No, Do not delete</button>
                     </a>
                 </div>
-    
+
             </div>
         </div>
     </div>
-    </div>
-    <div class="modal fade" id="delete-modal1" tabindex="-1" aria-labelledby="delete-modal1" aria-hidden="true">
-        <div class="modal-dialog position-relative leave_modal">
-            <div class="modal-content">
-                <div class="modal-body">
-                 
-        
-                    <p class="secondary font-21 font-500 text-center">Are You Sure You Want To Delete Attachment</p>
-                    <div class="apply_modal_buttons d-flex justify-content-between align-items-center">
-                        <a >
-                            <button type="button" class="cancel_modal_btn font-15 font-500 delete-icon-color" (click)="deleteAttachement()">Yes,
-                                delete</button>
-                        </a>
-                        <a>
-                            <button type="button" class="apply_modal_btn font-15 font-500" data-bs-dismiss="modal" aria-label="Close"  id="delete-task-modal1">No, Do not delete</button>
-                        </a>
-                    </div>
-        
+</div>
+<div class="modal fade" id="delete-modal1" tabindex="-1" aria-labelledby="delete-modal1" aria-hidden="true">
+    <div class="modal-dialog position-relative leave_modal">
+        <div class="modal-content">
+            <div class="modal-body">
+
+
+                <p class="secondary font-21 font-500 text-center">Are You Sure You Want To Delete Attachment</p>
+                <div class="apply_modal_buttons d-flex justify-content-between align-items-center">
+                    <a>
+                        <button type="button" class="cancel_modal_btn font-15 font-500 delete-icon-color"
+                            (click)="deleteAttachement()">Yes,
+                            delete</button>
+                    </a>
+                    <a>
+                        <button type="button" class="apply_modal_btn font-15 font-500" data-bs-dismiss="modal"
+                            aria-label="Close" id="delete-task-modal1">No, Do not delete</button>
+                    </a>
                 </div>
+
             </div>
         </div>
-        </div>
+    </div>
+</div>
 <!-- Modal Delete Modal End -->
 
 <!-- Modal Discard Changes Modal Start -->
 <div class="modal fade" id="discard-changes-modal" tabindex="-1" aria-labelledby="discard-changes-modal"
-aria-hidden="true">
-<div class="modal-dialog position-relative leave_modal">
-    <div class="modal-content">
-        <div class="modal-body">
-            <button type="button" class="close_btn" data-bs-dismiss="modal" aria-label="Close"
-                style="top: -23%;">
-                <i class="fi fi-rr-cross close_icon"></i>
-            </button>
+    aria-hidden="true">
+    <div class="modal-dialog position-relative leave_modal">
+        <div class="modal-content">
+            <div class="modal-body">
+                <button type="button" class="close_btn" data-bs-dismiss="modal" aria-label="Close" style="top: -23%;">
+                    <i class="fi fi-rr-cross close_icon"></i>
+                </button>
 
-            <p class="secondary font-21 font-500 text-center pointer">Are You Sure You Want To <br> Discard Changes?</p>
-            <div class="apply_modal_buttons d-flex justify-content-between align-items-center">
-                <a routerLink="/admin/createtask">
-                    <button type="button" class="cancel_modal_btn font-15 font-500 delete-icon-color pointer">Discard
-                        changes</button>
-                </a>
-                <a routerLink="/admin/createtask">
-                    <button type="button" class="apply_modal_btn font-15 font-500 pointer" >No, Do not delete</button>
-                </a>
+                <p class="secondary font-21 font-500 text-center pointer">Are You Sure You Want To <br> Discard Changes?
+                </p>
+                <div class="apply_modal_buttons d-flex justify-content-between align-items-center">
+                    <a routerLink="/admin/createtask">
+                        <button type="button"
+                            class="cancel_modal_btn font-15 font-500 delete-icon-color pointer">Discard
+                            changes</button>
+                    </a>
+                    <a routerLink="/admin/createtask">
+                        <button type="button" class="apply_modal_btn font-15 font-500 pointer">No, Do not
+                            delete</button>
+                    </a>
+                </div>
+
             </div>
-
         </div>
     </div>
-</div>
 </div>
 <!-- Modal Discard Changes Modal End -->
 
 <!-- Modal Discard Changes Modal Start -->
-<div class="modal fade" id="save-changes-modal" tabindex="-1" aria-labelledby="save-changes-modal"
-aria-hidden="true">
-<div class="modal-dialog position-relative leave_modal">
-    <div class="modal-content">
-        <div class="modal-body">
-            <button type="button" class="close_btn" data-bs-dismiss="modal" aria-label="Close"
-                style="top: -23%;">
-                <i class="fi fi-rr-cross close_icon"></i>
-            </button>
-            <p class="secondary font-21 font-500 text-center pointer">Are You Sure You Want To<br> Save Changes?</p>
-            <div class="apply_modal_buttons d-flex justify-content-between align-items-center">
-                <a routerLink="/admin/createtask">
-                    <button type="button"
-                        class="cancel_modal_btn font-15 font-500 delete-icon-color pointer">Cancel</button>
-                </a>
-                <a routerLink="/admin/createtask">
-                    <button type="button" class="apply_modal_btn font-15 font-500 pointer" >No, Do not delete</button>
-                </a>
-            </div>
+<div class="modal fade" id="save-changes-modal" tabindex="-1" aria-labelledby="save-changes-modal" aria-hidden="true">
+    <div class="modal-dialog position-relative leave_modal">
+        <div class="modal-content">
+            <div class="modal-body">
+                <button type="button" class="close_btn" data-bs-dismiss="modal" aria-label="Close" style="top: -23%;">
+                    <i class="fi fi-rr-cross close_icon"></i>
+                </button>
+                <p class="secondary font-21 font-500 text-center pointer">Are You Sure You Want To<br> Save Changes?</p>
+                <div class="apply_modal_buttons d-flex justify-content-between align-items-center">
+                    <a routerLink="/admin/createtask">
+                        <button type="button"
+                            class="cancel_modal_btn font-15 font-500 delete-icon-color pointer">Cancel</button>
+                    </a>
+                    <a routerLink="/admin/createtask">
+                        <button type="button" class="apply_modal_btn font-15 font-500 pointer">No, Do not
+                            delete</button>
+                    </a>
+                </div>
 
+            </div>
         </div>
     </div>
-</div>
 </div>

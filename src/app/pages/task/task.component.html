@@ -8,9 +8,12 @@
     <div class="task_assignment mt-0">
       <div class="row">
         <div class="col-md-6 mb-4" *ngIf="tasks.length!=0">
-          <app-shared-task [tasks]="tasks" [taskIndexing]="taskIndexing"></app-shared-task>
-          <app-pagination (eventEmit)="getAllData($event)" [type]="'task'" [paginationManager]="TaskpageManager"
-            [pageRequest]="TaskPageRequest"></app-pagination>
+          <!-- <app-shared-task [tasks]="tasks" [taskIndexing]="taskIndexing"></app-shared-task>
+          <app-pagination *ngIf="TaskpageManager.totalElements>TaskPageRequest.pageSize " (eventEmit)="getAllData($event)" [type]="'task'" [paginationManager]="TaskpageManager"
+            [pageRequest]="TaskPageRequest"></app-pagination> -->
+            <app-shared-task [tasks]="tasks" [taskIndexing]="taskIndexing"  (eventEmit)="getAllData($event)" [type]="'task'" [paginationManager]="TaskpageManager"
+            [pageRequest]="TaskPageRequest"></app-shared-task>
+            <!-- <app-pagination *ngIf="TaskpageManager.totalElements>TaskPageRequest.pageSize "></app-pagination> -->
         </div>
         <div class="col-md-6 mb-4" *ngIf="tasks.length==0">
           <h3 class="font-21 font-600 secondary position-relative">
@@ -43,10 +46,11 @@
             </div>
           </div>
           <div class="all_summary assignment-updates">
-            <app-task-and-assignment-submission   [submission]="taskSubmissionList2" [title]="'Task'"></app-task-and-assignment-submission>
+            <app-task-and-assignment-submission   [submission]="taskSubmissionList2" [title]="'Task'"  [paginationManager]="submissioTaskpageManager" (eventEmit)="getAllData($event)"
+            [type]="'taskSubmission'" [pageRequest]="submissioTaskPageRequest"></app-task-and-assignment-submission>
           </div>
-          <app-pagination [paginationManager]="submissioTaskpageManager" (eventEmit)="getAllData($event)"
-            [type]="'taskSubmission'" [pageRequest]="submissioTaskPageRequest"></app-pagination>
+          <!-- <app-pagination *ngIf="submissioTaskpageManager.totalElements>submissioTaskPageRequest.pageSize"  [paginationManager]="submissioTaskpageManager" (eventEmit)="getAllData($event)"
+            [type]="'taskSubmission'" [pageRequest]="submissioTaskPageRequest"></app-pagination> -->
           <div class="col-md-6" *ngIf="taskSubmissionList.length==0">
             <h3 class="font-21 font-600 secondary position-relative">
               No task submission found!!

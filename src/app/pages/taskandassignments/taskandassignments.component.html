@@ -41,9 +41,10 @@
           </div>
           <div class="all_summary assignment-updates">
             <app-task-and-assignment-submission
-              [submission]="assignmentSubmissionsList"  [title]="'Assignment'"></app-task-and-assignment-submission>
-            <app-pagination [paginationManager]="assignmentSubmissionPagination" (eventEmit)="getAllData($event)"
-              [type]="'AssignmentSubmission'" [pageRequest]="assignmentSubmissionPageRequest"></app-pagination>
+              [submission]="assignmentSubmissionsList"  [title]="'Assignment'" [paginationManager]="assignmentSubmissionPagination" (eventEmit)="getAllData($event)"
+              [type]="'AssignmentSubmission'" [pageRequest]="assignmentSubmissionPageRequest"></app-task-and-assignment-submission>
+            <!-- <app-pagination  *ngIf="assignmentSubmissionPagination.totalElements>assignmentSubmissionPageRequest.pageSize" [paginationManager]="assignmentSubmissionPagination" (eventEmit)="getAllData($event)"
+              [type]="'AssignmentSubmission'" [pageRequest]="assignmentSubmissionPageRequest"></app-pagination> -->
           </div>
         </div>
       </div>

@@ -15,6 +15,7 @@ import { AppUtils } from 'src/app/utils/app-utils';
   styleUrls: ['./task.component.scss']
 })
 export class TaskComponent implements AfterViewInit {
+  
   tasks: Task[] = []
   taskSubmissionList: StudentTaskSubmittion[] = []
   taskSubmissionList2: StudentTaskSubmittion[] = []

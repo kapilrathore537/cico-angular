@@ -13,13 +13,13 @@ import { WebsocketServiceDiscussionFormService } from 'src/app/service/websocket
   templateUrl: './right-side-bar.component.html',
   styleUrls: ['./right-side-bar.component.scss'],
 })
-export class RightSideBarComponent implements OnInit ,AfterViewInit,OnDestroy{
+export class RightSideBarComponent implements OnInit, AfterViewInit, OnDestroy {
 
   profileData: Profile = new Profile();
   readMessage = false;
   messageNo = 0;
   timeline: string = '';
-  messageTopic:any;
+  messageTopic: any;
   Coursestatus: Boolean = false
   announcements: Announcement[] = [];
   unseenNotification = 0;
@@ -32,29 +32,31 @@ export class RightSideBarComponent implements OnInit ,AfterViewInit,OnDestroy{
     private adminService: AdminServiceService,
     private annoucementService: AnnouncementServiceService, private websocketService: WebsocketServiceDiscussionFormService) { }
   ngOnDestroy(): void {
-   this.messageTopic.unsubscribe();
+    this.messageTopic.unsubscribe();
   }
 
   ngOnInit(): void {
-    this.connect()
+
   }
 
-ngAfterViewInit(): void {
-  if (this.loginService.getRole() == 'STUDENT') {
-    this.profileData = this.studentService.getStudentHeaderProfileData();
-    this.getAnnouncementsForStudents();
-  } else if (this.loginService.getRole() == 'ADMIN') {
-    this.profileData = this.adminService.getAdminProfileData()
+  ngAfterViewInit(): void {
+    if (this.loginService.getRole() == 'STUDENT') {
+      this.profileData = this.studentService.getStudentHeaderProfileData();
+      this.getAnnouncementsForStudents();
+    } else if (this.loginService.getRole() == 'ADMIN') {
+      this.profileData = this.adminService.getAdminProfileData()
+    }
+    this.connect();
   }
-}
 
   public getAnnouncementsForStudents() {
 
     this.isDataReloading = true
     this.annoucementService.getAnnouncementForStudent(this.loginService.getStudentId()).subscribe({
       next: (data: any) => {
-        setTimeout(() => {
-          this.announcements = data;
+
+        this.announcements = data;
+        if (this.announcements) {
           this.unseenNotification = this.announcements.length
           this.isDataReloading = false
           if (this.announcements.length == 0) {
@@ -62,7 +64,8 @@ ngAfterViewInit(): void {
           } else {
             this.messages = false
           }
-        }, 300);
+        }
+
       },
       error: (err: any) => {
         this.isDataReloading = false
@@ -96,15 +99,15 @@ ngAfterViewInit(): void {
   }
 
   public connect() {
-   this.messageTopic= this.websocketService.getMessages().subscribe((message) => {
+    this.messageTopic = this.websocketService.getMessages().subscribe((message) => {
       if (message.type == 'announcement') {
         let newObject = new Announcement(message.title, message.message, message.date);
         this.getStudentCourse(message.allCourse).then(() => {
           if (this.Coursestatus) {
             this.messages = false
             this.Coursestatus = false;
-             if(this.announcements[0].message!=newObject.message)
-            this.announcements.unshift(newObject);
+            if (this.announcements[0].message != newObject.message)
+              this.announcements.unshift(newObject);
           }
         });
       }

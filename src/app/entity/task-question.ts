@@ -7,5 +7,6 @@ export class TaskQuestion {
     public questionImages: string[] = []
     public assignment: Assignment = new Assignment
     public assignmentSubmission: AssignmentSubmission[] = []
-    public isActive!: boolean
+    public isActive!: boolean;
+    public taskNumber: number = 0;
 }

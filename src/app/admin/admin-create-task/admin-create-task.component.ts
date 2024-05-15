@@ -44,6 +44,8 @@ export class AdminCreateTaskComponent {
   };
   questionId: number = 0;
   secondTaskForm: FormGroup;
+  loading: boolean = false
+
   constructor(private activateRouter: ActivatedRoute,
     private subjectService: SubjectService,
     private courseService: CourseServiceService,
@@ -117,28 +119,32 @@ export class AdminCreateTaskComponent {
       this.secondFormControl()
       return;
     } else {
+      this.loading = true
       this.taskService.addQuestionInTask(this.taskQuestion, this.taskId).subscribe(
         {
           next: (data: any) => {
             this.task.taskQuestion.push(data)
             this.toast.showSuccess('Successfully added', 'Success')
-            this.secondTaskForm.reset()
-
+            this.secondTaskForm.reset();
+            setTimeout(() => {
+              this.loading = false
+              this.taskQuestion = new TaskQuestionRequest();
+              this.imagePreview = [];
+              this.imageName = [];
+            }, 1000);
           },
           error: (errore) => {
             this.toast.showError('Error occure', 'Error')
           }
         }
       )
-      this.taskQuestion = new TaskQuestionRequest();
-      this.imagePreview = [];
-      this.imageName = [];
+
     }
   }
 
   public submitTask() {
 
-    if (this.attachmentInfo.name  != null) {
+    if (this.attachmentInfo.name != null) {
 
       this.taskService.addAssignment(this.taskData)
         .subscribe({
@@ -194,7 +200,7 @@ export class AdminCreateTaskComponent {
   }
 
   public secondFormControl() {
-    AppUtils.submissionFormFun(this.secondTaskForm )
+    AppUtils.submissionFormFun(this.secondTaskForm)
   }
 
   public pageRenderUsingRouterLink(path: string, questionId: number) {

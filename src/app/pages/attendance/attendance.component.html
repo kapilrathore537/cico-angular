@@ -261,7 +261,7 @@
                     <div class="form-check d-inline-block position-relative account_option ms-auto apply_radio_box">
                       <input class="form-control d-none" formControlName="leaveDayType" type="radio" name="leaveDayType"
                         id="inlineRadio1" value="Full Day" [(ngModel)]="leaves.leaveDayType" />
-                      <label class="form-check-label" for="inlineRadio1">
+                      <label class="form-check-label" for="inlineRadio1" (click)="addFullDayField()">
                         <div class="radio-box mb-0 day_box">
                           <p class="text-center font-13 font-400 info mb-0 text0">
                             Full Day
@@ -278,7 +278,7 @@
                     <div class="form-check d-inline-block position-relative account_option ms-auto apply_radio_box">
                       <input class="form-control d-none" type="radio" formControlName="leaveDayType" name="leaveDayType"
                         id="inlineRadio2" value="Half Day" [(ngModel)]="leaves.leaveDayType" />
-                      <label class="form-check-label" for="inlineRadio2">
+                      <label class="form-check-label" for="inlineRadio2" (click)="addHalfDayField()">
                         <div class="radio-box mb-0 day_box">
                           <p class="text-center font-13 font-400 info mb-0 text0">
                             Half Day

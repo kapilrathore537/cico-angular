@@ -32,6 +32,7 @@ export class AdminCreateAssignmentsComponent implements OnInit {
   expandedQuestions: boolean[] = [];
   questionId: number = 0;
   assignmentForm: FormGroup;
+  loading: boolean = false
 
   constructor(
     private activateRoute: ActivatedRoute,
@@ -95,7 +96,7 @@ export class AdminCreateAssignmentsComponent implements OnInit {
       this.taskFormControl()
       return;
     }
-
+    this.loading = true
     this.assignmentService.addQuestionInTask(this.taskQuestion, this.assignmentId).subscribe(
       {
         next: (data: any) => {
@@ -103,15 +104,18 @@ export class AdminCreateAssignmentsComponent implements OnInit {
           this.expandedQuestions.push(false)
           this.assignmentForm.reset()
           this.toast.showSuccess('Question added successsfully!!', 'Success');
+          this.loading = false;
+          setTimeout(() => {
+            this.taskQuestion = new TaskQuestionRequest();
+            this.imagePreview = [];
+            this.imageName = [];
+          }, 500);
         },
         error: (er: any) => {
           this.toast.showError(er.error.message, 'Error')
         }
       }
     )
-    this.taskQuestion = new TaskQuestionRequest();
-    this.imagePreview = [];
-    this.imageName = [];
   }
   public addAttachmentFile(event: any) {
     const data = event.target.files[0];

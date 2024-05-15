@@ -167,27 +167,42 @@ export class AttendanceComponent implements OnInit {
     }
   }
 
+  public addFullDayField() {
+    this.applyLeaveForm.addControl('leaveEndDate', this.formBuilder.control('', Validators.required));
+    this.removeHalfDayField()
+  }
+  public RemoveFullDayField() {
+    this.applyLeaveForm.removeControl('leaveEndDate');
+  }
+  public addHalfDayField() {
+    this.applyLeaveForm.addControl('halfDayType', this.formBuilder.control('', Validators.required))
+    this.RemoveFullDayField();
+  }
+  public removeHalfDayField() {
+    this.applyLeaveForm.removeControl('halfDayType');
+  }
+
+
   public addStudentLeave() {
+    if (this.applyLeaveForm.invalid) {
+      AppUtils.submissionFormFun(this.applyLeaveForm)
+      return;
+    } else {
+      this.leaveService.addLeave(this.leaves).subscribe({
+        next: (res: any) => {
+          if (res.message == 'SUCCESS') {
+            this.getStudentLeaves();
+            document.getElementById('leave-modal-close1')?.click()
+            this.toastService.showSuccess('Successfully leave applied', 'Success')
+          }
+        },
+        error: (err: any) => {
+          this.color = 'red';
+          this.message = err.error.message;
+        },
+      });
+    }
 
-
-    // if (this.applyLeaveForm.invalid) {
-    //   this.checkApplyLeaveForm();
-    //   return;
-    // }
-    this.leaveService.addLeave(this.leaves).subscribe({
-      next: (res: any) => {
-        if (res.message == 'SUCCESS') {
-          this.leaves = new Leaves();
-          this.getStudentLeaves();
-          document.getElementById('leave-modal-close1')?.click()
-          this.toastService.showSuccess('Successfully leave applied', 'Success')
-        }
-      },
-      error: (err: any) => {
-        this.color = 'red';
-        this.message = err.error.message;
-      },
-    });
   }
 
   public getStudentLeaves() {

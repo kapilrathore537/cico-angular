@@ -158,7 +158,7 @@
                         </div>  
 
                         <div class="col-lg-4 col-md-4">
-                            <form class="attachment_file2 d-flex align-items-center justify-content-center  position-relative add-attechment add-media-attech">
+                            <form class="attachment_file2 d-flex align-items-center justify-content-center  pointer position-relative add-attechment add-media-attech">
                                 <input type="file" name="image" (change)="addImageFile($event)" value="image" class="d-none" id="image">
                                 <label for="image" class="font-17 font-500 d-flex">
                                   <i class="fi fi-rr-plus-small warning font-24 line-height-0"></i>
@@ -202,10 +202,28 @@
             </div><!-- col-md-12 -->
 
             <div class="col-md-12 mb_24 text-center">
-                <div class="add-que button-hover">
+                <!-- <div class="add-que button-hover">
                     <i class="fi fi-rr-plus-small warning font-36 line-height-0"></i>
                     <h5 class="font-17 font-500 warning mb-0" (click)="addAssignmentQuestion()">Add Question</h5>
+                </div> -->
+
+
+                <div [class]="!loading?'add-que button-hover pointer':'add-que button-hover1 pointer'"
+                (click)="addAssignmentQuestion()">
+                <!-- <i class="fi fi-rr-plus-small warning font-36 line-height-0"></i>
+                <h5 class="font-17 font-500 warning mb-0">Add Question</h5> -->
+
+                <div *ngIf="!loading;else spinner">
+                    <i class="fi fi-rr-plus-small warning font-36 line-height-0"></i>
+                    <h5 class="font-17 font-500 warning mb-0">Add Question</h5>
                 </div>
+
+                <ng-template #spinner>
+                    <div class="spinner-border text-light" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                </ng-template>
+            </div>
             </div><!-- col-md-12 -->
 
             <div class="col-md-12">

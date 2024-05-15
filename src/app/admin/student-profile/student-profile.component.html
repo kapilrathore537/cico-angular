@@ -76,10 +76,12 @@
                   <div class="all_summary assignment-updates">
 
                     <app-task-and-assignment-submission [id]="'example1'"   [title]="'Assignment'"
-                      [submission]="assignmentSubmissionsList"></app-task-and-assignment-submission>
-                    <app-pagination [paginationManager]="assignmentSubmissionPagination"
+                      [submission]="assignmentSubmissionsList" [paginationManager]="assignmentSubmissionPagination"
                       (eventEmit)="getAllData($event)" [type]="'AssignmentSubmission'"
-                      [pageRequest]="assignmentSubmissionPageRequest"></app-pagination>
+                      [pageRequest]="assignmentSubmissionPageRequest"></app-task-and-assignment-submission>
+                    <!-- <app-pagination [paginationManager]="assignmentSubmissionPagination"
+                      (eventEmit)="getAllData($event)" [type]="'AssignmentSubmission'"
+                      [pageRequest]="assignmentSubmissionPageRequest"></app-pagination> -->
                   </div>
 
                 </div>
@@ -93,18 +95,22 @@
             <div class="task_assignment mt-0">
               <div class="row">
                 <div class="col-md-6 mb-4">
-                  <app-shared-task [tasks]="tasks" [taskIndexing]="taskIndexing"></app-shared-task>
-                  <app-pagination (eventEmit)="getAllData($event)" [type]="'task'" [paginationManager]="TaskpageManager"
-                    [pageRequest]="TaskPageRequest"></app-pagination>
+                  <app-shared-task [tasks]="tasks" [taskIndexing]="taskIndexing" (eventEmit)="getAllData($event)" [type]="'task'" [paginationManager]="TaskpageManager"
+                  [pageRequest]="TaskPageRequest"></app-shared-task>
+                  <!-- <app-pagination (eventEmit)="getAllData($event)" [type]="'task'" [paginationManager]="TaskpageManager"
+                    [pageRequest]="TaskPageRequest"></app-pagination> -->
                 </div>
                 <!-- col-md-6/// -->
                 <div class="col-md-6 mb-4">
+                  <h3 class="title font-17 font-500 secondary position-relative">Submission History</h3>
+
                   <div class="all_summary assignment-updates">
                     <app-task-and-assignment-submission  [id]="'example2'" [title]="'Task'"
-                      [submission]="taskSubmissionList"></app-task-and-assignment-submission>
+                      [submission]="taskSubmissionList"  [paginationManager]="submissioTaskpageManager" (eventEmit)="getAllData($event)"
+                      [type]="'taskSubmission'" [pageRequest]="submissioTaskPageRequest"></app-task-and-assignment-submission>
                   </div>
-                  <app-pagination [paginationManager]="submissioTaskpageManager" (eventEmit)="getAllData($event)"
-                    [type]="'taskSubmission'" [pageRequest]="submissioTaskPageRequest"></app-pagination>
+                  <!-- <app-pagination [paginationManager]="submissioTaskpageManager" (eventEmit)="getAllData($event)"
+                    [type]="'taskSubmission'" [pageRequest]="submissioTaskPageRequest"></app-pagination> -->
                 </div>
                 <!-- col-md-6/// -->
 

@@ -66,6 +66,8 @@
                                 Course
                             </a>
                             <ul class="dropdown-menu">
+
+                                <li><a class="dropdown-item" (click)="getAllCourse()">All</a></li>
                                 <li><a class="dropdown-item"
                                         (click)="courseFilterByCourseIdAndSubjectId(obj,this.subject,pageRequest)"
                                         *ngFor="let obj of courses">{{obj.courseName}}</a></li>
@@ -136,6 +138,7 @@
                                 Course
                             </a>
                             <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" (click)="resetSubmissionCourseFilter()">All</a></li>
                                 <li><a class="dropdown-item"
                                         (click)="getAllSubmittedTaskFilter(obj,0,'NOT_CHECKED_WITH_IT',submissioTaskPageRequest)"
                                         *ngFor="let obj of courses">{{obj.courseName}}</a></li>
@@ -148,6 +151,7 @@
                                 Subject
                             </a>
                             <ul class="dropdown-menu">
+
                                 <li><a class="dropdown-item" (click)="getCourseSubjects(obj)"
                                         (click)="getAllSubmittedTaskFilter(course1,subjectId,'NOT_CHECKED_WITH_IT',submissioTaskPageRequest)"
                                         *ngFor="let obj of  subjectes">{{obj.subjectName}}</a></li>

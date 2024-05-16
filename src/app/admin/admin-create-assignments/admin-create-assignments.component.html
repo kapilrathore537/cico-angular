@@ -234,7 +234,7 @@
                 <form
                     class="attachment_file2 d-inline-flex align-items-center  position-relative mb-2 add-attechment button-hover">
                     <input type="file" name="attachment" value="attachment" (change)="addAttachmentFile($event)" class="d-none" id="attachment">
-                    <label for="attachment" class="font-17 font-500 d-flex ">
+                    <label for="attachment" class="font-17 pointer font-500 d-flex ">
                         <i class="fi fi-rr-plus-small warning font-24 line-height-0 "></i><h5> Add Attachments</h5>
                        </label>
                 </form><br>
@@ -243,12 +243,22 @@
                     <h5 class="font-17 font-500 warning mb-0">{{attachmentInfo.name}} ({{attachmentInfo.size}} mb)</h5>
                 </div>
                 <br> -->
-                <div class="add-que border-0" style="padding: 16px 12px;" *ngIf="attachmentInfo.name != ''">
+                <div class="add-que border-0" style="padding: 16px 12px;" *ngIf="attachmentInfo.name != '';else elsepart"  >
                     <i class="fi fi-rr-file-zipper warning font-25 line-height-0"></i>
                     <h5 class="font-17 font-500 warning mb-0">{{attachmentInfo.name}} ({{attachmentInfo.size}} mb)</h5>
-                    <span data-bs-toggle="modal" data-bs-target="#delete-modal-file"><i
+                    <span data-bs-toggle="modal" data-bs-target="#delete-modal-file" ><i
                         class="fi fi-rr-trash line-height-0 font-24 ms-3 delete-icon-color"></i></span>
                 </div>
+              
+                <ng-template #elsepart>
+                    <div class="add-que border-0" style="padding: 16px 12px;" *ngIf="assignment.taskAttachment != null ">
+                        <i class="fi fi-rr-file-zipper warning font-25 line-height-0"></i>
+                        <h5 class="font-17 font-500 warning mb-0">{{"attachment"}}</h5>
+                        <span data-bs-toggle="modal" data-bs-target="#delete-modal-file" ><i
+                            class="fi fi-rr-trash  pointer line-height-0 font-24 ms-3 delete-icon-color"></i></span>
+                    </div>
+                </ng-template>
+
             </div><!-- col-md-12 -->
 
         </div>
@@ -305,10 +315,10 @@ aria-hidden="true">
             <p class="secondary font-21 font-500 text-center">Are You Sure You Want To <br> delete </p>
             <div class="apply_modal_buttons d-flex justify-content-between align-items-center">
                
-                    <button type="button" class="cancel_modal_btn font-15 font-500 delete-icon-color pointer"  (click)="deleteAttachment()">Delete</button>
+                    <button type="button" data-bs-dismiss="modal" aria-label="Close" class="cancel_modal_btn font-15 font-500 delete-icon-color pointer"  (click)="deleteAttachment()">Delete</button>
               
                 <a  >
-                    <button type="button" class="apply_modal_btn font-15 font-500">No, Do not delete</button>
+                    <button type="button" data-bs-dismiss="modal" aria-label="Close" class="apply_modal_btn font-15 font-500">No, Do not delete</button>
                 </a>
             </div>
 
@@ -319,7 +329,7 @@ aria-hidden="true">
 <!-- Modal Discard Changes Modal End -->
 
 <!-- Modal Discard Changes Modal Start -->
-<div class="modal fade" id="save-changes-modal" tabindex="-1" aria-labelledby="save-changes-modal"
+<!-- <div class="modal fade" id="save-changes-modal" tabindex="-1" aria-labelledby="save-changes-modal"
 aria-hidden="true">
 <div class="modal-dialog position-relative leave_modal">
     <div class="modal-content">
@@ -343,4 +353,4 @@ aria-hidden="true">
         </div>
     </div>
 </div>
-</div>
+</div> -->

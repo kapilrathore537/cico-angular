@@ -169,6 +169,9 @@ export class AdminAssignmentsComponent implements OnInit, AfterViewInit {
 
     }
   }
+  getCourses() {
+    this.courseFilterByCourseIdAndSubjectId(new Course, 0);
+  }
 
   public courseFilterByCourseIdAndSubjectId(course: Course, subjectId: number, pageRequest?: PageRequest) {
     this.course = course;

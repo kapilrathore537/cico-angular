@@ -12,6 +12,7 @@ import { an } from '@fullcalendar/core/internal-common';
 import { AssignmentSubmissionRequest } from '../payload/assignment-submission-request';
 import { TaskQuestion } from '../entity/task-question';
 import { PageRequest } from '../payload/page-request';
+import { Assignment } from '../entity/assignment';
 
 @Injectable({
   providedIn: 'root'
@@ -39,7 +40,7 @@ export class AssignmentServiceService {
         formData.append('newImages', t)
       })
     }
-  
+
     return this.http.put<any>(`${this.assignmentUrl}/updateAssignmentQuestion`, formData)
   }
 
@@ -66,10 +67,12 @@ export class AssignmentServiceService {
   public deleteTaskQuestion(questionId: number) {
     return this.http.delete(`${this.assignmentUrl}/deleteTaskQuestion?questionId=${questionId}`)
   }
-  public addAssignment(data: any) {
+  
+  public addAssignment(data: Assignment) {
     let formData = new FormData();
-    formData.append('assignmentId', data.id)
-    formData.append('attachment', data.attachment)
+    formData.append('assignmentId', data.id.toString());
+    if (data.taskAttachment instanceof File)
+      formData.append('attachment', data.taskAttachment);
     return this.http.post(`${this.assignmentUrl}/addAssignment`, formData)
   }
 

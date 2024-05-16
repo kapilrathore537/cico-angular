@@ -2,7 +2,7 @@
     <div class="profile d-flex mb-4">
         <div class="assign-detail-heading">
             <h1 class="font-27 font-700 secondary mb-0">Create Task</h1>
-            <a class="submit_buttons font-14 font-500  text-white d-inline-flex" (click)="submitTask()">Done </a>
+            <!-- <a class="submit_buttons font-14 font-500  text-white d-inline-flex" (click)="submitTask()">Done </a> -->
         </div>
         <app-profile-bar></app-profile-bar>
     </div>
@@ -241,12 +241,22 @@
 
             <div class="col-md-12">
                 <form
-                    class=" button-hover attachment_file2 d-inline-flex align-items-center  position-relative mb-2 add-attechment">
+                    [class]="!fileLoading?' button-hover attachment_file2 d-inline-flex align-items-center  position-relative mb-2 add-attechment':' button-hover1 attachment_file2 d-inline-flex align-items-center  position-relative mb-2 add-attechment '">
                     <input type="file" name="attachment" value="attachment" (change)="addAttachmentFile($event)"
                         class="d-none" id="attachment">
                     <label for="attachment" class="font-17 font-500 d-flex">
-                        <i class="fi fi-rr-plus-small warning font-24 line-height-0"></i>
-                        <h5>Add Attachments</h5>
+
+                        <div *ngIf="!fileLoading;else spinner">
+                            <i class="fi fi-rr-plus-small warning font-24 line-height-0"></i>
+                            <h5>Add Attachments</h5>
+                        </div>
+
+                        <ng-template #spinner>
+                            <div class="spinner-border text-light" role="status">
+                                <span class="sr-only">Loading...</span>
+                            </div>
+                        </ng-template>
+
                     </label>
                 </form><br>
                 <!-- <div class="add-que mb-2" style="padding: 16px 12px;" *ngI>
@@ -254,15 +264,26 @@
                     <h5 class="font-17 font-500 warning mb-0">{{attachmentInfo.name}} ({{attachmentInfo.size}} mb)</h5>
                 </div>
                 <br> -->
-                <div class="add-que border-0" style="padding: 16px 12px;" *ngIf="attachmentInfo.name != ''">
+                <div class="add-que border-0" style="padding: 16px 12px;"
+                    *ngIf="attachmentInfo.name != '';else elsePart">
                     <i class="fi fi-rr-file-zipper warning font-25 line-height-0"></i>
                     <h5 class="font-17 font-500 warning mb-0">{{attachmentInfo.name}} ({{attachmentInfo.size}} mb)</h5>
                     <span data-bs-toggle="modal" data-bs-target="#delete-modal1"><i
                             class="fi fi-rr-trash line-height-0 font-24 ms-3 delete-icon-color"></i></span>
                 </div>
 
+                <ng-template #elsePart>
+                    <div class="add-que border-0" style="padding: 16px 12px;" *ngIf="task.taskAttachment!=''">
+                        <i class="fi fi-rr-file-zipper warning font-25 line-height-0"></i>
+                        <h5 class="font-17 font-500 warning mb-0">Attachment
+                        </h5>
+                        <span data-bs-toggle="modal" data-bs-target="#delete-modal1"><i
+                                class="fi fi-rr-trash line-height-0 font-24 ms-3 delete-icon-color"></i></span>
+                    </div>
+                </ng-template>
+
             </div><!-- col-md-12 -->
-            <h6 style="color: red;" *ngIf="at">required</h6>
+
         </div>
     </div>
 </div>
@@ -326,7 +347,7 @@
 <!-- Modal Delete Modal End -->
 
 <!-- Modal Discard Changes Modal Start -->
-<div class="modal fade" id="discard-changes-modal" tabindex="-1" aria-labelledby="discard-changes-modal"
+<!-- <div class="modal fade" id="discard-changes-modal" tabindex="-1" aria-labelledby="discard-changes-modal"
     aria-hidden="true">
     <div class="modal-dialog position-relative leave_modal">
         <div class="modal-content">
@@ -352,11 +373,11 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->
 <!-- Modal Discard Changes Modal End -->
 
 <!-- Modal Discard Changes Modal Start -->
-<div class="modal fade" id="save-changes-modal" tabindex="-1" aria-labelledby="save-changes-modal" aria-hidden="true">
+<!-- <div class="modal fade" id="save-changes-modal" tabindex="-1" aria-labelledby="save-changes-modal" aria-hidden="true">
     <div class="modal-dialog position-relative leave_modal">
         <div class="modal-content">
             <div class="modal-body">
@@ -378,4 +399,4 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->

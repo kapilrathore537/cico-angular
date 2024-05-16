@@ -60,10 +60,7 @@ export class AdminCreateAssignmentsComponent implements OnInit {
     return field ? field.invalid && field.touched : false;
   }
 
-  public taskFormControl() {
-    AppUtils.submissionFormFun(this.assignmentForm)
-  }
-
+  
   public getAssignmentById() {
     this.assignmentService.getAssignmentById(this.assignmentId).subscribe({
       next: (data: any) => {
@@ -93,7 +90,7 @@ export class AdminCreateAssignmentsComponent implements OnInit {
 
   public addAssignmentQuestion() {
     if (this.assignmentForm.invalid) {
-      this.taskFormControl()
+      AppUtils.submissionFormFun(this.assignmentForm)
       return;
     }
     this.loading = true
@@ -102,7 +99,7 @@ export class AdminCreateAssignmentsComponent implements OnInit {
         next: (data: any) => {
           this.assignmentQuestionsData.assignmentQuestion.push(data)
           this.expandedQuestions.push(false)
-          this.assignmentForm.reset()
+          this.assignmentForm.reset();
           this.toast.showSuccess('Question added successsfully!!', 'Success');
           this.loading = false;
           setTimeout(() => {
@@ -121,27 +118,24 @@ export class AdminCreateAssignmentsComponent implements OnInit {
     const data = event.target.files[0];
     this.attachmentInfo.name = event.target.files[0].name
     this.attachmentInfo.size = Math.floor(((event.target.files[0].size) / 1024) / 1024)
-    this.assignmentQuestionsData.taskAttachment = event.target.files[0];
+    // this.assignmentQuestionsData.taskAttachment = event.target.files[0];
+    this.assignment.taskAttachment = data;
   }
 
   deleteAttachment() {
-    //const data = event.target.files[0];
     this.attachmentInfo.name = ''
     this.attachmentInfo.size = 0
-    this.assignmentQuestionsData.taskAttachment = undefined
+    this.assignmentQuestionsData.taskAttachment = null;
+    this.assignment.taskAttachment = null;
   }
 
   public submitAssignmentQuestions() {
 
     if (this.assignmentQuestionsData.assignmentQuestion.length === 0 && this.assignmentForm.invalid) {
-      this.taskFormControl();
+      AppUtils.submissionFormFun(this.assignmentForm)
       return;
     } else {
-      let obj = {
-        ...this.assignment,
-        attachment: this.assignmentQuestionsData.taskAttachment
-      }
-      this.assignmentService.addAssignment(obj)
+      this.assignmentService.addAssignment(this.assignment)
         .subscribe({
           next: (data: any) => {
             this.router.navigate(['/admin/assignments']);

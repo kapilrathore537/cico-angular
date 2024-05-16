@@ -73,22 +73,13 @@ export class AdminTaskComponent implements AfterViewInit {
 
   }
 
+  getAllCourse() {
+    this.courseFilterByCourseIdAndSubjectId(new Course, new Subject, this.pageRequest)
+  }
+
   public isFieldInvalidForTaskForm(fieldName: string): boolean {
     const field = this.firstTaskForm.get(fieldName);
     return field ? field.invalid && field.touched : false;
-  }
-
-  public firstTaskFormControl() {
-    Object.keys(this.firstTaskForm.controls).forEach(key => {
-      const control = this.firstTaskForm.get(key);
-      if (control) {
-        control.markAsTouched();
-      }
-    });
-    const firstInvalidControl = document.querySelector('input.ng-invalid');
-    if (firstInvalidControl) {
-      firstInvalidControl.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }
   }
 
   public getCourses() {
@@ -103,8 +94,10 @@ export class AdminTaskComponent implements AfterViewInit {
   }
 
   public submit() {
-    this.firstTaskFormControl();
-    if (this.firstTaskForm.valid) {
+    if (this.firstTaskForm.invalid) {
+      AppUtils.submissionFormFun(this.firstTaskForm);
+      return;
+    } else {
       this.taskService.addTask(this.task).subscribe(
         {
           next: (data: any) => {
@@ -128,6 +121,11 @@ export class AdminTaskComponent implements AfterViewInit {
   getCourseSubjects(subject: Subject) {
     this.subjectId = subject.subjectId
     this.subjectName = subject.subjectName
+  }
+
+
+  resetSubmissionCourseFilter() {
+    this.getAllSubmittedTaskFilter(new Course, 0, 'NOT_CHECKED_WITH_IT', this.submissioTaskPageRequest)
   }
 
   public getAllSubmittedTaskFilter(course: Course, subjectId: number, status: string, pageRequest: PageRequest) {

@@ -68,11 +68,12 @@ export class ChapterServiceService {
     formData.append('chapterId', chapterId.toString());
     return this.http.put(`${this.CHAPTER_URL}/deleteChapter`, formData);
   }
-  public updateChapter(chapterId: number, chapterName: string) {
+  public updateChapter(chapterId: number, chapterName: string, subjectId: number) {
 
     let formData = new FormData();
     formData.append('chapterId', chapterId.toString());
     formData.append('chapterName', chapterName);
+    formData.append('subjectId', subjectId.toString())
     return this.http.put(`${this.CHAPTER_URL}/updateChapter`, formData);
   }
 }

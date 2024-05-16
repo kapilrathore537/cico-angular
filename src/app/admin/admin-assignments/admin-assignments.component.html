@@ -67,7 +67,7 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item"
-                                    (click)="courseFilterByCourseIdAndSubjectId(course,0)">{{course.courseName}}</a>
+                                    (click)="getCourses()">All</a>
                             </li>
                                 <li><a class="dropdown-item" *ngFor="let course of courses"
                                         (click)="courseFilterByCourseIdAndSubjectId(course,0)">{{course.courseName}}</a>

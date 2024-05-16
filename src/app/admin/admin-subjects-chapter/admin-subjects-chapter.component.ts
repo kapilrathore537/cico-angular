@@ -90,7 +90,6 @@ export class AdminSubjectsChapterComponent implements AfterViewInit {
       examName: ['', Validators.required],
       passingMarks: ['', Validators.required],
     })
-
   }
 
   ngOnInit() {
@@ -171,7 +170,7 @@ export class AdminSubjectsChapterComponent implements AfterViewInit {
       AppUtils.submissionFormFun(this.chapterForm);
       return;
     } else {
-      this.chapterService.updateChapter(this.chapterId, this.chapterUpdate.chapterName).subscribe(
+      this.chapterService.updateChapter(this.chapterId, this.chapterUpdate.chapterName, this.subjectId).subscribe(
         {
           next: (data) => {
             let ch = this.chapterResponse.find(obj => obj.chapterId === this.chapterId) as ChapterResponse
@@ -190,11 +189,11 @@ export class AdminSubjectsChapterComponent implements AfterViewInit {
   }
   public getChapterById(id: number) {
     this.chapterId = id;
-    this.chapterUpdate = {... this.chapterResponse.find(obj => obj.chapterId == id) as ChapterResponse};
+    this.chapterUpdate = { ... this.chapterResponse.find(obj => obj.chapterId == id) as ChapterResponse };
   }
 
   public clearExamForm() {
-    this.examForm.reset()
+    this.examForm.reset();
   }
 
   examId!: number
@@ -304,20 +303,8 @@ export class AdminSubjectsChapterComponent implements AfterViewInit {
 
   clearChapterForm() {
     this.chapterForm.reset();
-
   }
 
-  getNormalExamById(id: any,) {
-    this.isScheduleForm = false
-    this.exam = { ...this.normlaExam.find(obj => obj.examId == id) as Exam }
-    this.initiaLiseExamform()
-  }
-
-  getScheduleExamById(id: number) {
-    this.exam = { ...this.scheduleExam.find(obj => obj.examId == id) as Exam }
-    this.isScheduleForm = true
-    this.addScheduleFormField();
-  }
 
 
   public clearFormSubmission() {
@@ -458,7 +445,6 @@ export class AdminSubjectsChapterComponent implements AfterViewInit {
   }
   addUpdateExams() {
     if (this.isExam == 'edit') {
-
       if (this.examForm.invalid) {
         AppUtils.submissionFormFun(this.examForm);
         return;
@@ -512,17 +498,28 @@ export class AdminSubjectsChapterComponent implements AfterViewInit {
     }
   }
 
+  getNormalExamById(id: any,) {
+    this.isScheduleForm = false
+    this.exam = { ...this.normlaExam.find(obj => obj.examId == id)! }
+  }
+
+
+  getScheduleExamById(id: number) {
+    this.isScheduleForm = true
+    this.exam = { ...this.scheduleExam.find(obj => obj.examId == id)! }
+  }
 
   onClickForExam(event: any) {
-
     this.openScheduleFieldForEdit()
     if (event.type == "getData") {
       this.isExam = 'edit'
-      if (event.examType == "SCHEDULEEXAM")
+      if (event.examType == "SCHEDULEEXAM") {
         this.getScheduleExamById(event.id);
-      else
-        if (event.examType == "NORMALEXAM")
+      } else {
+        if (event.examType == "NORMALEXAM") {
           this.getNormalExamById(event.id)
+        }
+      }
     } else if (event.type == "delete") {
       this.examType = event.examType
       this.examId = event.id

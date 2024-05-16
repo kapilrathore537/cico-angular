@@ -56,10 +56,21 @@ export class TaskServiceService {
   public deleteTaskQuestion(questionId: number) {
     return this.http.delete(`${this.TASK_URL}/deleteTaskQuestion?questionId=${questionId}`)
   }
-  public addAssignment(taskData: Task) {
+
+
+  // public addAssignment(taskData: Task) {
+  //   let formData = new FormData();
+  //   formData.append('taskId', taskData.taskId.toString())
+  //   formData.append('attachment', taskData.taskAttachment);
+  //   return this.http.post(`${this.TASK_URL}/addTaskAttachment`, formData);
+  // }
+
+
+  public addAttachment(taskData: Task) {
     let formData = new FormData();
-    formData.append('taskId', taskData.taskId.toString())
-    formData.append('attachment', taskData.taskAttachment);
+    formData.append('taskId', taskData.taskId.toString());
+    if (taskData.taskAttachment instanceof File)
+      formData.append('attachment', taskData.taskAttachment);
     return this.http.post(`${this.TASK_URL}/addTaskAttachment`, formData);
   }
 

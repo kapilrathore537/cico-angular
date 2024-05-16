@@ -93,7 +93,7 @@ export class AdminSubjectsComponent implements OnInit {
     if (this.techImages.length == 0) {
       this.getAllTechImage();
     }
-    this.subject = this.subjects.find(obj => obj.subjectId == id) as SubjectResponse
+    this.subject = {...this.subjects.find(obj => obj.subjectId == id) as SubjectResponse}
   }
 
   public updateSubject() {

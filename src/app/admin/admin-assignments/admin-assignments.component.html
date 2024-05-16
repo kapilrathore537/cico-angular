@@ -139,7 +139,7 @@
                     </table>
                 </div>
 
-                <app-pagination [paginationManager]="assignmentPagination" (eventEmit)="getAllData($event)"
+                <app-pagination *ngIf="assignmentPagination.totalElements>assignmentPageRequest.pageSize"  [paginationManager]="assignmentPagination" (eventEmit)="getAllData($event)"
                     [type]="'Assignment'" [pageRequest]="assignmentPageRequest"></app-pagination>
             </div>
 
@@ -238,7 +238,7 @@
                         </tbody>
                     </table>
                 </div>
-                <app-pagination [paginationManager]="assignmentSubmissionPagination" (eventEmit)="getAllData($event)"
+                <app-pagination   *ngIf="assignmentSubmissionPagination.totalElements>assignmentSubmissionPageRequest.pageSize" [paginationManager]="assignmentSubmissionPagination" (eventEmit)="getAllData($event)"
                     [type]="'AssignmentSubmission'" [pageRequest]="assignmentSubmissionPageRequest"></app-pagination>
             </div>
 

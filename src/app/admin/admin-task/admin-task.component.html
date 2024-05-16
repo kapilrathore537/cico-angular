@@ -121,7 +121,7 @@
 
 
                 <div class=" pagination1 ttendance_dropdown d-flex justify-3-between align-items-center">
-                    <app-pagination [paginationManager]="pageManager" (eventEmit)="getAllData($event)"
+                    <app-pagination   *ngIf="pageManager.totalElements>pageRequest.pageSize" [paginationManager]="pageManager" (eventEmit)="getAllData($event)"
                     [type]="'task'" [pageRequest]="pageRequest"></app-pagination>
                 </div>
             </div>
@@ -219,7 +219,7 @@
                                 (click)="submissionManageNextPrev(true)">Next</a></li>
                     </ul>
                 </nav> -->
-                <app-pagination [paginationManager]="submissioTaskpageManager" (eventEmit)="getAllData($event)"
+                <app-pagination *ngIf="submissioTaskpageManager.totalElements>submissioTaskPageRequest.pageSize" [paginationManager]="submissioTaskpageManager" (eventEmit)="getAllData($event)"
                 [type]="'taskSubmission'" [pageRequest]="submissioTaskPageRequest"></app-pagination>
             </div>
 

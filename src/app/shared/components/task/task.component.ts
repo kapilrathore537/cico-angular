@@ -29,23 +29,7 @@ export class TaskComponent implements OnInit {
   @Input() type !: string
   @Output() eventEmit = new EventEmitter<any>();
 
-  getAllData() {
+  getAllData(event: any) {
     this.eventEmit.emit({ 'method': 'getAllData', 'type': this.type })
   }
-  ManageNextPrev(isNext: boolean) {
-    if (isNext)
-      this.pageRequest.pageNumber++;
-    else
-      this.pageRequest.pageNumber--;
-    if (this.pageRequest.pageNumber >= 0 && this.pageRequest.pageNumber < this.paginationManager.totalPages)
-      this.getAllData();
-  }
-  // get pages
-  setPage(page: any) {
-    if (page - 1 != this.pageRequest.pageNumber) {
-      this.pageRequest.pageNumber = page - 1;
-      this.getAllData();
-    }
-  }
-
 }

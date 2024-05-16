@@ -190,7 +190,7 @@ export class AdminSubjectsChapterComponent implements AfterViewInit {
   }
   public getChapterById(id: number) {
     this.chapterId = id;
-    this.chapterUpdate = this.chapterResponse.find(obj => obj.chapterId == id) as ChapterResponse;
+    this.chapterUpdate = {... this.chapterResponse.find(obj => obj.chapterId == id) as ChapterResponse};
   }
 
   public clearExamForm() {

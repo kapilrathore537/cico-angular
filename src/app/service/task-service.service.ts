@@ -129,7 +129,7 @@ export class TaskServiceService {
     return this.http.get(`${this.TASK_URL}/getAllSubmissionTaskStatusByCourseIdAndSubjectId`, { params })
   }
 
-  public updateTaskquestion(question: TaskQuestion, imagePreview: File[]) {
+  public updateTaskQuestion(question: TaskQuestion, imagePreview: File[]) {
     let formData = new FormData();
     formData.append('question', question.question)
     formData.append('videoUrl', question.videoUrl)

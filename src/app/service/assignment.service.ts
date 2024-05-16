@@ -23,7 +23,7 @@ export class AssignmentServiceService {
 
   constructor(private http: HttpClient, private utilityService: UtilityServiceService) { }
 
-  updateQuestion(question: TaskQuestion, imagePreview: File[]) {
+  updateTaskQuestion(question: TaskQuestion, imagePreview: File[]) {
     let formData = new FormData();
     formData.append('question', question.question)
     formData.append('videoUrl', question.videoUrl)
@@ -39,6 +39,7 @@ export class AssignmentServiceService {
         formData.append('newImages', t)
       })
     }
+  
     return this.http.put<any>(`${this.assignmentUrl}/updateAssignmentQuestion`, formData)
   }
 

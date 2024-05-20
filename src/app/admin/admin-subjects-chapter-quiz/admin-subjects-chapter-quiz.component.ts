@@ -52,7 +52,8 @@ export class AdminSubjectsChapterQuizComponent {
   ngOnInit() {
     this.activateRouter.queryParams.subscribe(params => {
       this.id = params['chapterId'];
-      this.examId = params['examId']
+      this.examId = params['examId'];
+      this.subjectId = params['subjectId']
     });
     this.getAllQuestions();
   }

@@ -28,10 +28,10 @@
           check == 'task' ? 'icon-text dashboard' : 'icon-text'
         ">Tasks</span>
     </a>
-    <a [ngClass]="check == 'result' ? 'active' : 'box-hover'" (click)="getValueById(lsdv5.value)"><input #lsdv5
+    <a  routerLink="/student/statics" [ngClass]="check == 'result' ? 'active' : 'box-hover'" (click)="getValueById(lsdv5.value)"><input #lsdv5
         type="hidden" value="result" /><img src="assets/images/svg_img/New folder/Neutral-Statistics.svg"
         class="material-icons" id="icon4" /><span
-        [ngClass]="check == 'result' ? 'icon-text dashboard' : 'icon-text'">Results & Statistics</span></a>
+        [ngClass]="check == 'statics' ? 'icon-text dashboard' : 'icon-text'">Results & Statistics</span></a>
     <a routerLink="/student/attendance" [ngClass]="check == 'attendance' ? 'active' : 'box-hover'"
       (click)="getValueById(lsdv6.value)"><input #lsdv6 type="hidden" value="attendance" /><img
         src="assets/images/svg_img/New folder/Neutral-Calender.svg" class="material-icons" id="icon5" /><span

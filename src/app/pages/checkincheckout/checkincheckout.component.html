@@ -8,10 +8,16 @@
   CHECK IN
 </button> -->
 
+<div   class="spinner-container" style="justify-content: center;">
+  <mat-spinner *ngIf="isSpinner"  [color]="color" class="spin mat-mdc-progress-spinner" mode="determinate" [value]="percent" ></mat-spinner>
+  <div class="overlay-content">
+    <img src="assets/images/svg_img/punch-btn.svg" alt="Punch Button" data-bs-toggle="modal" data-bs-target="#dash_checkout_modal">
+  </div>
+</div>
 
 <div class="text-center" >
 
-  <img src="assets/images/svg_img/punch-btn.svg" alt="Punch Button" data-bs-toggle="modal" data-bs-target="#dash_checkout_modal">
+  
   <h4 class="light mb-0">{{ clock | async | date: "mediumTime" }}</h4>
   <h5 class="light mb-0">{{formattedDate}}</h5>
 </div>

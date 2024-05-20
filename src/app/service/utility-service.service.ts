@@ -13,7 +13,7 @@ export class UtilityServiceService {
 
   //private BASE_URL = 'http://cicoapi.dollopinfotech.com';
 
-  private BASE_URL =   'http://192.168.0.34:8080';//
+  private BASE_URL =   'http://localhost:8080';//
   private readonly TIME_URL = 'http://worldtimeapi.org/api/ip';
 
 

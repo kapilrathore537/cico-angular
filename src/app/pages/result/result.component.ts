@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ChapterExamResult } from 'src/app/entity/chapter-exam-result';
 import { ExamServiceService } from 'src/app/service/exam-service.service';
@@ -8,12 +8,16 @@ import { ExamServiceService } from 'src/app/service/exam-service.service';
   templateUrl: './result.component.html',
   styleUrls: ['./result.component.scss']
 })
-export class ResultComponent implements OnInit {
+export class ResultComponent implements OnInit ,AfterViewInit {
 
   resultId = 0
   chapterExamResult: ChapterExamResult = new ChapterExamResult
   type!: string
+  localst: any;
   constructor(private activateRoute: ActivatedRoute, private examService: ExamServiceService, private router: Router) { }
+  ngAfterViewInit(): void {
+    
+  }
 
   ngOnInit(): void {
     this.activateRoute.queryParams.subscribe((param: any) => {
@@ -40,6 +44,14 @@ export class ResultComponent implements OnInit {
         });
       }
     }, 500);
+
+    // ************ PREVENT BACK BUTTON **************************
+
+    history.pushState(null, '', location.href);
+    this.localst.onPopState(() => {
+      history.pushState(null, '', location.href);
+    });
+
   }
 
   isFullScreen = true;
@@ -51,7 +63,7 @@ export class ResultComponent implements OnInit {
   }
   exite() {
     this.toggleFullScreen();
-    this.router.navigate(['/student/test'])
+    this.router.navigate(['/student/'])
   }
 
   viewReview() {

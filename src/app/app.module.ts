@@ -98,6 +98,8 @@ import { LoaderComponentComponent } from './app/loader-component/loader-componen
 import { TestComponent } from './pages/test/test.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { SharedModule } from './shared/shared.module';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { StaticsComponent } from './pages/statics/statics.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -172,11 +174,13 @@ import { SharedModule } from './shared/shared.module';
     SafePipe,
     LoaderComponentComponent,
     TestComponent,
+    StaticsComponent,
 
 
 
   ],
   imports: [
+    MatSlideToggleModule,
     BrowserModule,
     AppRoutingModule,
     CommonModule,

@@ -1,0 +1,241 @@
+<div id="main" class="main dashboard_page">
+    <div class="profile d-flex mb-4">
+      <h1 class="font-27 font-700 secondary mb-0">Dashboard</h1>
+     <app-profile-bar></app-profile-bar>
+    </div>
+  
+    <div class="scroll_dashboard">
+      <div class="row mb_20">
+  
+        <div class="col-md-4 admin-dash-attendance mb-4">
+          <h3 class="admin-title font-17 font-600 secondary position-relative">Attendance</h3>
+          <div class="attendance-area position-relative">
+            <div id="chart" class="chartmargin d-flex justify-content-center">
+              <!-- <apx-chart [colors]="attendanceOptions.colors" [series]="attendanceOptions.series" [chart]="attendanceOptions.chart"
+                [labels]="attendanceOptions.labels" [responsive]="attendanceOptions.responsive" [legend]="attendanceOptions.legend"
+                [stroke]="attendanceOptions.stroke"></apx-chart> -->
+            </div>
+          </div>
+        </div>
+  
+        <div class="col-md-4 admin-dash-assignment mb-4">
+          <h3 class="admin-title font-17 font-600 secondary position-relative">Assignments</h3>
+          <div class="assignment-area">
+            <div class="assignment-chart">
+              <div class="Present tool_tip" [style.width]="3+'%'">
+                <span class="tooltiptext">
+                  <span class="tip-box" style="background: #8079FF;"></span>Submited {{3}}
+              </span>
+              </div>
+              <div class="Absent tool_tip_absent" [style.width]="3+'%'">
+                <span class="tooltiptext_absent">
+                  <span class="tip-box" style="background:  #49CF9F;"></span>Reviewed {{3}}
+              </span>
+              </div>
+              <div class="Leave tool_tip_leave" [style.width]="4+'%'">
+                <span class="tooltiptext_leave">
+                  <span class="tip-box" style="background: #F6C453;"></span>Unreviewed {{2}}
+              </span>
+              </div>
+              <!-- <div class="our_due" [style.width]="presentWidth"></div> -->
+            </div>
+            <div class="chart-detail-bottom justify-content-center">
+              <div class="submitted-value">
+                <p>Submited</p>
+                <h2 class="font-14 font-600 text_dark"> <span class="purple-small-box"></span>{{3}}%</h2>
+              </div>
+              <div class="pending-value">
+                <p>Reviewed</p>
+                <h2 class="font-14 font-600 text_dark"> <span class="purple-small-box"></span>{{3}}%</h2>
+              </div>
+              <div class="approve-value">
+                <p>Unreviewed</p>
+                <h2 class="font-14 font-600 text_dark"> <span class="purple-small-box"></span>{{10}}%</h2>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 admin-dash-fees mb-4">
+          <h3 class="admin-title font-17 font-600 secondary position-relative">Fees</h3>
+          <div class="fees-area d-flex align-items-center justify-content-center">
+  
+            <div id="chart">
+              <!-- <apx-chart
+                [series]="feesPieOptions.series"
+                [chart]="feesPieOptions.chart"
+                [responsive]="feesPieOptions.responsive"
+                [legend]="feesPieOptions.legend"
+                [colors]="feesPieOptions.colors"
+                [stroke]="feesPieOptions.stroke"
+                [labels]="feesPieOptions.labels"
+              ></apx-chart> -->
+            </div>
+  
+            <!-- <div class="fees-details w-100">
+              <div class="d-flex align-items-center justify-content-between">
+                <span class="left-color-border bg-total-red"><span class="ms-3"> Total</span></span> 
+                <p class="mb-0 font-15">{{totalFees}}</p>
+                
+              </div>
+              <div class="d-flex align-items-center justify-content-between my-2">
+                <span class="left-color-border bg-collect-green"><span class="ms-3"> Collected</span></span> 
+                <p class="mb-0 font-15">{{collectedFees}}</p>
+              </div>
+              <div class="d-flex align-items-center justify-content-between">
+                <span class="left-color-border bg-pending-yellow"><span class="ms-3"> Pending</span></span> 
+                <p class="mb-0 font-15">{{pendingFees}}</p>
+              </div>
+            </div> -->
+          </div>
+        </div>
+        <div class="col-md-4 admin-dash-fees mb-4">
+            <h3 class="admin-title font-17 font-600 secondary position-relative">Fees</h3>
+            <div class="fees-area d-flex align-items-center justify-content-center">
+    
+              <div id="chart">
+                <!-- <apx-chart
+                  [series]="feesPieOptions.series"
+                  [chart]="feesPieOptions.chart"
+                  [responsive]="feesPieOptions.responsive"
+                  [legend]="feesPieOptions.legend"
+                  [colors]="feesPieOptions.colors"
+                  [stroke]="feesPieOptions.stroke"
+                  [labels]="feesPieOptions.labels"
+                ></apx-chart> -->
+              </div>
+    
+              <!-- <div class="fees-details w-100">
+                <div class="d-flex align-items-center justify-content-between">
+                  <span class="left-color-border bg-total-red"><span class="ms-3"> Total</span></span> 
+                  <p class="mb-0 font-15">{{totalFees}}</p>
+                  
+                </div>
+                <div class="d-flex align-items-center justify-content-between my-2">
+                  <span class="left-color-border bg-collect-green"><span class="ms-3"> Collected</span></span> 
+                  <p class="mb-0 font-15">{{collectedFees}}</p>
+                </div>
+                <div class="d-flex align-items-center justify-content-between">
+                  <span class="left-color-border bg-pending-yellow"><span class="ms-3"> Pending</span></span> 
+                  <p class="mb-0 font-15">{{pendingFees}}</p>
+                </div>
+              </div> -->
+            </div>
+          </div>
+          <div class="col-md-4 admin-dash-fees mb-4">
+            <h3 class="admin-title font-17 font-600 secondary position-relative">Fees</h3>
+            <div class="fees-area d-flex align-items-center justify-content-center">
+    
+              <div id="chart">
+                <!-- <apx-chart
+                  [series]="feesPieOptions.series"
+                  [chart]="feesPieOptions.chart"
+                  [responsive]="feesPieOptions.responsive"
+                  [legend]="feesPieOptions.legend"
+                  [colors]="feesPieOptions.colors"
+                  [stroke]="feesPieOptions.stroke"
+                  [labels]="feesPieOptions.labels"
+                ></apx-chart> -->
+              </div>
+    
+              <!-- <div class="fees-details w-100">
+                <div class="d-flex align-items-center justify-content-between">
+                  <span class="left-color-border bg-total-red"><span class="ms-3"> Total</span></span> 
+                  <p class="mb-0 font-15">{{totalFees}}</p>
+                  
+                </div>
+                <div class="d-flex align-items-center justify-content-between my-2">
+                  <span class="left-color-border bg-collect-green"><span class="ms-3"> Collected</span></span> 
+                  <p class="mb-0 font-15">{{collectedFees}}</p>
+                </div>
+                <div class="d-flex align-items-center justify-content-between">
+                  <span class="left-color-border bg-pending-yellow"><span class="ms-3"> Pending</span></span> 
+                  <p class="mb-0 font-15">{{pendingFees}}</p>
+                </div>
+              </div> -->
+            </div>
+          </div>
+          <div class="col-md-4 admin-dash-fees mb-4">
+            <h3 class="admin-title font-17 font-600 secondary position-relative">Fees</h3>
+            <div class="fees-area d-flex align-items-center justify-content-center">
+    
+              <div id="chart">
+                <!-- <apx-chart
+                  [series]="feesPieOptions.series"
+                  [chart]="feesPieOptions.chart"
+                  [responsive]="feesPieOptions.responsive"
+                  [legend]="feesPieOptions.legend"
+                  [colors]="feesPieOptions.colors"
+                  [stroke]="feesPieOptions.stroke"
+                  [labels]="feesPieOptions.labels"
+                ></apx-chart> -->
+              </div>
+    
+              <!-- <div class="fees-details w-100">
+                <div class="d-flex align-items-center justify-content-between">
+                  <span class="left-color-border bg-total-red"><span class="ms-3"> Total</span></span> 
+                  <p class="mb-0 font-15">{{totalFees}}</p>
+                  
+                </div>
+                <div class="d-flex align-items-center justify-content-between my-2">
+                  <span class="left-color-border bg-collect-green"><span class="ms-3"> Collected</span></span> 
+                  <p class="mb-0 font-15">{{collectedFees}}</p>
+                </div>
+                <div class="d-flex align-items-center justify-content-between">
+                  <span class="left-color-border bg-pending-yellow"><span class="ms-3"> Pending</span></span> 
+                  <p class="mb-0 font-15">{{pendingFees}}</p>
+                </div>
+              </div> -->
+            </div>
+          </div>
+          <div class="col-md-4 admin-dash-fees mb-4">
+            <h3 class="admin-title font-17 font-600 secondary position-relative">Fees</h3>
+            <div class="fees-area d-flex align-items-center justify-content-center">
+    
+              <div id="chart">
+                <!-- <apx-chart
+                  [series]="feesPieOptions.series"
+                  [chart]="feesPieOptions.chart"
+                  [responsive]="feesPieOptions.responsive"
+                  [legend]="feesPieOptions.legend"
+                  [colors]="feesPieOptions.colors"
+                  [stroke]="feesPieOptions.stroke"
+                  [labels]="feesPieOptions.labels"
+                ></apx-chart> -->
+              </div>
+    
+              <!-- <div class="fees-details w-100">
+                <div class="d-flex align-items-center justify-content-between">
+                  <span class="left-color-border bg-total-red"><span class="ms-3"> Total</span></span> 
+                  <p class="mb-0 font-15">{{totalFees}}</p>
+                  
+                </div>
+                <div class="d-flex align-items-center justify-content-between my-2">
+                  <span class="left-color-border bg-collect-green"><span class="ms-3"> Collected</span></span> 
+                  <p class="mb-0 font-15">{{collectedFees}}</p>
+                </div>
+                <div class="d-flex align-items-center justify-content-between">
+                  <span class="left-color-border bg-pending-yellow"><span class="ms-3"> Pending</span></span> 
+                  <p class="mb-0 font-15">{{pendingFees}}</p>
+                </div>
+              </div> -->
+            </div>
+          </div>
+  
+      </div>
+  
+  
+    </div>
+    <!-- DASHBOARD END -->
+  
+    <!-- RIGHT SIDE START-->
+    <app-right-side-bar></app-right-side-bar>
+    <!-- RIGHT SIDE END -->
+  
+  
+    <!-- MIDDLE CONTENT END -->
+  
+  
+  </div>
+  <!--DASHBOARD END -->
+  
+  

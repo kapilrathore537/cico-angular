@@ -99,7 +99,7 @@ export class AttendanceComponent implements OnInit {
     // this.getLeaveType();
     this.getStudentLeaves();
     this.getStudentPresentsAbsentsAndLeavesYearWise();
-    //   this.loadClock();
+       this.loadClock();
   }
 
 
@@ -442,52 +442,131 @@ export class AttendanceComponent implements OnInit {
 
 
 
+  // loadClock() {
+  //   let hr: any = document.querySelector("#hr");
+  //   let mn: any = document.querySelector("#mn");
+  //   let sc: any = document.querySelector("#sc");
+
+  //   setInterval(() => {
+  //     let day = new Date();
+  //     let hh = day.getHours() * 30;
+  //     let mm = day.getMinutes() * 6;
+  //     let ss = day.getSeconds() * 6;
+
+  //     hr.style.transform = `rotateZ(${hh + mm / 12}deg)`;
+  //     mn.style.transform = `rotateZ(${mm}deg)`;
+  //     sc.style.transform = `rotateZ(${ss}deg)`;
+
+  //     /* Digital Clock */
+
+  //     let hours: any = document.getElementById("hours");
+  //     let minutes: any = document.getElementById("minutes");
+  //     let seconds: any = document.getElementById("seconds");
+  //     let ampm: any = document.getElementById("ampm");
+
+  //     let h: any = new Date().getHours();
+  //     let m: any = new Date().getMinutes();
+  //     let s: any = new Date().getSeconds();
+
+  //     let am = h > 12 ? "PM" : "AM";
+
+  //     if (h > 12) {
+  //       h = h - 12;
+  //     }
+
+  //     h = h < 10 ? "0" + h : h;
+  //     m = m < 10 ? "0" + m : m;
+  //     s = s < 10 ? "0" + s : s;
+  //     if (h)
+  //       hours.innerHTML = h;
+  //     if (m)
+  //       minutes.innerHTML = m;
+  //     if (s)
+  //       seconds.innerHTML = s;
+  //     if (am)
+  //       ampm.innerHTML = am;
+  //   });
+  // }
+
+
   loadClock() {
-    let hr: any = document.querySelector("#hr");
-    let mn: any = document.querySelector("#mn");
-    let sc: any = document.querySelector("#sc");
-
+    // Select the elements for hours, minutes, and seconds
+    let hr: HTMLElement | null = document.querySelector("#hr");
+    let mn: HTMLElement | null = document.querySelector("#mn");
+    let sc: HTMLElement | null = document.querySelector("#sc");
+  
+    // Select the elements for the digital clock
+    let hours: HTMLElement | null = document.getElementById("hours");
+    let minutes: HTMLElement | null = document.getElementById("minutes");
+    let seconds: HTMLElement | null = document.getElementById("seconds");
+    let ampm: HTMLElement | null = document.getElementById("ampm");
+  
+    // Select the elements for check-in, checkout, and gap time display
+    let checkinInput: HTMLInputElement | null = document.getElementById("checkin") as HTMLInputElement;
+    let checkoutInput: HTMLInputElement | null = document.getElementById("checkout") as HTMLInputElement;
+    let gapTimeDisplay: HTMLElement | null = document.getElementById("gapTime");
+  
+    // Update the clock every second
     setInterval(() => {
-      let day = new Date();
-      let hh = day.getHours() * 30;
-      let mm = day.getMinutes() * 6;
-      let ss = day.getSeconds() * 6;
-
-      hr.style.transform = `rotateZ(${hh + mm / 12}deg)`;
-      mn.style.transform = `rotateZ(${mm}deg)`;
-      sc.style.transform = `rotateZ(${ss}deg)`;
-
-      /* Digital Clock */
-
-      let hours: any = document.getElementById("hours");
-      let minutes: any = document.getElementById("minutes");
-      let seconds: any = document.getElementById("seconds");
-      let ampm: any = document.getElementById("ampm");
-
-      let h: any = new Date().getHours();
-      let m: any = new Date().getMinutes();
-      let s: any = new Date().getSeconds();
-
-      let am = h > 12 ? "PM" : "AM";
-
-      if (h > 12) {
-        h = h - 12;
-      }
-
+      let day: Date = new Date();
+  
+      // Calculate the rotations for the analog clock
+      let hh: number = day.getHours() * 30; // 360 degrees / 12 hours = 30 degrees per hour
+      let mm: number = day.getMinutes() * 6; // 360 degrees / 60 minutes = 6 degrees per minute
+      let ss: number = day.getSeconds() * 6; // 360 degrees / 60 seconds = 6 degrees per second
+  
+      // Apply the rotations
+      if (hr) hr.style.transform = `rotateZ(${hh + mm / 12}deg)`;
+      if (mn) mn.style.transform = `rotateZ(${mm}deg)`;
+      if (sc) sc.style.transform = `rotateZ(${ss}deg)`;
+  
+      // Get the current time
+      let h: any = day.getHours();
+      let m: any = day.getMinutes();
+      let s: any     = day.getSeconds();
+  
+      // Determine AM/PM
+      let am: string = h >= 12 ? "PM" : "AM";
+      if (h > 12) h -= 12;
+  
+      // Format the time as two digits
       h = h < 10 ? "0" + h : h;
       m = m < 10 ? "0" + m : m;
       s = s < 10 ? "0" + s : s;
-      if (h)
-        hours.innerHTML = h;
-      if (m)
-        minutes.innerHTML = m;
-      if (s)
-        seconds.innerHTML = s;
-      if (am)
-        ampm.innerHTML = am;
-    });
+  
+      // Update the digital clock display
+      if (hours) hours.innerHTML = String(h);
+      if (minutes) minutes.innerHTML = String(m);
+      if (seconds) seconds.innerHTML = String(s);
+      if (ampm) ampm.innerHTML = am;
+  
+      // Calculate and display the gap time if both check-in and checkout times are set
+      if (checkinInput?.value && checkoutInput?.value) {
+        let checkinTime: Date = new Date(`1970-01-01T${checkinInput.value}:00`);
+        let checkoutTime: Date = new Date(`1970-01-01T${checkoutInput.value}:00`);
+  
+        if (checkoutTime < checkinTime) {
+          // If checkout is before check-in, assume checkout is on the next day
+          checkoutTime.setDate(checkoutTime.getDate() + 1);
+        }
+  
+        let gapTimeMs: number = checkoutTime.getTime() - checkinTime.getTime();
+        let gapHours: number = Math.floor(gapTimeMs / (1000 * 60 * 60));
+        let gapMinutes: number = Math.floor((gapTimeMs % (1000 * 60 * 60)) / (1000 * 60));
+        let gapSeconds: number = Math.floor((gapTimeMs % (1000 * 60)) / 1000);
+  
+        // Format the gap time as two digits
+        let gapTimeStr: string = 
+          (gapHours < 10 ? "0" + gapHours : gapHours) + ":" + 
+          (gapMinutes < 10 ? "0" + gapMinutes : gapMinutes) + ":" + 
+          (gapSeconds < 10 ? "0" + gapSeconds : gapSeconds);
+  
+        // Update the gap time display
+        if (gapTimeDisplay) gapTimeDisplay.innerHTML = gapTimeStr;
+      }
+    }, 1000); // Update interval set to 1 second
   }
-
+  
 
   getAllLeaves() {
     this.getStudentLeaves();

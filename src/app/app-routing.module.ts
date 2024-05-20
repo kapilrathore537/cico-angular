@@ -65,6 +65,7 @@ import { DiscussionForumComponent } from './pages/discussion-forum/discussion-fo
 import { AdminDiscussionForumComponent } from './admin/admin-discussion-forum/admin-discussion-forum.component';
 import { AdminChapterResultComponent } from './admin/admin-chapter-result/admin-chapter-result.component';
 import { TestComponent } from './pages/test/test.component';
+import { StaticsComponent } from './pages/statics/statics.component';
 
 
 
@@ -92,13 +93,14 @@ const routes: Routes = [
       { path: 'jobdescription/:id', component: JobDescriptionComponent, pathMatch: 'full' },
       { path: 'internshipsdescription/:id', component: InternshipsDescriptionComponent, pathMatch: 'full' },
       { path: 'testing', component: TestingComponent, pathMatch: 'full' },
-      { path: 'test', component: TestComponent, pathMatch: 'full' }
+      { path: 'test', component: TestComponent, pathMatch: 'full' },
+      { path: 'statics', component: StaticsComponent, pathMatch: 'full' }
     ]
   },
 
   { path: 'result', component: ResultComponent, pathMatch: 'full' },
   { path: 'review', component: ReviewComponent, pathMatch: 'full' },
-  { path: 'questions', component: QuestionsComponent, pathMatch: 'full'},
+  { path: 'questions', component: QuestionsComponent, pathMatch: 'full' },
 
   {
     path: 'admin', component: AdminPanelComponent, canActivate: [AdminGuardGuard], children: [

@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { SafeResourceUrl, DomSanitizer } from "@angular/platform-browser";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { TaskQuestion } from "src/app/entity/task-question";
 import { AssignmentServiceService } from "src/app/service/assignment.service";
@@ -21,7 +21,8 @@ export class AdminEditTaskComponent implements OnInit {
   videoIframe!: SafeResourceUrl;
   loading = false;
 
-  private taskId!: number;
+  private questionId!: number;
+  private taskId!: number
   private type = '';
   private videoUrl = 'https://www.youtube.com/watch?v=ODLiJ2_CGXI';
 
@@ -31,13 +32,15 @@ export class AdminEditTaskComponent implements OnInit {
   imageName: string[] = [];
   updatingImages: File[] = [];
 
+
   constructor(
     private toast: ToastService,
     private taskService: TaskServiceService,
     private assignmentService: AssignmentServiceService,
     private sanitizer: DomSanitizer,
     private formBuilder: FormBuilder,
-    private activateRoute: ActivatedRoute
+    private activateRoute: ActivatedRoute,
+    private router:Router
   ) {
     this.taskForm = this.formBuilder.group({
       question: ['', Validators.required]
@@ -46,7 +49,8 @@ export class AdminEditTaskComponent implements OnInit {
 
   ngOnInit(): void {
     this.activateRoute.queryParams.subscribe(params => {
-      this.taskId = params['id'];
+      this.taskId = params['taskId'];
+      this.questionId = params['id']
       this.type = params['type'];
       this.loadQuestion();
     });
@@ -54,9 +58,9 @@ export class AdminEditTaskComponent implements OnInit {
 
   loadQuestion() {
     if (this.type === 'assignmentQuestion') {
-      this.getAssignmentQuestion(this.taskId);
+      this.getAssignmentQuestion(this.questionId);
     } else if (this.type === 'taskQuestion') {
-      this.getTaskQuestion(this.taskId);
+      this.getTaskQuestion(this.questionId);
     }
   }
 
@@ -126,9 +130,9 @@ export class AdminEditTaskComponent implements OnInit {
 
   updateDetails(service: any): void {
     this.loading = true;
-    service.updateTaskQuestion(this.question, this.updatingImages).subscribe({
-      next: (data:any) => this.handleUpdateResponse(data),
-      error: (er:any) => this.toast.showError(er.error.message, 'Error')
+    service.updateTaskQuestion(this.question, this.updatingImages, this.taskId).subscribe({
+      next: (data: any) => this.handleUpdateResponse(data),
+      error: (er: any) => this.toast.showError(er.error.message, 'Error')
     });
   }
 
@@ -136,8 +140,11 @@ export class AdminEditTaskComponent implements OnInit {
     this.question = data.question;
     this.temp = data.question;
     this.clearImages();
-    this.toast.showSuccess('Successfully updated!!', 'Success');
+    this.toast.showSuccess(data.message, 'Success');
     this.loading = false;
+    if(data.isNewTask){
+      this.router.navigate(['/admin/createtask/'+data.taskId])
+    }
   }
 
   clearImages(): void {

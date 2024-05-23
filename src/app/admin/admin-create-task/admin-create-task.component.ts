@@ -144,25 +144,6 @@ export class AdminCreateTaskComponent {
     }
   }
 
-  public submitTask() {
-
-    // if (this.attachmentInfo.name != null) {
-
-    //   this.taskService.addAssignment(this.taskData)
-    //     .subscribe({
-    //       next: (data: any) => {
-    //         this.at = false
-    //         alert('Success..')
-    //         // this.router.navigate(['/admin/task']);
-    //       }
-    //     })
-    // } else {
-    //   this.at = true
-    //   return
-    // }
-
-  }
-
   fileLoading: boolean = false
 
   addAttachment() {
@@ -220,7 +201,8 @@ export class AdminCreateTaskComponent {
   public pageRenderUsingRouterLink(path: string, questionId: number) {
     const dataParams = {
       id: questionId,
-      type: "taskQuestion"
+      type: "taskQuestion",
+      taskId: this.taskId
     };
     this.router.navigate([path], {
       queryParams: dataParams

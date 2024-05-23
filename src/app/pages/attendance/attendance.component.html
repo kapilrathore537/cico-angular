@@ -470,7 +470,7 @@
 
               <div class="container">
 
-                  <div class="clock">
+                  <!-- <div class="clock">
 
                     <div class="circles" id="sc" style="--clr:#00b4ff"><i></i></div>
                     <div class="circles circles2" id="mn" style="--clr:#f71561"><i></i></div>
@@ -488,10 +488,46 @@
                     <span style="--i:10"><b>10</b></span>
                     <span style="--i:11"><b>11</b></span>
                     <span style="--i:12"><b>12</b></span>
+                  </div> -->
+
+                  <div class="clock">
+                    <div id="clockface">
+                      <div class="hand hour"></div>
+                      <div class="hand min"></div>
+                      <div class="hand sec"></div>
+                      <div class="centerpoint"></div>
+                      <div class="numbers one">1</div>
+                      <div class="numbers two">2</div>
+                      <div class="numbers three">3</div>
+                      <div class="numbers four">4</div>
+                      <div class="numbers five">5</div>
+                      <div class="numbers six">6</div>
+                      <div class="numbers seven">7</div>
+                      <div class="numbers eight">8</div>
+                      <div class="numbers nine">9</div>
+                      <div class="numbers ten">10</div>
+                      <div class="numbers eleven">11</div>
+                      <div class="numbers twelve">12</div>
+                      <div class="fiveminutes"></div>
+                      <div class="minutes"></div>
+                      <svg viewBox="-100 -100 200 200">
+                          <!-- Draw circle -->
+                          <!-- <circle cx="0" cy="0" r="100" fill="none" stroke="black"/> -->
+                          
+                          <!-- Highlighted sector -->
+                          <path id="highlightedSector" fill="lightblue" stroke="black" stroke-width="2"/>
+                          
+                          <!-- Starting point marker -->
+                          <circle id="startPoint" cx="100" cy="0" r="3" fill="red"/>
+                          
+                          <!-- Ending point marker -->
+                          <circle id="endPoint" cx="100" cy="0" r="3" fill="red"/>
+                      </svg>
+                    </div>
+                    <div id="speaker">&#x1f50a;</div>
+                    <div class="interval-overlay" id="highlightInterval"></div>
                   </div>
-
-
-              </div>
+             
             </div>
 
             <div class="col-md-4 d-flex justify-content-end">

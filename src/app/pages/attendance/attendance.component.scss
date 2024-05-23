@@ -171,261 +171,261 @@
 
 }
 
-
+//21-05-24 change
 /*** Analog Clock ***/
-.clock {
-    position: relative;
-    width: 200px;
-    height: 200px;
-    background: #091a21;
-    border: 5px solid #00b3ff;
-    border-radius: 50%;
-    box-shadow: 0 0 50px #ffffff44;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 30px;
+// .clock {
+//     position: relative;
+//     width: 200px;
+//     height: 200px;
+//     background: #091a21;
+//     border: 5px solid #00b3ff;
+//     border-radius: 50%;
+//     box-shadow: 0 0 50px #ffffff44;
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+//     margin-bottom: 30px;
 
-    & span {
-        position: absolute;
-        inset: -3px;
-        color: #ffffff83;
-        text-align: center;
-        transform: rotate(calc(30deg*var(--i)));
+//     & span {
+//         position: absolute;
+//         inset: -3px;
+//         color: #ffffff83;
+//         text-align: center;
+//         transform: rotate(calc(30deg*var(--i)));
 
-        & b {
-            font-size: 2em;
-            font-weight: 600;
-            display: inline-block;
-            transform: rotate(calc(-30deg*var(--i)));
-        }
-    }
+//         & b {
+//             font-size: 2em;
+//             font-weight: 600;
+//             display: inline-block;
+//             transform: rotate(calc(-30deg*var(--i)));
+//         }
+//     }
 
-    &::before {
-        content: '';
-        position: absolute;
-        width: 8px;
-        height: 8px;
-        border-radius: 50%;
-        background: #ffffff;
-        border: 3px solid #1c1c1e;
-        z-index: 4;
-    }
-}
+//     &::before {
+//         content: '';
+//         position: absolute;
+//         width: 8px;
+//         height: 8px;
+//         border-radius: 50%;
+//         background: #ffffff;
+//         border: 3px solid #1c1c1e;
+//         z-index: 4;
+//     }
+// }
 
-.circles {
-	position: absolute;
-    width: 300px;
-    height: 300px;
-    border: 2px solid rgba(255, 255, 255, 0.1);
-    border-radius: 61%;
-    display: contents;
-    /* justify-content: center; */
-    align-items: flex-start;
-     z-index: 3;
+// .circles {
+// 	position: absolute;
+//     width: 300px;
+//     height: 300px;
+//     border: 2px solid rgba(255, 255, 255, 0.1);
+//     border-radius: 61%;
+//     display: contents;
+//     /* justify-content: center; */
+//     align-items: flex-start;
+//      z-index: 3;
 
-    & i {
-        position: absolute;
-        width: 6px;
-        height: 50%;
-        border-radius: 50%;
-        background: var(--clr);
-        opacity: 0.8;
-        transform-origin: bottom;
-        transform: scaleY(0.6);
-    }
+//     & i {
+//         position: absolute;
+//         width: 6px;
+//         height: 50%;
+//         border-radius: 50%;
+//         background: var(--clr);
+//         opacity: 0.8;
+//         transform-origin: bottom;
+//         transform: scaleY(0.6);
+//     }
 
-    &:nth-child(1) i {
-        width: 2px;
-    }
+//     &:nth-child(1) i {
+//         width: 2px;
+//     }
 
-    &:nth-child(2) i {
-        width: 4px;
-    }
+//     &:nth-child(2) i {
+//         width: 4px;
+//     }
 
-    &::before {
-        content: '';
-        position: absolute;
-        width: 15px;
-        height: 15px;
-        border-radius: 50%;
-        top: -8px;
-        background: var(--clr);
-        box-shadow: 0 0 20px var(--clr),
-            0 0 60px var(--clr);
-    }
+//     &::before {
+//         content: '';
+//         position: absolute;
+//         width: 15px;
+//         height: 15px;
+//         border-radius: 50%;
+//         top: -8px;
+//         background: var(--clr);
+//         box-shadow: 0 0 20px var(--clr),
+//             0 0 60px var(--clr);
+//     }
 
-}
+// }
 
-.circles2 {
-    width: 240px;
-    height: 240px;
-    z-index: 2;
-}
+// .circles2 {
+//     width: 240px;
+//     height: 240px;
+//     z-index: 2;
+// }
 
-.circles3 {
-    width: 180px;
-    height: 180px;
-    z-index: 1;
-}
+// .circles3 {
+//     width: 180px;
+//     height: 180px;
+//     z-index: 1;
+// }
 
-/*** Digital Clock ***/
+// /*** Digital Clock ***/
 
-#time {
-    margin-bottom: 40px;
-    display: flex;
-    padding: 10px 20px;
-    font-size: 2em;
-    font-weight: 600;
-    border: 5px solid rgba(255, 255, 255, 0.15);
-    border-radius: 40px;
+// #time {
+//     margin-bottom: 40px;
+//     display: flex;
+//     padding: 10px 20px;
+//     font-size: 2em;
+//     font-weight: 600;
+//     border: 5px solid rgba(255, 255, 255, 0.15);
+//     border-radius: 40px;
 
-    & div {
-        position: relative;
-        width: 60px;
-        text-align: center;
-        font-weight: 500;
-        color: var(--clr);
+//     & div {
+//         position: relative;
+//         width: 60px;
+//         text-align: center;
+//         font-weight: 500;
+//         color: var(--clr);
 
-        &:nth-child(1)::after,
-        &:nth-child(2)::after {
-            content: ':';
-            position: absolute;
-            right: -4px;
+//         &:nth-child(1)::after,
+//         &:nth-child(2)::after {
+//             content: ':';
+//             position: absolute;
+//             right: -4px;
 
-        }
+//         }
 
-        &:nth-child(2)::after {
-            animation: animate 1s steps(1) infinite;
-        }
+//         &:nth-child(2)::after {
+//             animation: animate 1s steps(1) infinite;
+//         }
 
-        &:last-child {
-            font-size: 0.7em;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: #fff;
-        }
+//         &:last-child {
+//             font-size: 0.7em;
+//             display: flex;
+//             justify-content: center;
+//             align-items: center;
+//             color: #fff;
+//         }
 
-    }
-}
+//     }
+// }
 
-@keyframes animate {
-    0% {
-        opacity: 0;
-    }
+// @keyframes animate {
+//     0% {
+//         opacity: 0;
+//     }
 
-    50% {
-        opacity: 1;
-    }
-}
-.container {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+//     50% {
+//         opacity: 1;
+//     }
+// }
+// .container {
+//     position: relative;
+//     display: flex;
+//     flex-direction: column;
+//     justify-content: center;
+//     align-items: center;
 
-}
+// }
 
 
-/*** Analog Clock ***/
-.clock {
-    position: relative;
-    width: 100px;
-    height: 100px;
-    background: #091a21;
-    border: 2px solid #00b3ff;
-    border-radius: 50%;
-    box-shadow: 0 0 50px #ffffff44;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 30px;
+// /*** Analog Clock ***/
+// .clock {
+//     position: relative;
+//     width: 100px;
+//     height: 100px;
+//     background: #091a21;
+//     border: 2px solid #00b3ff;
+//     border-radius: 50%;
+//     box-shadow: 0 0 50px #ffffff44;
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+//     margin-bottom: 30px;
 
-    & span {
-        position: absolute;
-        inset:-2px;
-        color: #ffffff83;
-        text-align: center;
-        transform: rotate(calc(30deg*var(--i)));
+//     & span {
+//         position: absolute;
+//         inset:-2px;
+//         color: #ffffff83;
+//         text-align: center;
+//         transform: rotate(calc(30deg*var(--i)));
 
-        & b {
-            font-size:12px;
-            font-weight: 600;
-            display: inline-block;
-            transform: rotate(calc(-30deg*var(--i)));
-        }
-    }
+//         & b {
+//             font-size:12px;
+//             font-weight: 600;
+//             display: inline-block;
+//             transform: rotate(calc(-30deg*var(--i)));
+//         }
+//     }
 
-    &::before {
-        content: '';
-        position: absolute;
-        width: 8px;
-        height: 8px;
-        border-radius: 50%;
-        background: #ffffff;
-        border: 3px solid #1c1c1e;
-        z-index: 4;
-    }
-}
+//     &::before {
+//         content: '';
+//         position: absolute;
+//         width: 8px;
+//         height: 8px;
+//         border-radius: 50%;
+//         background: #ffffff;
+//         border: 3px solid #1c1c1e;
+//         z-index: 4;
+//     }
+// }
 
-.circles {
-    position: absolute;
-    width: 30px;
-    height: 30px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    z-index: 3;
+// .circles {
+//     position: absolute;
+//     width: 30px;
+//     height: 30px;
+//     border: 1px solid rgba(255, 255, 255, 0.1);
+//     border-radius: 50%;
+//     display: flex;
+//     justify-content: center;
+//     align-items: flex-start;
+//     z-index: 3;
 
-    & i {
-        position: absolute;
-        width: 3px;
-        height: 50%;
-        border-radius: 50%;
-        background: var(--clr);
-        opacity: 0.8;
-        transform-origin: bottom;
-        transform: scaleY(0.6);
-    }
+//     & i {
+//         position: absolute;
+//         width: 3px;
+//         height: 50%;
+//         border-radius: 50%;
+//         background: var(--clr);
+//         opacity: 0.8;
+//         transform-origin: bottom;
+//         transform: scaleY(0.6);
+//     }
 
-    &:nth-child(1) i {
-        width: 3px;
-    }
+//     &:nth-child(1) i {
+//         width: 3px;
+//     }
 
-    &:nth-child(2) i {
-        width: 3px;
-    }
+//     &:nth-child(2) i {
+//         width: 3px;
+//     }
 
-    &::before {
-        content: '';
-        position: absolute;
-        width: 4px;
-        height: 4px;
-        border-radius: 50%;
-        top:0px;
-        background: var(--clr);
-        box-shadow: 0 0 20px var(--clr),
-            0 0 60px var(--clr);
-    }
+//     &::before {
+//         content: '';
+//         position: absolute;
+//         width: 4px;
+//         height: 4px;
+//         border-radius: 50%;
+//         top:0px;
+//         background: var(--clr);
+//         box-shadow: 0 0 20px var(--clr),
+//             0 0 60px var(--clr);
+//     }
 
-}
+// }
 
-.circles2 {
-    width:45px;
-    height:45px;
-    z-index: 2;
-}
+// .circles2 {
+//     width:45px;
+//     height:45px;
+//     z-index: 2;
+// }
 
-.circles3 {
-    width: 60px;
-    height: 60px;
-    z-index: 1;
+// .circles3 {
+//     width: 60px;
+//     height: 60px;
+//     z-index: 1;
 
-}
+// }
 
 // /*** Digital Clock ***/
 
@@ -489,4 +489,99 @@
 
 .report1{
     margin-left:22px;
+}
+
+
+
+//21-05-24
+body {
+    width: 99%;
+}
+.clock {
+    width: 50%;
+    margin: 5% auto;
+}
+#clockface {
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-bottom: 100%; /* Makes a square container */
+    background: white;
+    border-radius: 50%;
+    border: 3% solid black;
+    box-shadow: 0 0 3px 0px red;
+}
+.hand {
+    position: absolute;
+    bottom: 50%;
+    left: 50%;
+    transform-origin: 50% 100%;
+}
+.hour {
+    width: 2%;
+    height: 35%;
+    background: black;
+    border-radius: 1em;
+}
+.min {
+    width: 1.5%;
+    height: 45%;
+    background: black;
+    border-radius: 1em;
+}
+.sec {
+    width: 1%;
+    height: 50%;
+    background: red;
+    border-radius: 1em;
+}
+.centerpoint {
+    position: absolute;
+    width: 6%;
+    height: 6%;
+    border-radius: 50%;
+    background-color: black;
+    top: 47%;
+    left: 47%;
+}
+.numbers {
+    position: absolute;
+    font-size: 10%;
+    text-align: center;
+    width: 10%;
+    height: 10%;
+}
+.one { top: 12%; left: 75%; }
+.two { top: 25%; left: 85%; }
+.three { top: 45%; left: 88%; }
+.four { top: 65%; left: 85%; }
+.five { top: 78%; left: 75%; }
+.six { top: 85%; left: 45%; }
+.seven { top: 78%; left: 15%; }
+.eight { top: 65%; left: 5%; }
+.nine { top: 45%; left: 2%; }
+.ten { top: 25%; left: 5%; }
+.eleven { top: 12%; left: 15%; }
+.twelve { top: 5%; left: 45%; }
+.minutes, .fiveminutes {
+    position: absolute;
+    width: 1%;
+    top: 0;
+    left: 49.5%;
+    transform-origin: 50% 100%;
+}
+.minutes {
+    height: 4%;
+    background: grey;
+}
+.fiveminutes {
+    height: 7%;
+    background: black;
+}
+svg {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
 }

@@ -29,7 +29,7 @@ export type ChartOptions = {
   styleUrls: ['./attendance.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class AttendanceComponent implements OnInit {
+export class AttendanceComponent implements OnInit ,AfterViewInit{
   @ViewChild('chart') chart: ChartComponent | undefined;
   public attendanceOptions: Partial<ChartOptions>;
 
@@ -89,7 +89,7 @@ export class AttendanceComponent implements OnInit {
 
 
   }
-
+ 
   ngOnInit(): void {
     // this.cloneTicks();
     // this.intervalId = setInterval(() => this.setTime(), 1000);
@@ -99,7 +99,10 @@ export class AttendanceComponent implements OnInit {
     // this.getLeaveType();
     this.getStudentLeaves();
     this.getStudentPresentsAbsentsAndLeavesYearWise();
-       this.loadClock();
+       //this.loadClock();
+
+       this.cloneTicks();
+       setInterval(() => this.setTime(), 1000);
   }
 
 
@@ -489,6 +492,8 @@ export class AttendanceComponent implements OnInit {
   // }
 
 
+
+
   loadClock() {
     // Select the elements for hours, minutes, and seconds
     let hr: HTMLElement | null = document.querySelector("#hr");
@@ -574,4 +579,119 @@ export class AttendanceComponent implements OnInit {
   getALLAttandance() {
     this.getAttendanceHistoy()
   }
+
+
+  ///////////////////////////////////////////////////////////////////////////////
+
+  private synth: SpeechSynthesis = window.speechSynthesis;
+
+  ngAfterViewInit(): void {
+    const speaker = document.getElementById('speaker') as HTMLElement;
+    speaker.onclick = (e: MouseEvent) => this.speakTime(e);
+  }
+
+  highlightSector(startAngle: number, endAngle: number): void {
+    startAngle = startAngle % 360;
+    endAngle = endAngle % 360;
+
+    const startAngleRad = (startAngle - 90) * Math.PI / 180;
+    const endAngleRad = (endAngle - 90) * Math.PI / 180;
+
+    const startX = Math.cos(startAngleRad) * 100;
+    const startY = Math.sin(startAngleRad) * 100;
+    const endX = Math.cos(endAngleRad) * 100;
+    const endY = Math.sin(endAngleRad) * 100;
+
+    let largeArcFlag = (endAngle - startAngle + 360) % 360 > 180 ? 1 : 0;
+
+    if (endAngle < startAngle) {
+      largeArcFlag = 1;
+    }
+
+    const pathData = [
+      'M', 0, 0,
+      'L', startX, startY,
+      'A', 100, 100, 0, largeArcFlag, 1, endX, endY,
+      'Z'
+    ].join(' ');
+
+    const highlightedSector = document.getElementById('highlightedSector');
+    highlightedSector!.setAttribute('d', pathData);
+
+    const startPoint = document.getElementById('startPoint') ;
+    startPoint!.setAttribute('cx', startX.toString());
+    startPoint!.setAttribute('cy', startY.toString());
+
+    const endPoint = document.getElementById('endPoint') ;
+    endPoint!.setAttribute('cx', endX.toString());
+    endPoint!.setAttribute('cy', endY.toString());
+  }
+
+  highlightInterval(startHour: number, startMin: number, endHour: number, endMin: number): void {
+    const startDeg = ((startHour + startMin / 60) / 12) * 360;
+    const endDeg = ((endHour + endMin / 60) / 12) * 360;
+
+    console.log('Start Degree:', startDeg);
+    console.log('End Degree:', endDeg);
+    this.highlightSector(startDeg, endDeg);
+  }
+
+  cloneTicks(): void {
+    for (let i = 1; i <= 12; i++) {
+      const el = document.querySelector('.fiveminutes') as HTMLElement;
+      const clone = el.cloneNode(true) as HTMLElement;
+      clone.setAttribute('class', `fiveminutes f${i}`);
+      document.getElementById('clockface')?.appendChild(clone);
+      const el2 = document.querySelector(`.f${i}`) as HTMLElement;
+      el2.style.transform = `rotate(${30 * i}deg)`;
+    }
+
+    for (let i = 1; i <= 60; i++) {
+      const el = document.querySelector('.minutes') as HTMLElement;
+      const clone = el.cloneNode(true) as HTMLElement;
+      clone.setAttribute('class', `minutes m${i}`);
+      document.getElementById('clockface')?.appendChild(clone);
+      const el2 = document.querySelector(`.m${i}`) as HTMLElement;
+      el2.style.transform = `rotate(${6 * i}deg)`;
+    }
+  }
+
+  setTime(): void {
+    const now = new Date();
+    const sec = now.getSeconds();
+    const secdeg = (sec / 60) * 360;
+    const sechand = document.querySelector('.sec') as HTMLElement;
+    sechand.style.transform = `rotate(${secdeg}deg)`;
+
+    const min = now.getMinutes();
+    const mindeg = (min / 60) * 360;
+    const minhand = document.querySelector('.min') as HTMLElement;
+    minhand.style.transform = `rotate(${mindeg}deg)`;
+
+    const hour = now.getHours();
+    const hourdeg = ((hour + min / 60) / 12) * 360;
+    const hourhand = document.querySelector('.hour') as HTMLElement;
+    hourhand.style.transform = `rotate(${hourdeg}deg)`;
+  }
+
+  speakTime(e: MouseEvent): void {
+    e.preventDefault();
+
+    const now = new Date();
+    let min = now.getMinutes();
+    let hour = now.getHours().toString();
+
+    if (min === 0) {
+      min = parseInt(hour);
+      hour = 'Even';
+    }
+    if (min < 10 && min > 1) {
+      min = parseInt('0' + min);
+    }
+
+    const utterThis = new SpeechSynthesisUtterance(`aandu paandu gaandu time is ${hour} ${min}`);
+    this.synth.speak(utterThis);
+  }
+
+
 }

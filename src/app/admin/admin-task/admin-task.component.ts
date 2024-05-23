@@ -225,7 +225,11 @@ export class AdminTaskComponent implements AfterViewInit {
   ActivateTask(task: SubmissionAssignmentTaskStatus) {
     this.taskService.ActivateTask(task.taskId).subscribe({
       next: (data: any) => {
-        task.status = data.status
+        task.status = data.status;
+        this.toast.showSuccess('Sucessfully updated!!', 'success')
+      },
+      error: (er: any) => {
+        this.toast.showError(er.error.message, 'error')
       }
     })
   }

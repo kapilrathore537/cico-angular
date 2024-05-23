@@ -53,8 +53,7 @@ export class AdminAssignmentsComponent implements OnInit, AfterViewInit {
     private router: Router,
     private utilityService: UtilityServiceService,
     private formBuilder: FormBuilder,
-    private tost: ToastService,
-    private toster: ToastrService) {
+    private tost: ToastService) {
 
     this.submissionForm = this.formBuilder.group({
       subjectId: ['', Validators.required],
@@ -235,6 +234,10 @@ export class AdminAssignmentsComponent implements OnInit, AfterViewInit {
     this.assignmentService.activateTask(obj.assignmentId).subscribe({
       next: (data: any) => {
         obj.status = data.status
+        this.tost.showSuccess('Sucessfully updated!!', 'success')
+      },
+      error: (er: any) => {
+        this.tost.showError(er.error.message, 'error')
       }
     })
   }

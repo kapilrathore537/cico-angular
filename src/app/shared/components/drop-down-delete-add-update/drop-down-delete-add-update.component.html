@@ -13,7 +13,7 @@
             </p>
 
         </li>
-        <li>
+        <li *ngIf="deleteButton">
             <p class="mb-0 delete-icon-color d-flex align-items-center gap_5 dropdown-padding pointer"
                 data-bs-toggle="modal" [attr.data-bs-target]="deleteModalId" (click)="deleteData()"><i
                     class="fi fi-rr-trash line-hei "></i> Delete</p>

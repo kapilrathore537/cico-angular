@@ -11,8 +11,6 @@ import { ht } from 'date-fns/locale';
 })
 export class SubjectService {
 
-
-
   public getAllChapterWithSubjectId(id: number) {
     return this.http.get(`${this.Subject_url}/getAllChapterWithSubjectId?subjectId=${id}`);
   }
@@ -79,5 +77,9 @@ export class SubjectService {
     return this.http.delete(`${this.EXAM_URL}/deleteSubjectExam?examId=${examId}`)
   }
 
+
+  activateExam(examId: number | undefined) {
+    return this.http.put(`${this.EXAM_URL}/changeSubjectExamStatus?examId=${examId}`, null)
+  }
 
 }

@@ -55,12 +55,12 @@ export class QuestionsComponent implements AfterViewInit {
   ngAfterViewInit(): void {
     if (this.type == Exam.subjectExam) {
       this.getSubjectExamQuestion();
+      this.setSubjectExamStartStatus();
     } else {
       this.getChapeter();
+      this.setChapterExamStartStatus();
     }
   }
-
-
 
   ngOnInit() {
     this.activateRouter.queryParams.subscribe((params: any) => {
@@ -77,8 +77,22 @@ export class QuestionsComponent implements AfterViewInit {
     window.onpopstate = function () {
       window.history.pushState(null, "", window.location.href);
     };
+
   }
 
+  public setSubjectExamStartStatus() {
+    this.examServiceService.setSubjectExamStartStatus(this.subjectExamId).subscribe({
+      next: (data: any) => {},
+      error: (er: any) => {}
+    })
+  }
+
+  public setChapterExamStartStatus() {
+    this.examServiceService.setChapterExamStartStatus(this.chapterId).subscribe({
+      next: (data: any) => {},
+      error: (er: any) => {}
+    })
+  }
 
   public getSubjectExamQuestion() {
     this.questionService.getAllSubjectExamQuestion(this.subjectExamId, this.loginService.getStudentId()).subscribe({

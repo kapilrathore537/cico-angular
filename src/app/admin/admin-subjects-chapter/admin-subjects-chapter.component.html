@@ -2,8 +2,9 @@
     <div class="profile d-flex mb-4">
         <div class="profile_top_heading d-flex gap_24">
             <h1 class="font-27 font-700 secondary mb-0">Chapters</h1>
-            <button class="top_profile_sec_btn font-14 font-500 lh-1 pointer" id="topic_create_new" data-bs-toggle="modal"
-                data-bs-target="#subject-subadd-modal" (click)="clearChapterForm()">Add Chapter</button>
+            <button class="top_profile_sec_btn font-14 font-500 lh-1 pointer" id="topic_create_new"
+                data-bs-toggle="modal" data-bs-target="#subject-subadd-modal" (click)="clearChapterForm()">Add
+                Chapter</button>
             <button class="top_profile_sec_btn font-14 font-500 lh-1 pointer" id="add-exam" data-bs-toggle="modal"
                 data-bs-target="#exam_add_modal" style="display: none;" (click)="clearExam()">Add Exam</button>
             <button class="top_profile_sec_btn font-14 font-500 lh-1 pointer" id="test_add_ques" data-bs-toggle="modal"
@@ -49,7 +50,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <app-drop-down-delete-add-update [path]="'/admin/subjectContent'" 
+                            <app-drop-down-delete-add-update [path]="'/admin/subjectContent'"
                                 [editModalId]="'#chapter-edit-modal'" [deleteModalId]="'#chapter-delete'"
                                 [params]="{chapterId:obj.chapterId,subjectId:subjectId}" [id]="obj.chapterId"
                                 [index]="i" (onClick)="onClick($event)"></app-drop-down-delete-add-update>
@@ -125,11 +126,22 @@
                                 <div class="test_details">
                                     <h3 class="mb-1">{{obj.examName}}</h3>
                                 </div>
-                            </div> 
-                            <app-drop-down-delete-add-update [editModalId]="'#exam_add_modal'"   (click)="removeScheduleFormField()"
-                                [examType]="'NORMALEXAM'" [deleteModalId]="'#delete-exam-modal'"
-                                [path]="'/admin/result/'" [params]="{subjectExamId:obj.examId,type:'subjectExam'}"
-                                [id]="obj.examId" [index]="i"
+                            </div>
+
+
+                            <div class="d-flex align-items-center gap_12">
+                                <div class="checkox_class">
+                                    <label class="switch">
+                                        <input type="checkbox"  (click)="beforeToggle($event, obj)" [checked]="obj.isActive">
+                                        <span class="slider round"></span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <app-drop-down-delete-add-update [editModalId]="'#exam_add_modal'"  [deleteButton]="!obj.isStart"
+                                (click)="removeScheduleFormField()" [examType]="'NORMALEXAM'"
+                                [deleteModalId]="'#delete-exam-modal'" [path]="'/admin/result/'"
+                                [params]="{subjectExamId:obj.examId,type:'subjectExam'}" [id]="obj.examId" [index]="i"
                                 (onClick)="onClickForExam($event)"></app-drop-down-delete-add-update>
                         </div>
 
@@ -165,8 +177,17 @@
                                     <!-- <h4 class="mb-0">Best Score - 36%</h4> -->
                                 </div>
                             </div>
-                            <app-drop-down-delete-add-update [examType]="'SCHEDULEEXAM'"
-                                [editModalId]="'#exam_add_modal'" [deleteModalId]="'#delete-exam-modal'" 
+                            {{obj.isActive}}
+                            <div class="d-flex align-items-center gap_12">
+                                <div class="checkox_class">
+                                    <label class="switch">
+                                        <input type="checkbox"  (click)="beforeToggle($event, obj)" [checked]="obj.isActive">
+                                        <span class="slider round"></span>
+                                    </label>
+                                </div>
+                            </div>
+                            <app-drop-down-delete-add-update [examType]="'SCHEDULEEXAM'" [deleteButton]="!obj.isStart"
+                                [editModalId]="'#exam_add_modal'" [deleteModalId]="'#delete-exam-modal'"
                                 [path]="'/admin/result/'" [params]="{subjectExamId:obj.examId,type:'subjectExam'}"
                                 [id]="obj.examId" [index]="i"
                                 (onClick)="onClickForExam($event)"></app-drop-down-delete-add-update>
@@ -338,23 +359,20 @@
 <!-- Modal Admin Subject Test Add Question Modal Start -->
 
 <!-- Modal  exam add   -->
-<div class="modal fade" id="exam_add_modal" tabindex="-1" aria-labelledby="subject-testques-modal5"
-    aria-hidden="true">
+<div class="modal fade" id="exam_add_modal" tabindex="-1" aria-labelledby="subject-testques-modal5" aria-hidden="true">
     <div class="modal-dialog position-relative leave_modal subject_modal">
         <div class="modal-content">
             <div class="modal-body">
                 <div class="modal-header apply_title">
                     <h1 class="modal-title fs-5 font-21 font-600 secondary modal_line position-relative" id="addExam">
                         Add Exam</h1>
-                    <button type="button" class="close_btn" data-bs-dismiss="modal" aria-label="Close" 
+                    <button type="button" class="close_btn" data-bs-dismiss="modal" aria-label="Close"
                         id="close-exam-add-form" (click)="clearExamForm()">
                         <i class="fi fi-rr-cross close_icon"></i>
                     </button>
                 </div>
 
                 <form [formGroup]="examForm">
-
-
                     <div class="form-group">
                         <div class="col-md-12  mb_18">
                             <h4 class="sub-heading font-17 font-500 text_gray"> Exam Name </h4>
@@ -405,7 +423,8 @@
                             <h4 class="sub-heading font-17 font-500 text_gray">Duration in (Minutes)</h4>
                             <div class="input_icon position-relative"><input formControlName="examTimer"
                                     [(ngModel)]="exam.examTimer" _ngcontent-xnu-c70="" type="number" id=""
-                                    name="examTimer" placeholder="Enter duration" class="form-control input_text   "></div>
+                                    name="examTimer" placeholder="Enter duration" class="form-control input_text   ">
+                            </div>
                             <div *ngIf="isFieldInvalidForExamForm('examTimer')" class="text-danger">
                                 {{appUtil.requiredField}}</div>
                         </div>
@@ -415,7 +434,7 @@
                                 <h4 class="sub-heading font-17 font-500 text_gray">Schedule Test (Optional) </h4>
                             </div>
                             <div class="col-md-2  mb_18">
-                                <input type="checkbox" (input)="openScheduleField()">
+                                <input type="checkbox" id="checkbox" (input)="openScheduleField()">
                             </div>
 
                         </div>
@@ -427,9 +446,7 @@
                                 <div class="input_icon position-relative d-flex align-items-center"><input type="date"
                                         [min]="" [(ngModel)]="exam.scheduleTestDate" id="birthday"
                                         name="scheduleTestTime" placeholder="From" formControlName="scheduleTestDate"
-                                        class="form-control input_text   ">
-
-
+                                        class="form-control input_text">
                                 </div>
                                 <div *ngIf="isFieldInvalidForExamForm('scheduleTestDate')" class="text-danger">
                                     {{appUtil.requiredField}}</div>
@@ -453,17 +470,12 @@
                     
                 </div> -->
 
-
-
-
-
-
                 <div class="apply_modal_buttons d-flex justify-content-center align-items-center">
-                    <button type="button" class="cancel_modal_btn font-15 font-500" data-bs-dismiss="modal" id="exam_modal_close"
-                        aria-label="Close" (click)="cancel()">Cancel</button>
+                    <button type="button" class="cancel_modal_btn font-15 font-500" data-bs-dismiss="modal"
+                        id="exam_modal_close" aria-label="Close" (click)="cancel()">Cancel</button>
                     <a>
-                        <button type="button" class="apply_modal_btn font-15 font-500"
-                            (click)="addUpdateExams()">Create</button>
+                        <button type="button" [hidden]="exam.isStart==true?true:false" id="buttonName"
+                            class="apply_modal_btn font-15 font-500" (click)="addUpdateExams()">Create</button>
                     </a>
                 </div>
 

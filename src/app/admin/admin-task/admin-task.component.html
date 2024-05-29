@@ -105,7 +105,7 @@
                             <tr *ngFor="let obj of taskSubmissionStatus ;let i=index" class="pointer">
                                 <td>
                                     <h5 class="font-15 font-500 mb-0" routerLink="/admin/createtask/{{obj.taskId}}">
-                                        {{obj.taskTitle+' ( version '+ obj.taskVersion +')'}}</h5>
+                                        {{obj.taskTitle}}<span *ngIf="obj.taskVersion">  ( version {{obj.taskVersion}})</span></h5>
                                 </td>
                                 <td class="txt_color_blue" [ngClass]="obj.status==false?'success':'text-danger'">
                                     <!-- <input type="checkbox" checked  (input)="ActivateTask(obj)" [checked]="obj.status"> 

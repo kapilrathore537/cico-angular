@@ -29,7 +29,7 @@ export type ChartOptions = {
   styleUrls: ['./attendance.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class AttendanceComponent implements OnInit ,AfterViewInit{
+export class AttendanceComponent implements OnInit, AfterViewInit {
   @ViewChild('chart') chart: ChartComponent | undefined;
   public attendanceOptions: Partial<ChartOptions>;
 
@@ -89,7 +89,7 @@ export class AttendanceComponent implements OnInit ,AfterViewInit{
 
 
   }
- 
+
   ngOnInit(): void {
     // this.cloneTicks();
     // this.intervalId = setInterval(() => this.setTime(), 1000);
@@ -99,10 +99,11 @@ export class AttendanceComponent implements OnInit ,AfterViewInit{
     // this.getLeaveType();
     this.getStudentLeaves();
     this.getStudentPresentsAbsentsAndLeavesYearWise();
-       //this.loadClock();
+    //this.loadClock();
 
-       this.cloneTicks();
-       setInterval(() => this.setTime(), 1000);
+    this.cloneTicks();
+    //   setInterval(() => this.setTime(), 1000);
+  //  this.highlightInterval(7, 47, 3, 0);
   }
 
 
@@ -241,6 +242,27 @@ export class AttendanceComponent implements OnInit ,AfterViewInit{
 
   public attendanceModal(attendance: Attendance) {
     this.attendance = attendance;
+    const checkInTime = this.extractHourAndMinutes(attendance.checkInTime);
+    const checkOutInTime = this.extractHourAndMinutes(attendance.checkOutTime);
+
+    setTimeout(() => {
+      this.highlightInterval(checkInTime.hour, checkInTime.minutes, checkOutInTime.hour, checkOutInTime.minutes);
+    }, 1000);
+  }
+
+  extractHourAndMinutes(time: string): { hour: number, minutes: number } {
+    // Split the time string by spaces and colons
+    const [timePart, modifier] = time.split(' ');
+    let [hours, minutes] = timePart.split(':').map(Number);
+
+    // Convert to 24-hour format if necessary
+    if (modifier === 'PM' && hours < 12) {
+      hours += 12;
+    } else if (modifier === 'AM' && hours === 12) {
+      hours = 0;
+    }
+
+    return { hour: hours, minutes: minutes };
   }
 
   public leaveModal(leave: Leaves) {
@@ -499,79 +521,79 @@ export class AttendanceComponent implements OnInit ,AfterViewInit{
     let hr: HTMLElement | null = document.querySelector("#hr");
     let mn: HTMLElement | null = document.querySelector("#mn");
     let sc: HTMLElement | null = document.querySelector("#sc");
-  
+
     // Select the elements for the digital clock
     let hours: HTMLElement | null = document.getElementById("hours");
     let minutes: HTMLElement | null = document.getElementById("minutes");
     let seconds: HTMLElement | null = document.getElementById("seconds");
     let ampm: HTMLElement | null = document.getElementById("ampm");
-  
+
     // Select the elements for check-in, checkout, and gap time display
     let checkinInput: HTMLInputElement | null = document.getElementById("checkin") as HTMLInputElement;
     let checkoutInput: HTMLInputElement | null = document.getElementById("checkout") as HTMLInputElement;
     let gapTimeDisplay: HTMLElement | null = document.getElementById("gapTime");
-  
+
     // Update the clock every second
     setInterval(() => {
       let day: Date = new Date();
-  
+
       // Calculate the rotations for the analog clock
       let hh: number = day.getHours() * 30; // 360 degrees / 12 hours = 30 degrees per hour
       let mm: number = day.getMinutes() * 6; // 360 degrees / 60 minutes = 6 degrees per minute
       let ss: number = day.getSeconds() * 6; // 360 degrees / 60 seconds = 6 degrees per second
-  
+
       // Apply the rotations
       if (hr) hr.style.transform = `rotateZ(${hh + mm / 12}deg)`;
       if (mn) mn.style.transform = `rotateZ(${mm}deg)`;
       if (sc) sc.style.transform = `rotateZ(${ss}deg)`;
-  
+
       // Get the current time
       let h: any = day.getHours();
       let m: any = day.getMinutes();
-      let s: any     = day.getSeconds();
-  
+      let s: any = day.getSeconds();
+
       // Determine AM/PM
       let am: string = h >= 12 ? "PM" : "AM";
       if (h > 12) h -= 12;
-  
+
       // Format the time as two digits
       h = h < 10 ? "0" + h : h;
       m = m < 10 ? "0" + m : m;
       s = s < 10 ? "0" + s : s;
-  
+
       // Update the digital clock display
       if (hours) hours.innerHTML = String(h);
       if (minutes) minutes.innerHTML = String(m);
       if (seconds) seconds.innerHTML = String(s);
       if (ampm) ampm.innerHTML = am;
-  
+
       // Calculate and display the gap time if both check-in and checkout times are set
       if (checkinInput?.value && checkoutInput?.value) {
         let checkinTime: Date = new Date(`1970-01-01T${checkinInput.value}:00`);
         let checkoutTime: Date = new Date(`1970-01-01T${checkoutInput.value}:00`);
-  
+
         if (checkoutTime < checkinTime) {
           // If checkout is before check-in, assume checkout is on the next day
           checkoutTime.setDate(checkoutTime.getDate() + 1);
         }
-  
+
         let gapTimeMs: number = checkoutTime.getTime() - checkinTime.getTime();
         let gapHours: number = Math.floor(gapTimeMs / (1000 * 60 * 60));
         let gapMinutes: number = Math.floor((gapTimeMs % (1000 * 60 * 60)) / (1000 * 60));
         let gapSeconds: number = Math.floor((gapTimeMs % (1000 * 60)) / 1000);
-  
+
         // Format the gap time as two digits
-        let gapTimeStr: string = 
-          (gapHours < 10 ? "0" + gapHours : gapHours) + ":" + 
-          (gapMinutes < 10 ? "0" + gapMinutes : gapMinutes) + ":" + 
+        let gapTimeStr: string =
+          (gapHours < 10 ? "0" + gapHours : gapHours) + ":" +
+          (gapMinutes < 10 ? "0" + gapMinutes : gapMinutes) + ":" +
           (gapSeconds < 10 ? "0" + gapSeconds : gapSeconds);
-  
+
         // Update the gap time display
         if (gapTimeDisplay) gapTimeDisplay.innerHTML = gapTimeStr;
       }
     }, 1000); // Update interval set to 1 second
   }
-  
+
 
   getAllLeaves() {
     this.getStudentLeaves();
@@ -586,8 +608,7 @@ export class AttendanceComponent implements OnInit ,AfterViewInit{
   private synth: SpeechSynthesis = window.speechSynthesis;
 
   ngAfterViewInit(): void {
-    const speaker = document.getElementById('speaker') as HTMLElement;
-    speaker.onclick = (e: MouseEvent) => this.speakTime(e);
+  
   }
 
   highlightSector(startAngle: number, endAngle: number): void {
@@ -618,11 +639,11 @@ export class AttendanceComponent implements OnInit ,AfterViewInit{
     const highlightedSector = document.getElementById('highlightedSector');
     highlightedSector!.setAttribute('d', pathData);
 
-    const startPoint = document.getElementById('startPoint') ;
+    const startPoint = document.getElementById('startPoint');
     startPoint!.setAttribute('cx', startX.toString());
     startPoint!.setAttribute('cy', startY.toString());
 
-    const endPoint = document.getElementById('endPoint') ;
+    const endPoint = document.getElementById('endPoint');
     endPoint!.setAttribute('cx', endX.toString());
     endPoint!.setAttribute('cy', endY.toString());
   }
@@ -630,9 +651,6 @@ export class AttendanceComponent implements OnInit ,AfterViewInit{
   highlightInterval(startHour: number, startMin: number, endHour: number, endMin: number): void {
     const startDeg = ((startHour + startMin / 60) / 12) * 360;
     const endDeg = ((endHour + endMin / 60) / 12) * 360;
-
-    console.log('Start Degree:', startDeg);
-    console.log('End Degree:', endDeg);
     this.highlightSector(startDeg, endDeg);
   }
 
@@ -653,45 +671,7 @@ export class AttendanceComponent implements OnInit ,AfterViewInit{
       document.getElementById('clockface')?.appendChild(clone);
       const el2 = document.querySelector(`.m${i}`) as HTMLElement;
       el2.style.transform = `rotate(${6 * i}deg)`;
+
     }
   }
-
-  setTime(): void {
-    const now = new Date();
-    const sec = now.getSeconds();
-    const secdeg = (sec / 60) * 360;
-    const sechand = document.querySelector('.sec') as HTMLElement;
-    sechand.style.transform = `rotate(${secdeg}deg)`;
-
-    const min = now.getMinutes();
-    const mindeg = (min / 60) * 360;
-    const minhand = document.querySelector('.min') as HTMLElement;
-    minhand.style.transform = `rotate(${mindeg}deg)`;
-
-    const hour = now.getHours();
-    const hourdeg = ((hour + min / 60) / 12) * 360;
-    const hourhand = document.querySelector('.hour') as HTMLElement;
-    hourhand.style.transform = `rotate(${hourdeg}deg)`;
-  }
-
-  speakTime(e: MouseEvent): void {
-    e.preventDefault();
-
-    const now = new Date();
-    let min = now.getMinutes();
-    let hour = now.getHours().toString();
-
-    if (min === 0) {
-      min = parseInt(hour);
-      hour = 'Even';
-    }
-    if (min < 10 && min > 1) {
-      min = parseInt('0' + min);
-    }
-
-    const utterThis = new SpeechSynthesisUtterance(`aandu paandu gaandu time is ${hour} ${min}`);
-    this.synth.speak(utterThis);
-  }
-
-
 }

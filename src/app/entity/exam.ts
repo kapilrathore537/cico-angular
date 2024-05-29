@@ -17,4 +17,5 @@ export class Exam {
     public totalExamQuestion!: number
     public examImage!: string
     public examStartTime: any
+    public isStart!: boolean
 }

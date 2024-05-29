@@ -10,4 +10,5 @@ export class SubmissionAssignmentTaskStatus {
     public taskCount: number = 0;
     public assignmentTitle: string = ''
     public taskNumber: number = 0;
+    public taskVersion: number = 0;
 }

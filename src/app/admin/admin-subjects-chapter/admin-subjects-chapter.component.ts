@@ -1,7 +1,5 @@
 import { AfterViewInit, Component } from '@angular/core';
 import { ActivatedRoute, Route, Router } from '@angular/router';
-import { error, log } from 'console';
-import { ToastrService } from 'ngx-toastr';
 import { Chapter } from 'src/app/entity/chapter';
 import { QuizeQuestion } from 'src/app/entity/quize-question';
 import { Subject } from 'src/app/entity/subject';
@@ -17,6 +15,8 @@ import { QuestionServiceService } from 'src/app/service/question-service.service
 import { QuestionResponse } from 'src/app/payload/question-response';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { Exam } from 'src/app/entity/exam';
+import { ex } from '@fullcalendar/core/internal-common';
+import { timeStamp } from 'console';
 declare var $: any;
 @Component({
   selector: 'app-admin-subjects-chapter',
@@ -55,6 +55,7 @@ export class AdminSubjectsChapterComponent implements AfterViewInit {
   examType!: string;
   appUtil = AppUtils;
   isExam: any
+  isEdit: boolean = false;
 
 
   constructor(private subjectService: SubjectService,
@@ -281,7 +282,6 @@ export class AdminSubjectsChapterComponent implements AfterViewInit {
   }
 
   public updateSubjectExam() {
-
     this.subjectService.updateSubjectExam(this.exam).subscribe({
       next: (data: any) => {
         this.toast.showSuccess(data.message, 'Success');
@@ -289,11 +289,7 @@ export class AdminSubjectsChapterComponent implements AfterViewInit {
           this.normlaExam = this.normlaExam.map(obj => (obj.examId == data.exam.examId ? data.exam : obj))
         } else if (data.exam.examType == "SCHEDULEEXAM")
           this.scheduleExam = this.scheduleExam.map(obj => (obj.examId == data.exam.examId ? data.exam : obj))
-
-        // this.examForm.reset()
-        // this.updateExam = new Exam();
-        // this.exam = new Exam();
-        AppUtils.modelDismiss('exam_modal_close')
+        AppUtils.modelDismiss('exam_modal_close');
       },
       error: (er: any) => {
         this.toast.showError(er.error.message, 'Error')
@@ -382,7 +378,7 @@ export class AdminSubjectsChapterComponent implements AfterViewInit {
     this.question = { ...this.questions.find(obj => obj.questionId === id) as QuestionResponse }
     document.getElementById('addQuestion')!.innerText = 'Update Question'
   }
-  isEdit: boolean = false;
+
 
   addUpdateQuestion() {
     if (this.isEdit) {
@@ -432,6 +428,7 @@ export class AdminSubjectsChapterComponent implements AfterViewInit {
     this.exam = new Exam();
     this.isExam = 'add'
     this.changeFormName('Add Exam');
+    document.getElementById('buttonName')!.innerText = 'Add'
     this.isScheduleFieldOpen = true;
   }
 
@@ -460,23 +457,29 @@ export class AdminSubjectsChapterComponent implements AfterViewInit {
 
   isScheduleForm: boolean = false
   public openScheduleField() {
-    var checkbox = document.querySelector('input[type="checkbox"]') as HTMLInputElement;
-    this.isScheduleForm = checkbox!.checked
-    if (checkbox!.checked) {
-      this.addScheduleFormField();
-      this.exam.examType = 'SCHEDULEEXAM'
-      this.changeFormName('Add Schedule Exam');
-    } else {
-      this.removeScheduleFormField();
-      this.changeFormName('Add  Exam');
-      this.exam.examType = 'NORMALEXAM'
-    }
+
+    var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    // Loop through the NodeList to find the checkbox with the specific id
+    checkboxes.forEach((checkbox: any) => {
+      if (checkbox.id === 'checkbox') {
+        this.isScheduleForm = checkbox!.checked
+        if (checkbox!.checked) {
+          this.addScheduleFormField();
+          this.exam.examType = 'SCHEDULEEXAM'
+          this.changeFormName('Add Schedule Exam');
+        } else {
+          this.removeScheduleFormField();
+          this.changeFormName('Add  Exam');
+          this.exam.examType = 'NORMALEXAM'
+        }
+      }
+    });
   }
 
   removeScheduleFormField() {
     this.examForm.removeControl('examStartTime');
     this.examForm.removeControl('scheduleTestDate');
-    // this.isScheduleFieldOpen = false;
+    //   this.isScheduleFieldOpen = false;
     this.changeFormName('Update Exam');
 
   }
@@ -510,8 +513,10 @@ export class AdminSubjectsChapterComponent implements AfterViewInit {
   }
 
   onClickForExam(event: any) {
-    this.openScheduleFieldForEdit()
+
+    this.openScheduleFieldForEdit();
     if (event.type == "getData") {
+      document.getElementById('buttonName')!.innerText = 'Update'
       this.isExam = 'edit'
       if (event.examType == "SCHEDULEEXAM") {
         this.getScheduleExamById(event.id);
@@ -534,5 +539,38 @@ export class AdminSubjectsChapterComponent implements AfterViewInit {
   clearQuestionForm() {
     this.questionForm.reset();
     document.getElementById('addQuestion')!.innerText = 'Add Question'
+  }
+
+
+  public activateExam(exam: Exam): any {
+    this.subjectService.activateExam(exam.examId).subscribe({
+      next: (data: any) => {
+        exam.isActive = data.isActive;
+        this.toast.showSuccess('Successfully updated', 'Success');
+        return true;
+      },
+      error: (er: any) => {
+        this.toast.showError(er.error.message, 'errror');
+        exam.isActive = exam.isActive;
+        return false;
+      }
+    })
+  }
+
+  beforeToggle(event: Event, obj: any) {
+    let proceed = confirm('Do you really want to change the status?');
+    if (proceed) {
+      if (this.activateExam(obj))
+        proceed = true
+      else
+        proceed = false
+
+      if (!proceed) {
+        event.preventDefault();
+        event.stopImmediatePropagation();
+      }
+    }
+    event.preventDefault();
+    event.stopImmediatePropagation();
   }
 }

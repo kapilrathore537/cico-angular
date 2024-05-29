@@ -9,6 +9,7 @@ import { ChapterExamResultResponse } from '../payload/chapter-exam-result-respon
 export class ExamServiceService {
 
 
+
   BASE_URL = this.utilityService.getBaseUrl();
   EXAM_URL = this.BASE_URL + '/exam';
 
@@ -52,5 +53,13 @@ export class ExamServiceService {
   public getSubjectExamResult(resultId: number) {
     return this.http.get(`${this.EXAM_URL}/getSubjectExamResult?resultId=${resultId}`)
   }
+
+  setSubjectExamStartStatus(subjectExamId: number) {
+    return this.http.put(`${this.EXAM_URL}/setSubjectExamStartStatus?examId=${subjectExamId}`, null)
+  }
+  setChapterExamStartStatus(chapterId: number) {
+    return this.http.put(`${this.EXAM_URL}/setChapterExamStartStatus?examId=${chapterId}`, null)
+  }
+
 
 }

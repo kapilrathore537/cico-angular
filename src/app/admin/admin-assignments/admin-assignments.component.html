@@ -125,9 +125,12 @@
                                     <p class="text_gray font-12 font-400 mb-0 " *ngIf="obj.taskNumber">Task
                                         {{obj.taskNumber}}</p>
                                 </td>
-                                <td class="txt_color_blue" [ngClass]="obj.status==false?'success':' text-danger'"
-                                    (click)="activateTask(obj)">
-                                    <div class="td">{{obj.status==false?' Active':'Inactive'}}</div>
+                                <td >
+                                    <label class="switch">
+                                        <input type="checkbox" checked (input)="activateTask(obj)"
+                                            [checked]="obj.status">
+                                        <span class="slider round"></span>
+                                    </label>
                                 </td>
                                 <td class="txt_color_purple ">{{obj.totalSubmitted}}</td>
                                 <td class="txt_color_light_green">{{obj.reveiwed}}</td>

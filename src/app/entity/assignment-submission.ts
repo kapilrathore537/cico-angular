@@ -24,5 +24,6 @@ export class AssignmentSubmission {
     public fullName!: string
     public applyForCourse!: string
     public taskNumber: any;
+    public taskVersion: number = 0;
 
 }

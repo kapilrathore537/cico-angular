@@ -16,5 +16,6 @@ export class StudentTaskSubmittion {
     public title!: string
     public description!: string
     submitFile: any
-    public taskNumber: any ;
+    public taskNumber: any;
+    public taskVersion: number = 0;
 }

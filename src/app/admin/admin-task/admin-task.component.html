@@ -85,7 +85,7 @@
 
                             </ul>
                         </div>
-                      
+
                     </div>
                 </div>
 
@@ -105,13 +105,19 @@
                             <tr *ngFor="let obj of taskSubmissionStatus ;let i=index" class="pointer">
                                 <td>
                                     <h5 class="font-15 font-500 mb-0" routerLink="/admin/createtask/{{obj.taskId}}">
-                                        {{obj.taskTitle}}</h5>
+                                        {{obj.taskTitle}}<span *ngIf="obj.taskVersion">  ( version {{obj.taskVersion}})</span></h5>
                                 </td>
-                                <td class="txt_color_blue" [ngClass]="obj.status==false?'success':'text-danger'"
-                                  >
-                                  <input type="checkbox" checked  (input)="ActivateTask(obj)" [checked]="obj.status"> 
-                                    <!-- <input class="" type="checkbox"   > -->
-                                </td>
+                                <td class="txt_color_blue" [ngClass]="obj.status==false?'success':'text-danger'">
+                                    <!-- <input type="checkbox" checked  (input)="ActivateTask(obj)" [checked]="obj.status"> 
+                                    <input class="" type="checkbox"   >
+                                </td> -->
+                                    <div class="checkox_class">
+                                        <label class="switch">
+                                            <input type="checkbox" checked (input)="ActivateTask(obj)"
+                                                [checked]="obj.status">
+                                            <span class="slider round"></span>
+                                        </label>
+                                    </div>
                                 <td class="txt_color_purple">{{obj.totalSubmitted}}</td>
                                 <td class="txt_color_light_green">{{obj.reveiwed}}</td>
                                 <td class="txt_color_yellow">{{obj.unReveiwed}}</td>
@@ -123,8 +129,9 @@
 
 
                 <div class=" pagination1 ttendance_dropdown d-flex justify-3-between align-items-center">
-                    <app-pagination   *ngIf="pageManager.totalElements>pageRequest.pageSize" [paginationManager]="pageManager" (eventEmit)="getAllData($event)"
-                    [type]="'task'" [pageRequest]="pageRequest"></app-pagination>
+                    <app-pagination *ngIf="pageManager.totalElements>pageRequest.pageSize"
+                        [paginationManager]="pageManager" (eventEmit)="getAllData($event)" [type]="'task'"
+                        [pageRequest]="pageRequest"></app-pagination>
                 </div>
             </div>
 
@@ -223,8 +230,9 @@
                                 (click)="submissionManageNextPrev(true)">Next</a></li>
                     </ul>
                 </nav> -->
-                <app-pagination *ngIf="submissioTaskpageManager.totalElements>submissioTaskPageRequest.pageSize" [paginationManager]="submissioTaskpageManager" (eventEmit)="getAllData($event)"
-                [type]="'taskSubmission'" [pageRequest]="submissioTaskPageRequest"></app-pagination>
+                <app-pagination *ngIf="submissioTaskpageManager.totalElements>submissioTaskPageRequest.pageSize"
+                    [paginationManager]="submissioTaskpageManager" (eventEmit)="getAllData($event)"
+                    [type]="'taskSubmission'" [pageRequest]="submissioTaskPageRequest"></app-pagination>
             </div>
 
         </div>

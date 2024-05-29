@@ -23,6 +23,7 @@ export class DropDownDeleteAddUpdateComponent implements OnInit {
   @Input() deleteModalId: string = ''
   @Output() onClick = new EventEmitter<any>();
   @Input() examType: string = ''
+  @Input() deleteButton: boolean = true;
 
   getData() {
     this.onClick.emit({ type: 'getData', id: this.id, examType: this.examType })

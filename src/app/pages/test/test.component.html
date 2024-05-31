@@ -9,14 +9,14 @@
         <div class="subject-test">
             <h3 _ngcontent-ghv-c53="" class="admin-title font-17 font-600 secondary position-relative">Test</h3>
             <div class="row mt-4">
-                <div class="col-md-4 mb-4 " *ngFor="let obj of normlaExam">
+                <div class="col-md-4 mb-4 " *ngFor="let obj of normalExam">
                     <div class="test_card">
                         <div class="d-flex justify-content-between align-items-center mb_12">
                             <div class="d-flex align-items-center gap_12">
                                 <img src="{{obj.examImage}}" class="test_icon">
                                 <div class="test_details">
                                     <h3 class="mb-1">{{obj.examName}}</h3>
-                                    <h4 class="mb-0" *ngIf="obj.scoreGet!=null"> Score -> {{obj.scoreGet}}%</h4>
+                                    <h4 class="mb-0" *ngIf="obj.scoreGet!=null" [ngStyle]="{'color':calculatePercentage(obj.scoreGet,obj.totalQuestionForTest) <=obj.passingMarks?'red':''}"> Score -> {{calculatePercentage(obj.scoreGet,obj.totalQuestionForTest)}}%   ({{ calculatePercentage(obj.scoreGet,obj.totalQuestionForTest)<=obj.passingMarks?'Fail':'Pass'}})</h4>
                                 </div>
                             </div>
                             <button *ngIf="obj.resultId==null" class="test_btn" (click)="startTest(obj.examId,obj.subjectId)">Start
@@ -55,7 +55,7 @@
                                 <img src="{{obj.examImage}}" class="test_icon">
                                 <div class="test_details">
                                     <h3 class="mb-1">{{obj.examName}}</h3>
-                                    <h4 class="mb-0" *ngIf="obj.scoreGet!=null" [ngStyle]="{'color':obj.scoreGet <=obj.passingMarks?'red':''}" >  Score -> {{obj.scoreGet}}%  ({{obj.scoreGet <=obj.passingMarks?'Fail':'Pass'}})</h4>
+                                    <h4 class="mb-0" *ngIf="obj.scoreGet!=null" [ngStyle]="{'color':obj.scoreGet <=obj.passingMarks?'red':''}" >  Score -> {{obj.scoreGet}}%  ({{ calculatePercentage(obj.scoreGet,obj.totalQuestionForTest)<=obj.passingMarks?'Fail':'Pass'}})</h4>
                                 </div>
                             </div>
                             <div class="lock_details">

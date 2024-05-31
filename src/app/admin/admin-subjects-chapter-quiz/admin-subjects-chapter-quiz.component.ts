@@ -9,7 +9,6 @@ import { QuestionResponse } from 'src/app/payload/question-response';
 import { AppUtils } from 'src/app/utils/app-utils';
 import { ToastService } from 'src/app/service/toast.service';
 import { ExamServiceService } from 'src/app/service/exam-service.service';
-import { from } from 'rxjs';
 @Component({
   selector: 'app-admin-subjects-chapter-quiz',
   templateUrl: './admin-subjects-chapter-quiz.component.html',
@@ -23,7 +22,6 @@ export class AdminSubjectsChapterQuizComponent {
   question: QuizeQuestion = new QuizeQuestion();
   public Editor = ClassicEditor;
   image: File | null = null;
-  private editorInstance: any;
   submissionForm: FormGroup
   subjectId: number = 0;
   questionIndex = 0;
@@ -175,7 +173,7 @@ export class AdminSubjectsChapterQuizComponent {
         return true;
       },
       error: (er: any) => {
-        this.toast.showError(er.error.message, 'errror');
+        this.toast.showError(er.error.message, 'error');
         this.activeStatus = this.activeStatus;
         return false;
       }
@@ -183,9 +181,12 @@ export class AdminSubjectsChapterQuizComponent {
     return true;
   }
 
-  activeStatus!: boolean
+  activeStatus: boolean = false
+
+  title1:string='Do you really want to activate the exam? The exam cannot be deactivated once it has started.'
+  title2:string='You can inactivate once there are no submissions or no one has started the exam.'
   beforeToggle(event: Event) {
-    let proceed = confirm('Do you really want to activate the exam? The exam cannot be deactivated once it has started.');
+    let proceed = confirm(!this.activeStatus?this.title1:this.title2);
     if (proceed) {
       proceed = this.activateExam()
       if (!proceed) {

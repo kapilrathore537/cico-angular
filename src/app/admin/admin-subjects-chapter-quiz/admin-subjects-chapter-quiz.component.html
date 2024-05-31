@@ -4,7 +4,13 @@
         <div class="profile_top_heading d-flex gap_24">
             <h1 class="font-27 font-700 secondary mb-0">Core Java</h1>
             <button class="top_profile_sec_btn font-14 font-500 lh-1" data-bs-toggle="modal"
-                data-bs-target="#subject-testques-modal" (click)="cancel()">Add Question</button>
+                data-bs-target="#subject-testques-modal" (click)="cancel()" *ngIf="!activeStatus">Add Question</button>
+                <div class="checkox_class">
+                    <label class="switch">
+                        <input type="checkbox"  (click)="beforeToggle($event)" [checked]="activeStatus">
+                        <span class="slider round"></span>
+                    </label>
+                </div>
         </div>
 
         <app-profile-bar></app-profile-bar>
@@ -26,16 +32,19 @@
                 <div class="col-md-12" *ngFor="let obj of questions let a =index">
                     <div class="top-test-question">
                         <h2>Question {{a+1}}</h2>
-                        <div class="test-que-edit-del">
-                            <span class="d-flex align-items-center gap_5 font-17 font-500 secondary"
-                                data-bs-toggle="modal" data-bs-target="#subject-edit_testques-modal"
+                        <div class="test-que-edit-del" *ngIf="!obj.isSelected;else editePart">
+                            <span class="d-flex align-items-center pointer gap_5 font-17 font-500 secondary"
+                                data-bs-toggle="modal" data-bs-target="#subject-testques-modal"
                                 (click)="setQuestion(obj.questionId,a)"><i
                                     class="fi fi-rr-file-edit line-height-0"></i> Edit</span>
-                            <span class="d-flex align-items-center gap_5 font-17 font-500 delete-icon-color"
-                                data-bs-toggle="modal" data-bs-target="#delete-modal"
-                                (click)="questionId = obj?.questionId ?? 0;questionIndex=a"><i class="fi fi-rr-trash line-height-0"
+                            <span class="d-flex align-items-center pointer gap_5 font-17 font-500 delete-icon-color"
+                                data-bs-toggle="modal" data-bs-target="#delete-modal" 
+                                (click)="questionId = obj?.questionId ?? 0;questionIndex=a;"><i class="fi fi-rr-trash line-height-0"
                                     data-bs-dismiss="modal" aria-label="Close"></i> Delete</span>
                         </div>
+                        <ng-template class="test-que-edit-del" #editePart>
+                            <h6 style="font: 200;">Can't editable</h6>
+                        </ng-template>
                     </div>
 
                     <div class="subject-test-question">
@@ -86,17 +95,18 @@
     <app-delete-modal [title]="'Question'" (onClick)="deleteQuestion()"></app-delete-modal>
 </div>
 <!-- Modal Delete Modal End -->
-<!-- Modal Admin Subject Test Add Question Modal Start -->
+<!-- Modal Admin Subject Test 
+     Modal Start -->
 <div class="modal fade" id="subject-testques-modal" tabindex="-1" aria-labelledby="subject-testques-modal"
     aria-hidden="true">
     <div class="modal-dialog position-relative leave_modal subject_modal">
         <div class="modal-content">
             <div class="modal-body">
                 <div class="modal-header apply_title">
-                    <h1 class="modal-title fs-5 font-21 font-600 secondary modal_line position-relative"
+                    <h1 class="modal-title fs-5 font-21 font-600 secondary modal_line position-relative" 
                         id="exampleModalLabel1">Add Question</h1>
                     <button type="button" class="close_btn" data-bs-dismiss="modal" aria-label="Close" id="quize-save-modal"
-                       (click)="clearFormSubmission()">
+                       (click)="cancel()">
                         <i class="fi fi-rr-cross close_icon"></i>
                     </button>
                 </div>
@@ -109,7 +119,7 @@
                                 <ckeditor [editor]="Editor" name="questionContent" [(ngModel)]="question.questionContent" formControlName="questionContent" >
                                 </ckeditor>
                                 <div *ngIf=" isFieldInvalidForSubmissionForm('questionContent')" class="text-danger">
-                                    questionContent is required.</div>
+                                    Field is required.</div>
                             </div>
                         </div>
                        
@@ -129,7 +139,7 @@
                                     <input type="text" id="" name="option1" class="form-control input_text" placeholder=""
                                         [(ngModel)]="question.option1" formControlName="option1">
                                         <div *ngIf=" isFieldInvalidForSubmissionForm('option1')" class="text-danger">
-                                            option1 is required.</div>
+                                            Field is required.</div>
                                 </div>
                             </div>
                         </div>
@@ -142,7 +152,7 @@
                                     <input type="text" id="" name="option2" class="form-control input_text" placeholder=""
                                         [(ngModel)]="question.option2"  formControlName="option2">
                                         <div *ngIf=" isFieldInvalidForSubmissionForm('option2')" class="text-danger">
-                                            option2 is required.</div>
+                                            Field is required.</div>
                                 </div>
                             </div>
                         </div>
@@ -153,7 +163,7 @@
                                     <input type="text" id="" name="option3" class="form-control input_text" placeholder=""
                                         [(ngModel)]="question.option3"  formControlName="option3">
                                         <div *ngIf=" isFieldInvalidForSubmissionForm('option3')" class="text-danger">
-                                            option3 is required.</div>
+                                            Field is required.</div>
                                 </div>
                             </div>
                         </div>
@@ -165,7 +175,7 @@
                                     <input type="text" id="" name="option4" class="form-control input_text" placeholder=""
                                         [(ngModel)]="question.option4"  formControlName="option4">
                                         <div *ngIf=" isFieldInvalidForSubmissionForm('option4')" class="text-danger">
-                                            option4 is required.</div>
+                                            Field is required.</div>
                                 </div>
                             </div>
                         </div>
@@ -182,19 +192,16 @@
                                     <option [value]="question.option4">{{question.option4}}</option>
                                 </select>
                                 <div *ngIf=" isFieldInvalidForSubmissionForm('correctOption')" class="text-danger">
-                                    correctOption is required.</div>
+                                    Field is required.</div>
                             </div>
                         </div>
-
-                       
-                       
                     </div><!-- row -->
                 </form>
                 <div class="apply_modal_buttons d-flex justify-content-between align-items-center">
                     <button type="button" class="cancel_modal_btn font-15 font-500" data-bs-dismiss="modal"
                         aria-label="Close" (click)="cancel()">Cancel</button>
                     <a>
-                        <button type="button" class="apply_modal_btn font-15 font-500" (click)="addQuestion()">Save
+                        <button type="button" class="apply_modal_btn font-15 font-500" id="buttonName" (click)="addUpdateQuestion()">Save
                             Question</button>
                     </a>
                 </div>
@@ -204,91 +211,3 @@
     </div>
 </div>
 <!-- Modal Admin Subject Test Add Question Modal End -->
-
-<!-- Modal Admin Subject Test Edit Question Modal Start -->
-<div class="modal fade" id="subject-edit_testques-modal" tabindex="-1" aria-labelledby="subject-edit_testques-modal"
-    aria-hidden="true">
-    <div class="modal-dialog position-relative leave_modal subject_modal">
-        <div class="modal-content">
-            <div class="modal-body">
-                <div class="modal-header apply_title">
-                    <h1 class="modal-title fs-5 font-21 font-600 secondary modal_line position-relative"
-                        id="exampleModalLabel1">Edit Question</h1>
-                    <button type="button" class="close_btn" data-bs-dismiss="modal" aria-label="Close" id="update-quize-modal"
-                      >
-                        <i class="fi fi-rr-cross close_icon"></i>
-                    </button>
-                </div>
-
-                <form action="">
-                    <div class="row">
-                        <div class="col-md-12 mb_18">
-                            <h4 class="sub-heading font-17 font-500 text_gray">Question Content</h4>
-                            <ckeditor [editor]="Editor" name="questionContent" [(ngModel)]="question.questionContent">
-                            </ckeditor>
-                        </div>
-                        <div class="col-md-12 mb_18">
-                            <h4 class="sub-heading font-17 font-500 text_gray">Image </h4>
-                            <div class="input_icon position-relative">
-                                <input type="file" (change)="handleImageInput($event)"
-                                    [value]="question.questionImage">
-                            </div>
-                        </div>
-                        <div class="col-md-12 mb_18">
-                            <h4 class="sub-heading font-17 font-500 text_gray">Option-1</h4>
-                            <div class="input_icon position-relative">
-                                <input type="text" id="" name="option1" class="form-control input_text" placeholder=""
-                                    [(ngModel)]="question.option1">
-                            </div>
-                        </div>
-                        <div class="col-md-12 mb_18">
-                            <h4 class="sub-heading font-17 font-500 text_gray">Option-2</h4>
-                            <div class="input_icon position-relative">
-                                <input type="text" id="" name="option2" class="form-control input_text" placeholder=""
-                                    [(ngModel)]="question.option2">
-                            </div>
-                        </div>
-                        <div class="col-md-12 mb_18">
-                            <h4 class="sub-heading font-17 font-500 text_gray">Option-3</h4>
-                            <div class="input_icon position-relative">
-                                <input type="text" id="" name="option3" class="form-control input_text" placeholder=""
-                                    [(ngModel)]="question.option3">
-                            </div>
-                        </div>
-                        <div class="col-md-12 mb_18">
-                            <h4 class="sub-heading font-17 font-500 text_gray">Option-4</h4>
-                            <div class="input_icon position-relative">
-                                <input type="text" id="" name="option4" class="form-control input_text" placeholder=""
-                                    [(ngModel)]="question.option4">
-                            </div>
-                        </div>
-                        <div class="col-md-12 mb_18">
-                            <h4 class="sub-heading font-17 font-500 text_gray">Correct Option </h4>
-                            <div class="input_icon position-relative ">
-                                <!-- <input type="text" id="" name="correctOption" class="form-control input_text" placeholder=""  [(ngModel)]="question.correctOption"> -->
-                                <select class="form-select" aria-label="Default select example" id="correctOption"
-                                    name="correctOption" [(ngModel)]="question.correctOption">
-                                    <option value = "">Select Correct Option</option>
-                                    <option [value]="question.option1">{{question.option1}}</option>
-                                    <option [value]="question.option2">{{question.option2}}</option>
-                                    <option [value]="question.option3">{{question.option3}}</option>
-                                    <option [value]="question.option4">{{question.option4}}</option>
-                                </select>
-                            </div>
-                        </div>
-                       
-                    </div><!-- row -->
-                </form>
-                <div class="apply_modal_buttons d-flex justify-content-between align-items-center">
-                    <button type="button" class="cancel_modal_btn font-15 font-500" data-bs-dismiss="modal"
-                        aria-label="Close" (click)="cancel()">Cancel</button>
-                    <a>
-                        <button type="button" class="apply_modal_btn font-15 font-500" (click)="updateQuestion()">Save
-                            Question</button>
-                    </a>
-                </div>
-
-            </div>
-        </div>
-    </div>
-</div>

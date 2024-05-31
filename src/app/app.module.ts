@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginQRComponent } from './pages/login-qr/login-qr.component';
@@ -27,7 +26,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { authInterceptorProvider } from './shared/Interceptor/auth.interceptor';
 import { FormsModule } from '@angular/forms';
-import { TestingComponent } from './pages/testing/testing.component';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { NgxPaginationModule } from 'ngx-pagination';
@@ -114,7 +112,6 @@ import { StaticsComponent } from './pages/statics/statics.component';
     LeftSideBarComponent,
     RightSideBarComponent,
     ProfileBarComponent,
-    TestingComponent,
     AdminPanelComponent,
     AdminSideBarComponent,
     AdminDashboardComponent,

@@ -5,18 +5,18 @@
     <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink" style="min-width: 8rem;">
         <li><a (click)="pageRenderUsingRouterLink()"
                 class="mb-0 warning d-flex align-items-center gap_5 dropdown-padding pointer"><i
-                    class="fi fi-rr-document line-height-0"></i> View</a></li>
+                    class="fi fi-rr-document line-height-0"></i> {{View}}</a></li>
         <li>
             <p class="mb-0 warning d-flex align-items-center gap_5 dropdown-padding pointer" data-bs-toggle="modal"
                 [attr.data-bs-target]="editModalId" (click)="getData()">
-                <i class="fi fi-rr-file-edit line-height-0"></i> Edit
+                <i class="fi line-height-0"  [ngClass]="Edit=='Edit'?'fi-rr-file-edit':'fi-rr-document'"></i> {{Edit}}
             </p>
 
         </li>
         <li *ngIf="deleteButton">
             <p class="mb-0 delete-icon-color d-flex align-items-center gap_5 dropdown-padding pointer"
                 data-bs-toggle="modal" [attr.data-bs-target]="deleteModalId" (click)="deleteData()"><i
-                    class="fi fi-rr-trash line-hei "></i> Delete</p>
+                    class="fi fi-rr-trash line-hei "></i> {{Delete}}</p>
         </li>
     </ul>
 </div>

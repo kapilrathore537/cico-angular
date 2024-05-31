@@ -22,7 +22,7 @@
             <div class="subjects_tabs">
                 <h2 id="subject_topic" class="tabs_heading warning tabs_heading_border_active"
                     onclick="subject_topic()">Subject Chapter
-                </h2>`
+                </h2>
                 <h2 id="subject_test" class="tabs_heading text_gray" onclick="subject_test()">Subject question</h2>
                 <h2 id="subject_exam" class="tabs_heading text_gray" onclick="subject_exam()">Subject exam
                 </h2>
@@ -71,7 +71,7 @@
                 <div class="col-md-12" *ngFor="let obj of questions; let a =index">
                     <div class="top-test-question">
                         <h2>Question {{a+1}}</h2>
-                        <div class="test-que-edit-del">
+                        <div class="test-que-edit-del" *ngIf="!obj.isSelected">
                             <span class="d-flex align-items-center gap_5 font-17 font-500 secondary"
                                 data-bs-toggle="modal" data-bs-target="#subject-testques-modal"
                                 (click)="setQuestion(obj.questionId,a)"><i class="fi fi-rr-file-edit line-height-0"></i>
@@ -177,7 +177,7 @@
                                     <!-- <h4 class="mb-0">Best Score - 36%</h4> -->
                                 </div>
                             </div>
-                            {{obj.isActive}}
+                            
                             <div class="d-flex align-items-center gap_12">
                                 <div class="checkox_class">
                                     <label class="switch">
@@ -186,7 +186,7 @@
                                     </label>
                                 </div>
                             </div>
-                            <app-drop-down-delete-add-update [examType]="'SCHEDULEEXAM'" [deleteButton]="!obj.isStart"
+                            <app-drop-down-delete-add-update [examType]="'SCHEDULEEXAM'"  [Edit]="obj.isStart?'View':'Edit'" [View]="obj.isStart?'View Result':'View'" [deleteButton]="!obj.isStart"
                                 [editModalId]="'#exam_add_modal'" [deleteModalId]="'#delete-exam-modal'"
                                 [path]="'/admin/result/'" [params]="{subjectExamId:obj.examId,type:'subjectExam'}"
                                 [id]="obj.examId" [index]="i"

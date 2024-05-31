@@ -8,4 +8,5 @@ export class QuestionResponse {
 	 correctOption:string='';
 	 selectedOption:string='';// select by student 
 	 questionImage:string='';
+	 public isSelected!:Boolean
 }

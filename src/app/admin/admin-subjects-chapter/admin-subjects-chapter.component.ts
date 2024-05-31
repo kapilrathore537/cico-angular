@@ -1,5 +1,5 @@
 import { AfterViewInit, Component } from '@angular/core';
-import { ActivatedRoute, Route, Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Chapter } from 'src/app/entity/chapter';
 import { QuizeQuestion } from 'src/app/entity/quize-question';
 import { Subject } from 'src/app/entity/subject';
@@ -15,9 +15,6 @@ import { QuestionServiceService } from 'src/app/service/question-service.service
 import { QuestionResponse } from 'src/app/payload/question-response';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { Exam } from 'src/app/entity/exam';
-import { ex } from '@fullcalendar/core/internal-common';
-import { timeStamp } from 'console';
-declare var $: any;
 @Component({
   selector: 'app-admin-subjects-chapter',
   templateUrl: './admin-subjects-chapter.component.html',
@@ -282,6 +279,7 @@ export class AdminSubjectsChapterComponent implements AfterViewInit {
   }
 
   public updateSubjectExam() {
+    this.exam.subjectId = this.subjectId    
     this.subjectService.updateSubjectExam(this.exam).subscribe({
       next: (data: any) => {
         this.toast.showSuccess(data.message, 'Success');
@@ -321,7 +319,6 @@ export class AdminSubjectsChapterComponent implements AfterViewInit {
           this.questions = data.questions;
           this.totalChapterExamQuestion = data.questionCount;
           this.initiaLiseExamform()
-
         },
         error: (er: any) => {
         }
@@ -346,7 +343,7 @@ export class AdminSubjectsChapterComponent implements AfterViewInit {
   }
 
   public updateQuestion() {
-    this.questionService.updateQuestionById(this.question).subscribe(
+    this.questionService.updateQuestionById(this.question,this.subjectId,2).subscribe(
       {
         next: (data: any) => {
           AppUtils.modelDismiss('quize-save-modal')
@@ -429,7 +426,8 @@ export class AdminSubjectsChapterComponent implements AfterViewInit {
     this.isExam = 'add'
     this.changeFormName('Add Exam');
     document.getElementById('buttonName')!.innerText = 'Add'
-    this.isScheduleFieldOpen = true;
+    this.isScheduleFieldOpen = true; 
+    
   }
 
   isScheduleFieldOpen: boolean = true;

@@ -45,13 +45,7 @@ export class UnlockedLockedAssignmentComponent implements OnInit {
   }
 
   toggleAssignment(index: number): void {
-    console.log('child ', this.assignmentTaskVisibility);
     this.assignmentTaskVisibility[index] = !this.assignmentTaskVisibility[index];
-    console.log(Array.isArray(this.unLockAssignments));
-    console.table(this.unLockAssignments);
-    console.table(this.assignmentTaskVisibility);
-
-
   }
 
 }

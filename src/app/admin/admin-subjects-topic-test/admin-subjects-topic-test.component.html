@@ -92,7 +92,7 @@
                                  <input type="text" id="" name="title" class="form-control input_text" placeholder="Title" [(ngModel)]="chapterContent.title" formControlName="title" >
                              </div>
                              <div *ngIf=" isFieldInvalidForSubmissionForm('title')" class="text-danger">
-                                 subjectName is required.</div>
+                                 Field is required.</div>
                          </div>
                      </div>
                      <div class="form-group">
@@ -101,7 +101,7 @@
                              <input type="text" id="" name="subTitle" class="form-control input_text" placeholder="Sub-Title"   [(ngModel)]="chapterContent.subTitle" formControlName="subTitle">
                          </div>
                          <div *ngIf=" isFieldInvalidForSubmissionForm('subTitle')" class="text-danger">
-                             subTitle is required.</div>
+                            Field is required.</div>
                      </div>
                      </div>
                      <div class="form-group">
@@ -110,7 +110,7 @@
                          <ckeditor [editor]="Editor" (ready)="onEditorReady($event)" name="content" [(ngModel)]="chapterContent.content" formControlName="content">
                          </ckeditor>
                          <div *ngIf=" isFieldInvalidForSubmissionForm('content')" class="text-danger">
-                             content is required.</div>
+                            Field is required.</div>
                      </div>
                  </div>
                  </form>

@@ -3,15 +3,13 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { QuizeQuestion } from 'src/app/entity/quize-question';
 import { QuestionServiceService } from 'src/app/service/question-service.service';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import { UtilityServiceService } from 'src/app/service/utility-service.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ChapterServiceService } from 'src/app/service/chapter-service.service';
-import { Question } from 'src/app/entity/question';
 import { QuestionResponse } from 'src/app/payload/question-response';
-import { timeStamp } from 'console';
 import { AppUtils } from 'src/app/utils/app-utils';
-import { ToastrService } from 'ngx-toastr';
 import { ToastService } from 'src/app/service/toast.service';
+import { ExamServiceService } from 'src/app/service/exam-service.service';
+import { from } from 'rxjs';
 @Component({
   selector: 'app-admin-subjects-chapter-quiz',
   templateUrl: './admin-subjects-chapter-quiz.component.html',
@@ -20,8 +18,8 @@ import { ToastService } from 'src/app/service/toast.service';
 export class AdminSubjectsChapterQuizComponent {
 
   questionId: number = 0;
-  questions: QuizeQuestion[] = []
-  id: number = 0;
+  questions!: QuizeQuestion[]
+  chapterId: number = 0;
   question: QuizeQuestion = new QuizeQuestion();
   public Editor = ClassicEditor;
   image: File | null = null;
@@ -31,13 +29,16 @@ export class AdminSubjectsChapterQuizComponent {
   questionIndex = 0;
   type!: string;
   examId!: number
+  formType!: number;
+  isActive!: boolean
 
   constructor(private activateRouter: ActivatedRoute,
     private questionService: QuestionServiceService,
     private router: Router,
     private formBuilder: FormBuilder,
     private chapterService: ChapterServiceService,
-    private toast: ToastService) {
+    private toast: ToastService,
+    private examService: ExamServiceService) {
 
     this.submissionForm = this.formBuilder.group({
       correctOption: ['', Validators.required],
@@ -46,45 +47,44 @@ export class AdminSubjectsChapterQuizComponent {
       option2: ['', Validators.required],
       option1: ['', Validators.required],
       questionContent: ['', Validators.required]
-
     });
+
+    this.questions = []
   }
   ngOnInit() {
     this.activateRouter.queryParams.subscribe(params => {
-      this.id = params['chapterId'];
+      this.chapterId = params['chapterId'];
       this.examId = params['examId'];
       this.subjectId = params['subjectId']
     });
     this.getAllQuestions();
   }
   public addQuestion() {
-    if (this.submissionForm.invalid) {
-      this.submissionFormFun()
-    } else {
-      this.questionService.addQuestion(this.question, this.id).subscribe(
-        {
-          next: (data) => {
-            this.questions.push(data)
-            this.question = new QuizeQuestion();
-            AppUtils.modelDismiss('quize-save-modal')
-            this.toast.showSuccess('Quize successfully added!!', 'Success')
-          },
-          error: (er) => {
-            this.toast.showError('Error please try again!!', 'Error')
-          }
+
+    this.questionService.addQuestion(this.question, this.chapterId).subscribe(
+      {
+        next: (data) => {
+          this.questions.push(data)
+          AppUtils.modelDismiss('quize-save-modal')
+          this.toast.showSuccess('Quize successfully added!!', 'Success')
+        },
+        error: (er) => {
+          this.toast.showError('Error please try again!!', 'Error')
         }
-      )
-    }
+      }
+    )
+
   }
   handleImageInput(event: any) {
     this.question.questionImage = event.target.files[0];
   }
 
   public getAllQuestions() {
-    this.chapterService.getChapterExamQuestions(this.id).subscribe(
+    this.chapterService.getChapterExamQuestions(this.chapterId).subscribe(
       {
         next: (data: any) => {
           this.questions = data.questions;
+          this.activeStatus = data.isActive;
         },
         error: (er) => {
         }
@@ -108,12 +108,11 @@ export class AdminSubjectsChapterQuizComponent {
   }
 
   public updateQuestion() {
-    this.questionService.updateQuestionById(this.question).subscribe(
+    this.questionService.updateQuestionById(this.question, this.examId, 1).subscribe(
       {
         next: (data: any) => {
-          AppUtils.modelDismiss('update-quize-modal')
-          this.questions[this.questionIndex] = data.question
-          this.cancel()
+          AppUtils.modelDismiss('quize-save-modal')
+          this.questions[this.questionIndex] = data.question;
           this.toast.showSuccess(data.message, 'Success')
         },
         error: (error) => {
@@ -121,6 +120,7 @@ export class AdminSubjectsChapterQuizComponent {
         }
       }
     )
+
   }
 
   public getQuestionById(id: number) {
@@ -133,22 +133,26 @@ export class AdminSubjectsChapterQuizComponent {
 
   public cancel() {
     this.question = new QuizeQuestion();
+    this.submissionForm.reset();
+    this.formType = 1 // for add question
+    this.changeFormName('Add Question', 'Add')
   }
-  public clearFormSubmission() {
-    this.submissionForm.reset()
+
+  changeFormName(formaName: string, buttonName: string) {
+    document.getElementById('exampleModalLabel1')!.innerText = formaName;
+    document.getElementById('buttonName')!.innerText = buttonName
   }
+
+
   public isFieldInvalidForSubmissionForm(fieldName: string): boolean {
     const field = this.submissionForm.get(fieldName);
     return field ? field.invalid && field.touched : false;
-  }
-  public submissionFormFun() {
-    AppUtils.submissionFormFun(this.submissionForm)
   }
 
   public pageRenderUsingRouterLink(path: string) {
     const dataParams = {
       subjectId: this.subjectId,
-      chapterId: this.id,
+      chapterId: this.chapterId,
     };
     this.router.navigate([path], {
       queryParams: dataParams
@@ -157,7 +161,53 @@ export class AdminSubjectsChapterQuizComponent {
 
   public setQuestion(id: number, index: number) {
     this.questionIndex = index
+    this.formType = 2;
+    this.changeFormName('Update Question', 'Update')
     this.question = { ...this.questions.find(obj => obj.questionId === id) as QuestionResponse }
   }
 
+
+  public activateExam() {
+    this.examService.changeStatus(this.examId).subscribe({
+      next: (data: any) => {
+        this.activeStatus = data.isActive;
+        this.toast.showSuccess('Successfully updated', 'Success');
+        return true;
+      },
+      error: (er: any) => {
+        this.toast.showError(er.error.message, 'errror');
+        this.activeStatus = this.activeStatus;
+        return false;
+      }
+    })
+    return true;
+  }
+
+  activeStatus!: boolean
+  beforeToggle(event: Event) {
+    let proceed = confirm('Do you really want to activate the exam? The exam cannot be deactivated once it has started.');
+    if (proceed) {
+      proceed = this.activateExam()
+      if (!proceed) {
+        event.preventDefault();
+        event.stopImmediatePropagation();
+      }
+    }
+    event.preventDefault();
+    event.stopImmediatePropagation();
+  }
+
+  addUpdateQuestion() {
+    if (this.submissionForm.invalid) {
+      AppUtils.submissionFormFun(this.submissionForm)
+    } else {
+      if (this.formType) {
+        if (this.formType == 1) {
+          this.addQuestion()
+        } else if (this.formType == 2) {
+          this.updateQuestion();
+        }
+      }
+    }
+  }
 }

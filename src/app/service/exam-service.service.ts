@@ -10,6 +10,8 @@ export class ExamServiceService {
 
 
 
+
+
   BASE_URL = this.utilityService.getBaseUrl();
   EXAM_URL = this.BASE_URL + '/exam';
 
@@ -58,8 +60,14 @@ export class ExamServiceService {
     return this.http.put(`${this.EXAM_URL}/setSubjectExamStartStatus?examId=${subjectExamId}`, null)
   }
   setChapterExamStartStatus(chapterId: number) {
-    return this.http.put(`${this.EXAM_URL}/setChapterExamStartStatus?examId=${chapterId}`, null)
+    return this.http.put(`${this.EXAM_URL}/setChapterExamStartStatus?chapterId=${chapterId}`, null)
   }
 
+  changeStatus(examId: number) {
+    return this.http.put(`${this.EXAM_URL}/changeChapterExamStatus?examId=${examId}`, null)
+  }
 
+  fetchChapterExam(chapterId: number) {
+    return this.http.get(`${this.EXAM_URL}/getChapterExam?chapterId=${chapterId}`)
+  }
 }

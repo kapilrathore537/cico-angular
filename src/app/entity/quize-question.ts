@@ -9,4 +9,5 @@ export class QuizeQuestion {
   public correctOption:string =''
   public questionImage:string =''
   public questionContent:string =''
+  public isSelected!:Boolean
 }

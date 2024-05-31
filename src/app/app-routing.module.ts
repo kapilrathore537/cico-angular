@@ -8,7 +8,6 @@ import { TaskandassignmentsComponent } from './pages/taskandassignments/taskanda
 import { NewsandeventsComponent } from './pages/newsandevents/newsandevents.component';
 import { AttendanceComponent } from './pages/attendance/attendance.component';
 import { JobalertComponent } from './pages/jobalert/jobalert.component';
-import { TestingComponent } from './pages/testing/testing.component';
 import { AdminPanelComponent } from './admin/admin-panel/admin-panel.component';
 import { AdminDashboardComponent } from './admin/admin-dashboard/admin-dashboard.component';
 import { AdminJobAlertComponent } from './admin/admin-job-alert/admin-job-alert.component';
@@ -88,20 +87,16 @@ const routes: Routes = [
       { path: 'newandseventsdescription/:id', component: NewsandEventsDescriptionComponent, pathMatch: 'full' },
       { path: 'attendance', component: AttendanceComponent, pathMatch: 'full' },
       { path: 'discussion', component: DiscussionForumComponent, pathMatch: 'full' },
-
       { path: 'jobalert', component: JobalertComponent, pathMatch: 'full' },
       { path: 'jobdescription/:id', component: JobDescriptionComponent, pathMatch: 'full' },
       { path: 'internshipsdescription/:id', component: InternshipsDescriptionComponent, pathMatch: 'full' },
-      { path: 'testing', component: TestingComponent, pathMatch: 'full' },
       { path: 'test', component: TestComponent, pathMatch: 'full' },
       { path: 'statics', component: StaticsComponent, pathMatch: 'full' }
     ]
   },
-
   { path: 'result', component: ResultComponent, pathMatch: 'full' },
   { path: 'review', component: ReviewComponent, pathMatch: 'full' },
   { path: 'questions', component: QuestionsComponent, pathMatch: 'full' },
-
   {
     path: 'admin', component: AdminPanelComponent, canActivate: [AdminGuardGuard], children: [
       { path: 'taskdetails/:id', component: TaskDetailsComponent, pathMatch: 'full' },

@@ -17,14 +17,16 @@ import { ToastService } from 'src/app/service/toast.service';
 export class AdminSubjectsTopicTestComponent {
 
   questionId: number = 0;
-  //chapterContentList: ChapterContent[] = []
   chapterId: number = 0;
   subjectId: number = 0;
   chapterContent: ChapterContent = new ChapterContent();
   erroreMessage: string = ''
   deleteContentId = 0;
   chapterName: string = ''
-  //chapter: Chapter = new Chapter
+  examId!: number
+
+
+
   public Editor = ClassicEditor;
   static images: File[] = []
   private editorInstance: any;
@@ -33,8 +35,6 @@ export class AdminSubjectsTopicTestComponent {
   contentIndex = 0;
   constructor(private router: Router,
     private chapterService: ChapterServiceService,
-    private route: ActivatedRoute,
-    private questionService: QuestionServiceService,
     private formBuilder: FormBuilder,
     private activateRouter: ActivatedRoute,
     private toast: ToastService) {
@@ -59,7 +59,8 @@ export class AdminSubjectsTopicTestComponent {
       {
         next: (data: any) => {
           this.chapteContentResponse = data.chapterContent
-          this.chapterName = data.chapterName
+          this.chapterName = data.chapterName;
+          this.examId = data.examId;
         },
         error: (er) => {
           this.toast.showError(er.error.message, 'Error')
@@ -142,7 +143,6 @@ export class AdminSubjectsTopicTestComponent {
   }
 
   public reload() {
-    //this.getChapter()
     this.chapterContent = new ChapterContent();
     this.erroreMessage = ''
   }
@@ -152,12 +152,7 @@ export class AdminSubjectsTopicTestComponent {
   }
 
   public clearFormSubmission() {
-    this.submissionForm = this.formBuilder.group({
-      content: ['', Validators.required],
-      subTitle: ['', Validators.required],
-      title: ['', Validators.required]
-
-    });
+    this.submissionForm.reset();
   }
   public isFieldInvalidForSubmissionForm(fieldName: string): boolean {
     const field = this.submissionForm.get(fieldName);
@@ -171,7 +166,8 @@ export class AdminSubjectsTopicTestComponent {
     const dataParams = {
       subjectId: this.subjectId,
       chapterId: chapterId,
-      type: "chapterExam"
+      type: "chapterExam",
+      examId:this.examId
     };
     this.router.navigate([path], {
       queryParams: dataParams

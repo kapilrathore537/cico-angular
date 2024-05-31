@@ -34,7 +34,7 @@ export class QuestionsComponent implements AfterViewInit {
   chapterExamResultResponse = new ChapterExamResultResponse
   subjectExamResultResponse = new ChapterExamResultResponse
   subjectId: number = 0;
-  chapter = new Chapter;
+  //chapter = new Chapter;
   totalQuestion = 0;
   questionNumber = 1;
 
@@ -42,6 +42,7 @@ export class QuestionsComponent implements AfterViewInit {
   subjectExamId!: number
   type!: string
   subjectTimer!: number
+  examTimer!: number;
 
   constructor(private questionService: QuestionServiceService, private activateRouter: ActivatedRoute,
     private chapterService: ChapterServiceService,
@@ -57,7 +58,7 @@ export class QuestionsComponent implements AfterViewInit {
       this.getSubjectExamQuestion();
       this.setSubjectExamStartStatus();
     } else {
-      this.getChapeter();
+      this.fetchChapterExam();
       this.setChapterExamStartStatus();
     }
   }
@@ -82,21 +83,20 @@ export class QuestionsComponent implements AfterViewInit {
 
   public setSubjectExamStartStatus() {
     this.examServiceService.setSubjectExamStartStatus(this.subjectExamId).subscribe({
-      next: (data: any) => {},
-      error: (er: any) => {}
+      next: (data: any) => { },
+      error: (er: any) => { }
     })
   }
 
   public setChapterExamStartStatus() {
     this.examServiceService.setChapterExamStartStatus(this.chapterId).subscribe({
-      next: (data: any) => {},
-      error: (er: any) => {}
+      next: (data: any) => { },
+      error: (er: any) => { }
     })
   }
 
   public getSubjectExamQuestion() {
     this.questionService.getAllSubjectExamQuestion(this.subjectExamId, this.loginService.getStudentId()).subscribe({
-
       next: (data: any) => {
         this.subjectTimer = data.timer;
         this.question = data.questions
@@ -106,7 +106,6 @@ export class QuestionsComponent implements AfterViewInit {
         this.toggleFullScreen()
         setTimeout(() => {
           this.timer();
-
         }, 500);
       },
       error: (err: any) => {
@@ -116,7 +115,7 @@ export class QuestionsComponent implements AfterViewInit {
   }
 
   public timer() {
-    const duration = 60 * (this.type == Exam.chapterExam ? this.chapter.exam.examTimer! : this.subjectTimer)// in seconds
+    const duration = 60 * (this.type == Exam.chapterExam ? this.examTimer! : this.subjectTimer)// in seconds
     this.timerSubscription = timer(0, 1000).subscribe((elapsedTime: any) => {
       this.second = duration - elapsedTime;
       this.remainingTime = new Date(this.second * 1000).toISOString().substr(11, 8);
@@ -280,13 +279,13 @@ export class QuestionsComponent implements AfterViewInit {
     this.isFullScreen = !this.isFullScreen;
   }
 
-  public getChapeter() {
-    this.chapterService.getChapterById(this.chapterId).subscribe(
+  public fetchChapterExam() {
+    this.examServiceService.fetchChapterExam(this.chapterId).subscribe(
       (data: any) => {
-        this.questions = this.shuffleList(data.chapter.exam.questions);
+        this.questions = this.shuffleList(data.testQuestions);
         this.question = this.questions[0];
         this.questionNotAnswered = this.questions.length;
-        this.chapter = data.chapter;
+        this.examTimer = data.examTimer;
         this.timer();
         this.toggleFullScreen()
       }

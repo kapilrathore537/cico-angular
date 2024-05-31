@@ -76,4 +76,7 @@ export class ChapterServiceService {
     formData.append('subjectId', subjectId.toString())
     return this.http.put(`${this.CHAPTER_URL}/updateChapter`, formData);
   }
+
+ 
+
 }

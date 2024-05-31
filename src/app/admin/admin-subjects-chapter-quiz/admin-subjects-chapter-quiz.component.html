@@ -32,7 +32,7 @@
                 <div class="col-md-12" *ngFor="let obj of questions let a =index">
                     <div class="top-test-question">
                         <h2>Question {{a+1}}</h2>
-                        <div class="test-que-edit-del" *ngIf="!obj.isSelected;else editePart">
+                        <div class="test-que-edit-del" *ngIf="!obj.isSelected && !activeStatus;else editePart">
                             <span class="d-flex align-items-center pointer gap_5 font-17 font-500 secondary"
                                 data-bs-toggle="modal" data-bs-target="#subject-testques-modal"
                                 (click)="setQuestion(obj.questionId,a)"><i

@@ -13,9 +13,10 @@ import { Exam } from 'src/app/enum/exam';
 export class TestComponent implements OnInit, AfterViewInit {
 
 
+
   subjectExamResponse: SubjectExamResponse[] = []
   scheduleExam: SubjectExamResponse[] = []
-  normlaExam: SubjectExamResponse[] = []
+  normalExam: SubjectExamResponse[] = []
 
 
   isExamStart: boolean = false
@@ -46,11 +47,14 @@ export class TestComponent implements OnInit, AfterViewInit {
   getAllExam() {
     this.questionService.getAllSubjectExam(this.loginService.getStudentId()).subscribe({
       next: (data: any) => {
-        this.normlaExam = data.normlaExam
+        this.normalExam = data.normlaExam
         this.scheduleExam = data.scheduleExam
         setTimeout(() => {
           this.scheduleExam.forEach(exam => this.startExamTimer(exam));
         }, 500);
+        setTimeout(() => {
+          this.fetchBestScore();
+        }, 1000);
       },
       error: (er: any) => {
 
@@ -83,7 +87,7 @@ export class TestComponent implements OnInit, AfterViewInit {
   }
 
   startExamTimer(exam: SubjectExamResponse): void {
-    
+
     if (exam.scheduleTestDate == this.date.date && !exam.isExamEnd) {
       this.updateRemainingTime(exam);
       exam.intervalId = setInterval(() => {
@@ -114,14 +118,14 @@ export class TestComponent implements OnInit, AfterViewInit {
       this.startExamTime(exam);
     } else if (minutesRemaining < 10) {
 
-      if (minutesRemaining >=1) {
+      if (minutesRemaining >= 1) {
         exam.remainingTime = `${minutesRemaining}m ${secondsRemaining}s`;
       } else {
         exam.remainingTime = `${secondsRemaining}s`;
       }
-    } else if(minutesRemaining >60){
+    } else if (minutesRemaining > 60) {
       exam.remainingTime = `${hoursRemaining}h ${minutesRemaining}m ${secondsRemaining}s`;
-    }else{
+    } else {
       exam.remainingTime = `${minutesRemaining}m ${secondsRemaining}s`;
     }
   }
@@ -144,5 +148,27 @@ export class TestComponent implements OnInit, AfterViewInit {
     if (timeDiff <= 0) {
       exam.isExamEnd = true
     }
+  }
+
+
+
+
+  calculatePercentage(arg0: number, arg1: number) {
+    return Math.floor((arg0 / arg1) * 100);
+  }
+
+  fetchBestScore() {
+    // Combine the arrays
+    const combinedExams = [...this.normalExam, ...this.scheduleExam];
+
+    // Calculate the percentage for each object and find the one with the highest score
+    const highestScoreExam = combinedExams
+      .map(obj => ({
+        ...obj,
+        percentage: this.calculatePercentage(obj.scoreGet, obj.totalQuestionForTest)
+      }))
+      .reduce((max, obj) => (obj.percentage > max.percentage ? obj : max), { percentage: 0 });
+
+    console.log(highestScoreExam);
   }
 }

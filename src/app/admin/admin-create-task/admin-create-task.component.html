@@ -268,8 +268,8 @@
                     *ngIf="attachmentInfo.name != '';else elsePart">
                     <i class="fi fi-rr-file-zipper warning font-25 line-height-0"></i>
                     <h5 class="font-17 font-500 warning mb-0">{{attachmentInfo.name}} ({{attachmentInfo.size}} mb)</h5>
-                    <span data-bs-toggle="modal" data-bs-target="#delete-modal1"><i
-                            class="fi fi-rr-trash line-height-0 font-24 ms-3 delete-icon-color"></i></span>
+                    <span data-bs-toggle="modal" data-bs-target="#delete-modal1" ><i
+                            class="fi fi-rr-trash line-height-0  pointer font-24 ms-3 delete-icon-color"></i></span>
                 </div>
 
                 <ng-template #elsePart>
@@ -278,7 +278,7 @@
                         <h5 class="font-17 font-500 warning mb-0">Attachment
                         </h5>
                         <span data-bs-toggle="modal" data-bs-target="#delete-modal1"><i
-                                class="fi fi-rr-trash line-height-0 font-24 ms-3 delete-icon-color"></i></span>
+                                class="fi fi-rr-trash line-height-0 pointer font-24 ms-3 delete-icon-color"></i></span>
                     </div>
                 </ng-template>
 

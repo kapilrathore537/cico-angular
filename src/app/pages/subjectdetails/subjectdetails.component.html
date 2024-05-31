@@ -31,10 +31,14 @@
 
         </div>
         <br>
-        <h5 class="font-24 font-500 secondary mb_20"*ngIf="exam"  >Ready to test yourself?</h5>
-        <a (click)="pageRenderUsingRouterLink('/questions', chapterId)" type="button" class="back_button font-15 font-700" *ngIf="exam" >Take a test</a>
+        <div *ngIf="isExamActivate">
+          <h5 class="font-24 font-500 secondary mb_20"*ngIf="exam"  >Ready to test yourself?</h5>
+          <a (click)="pageRenderUsingRouterLink('/questions', chapterId)" type="button" class="back_button font-15 font-700" *ngIf="exam" >Take a test</a>
+   
+        </div>
         <!-- <h5 class="font-24 font-500 secondary mb_20" *ngIf="questionsInChapter != 0">Ready to test yourself?</h5> -->
-        <h2 class="font-17 font-600 dark-black" *ngIf="isQuizeFound">No Quiz Found!!!!!!</h2>
+        
+        <h2 class="font-17 font-600 dark-black mt-10px" *ngIf="isQuizeFound">No Quiz Found!!!!!!</h2>
         <a  type="button" (click)="getReview()" class="back_button font-15 font-700" *ngIf="resultId!=0">View Result</a>
       </div>
     </div>

@@ -22,8 +22,9 @@ export class SubjectdetailsComponent {
   isCompleted = false;
   resultId = 0;
   exam: boolean = false
-  isQuizeFound: boolean = false
-  chapterContentResponse: ChapterContentResponse[] = []
+  isQuizeFound: boolean = false;
+  isExamActivate!:Boolean
+  chapterContentResponse: ChapterContentResponse[] = [];
   constructor(
     private chapterService: ChapterServiceService,
     private examService: ExamServiceService,
@@ -47,10 +48,14 @@ export class SubjectdetailsComponent {
         this.questionsInChapter = this.chapterContentResponse.length
         if (this.chapterContentResponse.length == 0)
           this.isQuizeFound = true
-        this.chapterName = data.chapterName
+        this.chapterName = data.chapterName;
+        this.isExamActivate = data.isExamActivate
+
       }
     )
   }
+
+
   // public getChapterContent(contentId: number) {
   //   this.chapterService.getChapterContent(this.chapterId).subscribe(
   //     (data) => {
@@ -58,6 +63,7 @@ export class SubjectdetailsComponent {
   //     }
   //   )
   // }
+  
 
   public pageRenderUsingRouterLink(path: string, chapterId: number) {
     const dataParams = {
@@ -79,6 +85,7 @@ export class SubjectdetailsComponent {
       queryParams: dataParams
     });
   }
+
   public getChapterExamIsComplete() {
     this.examService.getChapterExamIsCompleted(this.chapterId, this.loginService.getStudentId()).subscribe({
       next: (data: any) => {

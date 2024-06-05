@@ -73,10 +73,10 @@
   </div>
 
   
+
+</div>
 <div class="page">
   <app-pagination *ngIf="paginationManager.totalElements>pageRequest.pageSize"  [paginationManager]="paginationManager" (eventEmit)="getAllData($event)"
     [type]="'taskSubmission'" [pageRequest]="pageRequest"></app-pagination>
 </div>
-</div>
-
 

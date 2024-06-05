@@ -9,7 +9,8 @@
       <div class="row">
 
         <div class="col-md-6 mb-4" *ngIf="unLockAssignments.length!==0 || lockAssignments.length!==0 ">
-          <app-unlocked-locked-assignment [lockAssignments]="lockAssignments" [unLockAssignments]="unLockAssignments" [assignmentTaskVisibility]="assignmentTaskVisibility">
+          <app-unlocked-locked-assignment [lockAssignments]="lockAssignments" [unLockAssignments]="unLockAssignments"
+            [assignmentTaskVisibility]="assignmentTaskVisibility">
           </app-unlocked-locked-assignment>
         </div>
         <div class="col-md-6 mb-4" *ngIf="unLockAssignments.length ==0  && lockAssignments.length ==0 ">
@@ -40,9 +41,10 @@
             </div>
           </div>
           <div class="all_summary assignment-updates">
-            <app-task-and-assignment-submission
-              [submission]="assignmentSubmissionsList"  [title]="'Assignment'" [paginationManager]="assignmentSubmissionPagination" (eventEmit)="getAllData($event)"
-              [type]="'AssignmentSubmission'" [pageRequest]="assignmentSubmissionPageRequest"></app-task-and-assignment-submission>
+            <app-task-and-assignment-submission [submission]="assignmentSubmissionsList" [title]="'Assignment'"
+              [paginationManager]="assignmentSubmissionPagination" (eventEmit)="getAllData($event)"
+              [type]="'AssignmentSubmission'"
+              [pageRequest]="assignmentSubmissionPageRequest"></app-task-and-assignment-submission>
             <!-- <app-pagination  *ngIf="assignmentSubmissionPagination.totalElements>assignmentSubmissionPageRequest.pageSize" [paginationManager]="assignmentSubmissionPagination" (eventEmit)="getAllData($event)"
               [type]="'AssignmentSubmission'" [pageRequest]="assignmentSubmissionPageRequest"></app-pagination> -->
           </div>

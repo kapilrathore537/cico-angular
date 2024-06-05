@@ -33,6 +33,8 @@ export class AdminSubjectsComponent implements OnInit {
   imageName = ''
   subjectSubmissionForm: FormGroup;
   subjectIndex = 0;
+  isSubmited: boolean = false
+  isDisableButton = false;
 
   constructor(private techService: TechnologyStackService,
     private subjectService: SubjectService,
@@ -73,6 +75,8 @@ export class AdminSubjectsComponent implements OnInit {
       this.submissionFormFun()
       return;
     } else {
+      this.isSubmited = true
+    this.isDisableButton = true;
       this.subjectService.saveSubject(this.subjectData).subscribe(
         {
           next: (data: any) => {
@@ -80,9 +84,13 @@ export class AdminSubjectsComponent implements OnInit {
             this.subjects.push(data.subject)
             this.toast.showSuccess('Subject Added Successfully!!', 'Success')
             AppUtils.modelDismiss('subject-model-close');
+            this.isSubmited = false
+             this.isDisableButton = false;
           },
           error: (error) => {
             this.toast.showError(error.error.message, 'Error')
+            this.isSubmited = false
+             this.isDisableButton = false;
           }
         }
       )

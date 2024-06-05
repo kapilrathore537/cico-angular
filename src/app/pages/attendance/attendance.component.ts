@@ -59,6 +59,8 @@ export class AttendanceComponent implements OnInit, AfterViewInit {
   minEnd: any
 
   applyLeaveForm: FormGroup;
+  isSubmited: boolean = false
+  isDisableButton = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -192,17 +194,23 @@ export class AttendanceComponent implements OnInit, AfterViewInit {
       AppUtils.submissionFormFun(this.applyLeaveForm)
       return;
     } else {
+      this.isSubmited = true
+    this.isDisableButton = true;
       this.leaveService.addLeave(this.leaves).subscribe({
         next: (res: any) => {
           if (res.message == 'SUCCESS') {
             this.getStudentLeaves();
             document.getElementById('leave-modal-close1')?.click()
             this.toastService.showSuccess('Successfully leave applied', 'Success')
+            this.isSubmited = false
+            this.isDisableButton = false;
           }
         },
         error: (err: any) => {
           this.color = 'red';
           this.message = err.error.message;
+          this.isSubmited = false
+    this.isDisableButton = false;
         },
       });
     }

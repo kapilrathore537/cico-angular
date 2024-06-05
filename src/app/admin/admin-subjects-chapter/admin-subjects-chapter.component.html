@@ -296,8 +296,13 @@
                         aria-label="Close" (click)="cancel()" id="chapter-save-modal">Cancel</button>
                     <a>
                         <button type="button" class="apply_modal_btn font-15 font-500"
-                            (click)="addChapter()">Save</button>
+                            (click)="addChapter()" *ngIf="!isSubmited;else spinner" [disabled]="isDisableButton">Save</button>
                     </a>
+                    <ng-template #spinner>
+                        <div class="spinner-border text-light" role="status">
+                          <span class="sr-only"></span>
+                        </div>
+                      </ng-template>
                 </div>
 
             </div>
@@ -603,6 +608,7 @@
                             (click)="addUpdateQuestion()">Save
                             Question</button>
                     </a>
+                    
                 </div>
 
             </div>

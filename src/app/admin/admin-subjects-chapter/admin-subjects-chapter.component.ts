@@ -1,20 +1,20 @@
-import { AfterViewInit, Component } from '@angular/core';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AfterViewInit, Component } from '@angular/core';
+import { AppUtils } from 'src/app/utils/app-utils';
 import { Chapter } from 'src/app/entity/chapter';
-import { QuizeQuestion } from 'src/app/entity/quize-question';
-import { Subject } from 'src/app/entity/subject';
-import { TechnologyStack } from 'src/app/entity/technology-stack';
 import { ChapterResponse } from 'src/app/payload/chapter-response';
 import { ChapterServiceService } from 'src/app/service/chapter-service.service';
+import { Exam } from 'src/app/entity/exam';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { QuestionResponse } from 'src/app/payload/question-response';
+import { QuestionServiceService } from 'src/app/service/question-service.service';
+import { QuizeQuestion } from 'src/app/entity/quize-question';
+import { Subject } from 'src/app/entity/subject';
 import { SubjectService } from 'src/app/service/subject.service';
+import { TechnologyStack } from 'src/app/entity/technology-stack';
 import { TechnologyStackService } from 'src/app/service/technology-stack-service.service';
 import { ToastService } from 'src/app/service/toast.service';
-import { AppUtils } from 'src/app/utils/app-utils';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { QuestionServiceService } from 'src/app/service/question-service.service';
-import { QuestionResponse } from 'src/app/payload/question-response';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import { Exam } from 'src/app/entity/exam';
 @Component({
   selector: 'app-admin-subjects-chapter',
   templateUrl: './admin-subjects-chapter.component.html',
@@ -53,6 +53,8 @@ export class AdminSubjectsChapterComponent implements AfterViewInit {
   appUtil = AppUtils;
   isExam: any
   isEdit: boolean = false;
+  isSubmited: boolean = false
+  isDisableButton = false;
 
 
   constructor(private subjectService: SubjectService,
@@ -126,15 +128,21 @@ export class AdminSubjectsChapterComponent implements AfterViewInit {
       AppUtils.submissionFormFun(this.chapterForm);
       return;
     } else {
+      this.isDisableButton = true;
+      this.isSubmited = true
       this.chapterService.addChapter(this.subjectId, this.chapterUpdate.chapterName.trim()).subscribe(
         {
           next: (data: any) => {
             this.chapterResponse.push(data.chapter)
             AppUtils.modelDismiss('chapter-save-modal')
             this.toast.showSuccess('Chapter added successfully!!', 'Success')
+            this.isSubmited = false
+             this.isDisableButton = false;
           },
           error: (error) => {
             this.toast.showError(error.error.message, 'Error')
+            this.isSubmited = false
+             this.isDisableButton = false;
           }
         }
       )

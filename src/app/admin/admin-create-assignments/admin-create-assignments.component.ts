@@ -146,9 +146,10 @@ export class AdminCreateAssignmentsComponent implements OnInit {
 
   fileLoading: boolean = false;
 
-  triggerFileInput() {
+  triggerFileInput(event:any) {
     const fileInput = document.getElementById('attachment') as HTMLInputElement;
     fileInput.click();
+    
   }
 
   deleteAttachment(attachment: HTMLInputElement) {

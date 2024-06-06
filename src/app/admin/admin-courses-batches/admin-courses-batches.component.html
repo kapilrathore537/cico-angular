@@ -57,7 +57,7 @@
             <div class="d-flex align-items-center justify-content-between mb_18">
                 <h3 class="admin-title font-17 font-600 secondary position-relative">Running Batch</h3>
                 <button class="top_profile_sec_btn font-14 font-500 lh-1" data-bs-toggle="modal"
-                    data-bs-target="#batch-add-modal" (click)="clearValidationForm()">Add New Batch</button>
+                    data-bs-target="#batch-add-modal" (click)="clearValidationForm()" >Add New Batch</button>
             </div>
             <h3 class="font-21 font-600 secondary position-relative" *ngIf="courseResponse.batchesCount == 0">
                 NO RUNNING BATCHES AVAILABLE
@@ -258,7 +258,14 @@
                         aria-label="Close" id="add-batch-modal">Cancel</button>
                     <a>
                         <button type="button" class="apply_modal_btn font-15 font-500"
-                            (click)="createNewBatch()">Save</button>
+                            (click)="createNewBatch()" [disabled]="isSubmitBatch"> <div *ngIf="!isSubmitBatch;else spinnerBatch">
+                                Save
+                    </div>
+                    <ng-template #spinnerBatch>
+                        <div class="spinner-border text-light" role="status">
+                            <span class="sr-only"></span>
+                        </div>
+                    </ng-template></button>
                     </a>
                 </div>
 
@@ -338,7 +345,15 @@
                         aria-label="Close" id="edite-batch-modal">Cancel</button>
                     <a>
                         <button type="button" class="apply_modal_btn font-15 font-500"
-                            (click)="updateBatch()">Save</button>
+                            (click)="updateBatch()" [disabled]="isSubmitUpdateBatch">
+                            <div *ngIf="!isSubmitUpdateBatch;else spinnerUpdateBatch">
+                                Save
+                            </div>
+                            <ng-template #spinnerUpdateBatch>
+                                <div class="spinner-border text-light" role="status">
+                                    <span class="sr-only"></span>
+                                </div>
+                            </ng-template></button>
                     </a>
                 </div>
             </div>

@@ -47,6 +47,7 @@ export class AdminTaskComponent implements AfterViewInit {
   submissioTaskPageRequest: PageRequest = new PageRequest();
   course = new Course()
   subject = new Subject
+  isSubmitTask:boolean=false
 
   constructor(private subjectService: SubjectService,
     private courseService: CourseServiceService,
@@ -98,15 +99,20 @@ export class AdminTaskComponent implements AfterViewInit {
       AppUtils.submissionFormFun(this.firstTaskForm);
       return;
     } else {
+      this.isSubmitTask=true
       this.taskService.addTask(this.task).subscribe(
         {
           next: (data: any) => {
             this.toast.showSuccess(data.message, 'Success')
             this.firstTaskForm.reset()
             this.router.navigate(['/admin/createtask/' + data.taskId])
+            this.isSubmitTask=false
+
           },
           error: (er: any) => {
             this.toast.showError(er.error.message, 'Error')
+            this.isSubmitTask=false
+
           }
         }
       )

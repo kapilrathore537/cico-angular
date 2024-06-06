@@ -35,8 +35,16 @@
                                 <td>{{obj.date | date:'medium'}}</td>
                                 <td>{{obj.title}}</td>
                                 <td>{{obj.message}}</td>
-                                <td>{{all[i]}}
-                                    <span class="secondary font-500 font-14" (click)="showMore(i)">+more</span>
+                                <td>{{obj.courseName[0]}}
+                                    <span class="secondary pointer font-500 font-14" *ngIf="hasContent(obj, i)" (click)="toggleDiv(i)">
+                                        {{ showMoreLessText(i) }}
+                                    </span>
+                                    <div *ngIf="showDiv[i]">
+                                        <!-- Content to show when "Show More" is clicked -->
+                                        <div *ngFor="let course of obj.courseName; let index = index">
+                                            <ng-container *ngIf="index > 0">{{ course }}</ng-container>
+                                        </div>
+                                    </div>
                                 </td>
                                 <!-- {{obj.course.length-1}}{{visibilityStatus} -->
                                 <td>{{obj.seenBy.seenBy}} of {{obj.seenBy.totalStudents}}</td>

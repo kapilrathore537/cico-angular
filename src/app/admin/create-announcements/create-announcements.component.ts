@@ -24,6 +24,8 @@ export class CreateAnnouncementsComponent implements OnInit {
   selectedCourses: Course[] = [];
   selectAll: boolean = true;
   SOCKET_URL = this.utilityService.getBaseUrl() + '/socket'
+  isSubmit:boolean=false;
+
 
   constructor(private courseService: CourseServiceService,
     private utilityService: UtilityServiceService,
@@ -45,6 +47,8 @@ export class CreateAnnouncementsComponent implements OnInit {
   }
 
   public publishAnnouncement() {
+    this.isSubmit=true
+
     this.announcementService.publishAnnouncement(this.announcementRequest).subscribe({
       next: (data: any) => {
         //let courses: number[] = []
@@ -66,6 +70,8 @@ export class CreateAnnouncementsComponent implements OnInit {
         this.sendMessage(obj);
       },
       error: (err: any) => {
+        this.isSubmit=false
+
       }
     })
   }

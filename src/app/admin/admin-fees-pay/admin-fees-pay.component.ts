@@ -29,6 +29,8 @@ export class AdminFeesPayComponent implements OnInit {
   endDate = '';
   startDate = '';
   updatePaidFeesFrom: FormGroup
+  isSubmit:boolean=false;
+
 
   constructor(private feesPayService: FeesPayService, private router: Router, private formBuilder: FormBuilder) {
     this.updatePaidFeesFrom = this.formBuilder.group({
@@ -105,10 +107,12 @@ export class AdminFeesPayComponent implements OnInit {
 
   public updateFeesPay() {
     this.updatePaidFeesFrom.markAllAsTouched();
-    if (this.updatePaidFeesFrom.valid)
+    if (this.updatePaidFeesFrom.valid){
+      this.isSubmit=true
       this.feesPayService.updateFeesPay(this.feesPays).subscribe(
         (data: any) => {
           this.feesPays = data
+          this.isSubmit=false
           const Toast = Swal.mixin({
 
             toast: true,
@@ -139,8 +143,11 @@ export class AdminFeesPayComponent implements OnInit {
             icon: 'error',
             title: 'failed !!'
           })
+          this.isSubmit=false
+
         }
       )
+    }
   }
 
 

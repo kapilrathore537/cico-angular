@@ -1,20 +1,20 @@
-import { AfterViewInit, Component } from '@angular/core';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AfterViewInit, Component } from '@angular/core';
+import { AppUtils } from 'src/app/utils/app-utils';
 import { Chapter } from 'src/app/entity/chapter';
-import { QuizeQuestion } from 'src/app/entity/quize-question';
-import { Subject } from 'src/app/entity/subject';
-import { TechnologyStack } from 'src/app/entity/technology-stack';
 import { ChapterResponse } from 'src/app/payload/chapter-response';
 import { ChapterServiceService } from 'src/app/service/chapter-service.service';
+import { Exam } from 'src/app/entity/exam';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { QuestionResponse } from 'src/app/payload/question-response';
+import { QuestionServiceService } from 'src/app/service/question-service.service';
+import { QuizeQuestion } from 'src/app/entity/quize-question';
+import { Subject } from 'src/app/entity/subject';
 import { SubjectService } from 'src/app/service/subject.service';
+import { TechnologyStack } from 'src/app/entity/technology-stack';
 import { TechnologyStackService } from 'src/app/service/technology-stack-service.service';
 import { ToastService } from 'src/app/service/toast.service';
-import { AppUtils } from 'src/app/utils/app-utils';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { QuestionServiceService } from 'src/app/service/question-service.service';
-import { QuestionResponse } from 'src/app/payload/question-response';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import { Exam } from 'src/app/entity/exam';
 @Component({
   selector: 'app-admin-subjects-chapter',
   templateUrl: './admin-subjects-chapter.component.html',
@@ -53,6 +53,12 @@ export class AdminSubjectsChapterComponent implements AfterViewInit {
   appUtil = AppUtils;
   isExam: any
   isEdit: boolean = false;
+
+  isSubmited: boolean = false
+  isSubmitedQuestion: boolean = false  
+  isSubmitedUpdateChapter: boolean = false
+  isSubmitedExam: boolean = false
+
 
 
   constructor(private subjectService: SubjectService,
@@ -126,15 +132,19 @@ export class AdminSubjectsChapterComponent implements AfterViewInit {
       AppUtils.submissionFormFun(this.chapterForm);
       return;
     } else {
+      this.isSubmited = true
       this.chapterService.addChapter(this.subjectId, this.chapterUpdate.chapterName.trim()).subscribe(
         {
           next: (data: any) => {
             this.chapterResponse.push(data.chapter)
             AppUtils.modelDismiss('chapter-save-modal')
             this.toast.showSuccess('Chapter added successfully!!', 'Success')
+            this.isSubmited = false
           },
           error: (error) => {
             this.toast.showError(error.error.message, 'Error')
+            this.isSubmited = false
+      
           }
         }
       )
@@ -168,6 +178,7 @@ export class AdminSubjectsChapterComponent implements AfterViewInit {
       AppUtils.submissionFormFun(this.chapterForm);
       return;
     } else {
+            this.isSubmitedUpdateChapter = true
       this.chapterService.updateChapter(this.chapterId, this.chapterUpdate.chapterName, this.subjectId).subscribe(
         {
           next: (data) => {
@@ -177,9 +188,13 @@ export class AdminSubjectsChapterComponent implements AfterViewInit {
             ch.chapterId = this.chapterUpdate.chapterId
             AppUtils.modelDismiss('chapter-update-modal')
             this.toast.showSuccess('Chapter updated successfully!!', 'success')
+              
+            this.isSubmitedUpdateChapter = false
           },
           error: (error) => {
             this.toast.showError(error.error.message, 'Error')
+              
+            this.isSubmitedUpdateChapter = false
           }
         }
       )
@@ -279,7 +294,8 @@ export class AdminSubjectsChapterComponent implements AfterViewInit {
   }
 
   public updateSubjectExam() {
-    this.exam.subjectId = this.subjectId    
+    this.exam.subjectId = this.subjectId   
+          this.isSubmitedExam = true 
     this.subjectService.updateSubjectExam(this.exam).subscribe({
       next: (data: any) => {
         this.toast.showSuccess(data.message, 'Success');
@@ -288,9 +304,13 @@ export class AdminSubjectsChapterComponent implements AfterViewInit {
         } else if (data.exam.examType == "SCHEDULEEXAM")
           this.scheduleExam = this.scheduleExam.map(obj => (obj.examId == data.exam.examId ? data.exam : obj))
         AppUtils.modelDismiss('exam_modal_close');
+        this.isSubmitedExam = false
+             
       },
       error: (er: any) => {
         this.toast.showError(er.error.message, 'Error')
+        this.isSubmitedExam = false
+        
       }
     })
   }
@@ -350,10 +370,13 @@ export class AdminSubjectsChapterComponent implements AfterViewInit {
           this.questions[this.questionIndex] = data.question
           this.cancel()
           this.toast.showSuccess(data.message, 'Success')
-
+        
+          this.isSubmitedQuestion = false
         },
         error: (error) => {
           this.toast.showError(error.error.message, 'Error')
+        
+          this.isSubmitedQuestion = false
         }
       }
     )
@@ -383,6 +406,7 @@ export class AdminSubjectsChapterComponent implements AfterViewInit {
         AppUtils.submissionFormFun(this.questionForm);
         return
       } else {
+            this.isSubmitedQuestion = true
         this.updateQuestion();
       }
       this.isEdit = false;
@@ -391,6 +415,7 @@ export class AdminSubjectsChapterComponent implements AfterViewInit {
         AppUtils.submissionFormFun(this.questionForm);
         return
       } else {
+              this.isSubmitedQuestion = true
         this.addQuestion();
       }
     }
@@ -411,9 +436,13 @@ export class AdminSubjectsChapterComponent implements AfterViewInit {
             this.question = new QuizeQuestion();
             AppUtils.modelDismiss('quize-save-modal')
             this.toast.showSuccess('Quize successfully added!!', 'Success')
+          
+            this.isSubmitedQuestion = false
           },
           error: (er) => {
             this.toast.showError(er.error.message, 'Error')
+          
+            this.isSubmitedQuestion = false
           }
         }
       )

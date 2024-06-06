@@ -21,6 +21,8 @@ export class AdminCreateNewJobComponent implements OnInit{
   technologyStack:TechnologyStack[]=[];
   imageName = ''
   jobDetailsForm: FormGroup ;
+  isSubmit:boolean=false;
+
   constructor(private jobAlertService: JobAlertService, private technologyStackService: TechnologyStackService, private router: Router, private formBuilder: FormBuilder) {
     this.jobDetailsForm = this.formBuilder.group({
       jobType: ['', Validators.required],
@@ -58,7 +60,9 @@ export class AdminCreateNewJobComponent implements OnInit{
     this.jobDetailsForm.markAllAsTouched();
     console.log(this.jobAlertRequest);
     
-    if (this.jobDetailsForm.valid && this.imageName != '')
+    if (this.jobDetailsForm.valid && this.imageName != ''){
+      this.isSubmit=true
+
     this.jobAlertService.addJob(this.jobAlertRequest).subscribe(
       (data: any) => {
         if(this.jobAlertRequest.type=='JOB'){
@@ -76,7 +80,10 @@ export class AdminCreateNewJobComponent implements OnInit{
           this.jobAlert = new JobAlert
           this.router.navigate(['/admin/jobalert']);
         })
+        this.isSubmit=false
+
       }else{
+        this.isSubmit=false
         const Toast = Swal.mixin({
           toast: true,
           position: 'top-end',
@@ -91,6 +98,7 @@ export class AdminCreateNewJobComponent implements OnInit{
           this.jobAlert = new JobAlert
           this.router.navigate(['/admin/jobalert']);
         })
+
       }
       },
       (err) => {
@@ -108,7 +116,7 @@ export class AdminCreateNewJobComponent implements OnInit{
       }
    
     )
-  
+    }
   }
 
   public getAllTechImages(){

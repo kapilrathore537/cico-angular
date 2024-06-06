@@ -115,6 +115,10 @@ export class AdminCreateTaskComponent {
     this.fileName = data.name
     this.addAttachment();
   }
+  triggerFileInput() {
+    const fileInput = document.getElementById('attachment') as HTMLInputElement;
+    fileInput.click();
+  }
 
   public addTaskQuestion() {
     if (this.secondTaskForm.invalid) {
@@ -151,7 +155,11 @@ export class AdminCreateTaskComponent {
     this.taskService.addAttachment(this.taskData).subscribe({
       next: (data: any) => {
         this.attachmentInfo.name = this.fileName;
+        this.fileLoading = false;
+        this.toast.showSuccess('Successfully attachement added', 'Success')
+      }, error: (er: any) => {
         this.fileLoading = false
+        this.toast.showError('Please try another one  or retry', 'Error')
       }
     })
   }

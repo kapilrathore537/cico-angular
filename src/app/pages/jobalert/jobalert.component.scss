@@ -1,10 +1,23 @@
-.img{
+.img {
     height: 100px;
     width: 100px;
     border-radius: 65px;
-    border: 0px ; 
-    border-width: 0px; 
+    border: 0px;
+    border-width: 0px;
 }
-.read-color{
+
+.read-color {
     color: dodgerblue;
-  }
+}
+
+.gif_image {
+    margin-left: 50px !important;
+    height: 387px !important;
+    width: 403px !important;
+}
+
+.gif_image_class {
+    height: 50%;
+    padding-left: 36% !important;
+    padding-right: 36% !important;
+}

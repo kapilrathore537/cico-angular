@@ -11,13 +11,11 @@ import { AnnouncementServiceService } from 'src/app/service/announcement-service
 export class AnnouncementsComponent implements OnInit {
 
   public announcements: Announcement[] = []
-  all: string[] = []
-  visibilityStatus!: string
   mp: Map<number, string> = new Map
+  showDiv: boolean[] = []; // Array to track visibility of divs
 
   constructor(private announcementService: AnnouncementServiceService) {
     this.announcements
-    this.visibilityStatus = ''
   }
 
   ngOnInit(): void {
@@ -27,9 +25,9 @@ export class AnnouncementsComponent implements OnInit {
     this.announcementService.getAllPublishedAnnouncement(page, size).subscribe({
       next: (data: any) => {
         this.announcements = data;
-        this.visibilityStatus = 'showMore'
-        this.fillData(this.announcements);
-        //  this.showMore()
+        this.announcements.forEach(() => {
+          this.showDiv.push(false); // Initially hide all divs
+      });
       },
       error: (err: any) => {
         console.log('error');
@@ -37,28 +35,18 @@ export class AnnouncementsComponent implements OnInit {
     })
   }
 
-  public fillData(data: any) {
-    let count = 0;
-    data.filter((obj: any) => {
-      this.all[count] = obj.courseName[0];
-      // map.put()
-      count += 1
-    });
-  }
-  public showMore(id: any) {
+    toggleDiv(index: number) {
+        // Toggle visibility of div for the clicked announcement
+        this.showDiv[index] = !this.showDiv[index];
+    }
 
-    // if (this.visibilityStatus == 'showMore') {
-    //  // alert('showMore')
-    //   this.visibilityStatus = 'showLess'
-    //   this.all = this.announcements.courseName[0];
-    //   console.log(this.announcements.courseName);
-    //   console.log(this.all);
-    // } else if (this.visibilityStatus == 'showLess') {
-    // //  alert('showLess')
-    //   this.visibilityStatus = 'showMore'
-    //   this.all = this.announcements.courseName
-    //   console.log(this.announcements.courseName);
+    hasContent(obj: any, index: number): boolean {
+      // Check if there is content to show in the div
+      return obj.courseName.length>1;
+    }
 
-    //   }
+    showMoreLessText(index: number): string {
+      // Return appropriate text based on visibility status
+      return this.showDiv[index] ? "- less" : "+ more";
   }
 }

@@ -26,6 +26,7 @@ export class AdminStudentRegistrationComponent {
 
   courses: Course[] = [];
   isStarter: boolean | undefined;
+  isSubmit:boolean=false;
   constructor(private studentService: StudentService, private router: Router, private formBuilder: FormBuilder, private courseService: CourseServiceService) {
     this.personlaDetailsForm = this.formBuilder.group({
       fullName: ['', Validators.required],
@@ -83,6 +84,7 @@ export class AdminStudentRegistrationComponent {
 
   submit() {
     if (this.personlaDetailsForm.valid && this.inrollmentForm.valid && this.addressForm.valid) {
+      this.isSubmit=true;
       this.studentService.registerStudent(this.registrationDetails).subscribe(
         (data: any) => {
           const Toast = Swal.mixin({
@@ -99,6 +101,7 @@ export class AdminStudentRegistrationComponent {
             this.registrationDetails = new StudentDetails
             this.router.navigate(['/admin/student']);
           })
+          this.isSubmit=false
         },
         (err) => {
           const Toast = Swal.mixin({
@@ -113,6 +116,7 @@ export class AdminStudentRegistrationComponent {
             title: err.error.message
             
           })
+          this.isSubmit=false
         }
       )
     }

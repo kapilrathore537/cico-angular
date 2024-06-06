@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { error } from 'console';
 import { TaskQuestion } from 'src/app/entity/task-question';
 import { AssignmentSubmissionRequest } from 'src/app/payload/assignment-submission-request';
 import { AssignmentServiceService } from 'src/app/service/assignment.service';
@@ -73,6 +74,7 @@ export class AssignmentDetailsComponent implements OnInit {
   }
 
   public submitAssignment() {
+    
     if (this.submissionForm.invalid) {
       AppUtils.submissionFormFun(this.submissionForm)
       return;
@@ -88,6 +90,9 @@ export class AssignmentDetailsComponent implements OnInit {
         this.toast.showSuccess('Successfully submitted!!', 'Success')
         this.router.navigate(['/student/taskAndAssignment'])
 
+      },
+      error: (error: any) => {
+        this.isSubmited=false;
       }
     })
   }

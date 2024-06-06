@@ -42,6 +42,7 @@ export class AdminCoursesComponent implements OnInit {
   courseId: number = 0
   imageName: string | undefined;
   loading: boolean = false;
+  loadingUpdate: boolean = false;
 
 
   courseresponseobj: Coursereponse = new Coursereponse()
@@ -112,10 +113,13 @@ export class AdminCoursesComponent implements OnInit {
           this.selectedSubjectIds = []
           this.toast.showSuccess(data.message, 'Success')
           AppUtils.modelDismiss('course-form-close')
+          this.loading=false
         },
         error: (err: any) => {
           this.loading = false
           this.toast.showError(err.error.message, 'Error')
+          this.loading=false
+
         }
       })
     }
@@ -166,7 +170,7 @@ export class AdminCoursesComponent implements OnInit {
     this.courseUpdate.technologyStack = this.courseResponse1.technologyStack.id
     this.courseUpdate.subjectIds = []
     this.courseUpdate.subjectIds = this.courseResponse1.subjectResponse.map(obj => obj.subjectId) as number[]
-    this.loading = true
+    this.loadingUpdate = true
 
     this.courseService.updatCourse(this.courseUpdate).subscribe({
 
@@ -175,10 +179,12 @@ export class AdminCoursesComponent implements OnInit {
         this.getAllCourses();
         this.toast.showSuccess(data.message, 'Success')
         AppUtils.modelDismiss('course-update-modal')
-        this.loading = false
+        this.loadingUpdate = false
       },
       error: (err: any) => {
         this.toast.showError(err.error.message, 'Error')
+        this.loadingUpdate = false
+
 
       }
     })

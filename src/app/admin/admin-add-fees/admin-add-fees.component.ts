@@ -22,6 +22,7 @@ export class AdminAddFeesComponent implements OnInit {
   // autofillForm: FormGroup;
   fees: Fees = new Fees();
   addFeesForm: FormGroup;
+  isSubmitFee:boolean=false
 
   constructor(private studentService: StudentService, private fb: FormBuilder, private feesService: FeesService, private router: Router, private courseService: CourseServiceService, private formBuilder: FormBuilder) {
     this.addFeesForm = this.formBuilder.group({
@@ -116,7 +117,8 @@ export class AdminAddFeesComponent implements OnInit {
 
   addFees() {
     this.addFeesForm.markAllAsTouched();
-    if (this.addFeesForm.valid)
+    if (this.addFeesForm.valid){
+      this.isSubmitFee=true
       this.feesService.addStudentFees(this.fees).subscribe(
         (data: any) => {
 
@@ -134,6 +136,7 @@ export class AdminAddFeesComponent implements OnInit {
             this.fees = new Fees
             this.router.navigate(['/admin/fees']);
           })
+          this.isSubmitFee=false
         },
         (err) => {
           const Toast = Swal.mixin({
@@ -147,8 +150,10 @@ export class AdminAddFeesComponent implements OnInit {
             icon: 'error',
             title: 'Registration failed !!'
           })
+          this.isSubmitFee=false
         }
       )
+    }
   }
 
 }

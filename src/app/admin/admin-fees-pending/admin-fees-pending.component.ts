@@ -26,6 +26,7 @@ export class AdminFeesPendingComponent implements OnInit {
   search = '';
   feesList = 0;
   payFeesForm: FormGroup;
+  isSubmit:boolean=false;
 
   constructor(private feesPayService: FeesPayService, private router: Router, private feesService: FeesService, private formBuilder: FormBuilder) {
     this.payFeesForm = this.formBuilder.group({
@@ -63,7 +64,8 @@ export class AdminFeesPendingComponent implements OnInit {
   feesPay() {
     this.payFeesForm.markAllAsTouched();
     if (this.payFeesForm.valid && !(this.fees.remainingFees < this.feesPays.feesPayAmount))
-
+{
+  this.isSubmit=true
       this.feesPayService.feesPay(this.feesPays).subscribe(
         (data: any) => {
           this.feesPays.feesPay.feesId = data.feesId
@@ -82,6 +84,7 @@ export class AdminFeesPendingComponent implements OnInit {
             this.feesPays = new FeesPay
             this.getAllfeesPayList(0, 8);
             this.router.navigate(['/admin/payfees']);
+            this.isSubmit=false
           })
         },
         (err) => {
@@ -96,8 +99,10 @@ export class AdminFeesPendingComponent implements OnInit {
             icon: 'error',
             title: 'failed !!'
           })
+          this.isSubmit=false
         }
       )
+    }
   }
 
   public getFeesById(feesId: number) {

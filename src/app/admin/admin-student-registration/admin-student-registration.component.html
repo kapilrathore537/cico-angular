@@ -317,8 +317,17 @@
                                 <button class="top_profile_sec_btn font-16 font-500"
                                     (click)="moveToPreviousSection()">Back
                                 </button>
-                                <a class="top_profile_sec_btn font-16 font-500 lh-1 address_complete_btns"
-                                    (click)="submit()"> Complete</a>
+                                <button class="top_profile_sec_btn font-16 font-500 lh-1 address_complete_btns"
+                                    (click)="submit()" [disabled]="isSubmit"> 
+                                    <div *ngIf="!isSubmit;else spinner">
+                                        Publish
+                                        Now
+                                    </div>
+                                    <ng-template #spinner>
+                                        <div class="spinner-border text-light" role="status">
+                                            <span class="sr-only"></span>
+                                        </div>
+                                    </ng-template></button>
                             </div>
                         </div><!-- row -->
                     </form>

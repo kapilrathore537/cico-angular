@@ -101,8 +101,17 @@
                     <button type="button" class="cancel_modal_btn font-15 font-500" data-bs-dismiss="modal"
                         aria-label="Close" (click)="reloadMessage() " id="subject-edite-modal-close">Cancel</button>
                     <a>
-                        <button type="button" class="apply_modal_btn font-15 font-500" (click)="updateSubject()">Update
-                            Subject</button>
+                        <button type="button" class="apply_modal_btn font-15 font-500" (click)="updateSubject()" [disabled]="isSubmittedEdit">
+                            <div *ngIf="!isSubmittedEdit;else spinner">
+                                Update
+                                Subject
+                            </div>
+                            <ng-template #spinner>
+                                <div class="spinner-border text-light" role="status">
+                                    <span class="sr-only"></span>
+                                </div>
+                            </ng-template>
+                           </button>
                     </a>
                 </div>
 
@@ -159,8 +168,12 @@
                     <button type="button" class="cancel_modal_btn font-15 font-500" data-bs-dismiss="modal"
                         aria-label="Close" (click)="reloadMessage() " id="subject-model-close">Cancel</button>
                     <a routerLink="/admin/subject">
-                        <button type="button" class="apply_modal_btn font-15 font-500" (click)="saveSubject()" *ngIf="!isSubmited;else spinner" [disabled]="isDisableButton">Save
-                            Subject</button>
+                        <button type="button" class="apply_modal_btn font-15 font-500" (click)="saveSubject()" [disabled]="isSubmited">
+                            <div *ngIf="!isSubmited;else spinner">
+                                Save
+                                Subject
+                            </div>
+                            </button>
                     </a>
                     <ng-template #spinner>
                         <div class="spinner-border text-light" role="status">

@@ -39,6 +39,9 @@ export class AdminCoursesBatchesComponent implements OnInit {
 
   message = '';
   messageClass = ''
+  isSubmitBatch:boolean=false
+  isSubmitUpdateBatch:boolean=false
+
 
   constructor(private activateRoute: ActivatedRoute,
     private courseService: CourseServiceService,
@@ -90,14 +93,17 @@ export class AdminCoursesBatchesComponent implements OnInit {
       AppUtils.submissionFormFun(this.createBatchFrom);
       return;
     }
+    this.isSubmitBatch=true;
     this.batchService.createNewBatch(this.batchRequest).subscribe({
       next: (data: any) => {
         this.batchRequest = new BatchRequest()
         this.getCourseByCourseId();
         this.toast.showSuccess(data.message, 'Success')
         AppUtils.modelDismiss('add-batch-modal')
+        this.isSubmitBatch=false
       },
       error: (err: any) => {
+        this.isSubmitBatch=false
         this.toast.showError(err.error.message, 'Error')
       }
     })
@@ -131,6 +137,8 @@ export class AdminCoursesBatchesComponent implements OnInit {
   }
 
   public updateBatch() {
+    this.isSubmitUpdateBatch=true
+
     this.batchService.updateBatch(this.batch).subscribe({
       next: (data: any) => {
         this.batch = new BatchResponse();
@@ -138,8 +146,12 @@ export class AdminCoursesBatchesComponent implements OnInit {
         this.clearValidationForm();
         AppUtils.modelDismiss('edite-batch-modal')
         this.toast.showSuccess(data.message, 'Success')
+        this.isSubmitUpdateBatch=false
+
       },
       error: (err: any) => {
+        this.isSubmitUpdateBatch=false
+
         this.toast.showError(err.error.message, 'Error')
       }
     })

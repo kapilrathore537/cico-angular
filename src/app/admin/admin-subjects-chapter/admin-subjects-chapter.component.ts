@@ -53,8 +53,12 @@ export class AdminSubjectsChapterComponent implements AfterViewInit {
   appUtil = AppUtils;
   isExam: any
   isEdit: boolean = false;
+
   isSubmited: boolean = false
-  isDisableButton = false;
+  isSubmitedQuestion: boolean = false  
+  isSubmitedUpdateChapter: boolean = false
+  isSubmitedExam: boolean = false
+
 
 
   constructor(private subjectService: SubjectService,
@@ -128,7 +132,6 @@ export class AdminSubjectsChapterComponent implements AfterViewInit {
       AppUtils.submissionFormFun(this.chapterForm);
       return;
     } else {
-      this.isDisableButton = true;
       this.isSubmited = true
       this.chapterService.addChapter(this.subjectId, this.chapterUpdate.chapterName.trim()).subscribe(
         {
@@ -137,12 +140,11 @@ export class AdminSubjectsChapterComponent implements AfterViewInit {
             AppUtils.modelDismiss('chapter-save-modal')
             this.toast.showSuccess('Chapter added successfully!!', 'Success')
             this.isSubmited = false
-             this.isDisableButton = false;
           },
           error: (error) => {
             this.toast.showError(error.error.message, 'Error')
             this.isSubmited = false
-             this.isDisableButton = false;
+      
           }
         }
       )
@@ -176,6 +178,7 @@ export class AdminSubjectsChapterComponent implements AfterViewInit {
       AppUtils.submissionFormFun(this.chapterForm);
       return;
     } else {
+            this.isSubmitedUpdateChapter = true
       this.chapterService.updateChapter(this.chapterId, this.chapterUpdate.chapterName, this.subjectId).subscribe(
         {
           next: (data) => {
@@ -185,9 +188,13 @@ export class AdminSubjectsChapterComponent implements AfterViewInit {
             ch.chapterId = this.chapterUpdate.chapterId
             AppUtils.modelDismiss('chapter-update-modal')
             this.toast.showSuccess('Chapter updated successfully!!', 'success')
+              
+            this.isSubmitedUpdateChapter = false
           },
           error: (error) => {
             this.toast.showError(error.error.message, 'Error')
+              
+            this.isSubmitedUpdateChapter = false
           }
         }
       )
@@ -287,7 +294,8 @@ export class AdminSubjectsChapterComponent implements AfterViewInit {
   }
 
   public updateSubjectExam() {
-    this.exam.subjectId = this.subjectId    
+    this.exam.subjectId = this.subjectId   
+          this.isSubmitedExam = true 
     this.subjectService.updateSubjectExam(this.exam).subscribe({
       next: (data: any) => {
         this.toast.showSuccess(data.message, 'Success');
@@ -296,9 +304,13 @@ export class AdminSubjectsChapterComponent implements AfterViewInit {
         } else if (data.exam.examType == "SCHEDULEEXAM")
           this.scheduleExam = this.scheduleExam.map(obj => (obj.examId == data.exam.examId ? data.exam : obj))
         AppUtils.modelDismiss('exam_modal_close');
+        this.isSubmitedExam = false
+             
       },
       error: (er: any) => {
         this.toast.showError(er.error.message, 'Error')
+        this.isSubmitedExam = false
+        
       }
     })
   }
@@ -358,10 +370,13 @@ export class AdminSubjectsChapterComponent implements AfterViewInit {
           this.questions[this.questionIndex] = data.question
           this.cancel()
           this.toast.showSuccess(data.message, 'Success')
-
+        
+          this.isSubmitedQuestion = false
         },
         error: (error) => {
           this.toast.showError(error.error.message, 'Error')
+        
+          this.isSubmitedQuestion = false
         }
       }
     )
@@ -391,6 +406,7 @@ export class AdminSubjectsChapterComponent implements AfterViewInit {
         AppUtils.submissionFormFun(this.questionForm);
         return
       } else {
+            this.isSubmitedQuestion = true
         this.updateQuestion();
       }
       this.isEdit = false;
@@ -399,6 +415,7 @@ export class AdminSubjectsChapterComponent implements AfterViewInit {
         AppUtils.submissionFormFun(this.questionForm);
         return
       } else {
+              this.isSubmitedQuestion = true
         this.addQuestion();
       }
     }
@@ -419,9 +436,13 @@ export class AdminSubjectsChapterComponent implements AfterViewInit {
             this.question = new QuizeQuestion();
             AppUtils.modelDismiss('quize-save-modal')
             this.toast.showSuccess('Quize successfully added!!', 'Success')
+          
+            this.isSubmitedQuestion = false
           },
           error: (er) => {
             this.toast.showError(er.error.message, 'Error')
+          
+            this.isSubmitedQuestion = false
           }
         }
       )

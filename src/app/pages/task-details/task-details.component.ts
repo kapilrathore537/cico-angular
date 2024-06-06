@@ -25,7 +25,6 @@ export class TaskDetailsComponent {
   isSubmittedTask: boolean = false
   taskAttachment: boolean = false
   loading: boolean = false;
-  isDisableButton = false;
 
   constructor(private taskService: TaskServiceService,
     private router: ActivatedRoute,
@@ -77,7 +76,6 @@ export class TaskDetailsComponent {
 
 
   taskSubmit() {
-    this.isDisableButton = true;
     this.loading = true;
     this.taskSubmittion.studentId = this.loginService.getStudentId();
     this.taskService.submitTask(this.taskSubmittion, this.taskId).subscribe(
@@ -92,7 +90,6 @@ export class TaskDetailsComponent {
         },
         error: (er) => {
           this.toast.showError(er.error.message, 'Error')
-          this.isDisableButton=false
           this.loading=false;
         }
       }

@@ -270,7 +270,7 @@
             <div class="modal-body">
                 <div class="modal-header apply_title p-3">
                     <h1 class="modal-title fs-5 font-21 font-600 secondary modal_line position-relative"
-                        id="exampleModalLabel1">Assignment Details</h1>
+                        id="exampleModalLabel1">Add Assignment</h1>
                     <button type="button" class="close_btn" data-bs-dismiss="modal" aria-label="Close"
                         (click)="clearFormSubmission()">
                         <i class="fi fi-rr-cross close_icon"></i>
@@ -301,7 +301,7 @@
                                         [(ngModel)]="assignmentRequest.courseId" aria-label="Default select example"
                                         (change)="getCourseSubject(assignmentRequest.courseId)"
                                         formControlName="courseId">
-                                        <option value="">Select Course</option>
+                                        <option [value]="">Select Course</option>
                                         <option selected="" [value]="course.courseId" *ngFor="let course of courses">
                                             {{course.courseName}}</option>
                                     </select>
@@ -338,7 +338,15 @@
                 </form>
                 <!-- <h6 *ngIf="message!=''" style="color: red;">{{message}}</h6> -->
                 <a class="apply_modal_buttons d-flex justify-content-center align-items-center mt-2">
-                    <button type="button" class="apply_modal_btn" (click)="createAssingment()">Create</button>
+                    <button type="button" class="apply_modal_btn" (click)="createAssingment()" [disabled]="isSubmitAssignment">
+                        <div *ngIf="!isSubmitAssignment;else spinnerAssignment">
+                            Create
+                        </div>
+                        <ng-template #spinnerAssignment>
+                            <div class="spinner-border text-light" role="status">
+                                <span class="sr-only"></span>
+                            </div>
+                        </ng-template></button>
                 </a>
 
             </div>

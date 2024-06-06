@@ -146,7 +146,7 @@
                                 <div class="profile_edits">
                                   <div class="profile_buttons d-flex align-items-end">
                                     
-                                    <i class="fi fi-rr-trash light font-24 line-height-0 hover-delete-icon" (click)="deleteImage(i)"></i>
+                                    <i class="fi fi-rr-trash light font-24 line-height-0 hover-delete-icon" (click)="deleteImage(i, fileInput)"></i>
                                   </div>
                                 </div>
                                 
@@ -159,7 +159,7 @@
 
                         <div class="col-lg-4 col-md-4">
                             <form class="attachment_file2 d-flex align-items-center justify-content-center  pointer position-relative add-attechment add-media-attech">
-                                <input type="file" name="image" (change)="addImageFile($event)" value="image" class="d-none" id="image">
+                                <input type="file" name="image" (change)="addImageFile($event)"  #fileInput  value="image" class="d-none" id="image">
                                 <label for="image" class="font-17 font-500 d-flex">
                                   <i class="fi fi-rr-plus-small warning font-24 line-height-0"></i>
                                   Add Media</label>
@@ -233,9 +233,9 @@
             <div class="col-md-12">
                 <form
                     class="attachment_file2 d-inline-flex align-items-center  position-relative mb-2 add-attechment button-hover">
-                    <input type="file" name="attachment" value="attachment" (change)="addAttachmentFile($event)" class="d-none" id="attachment">
+                    <input type="file" name="attachment" value="attachment" #attachment (change)="addAttachmentFile($event)" class="d-none" id="attachment">
                     <label for="attachment" class="font-17 pointer font-500 d-flex ">
-                        <i class="fi fi-rr-plus-small warning font-24 line-height-0 "></i><h5> Add Attachments</h5>
+                        <i class="fi fi-rr-plus-small warning font-24 line-height-0"></i><h5> Add Attachments</h5>
                        </label>
                 </form><br>
                 <!-- <div class="add-que mb-2" style="padding: 16px 12px;" *ngI>
@@ -315,7 +315,7 @@ aria-hidden="true">
             <p class="secondary font-21 font-500 text-center">Are You Sure You Want To <br> delete </p>
             <div class="apply_modal_buttons d-flex justify-content-between align-items-center">
                
-                    <button type="button" data-bs-dismiss="modal" aria-label="Close" class="cancel_modal_btn font-15 font-500 delete-icon-color pointer"  (click)="deleteAttachment()">Delete</button>
+                    <button type="button" data-bs-dismiss="modal" aria-label="Close" class="cancel_modal_btn font-15 font-500 delete-icon-color pointer"  (click)="deleteAttachment(attachment)">Delete</button>
               
                 <a  >
                     <button type="button" data-bs-dismiss="modal" aria-label="Close" class="apply_modal_btn font-15 font-500">No, Do not delete</button>

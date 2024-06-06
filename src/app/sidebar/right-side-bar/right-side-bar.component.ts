@@ -180,7 +180,9 @@ export class RightSideBarComponent implements OnInit, AfterViewInit {
       next: (data: any) => {
         setTimeout(() => {
           this.announcements = data;
-          this.unseenNotification = this.announcements.length
+          if(this.announcements){
+            this.unseenNotification = this.announcements.length
+          }
           this.isDataReloading = false
           if (this.announcements.length == 0) {
             this.messages = true

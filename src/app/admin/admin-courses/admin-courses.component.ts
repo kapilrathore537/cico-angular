@@ -114,6 +114,7 @@ export class AdminCoursesComponent implements OnInit {
           AppUtils.modelDismiss('course-form-close')
         },
         error: (err: any) => {
+          this.loading = false
           this.toast.showError(err.error.message, 'Error')
         }
       })

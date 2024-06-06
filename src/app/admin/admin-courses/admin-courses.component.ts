@@ -116,6 +116,7 @@ export class AdminCoursesComponent implements OnInit {
           this.loading=false
         },
         error: (err: any) => {
+          this.loading = false
           this.toast.showError(err.error.message, 'Error')
           this.loading=false
 

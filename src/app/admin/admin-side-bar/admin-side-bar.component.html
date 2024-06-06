@@ -112,6 +112,7 @@
         [ngClass]="check == 'student' ? 'icon-text dashboard' : 'icon-text'">Student</span></a>
 
     <a
+      style="cursor: pointer;"
       [ngClass]="check == 'logout' ? 'active' : 'box-hover'"
       (click)="getValueById(lsdv12.value)" (click)="logout()">
       <input #lsdv12 type="hidden" value="logout" />

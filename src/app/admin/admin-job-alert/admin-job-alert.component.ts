@@ -117,6 +117,8 @@ export class AdminJobAlertComponent implements OnInit,AfterViewInit {
     this.jobId = jobId
     this.numberOfJob = num;
     this.showFullMessage = !this.showFullMessage;
+    console.log(this.jobs[0].jobDescription.length);
+    
   }
 
 }

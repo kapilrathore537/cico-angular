@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { group } from 'console';
+import { event } from 'jquery';
 import { Assignment } from 'src/app/entity/assignment';
 import { AssignmentQuestionRequest } from 'src/app/payload/assignment-question-request';
 import { TaskQuestionRequest } from 'src/app/payload/task-question-request';
@@ -20,19 +21,20 @@ export class AdminCreateAssignmentsComponent implements OnInit {
   assignmentId = 0;
   public Editor = ClassicEditor;
   assignment: Assignment = new Assignment();
-  assignmentQuestionsData: AssignmentQuestionRequest = new AssignmentQuestionRequest();
+  assignmentQuestionsData: AssignmentQuestionRequest =
+    new AssignmentQuestionRequest();
   taskQuestion: TaskQuestionRequest = new TaskQuestionRequest();
   imagePreview: string[] = [];
   imageName: string[] = [];
   newImg = '';
   attachmentInfo = {
     name: '',
-    size: 0
+    size: 0,
   };
   expandedQuestions: boolean[] = [];
   questionId: number = 0;
   assignmentForm: FormGroup;
-  loading: boolean = false
+  loading: boolean = false;
 
   constructor(
     private activateRoute: ActivatedRoute,
@@ -41,10 +43,9 @@ export class AdminCreateAssignmentsComponent implements OnInit {
     private formBuilder: FormBuilder,
     private toast: ToastService
   ) {
-
     this.assignmentForm = this.formBuilder.group({
-      question: ['', Validators.required]
-    })
+      question: ['', Validators.required],
+    });
     this.assignmentId = this.activateRoute.snapshot.params['id'];
   }
 
@@ -58,12 +59,12 @@ export class AdminCreateAssignmentsComponent implements OnInit {
     return field ? field.invalid && field.touched : false;
   }
 
-
   public getAssignmentById() {
     this.assignmentService.getAssignmentById(this.assignmentId).subscribe({
       next: (data: any) => {
         this.assignment = data.assignment;
-        this.assignmentQuestionsData.assignmentQuestion = data.assignment.assignmentQuestion
+        this.assignmentQuestionsData.assignmentQuestion =
+          data.assignment.assignmentQuestion;
       },
     });
   }
@@ -88,15 +89,16 @@ export class AdminCreateAssignmentsComponent implements OnInit {
 
   public addAssignmentQuestion() {
     if (this.assignmentForm.invalid) {
-      AppUtils.submissionFormFun(this.assignmentForm)
+      AppUtils.submissionFormFun(this.assignmentForm);
       return;
     }
-    this.loading = true
-    this.assignmentService.addQuestionInTask(this.taskQuestion, this.assignmentId).subscribe(
-      {
+    this.loading = true;
+    this.assignmentService
+      .addQuestionInTask(this.taskQuestion, this.assignmentId)
+      .subscribe({
         next: (data: any) => {
-          this.assignmentQuestionsData.assignmentQuestion.push(data)
-          this.expandedQuestions.push(false)
+          this.assignmentQuestionsData.assignmentQuestion.push(data);
+          this.expandedQuestions.push(false);
           this.assignmentForm.reset();
           this.toast.showSuccess('Question added successsfully!!', 'Success');
           this.loading = false;
@@ -107,11 +109,10 @@ export class AdminCreateAssignmentsComponent implements OnInit {
           }, 500);
         },
         error: (er: any) => {
-          this.toast.showError(er.error.message, 'Error')
-          this.loading=false
-        }
-      }
-    )
+          this.toast.showError(er.error.message, 'Error');
+          this.loading = false;
+        },
+      });
   }
 
   public addAttachmentFile(event: any) {
@@ -121,70 +122,79 @@ export class AdminCreateAssignmentsComponent implements OnInit {
     this.assignmentService.addAttachment(this.assignment).subscribe({
       next: (data: any) => {
         this.assignment.taskAttachment = data;
-        this.attachmentInfo.name = file.name
-        this.attachmentInfo.size = Math.floor(((file.size) / 1024) / 1024);
+        this.attachmentInfo.name = file.name;
+        this.attachmentInfo.size = Math.floor(file.size / 1024 / 1024);
         // this.attachmentInfo.name = this.fileName;
         this.fileLoading = false;
-        this.toast.showSuccess('Successfully attachement added', 'Success')
-      }, error: (er: any) => {
-        this.fileLoading = false
-        this.toast.showError('Please try another one  or retry', 'Error')
-      }
-    })
+        this.toast.showSuccess('Successfully attachement added', 'Success');
+      },
+      error: (er: any) => {
+        this.fileLoading = false;
+        this.toast.showError('Please try another one  or retry', 'Error');
+      },
+    });
   }
 
+  // public submitAssignmentQuestions() {
+  //   if (
+  //     this.assignmentQuestionsData.assignmentQuestion.length === 0 &&
+  //     this.assignmentForm.invalid
+  //   ) {
+  //     AppUtils.submissionFormFun(this.assignmentForm);
+
+  // }
+
   fileLoading: boolean = false;
-
-
 
   triggerFileInput() {
     const fileInput = document.getElementById('attachment') as HTMLInputElement;
     fileInput.click();
   }
 
-  deleteAttachment() {
+  deleteAttachment(attachment: HTMLInputElement) {
+    attachment.value = '';
     this.assignmentService.deleteAttachmet(this.assignmentId).subscribe({
       next: (data: any) => {
-        this.toast.showSuccess('Successfully deleted attachmemt', 'Success')
-        this.attachmentInfo.name = ''
-        this.attachmentInfo.size = 0
+        this.toast.showSuccess('Successfully deleted attachmemt', 'Success');
+        this.attachmentInfo.name = '';
+        this.attachmentInfo.size = 0;
         this.assignmentQuestionsData.taskAttachment = null;
         this.assignment.taskAttachment = null;
       },
-      error: (er: any) => {
-
-      }
-    })
+      error: (er: any) => {},
+    });
   }
 
   public submitAssignmentQuestions() {
-    if (this.assignmentQuestionsData.assignmentQuestion.length === 0 && this.assignmentForm.invalid) {
-      AppUtils.submissionFormFun(this.assignmentForm)
+    if (
+      this.assignmentQuestionsData.assignmentQuestion.length === 0 &&
+      this.assignmentForm.invalid
+    ) {
+      AppUtils.submissionFormFun(this.assignmentForm);
       return;
     } else {
-      this.assignmentService.addAssignment(this.assignment)
-        .subscribe({
-          next: (data: any) => {
-            this.router.navigate(['/admin/assignments']);
-          }
-        })
+      this.assignmentService.addAssignment(this.assignment).subscribe({
+        next: (data: any) => {
+          this.router.navigate(['/admin/assignments']);
+        },
+      });
     }
   }
 
   public deleteAssignmentQuestion() {
-    this.assignmentService.deleteTaskQuestion(this.questionId).subscribe(
-      {
-        next: (data) => {
-          AppUtils.modelDismiss('delete-assignment-modal')
-          this.toast.showSuccess('Successfully deleted!!', 'Success')
-          let index = this.assignmentQuestionsData.assignmentQuestion.findIndex(obj => obj.questionId == this.questionId) as number
-          this.assignmentQuestionsData.assignmentQuestion.splice(index, 1)
-        },
-        error: (er: any) => {
-          this.toast.showError(er.error.message, 'Error')
-        }
-      }
-    )
+    this.assignmentService.deleteTaskQuestion(this.questionId).subscribe({
+      next: (data) => {
+        AppUtils.modelDismiss('delete-assignment-modal');
+        this.toast.showSuccess('Successfully deleted!!', 'Success');
+        let index = this.assignmentQuestionsData.assignmentQuestion.findIndex(
+          (obj) => obj.questionId == this.questionId
+        ) as number;
+        this.assignmentQuestionsData.assignmentQuestion.splice(index, 1);
+      },
+      error: (er: any) => {
+        this.toast.showError(er.error.message, 'Error');
+      },
+    });
   }
 
   setQuestionId(id: number) {
@@ -195,8 +205,9 @@ export class AdminCreateAssignmentsComponent implements OnInit {
     this.expandedQuestions[index] = !this.expandedQuestions[index];
   }
 
-  public deleteImage(index: number) {
+  public deleteImage(index: number, fileInput: HTMLInputElement) {
     if (index >= 0 && index < this.taskQuestion.questionImages.length) {
+      fileInput.value = '';
       this.taskQuestion.questionImages.splice(index, 1);
       this.imagePreview.splice(index, 1);
       this.imageName.splice(index, 1);
@@ -206,11 +217,10 @@ export class AdminCreateAssignmentsComponent implements OnInit {
   public pageRenderUsingRouterLink(path: string, questionId: number) {
     const dataParams = {
       id: questionId,
-      type: "assignmentQuestion"
+      type: 'assignmentQuestion',
     };
     this.router.navigate([path], {
-      queryParams: dataParams
+      queryParams: dataParams,
     });
   }
-
 }

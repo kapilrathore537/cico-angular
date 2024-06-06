@@ -155,7 +155,7 @@
                                 <div class="profile_edits">
                                     <div class="profile_buttons d-flex align-items-end">
                                         <i class="fi fi-rr-trash light font-24 line-height-0 hover-delete-icon"
-                                            (click)="deleteImage(i)"></i>
+                                            (click)="deleteImage(i,file)"></i>
                                     </div>
                                 </div>
 
@@ -171,7 +171,7 @@
                             <form [formGroup]="secondTaskForm">
                                 <div
                                     class="attachment_file2 d-flex align-items-center justify-content-center  position-relative add-attechment add-media-attech">
-                                    <input type="file" name="image" (change)="addImageFile($event)" value="image"
+                                    <input type="file" name="image" #file (change)="addImageFile($event)" value="image"
                                         class="form-control d-none " id="image">
                                     <label for="image" class="font-17 font-500 d-flex pointer">
                                         <i class="fi fi-rr-plus-small warning font-24 line-height-0"></i>
@@ -240,13 +240,14 @@
             </div>
 
             <div class="col-md-12">
+
                 <form   (click)="triggerFileInput()"
                     [class]="!fileLoading?' button-hover attachment_file2 d-inline-flex align-items-center  position-relative mb-2 add-attechment pointer':' button-hover1 pointer attachment_file2 d-inline-flex align-items-center  position-relative mb-2 add-attechment '">
                     <input type="file" name="attachment" value="attachment" (change)="addAttachmentFile($event)"
                         class="d-none" id="attachment">
                     <label for="attachment" class="font-17 font-500 d-flex">
                         <div *ngIf="!fileLoading;else spinner">
-                            <i class="fi fi-rr-plus-small warning font-24 line-height-0"></i>
+                            <i style="margin-left: 60px;" class="fi fi-rr-plus-small warning font-24 line-height-0"></i>
                             <h5>Add Attachments</h5>
                         </div>
 
@@ -331,7 +332,7 @@
                 <div class="apply_modal_buttons d-flex justify-content-between align-items-center">
                     <a>
                         <button type="button" class="cancel_modal_btn font-15 font-500 delete-icon-color"
-                            (click)="deleteAttachement()">Yes,
+                            (click)="deleteAttachement(attachment)">Yes,
                             delete</button>
                     </a>
                     <a>

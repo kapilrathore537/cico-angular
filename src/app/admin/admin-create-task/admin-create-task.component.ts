@@ -189,8 +189,9 @@ export class AdminCreateTaskComponent {
   }
 
 
-  public deleteImage(index: number) {
+  public deleteImage(index: number,file:HTMLInputElement) {
     if (index >= 0 && index < this.taskQuestion.questionImages.length) {
+      file.value=''
       this.taskQuestion.questionImages.splice(index, 1);
       this.imagePreview.splice(index, 1);
       this.imageName.splice(index, 1);
@@ -217,9 +218,10 @@ export class AdminCreateTaskComponent {
     });
   }
 
-  deleteAttachement() {
+  deleteAttachement(attachment:HTMLInputElement) {
     this.taskService.deleteAttachement(this.taskId).subscribe({
       next: (data: any) => {
+        attachment.value=''
         this.toast.showSuccess('success', '');
         this.attachmentInfo.name = ''
         this.task.taskAttachment = ''

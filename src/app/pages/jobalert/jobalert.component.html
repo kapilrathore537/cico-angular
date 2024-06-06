@@ -9,7 +9,7 @@
     <!-- INTERBSHIP CARD START -->
     <h3 class="Enrolled font-21 font-600 secondary position-relative">Internships</h3>
     <div class="row">
-      <div class="col-md-3 bootstrap_cards" *ngFor="let obj of internshipJobs;let i = index">
+      <div class="col-md-3 bootstrap_cards" *ngFor="let obj of internshipJobs else elsepart1;let i = index">
         <a routerLink="/student/internshipsdescription/{{obj.jobId}}">
           <div class="internship_container">
             <div class="container_top d-flex align-items-center">
@@ -25,7 +25,9 @@
           </div>
         </a>
       </div>
-
+      <div class="gif_image_class" *ngIf="internshipJobs.length==0">
+        <img class="gif_image"  style=" margin-left: 50px;height: 200px; width: 200px;" src="../../../assets/images/temp_img/Job hunt.gif">
+       </div>
     </div>
     <!-- INTERNSHIP CARD END -->
 
@@ -48,10 +50,13 @@
           </div>
         </a>
       </div>
-
+      <div class="gif_image_class" *ngIf="jobs.length==0">
+        <img class="gif_image"  style=" margin-left: 50px;height: 200px; width: 200px;" src="../../../assets/images/temp_img/Job hunt.gif">
+       </div>
     </div>
 
     <!-- JOB CARD END -->
+   
   </div>
 
   <app-right-side-bar></app-right-side-bar>

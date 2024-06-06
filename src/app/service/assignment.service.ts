@@ -19,6 +19,7 @@ import { Assignment } from '../entity/assignment';
 })
 export class AssignmentServiceService {
 
+
   BASE_URL = this.utilityService.getBaseUrl();
   assignmentUrl = this.BASE_URL + '/assignment';
 
@@ -53,7 +54,6 @@ export class AssignmentServiceService {
   }
 
   public addQuestionInTask(question: TaskQuestionRequest, assignmentId: number) {
-    console.log(question);
 
     let formData = new FormData();
     formData.append('question', question.question)
@@ -67,7 +67,7 @@ export class AssignmentServiceService {
   public deleteTaskQuestion(questionId: number) {
     return this.http.delete(`${this.assignmentUrl}/deleteTaskQuestion?questionId=${questionId}`)
   }
-  
+
   public addAssignment(data: Assignment) {
     let formData = new FormData();
     formData.append('assignmentId', data.id.toString());
@@ -143,9 +143,6 @@ export class AssignmentServiceService {
     return this.http.get(`${this.assignmentUrl}/getOverAllAssignmentTaskStatus`)
   }
 
-  private cachedData: any;
-  private dataSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
-
   public getAllLockedAndUnlockedAssignment(studentId: number): Observable<any> {
     let params = {
       studentId: studentId,
@@ -190,5 +187,17 @@ export class AssignmentServiceService {
 
   public getAllSubmittedAssignmentTask(assignmentId: number) {
     return this.http.get(`${this.assignmentUrl}/getAllSubmittedAssignmentTask?assignmentId=${assignmentId}`)
+  }
+
+  deleteAttachmet(assignmentId: number) {
+    return this.http.delete(`${this.assignmentUrl}/deleteAttachment?assignmentId=${assignmentId}`)
+  }
+
+  addAttachment(assignment: Assignment) {
+    let formData = new FormData();
+    formData.append('assignmentId', assignment.id.toString());
+    if (assignment.taskAttachment instanceof File)
+      formData.append('file', assignment.taskAttachment);
+    return this.http.post(`${this.assignmentUrl}/addAttachment`, formData);
   }
 }

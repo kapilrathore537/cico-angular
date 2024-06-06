@@ -136,8 +136,8 @@ export class AdminSubjectsChapterQuizComponent {
     this.changeFormName('Add Question', 'Add')
   }
 
-  changeFormName(formaName: string, buttonName: string) {
-    document.getElementById('exampleModalLabel1')!.innerText = formaName;
+  changeFormName(formName: string, buttonName: string) {
+    document.getElementById('exampleModalLabel1')!.innerText = formName;
     document.getElementById('buttonName')!.innerText = buttonName
   }
 

@@ -38,7 +38,6 @@ export class AdminCreateAssignmentsComponent implements OnInit {
     private activateRoute: ActivatedRoute,
     private assignmentService: AssignmentServiceService,
     private router: Router,
-    private utilityService: UtilityServiceService,
     private formBuilder: FormBuilder,
     private toast: ToastService
   ) {
@@ -46,11 +45,10 @@ export class AdminCreateAssignmentsComponent implements OnInit {
     this.assignmentForm = this.formBuilder.group({
       question: ['', Validators.required]
     })
-
+    this.assignmentId = this.activateRoute.snapshot.params['id'];
   }
 
   ngOnInit(): void {
-    this.assignmentId = this.activateRoute.snapshot.params['id'];
     this.assignmentQuestionsData.assignmentId = this.assignmentId;
     this.getAssignmentById();
   }
@@ -60,7 +58,7 @@ export class AdminCreateAssignmentsComponent implements OnInit {
     return field ? field.invalid && field.touched : false;
   }
 
-  
+
   public getAssignmentById() {
     this.assignmentService.getAssignmentById(this.assignmentId).subscribe({
       next: (data: any) => {
@@ -114,23 +112,51 @@ export class AdminCreateAssignmentsComponent implements OnInit {
       }
     )
   }
+
   public addAttachmentFile(event: any) {
-    const data = event.target.files[0];
-    this.attachmentInfo.name = event.target.files[0].name
-    this.attachmentInfo.size = Math.floor(((event.target.files[0].size) / 1024) / 1024)
-    // this.assignmentQuestionsData.taskAttachment = event.target.files[0];
-    this.assignment.taskAttachment = data;
+    this.fileLoading = true;
+    const file = event.target.files[0];
+    this.assignment.taskAttachment = file;
+    this.assignmentService.addAttachment(this.assignment).subscribe({
+      next: (data: any) => {
+        this.assignment.taskAttachment = data;
+        this.attachmentInfo.name = file.name
+        this.attachmentInfo.size = Math.floor(((file.size) / 1024) / 1024);
+        // this.attachmentInfo.name = this.fileName;
+        this.fileLoading = false;
+        this.toast.showSuccess('Successfully attachement added', 'Success')
+      }, error: (er: any) => {
+        this.fileLoading = false
+        this.toast.showError('Please try another one  or retry', 'Error')
+      }
+    })
+  }
+
+  fileLoading: boolean = false;
+
+
+
+  triggerFileInput() {
+    const fileInput = document.getElementById('attachment') as HTMLInputElement;
+    fileInput.click();
   }
 
   deleteAttachment() {
-    this.attachmentInfo.name = ''
-    this.attachmentInfo.size = 0
-    this.assignmentQuestionsData.taskAttachment = null;
-    this.assignment.taskAttachment = null;
+    this.assignmentService.deleteAttachmet(this.assignmentId).subscribe({
+      next: (data: any) => {
+        this.toast.showSuccess('Successfully deleted attachmemt', 'Success')
+        this.attachmentInfo.name = ''
+        this.attachmentInfo.size = 0
+        this.assignmentQuestionsData.taskAttachment = null;
+        this.assignment.taskAttachment = null;
+      },
+      error: (er: any) => {
+
+      }
+    })
   }
 
   public submitAssignmentQuestions() {
-
     if (this.assignmentQuestionsData.assignmentQuestion.length === 0 && this.assignmentForm.invalid) {
       AppUtils.submissionFormFun(this.assignmentForm)
       return;

@@ -240,12 +240,11 @@
             </div>
 
             <div class="col-md-12">
-                <form
-                    [class]="!fileLoading?' button-hover attachment_file2 d-inline-flex align-items-center  position-relative mb-2 add-attechment':' button-hover1 attachment_file2 d-inline-flex align-items-center  position-relative mb-2 add-attechment '">
+                <form   (click)="triggerFileInput()"
+                    [class]="!fileLoading?' button-hover attachment_file2 d-inline-flex align-items-center  position-relative mb-2 add-attechment pointer':' button-hover1 pointer attachment_file2 d-inline-flex align-items-center  position-relative mb-2 add-attechment '">
                     <input type="file" name="attachment" value="attachment" (change)="addAttachmentFile($event)"
                         class="d-none" id="attachment">
                     <label for="attachment" class="font-17 font-500 d-flex">
-
                         <div *ngIf="!fileLoading;else spinner">
                             <i class="fi fi-rr-plus-small warning font-24 line-height-0"></i>
                             <h5>Add Attachments</h5>
@@ -273,10 +272,11 @@
                 </div>
 
                 <ng-template #elsePart>
-                    <div class="add-que border-0" style="padding: 16px 12px;" *ngIf="task.taskAttachment!=''">
-                        <i class="fi fi-rr-file-zipper warning font-25 line-height-0"></i>
-                        <h5 class="font-17 font-500 warning mb-0">Attachment
-                        </h5>
+                    <div class="add-que border-0" style="padding: 16px 12px;" *ngIf="task.taskAttachment!='' && task.taskAttachment!=null">
+                        <a href="{{task.taskAttachment}}">
+                            <i class="fi fi-rr-file-zipper warning font-25 line-height-0"></i>
+                        <h5 class="font-17 font-500 warning mb-0">Attachment</h5>
+                        </a>
                         <span data-bs-toggle="modal" data-bs-target="#delete-modal1"><i
                                 class="fi fi-rr-trash line-height-0 pointer font-24 ms-3 delete-icon-color"></i></span>
                     </div>

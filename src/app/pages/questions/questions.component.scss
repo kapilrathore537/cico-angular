@@ -5,3 +5,26 @@
     padding: 20px;
     height: 100vh; /* Ensure content takes up full viewport height */
   }
+.prosesss.not-answered{
+    background-color: #ff3939;
+}
+
+.prosesss.answered{
+    background-color: #00a651;
+}
+
+.arrow-up {
+    width: 0; 
+    height: 0; 
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    
+    border-bottom: 5px solid black;
+    margin-top: 8px;
+  }
+
+  .active-arrow{
+        display: flex;
+        justify-content: center;
+  }
+

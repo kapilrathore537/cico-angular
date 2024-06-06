@@ -387,7 +387,7 @@
               <button type="button" class="cancel_modal_btn" data-bs-dismiss="modal" id="leave-modal-close1">
                 Cancel
               </button>
-              <button type="button" class="apply_modal_btn" (click)="addStudentLeave()" [disabled]="isDisableButton"
+              <button type="button" class="apply_modal_btn" (click)="addStudentLeave()" [disabled]="isSubmited"
                 *ngIf="!isSubmited;else spinner">
                 Apply
               </button>

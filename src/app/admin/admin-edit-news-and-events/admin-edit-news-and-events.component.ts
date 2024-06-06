@@ -18,6 +18,7 @@ export class AdminEditNewsAndEventsComponent implements OnInit {
   newsAndEventRequest: NewsAndEventRequest = new NewsAndEventRequest();
   imageName: string = '';
   imagePreview: string = '';
+  isSubmit:boolean=false;
 
   constructor(private newsAndEventService: NewsEventServiceService,
     private activateRoute: ActivatedRoute, private router: Router,
@@ -29,6 +30,7 @@ export class AdminEditNewsAndEventsComponent implements OnInit {
   }
 
   updateNewsAndEvent() {
+    this.isSubmit=true
     this.newsAndEventService.updateNewsAndEvent(this.newsAndEventRequest).subscribe(
       {
         next: (data: any) => {
@@ -37,7 +39,7 @@ export class AdminEditNewsAndEventsComponent implements OnInit {
           this.router.navigate(['/admin/newsAndEvent'])
         },
         error: (er: any) => {
-
+          this.isSubmit=false
         }
       }
     )

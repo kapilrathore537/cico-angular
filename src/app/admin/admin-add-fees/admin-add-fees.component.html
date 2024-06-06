@@ -117,7 +117,16 @@
                 <div class="row text-center">
                     <div class="col-md-12">
                         <a class="fees_submit_btn font-17 font-500" data-bs-toggle="modal"
-                            (click)="addFees()">Submit</a>
+                            (click)="addFees()">
+                            <div *ngIf="!isSubmitFee;else spinnerFee">
+                                Submit
+                            </div>
+                            <ng-template #spinnerFee>
+                                <div class="spinner-border text-light" role="status">
+                                    <span class="sr-only"></span>
+                                </div>
+                            </ng-template>
+                            </a>
                     </div>
                 </div>
             </form>

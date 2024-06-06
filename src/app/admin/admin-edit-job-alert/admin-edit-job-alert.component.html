@@ -111,8 +111,16 @@
                 <div class="row mb-3">
 
                     <div class="col-md-12">
-                        <a   class="top_profile_sec_btn font-14 font-500" (click)=" updateJob()">Update
-                            Now</a>
+                        <button   class="top_profile_sec_btn font-14 font-500" (click)=" updateJob()">
+                            <div *ngIf="!isSubmit;else spinner">
+                                Update
+                            Now
+                            </div>
+                            <ng-template #spinner>
+                                <div class="spinner-border text-light" role="status">
+                                    <span class="sr-only"></span>
+                                </div>
+                            </ng-template></button>
                     </div>
                 </div>
 

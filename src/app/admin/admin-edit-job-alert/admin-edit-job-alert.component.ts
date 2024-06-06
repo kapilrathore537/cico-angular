@@ -20,6 +20,7 @@ export class AdminEditJobAlertComponent implements OnInit{
   technologyStack:TechnologyStack[]=[];
   imageName = ''
   jobId:number=0
+  isSubmit:boolean=false;
   constructor(private jobAlertService: JobAlertService, private technologyStackService: TechnologyStackService, private router: Router,private utilityService:UtilityServiceService,private activateRoute:ActivatedRoute) { }
   ngOnInit(): void {
     this.jobId= this.activateRoute.snapshot.params[('jobId')];
@@ -54,7 +55,7 @@ export class AdminEditJobAlertComponent implements OnInit{
     }).then((result) => {
       /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
-
+        this.isSubmit=true
         this.jobAlertService.updateJobs(this.jobAlert).subscribe({
           next:(res:any)=>{
             
@@ -67,6 +68,7 @@ export class AdminEditJobAlertComponent implements OnInit{
       } else if (result.isDenied) {
         this.getJobAlert()
         Swal.fire('Changes are not saved', '', 'info')
+        this.isSubmit=false
       }
     })
   }

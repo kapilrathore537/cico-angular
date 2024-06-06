@@ -45,6 +45,8 @@ export class AdminAssignmentsComponent implements OnInit, AfterViewInit {
   //for assignment submission 
   assignmentSubmissionPageRequest: PageRequest = new PageRequest();
   assignmentSubmissionPagination: PaginationManager = new PaginationManager()
+  isSubmitAssignment: boolean = false;
+
 
   submissionForm: FormGroup
   constructor(private courseService: CourseServiceService,
@@ -122,13 +124,17 @@ export class AdminAssignmentsComponent implements OnInit, AfterViewInit {
       this.submissionFormFun()
       return;
     } else {
+      this.isSubmitAssignment=true
+
       this.assignmentService.createAssignment(this.assignmentRequest).subscribe({
         next: (data: any) => {
           this.tost.showSuccess('Successfully added', 'Success')
           this.router.navigate(['/admin/createassignments/' + data.assignmentId])
+          this.isSubmitAssignment=false
         },
         error: (error) => {
           this.tost.showError(error.error.message, 'Error')
+          this.isSubmitAssignment=false
         }
       }
       )

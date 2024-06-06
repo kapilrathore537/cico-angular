@@ -19,6 +19,7 @@ export class AdminCreateNewsAndEventsComponent implements OnInit {
 
   imagePreview: string = '';
   imageName: string = '';
+  isSubmit:boolean=false;
 
   ngOnInit(): void {
 
@@ -45,7 +46,8 @@ export class AdminCreateNewsAndEventsComponent implements OnInit {
 
   createNewsAndEvent() {
     this.newsAndEventForm.markAllAsTouched();
-    if (this.newsAndEventForm.valid)
+    if (this.newsAndEventForm.valid){
+      this.isSubmit=true
       this.newsEventService.createNewsAndEvent(this.newRequest).subscribe(
         (data: any) => {
 
@@ -65,6 +67,7 @@ export class AdminCreateNewsAndEventsComponent implements OnInit {
           })
         },
         (err) => {
+          this.isSubmit=false
           const Toast = Swal.mixin({
             toast: true,
             position: 'top-end',
@@ -78,6 +81,7 @@ export class AdminCreateNewsAndEventsComponent implements OnInit {
           })
         }
       )
+    }
   }
   // addImage(event:any){
   //   this.newRequest.fileName=event.target.files[0];

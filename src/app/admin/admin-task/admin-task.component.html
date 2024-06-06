@@ -316,7 +316,15 @@
                 </form>
 
                 <a class="apply_modal_buttons d-flex justify-content-center align-items-center mt-2">
-                    <button type="button" class="apply_modal_btn" (click)="submit()">Create</button>
+                    <button type="button" class="apply_modal_btn" (click)="submit()" [disabled]="isSubmitTask">
+                        <div *ngIf="!isSubmitTask;else spinnerTask">
+                            Create
+                        </div>
+                        <ng-template #spinnerTask>
+                            <div class="spinner-border text-light" role="status">
+                                <span class="sr-only"></span>
+                            </div>
+                        </ng-template></button>
                 </a>
 
             </div>

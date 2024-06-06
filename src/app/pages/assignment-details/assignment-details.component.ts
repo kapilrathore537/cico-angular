@@ -26,7 +26,6 @@ export class AssignmentDetailsComponent implements OnInit {
   assignmentSubmission: AssignmentSubmissionRequest = new AssignmentSubmissionRequest
   submissionForm: FormGroup;
   isSubmited: boolean = false
-  isDisableButton = false;
 
   constructor(private activateRoute: ActivatedRoute,
     private assignmentService: AssignmentServiceService,
@@ -80,7 +79,6 @@ export class AssignmentDetailsComponent implements OnInit {
       AppUtils.submissionFormFun(this.submissionForm)
       return;
     }
-    this.isDisableButton = true;    
     this.isSubmited = true
     this.assignmentSubmission.studentId = this.loginService.getStudentId();
     this.assignmentSubmission.assignmentId = this.assignmentId
@@ -94,7 +92,6 @@ export class AssignmentDetailsComponent implements OnInit {
 
       },
       error: (error: any) => {
-        this.isDisableButton=false;
         this.isSubmited=false;
       }
     })

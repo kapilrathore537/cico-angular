@@ -110,6 +110,7 @@ export class AdminCreateAssignmentsComponent implements OnInit {
         },
         error: (er: any) => {
           this.toast.showError(er.error.message, 'Error')
+          this.loading=false
         }
       }
     )

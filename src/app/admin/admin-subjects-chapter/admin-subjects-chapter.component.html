@@ -296,7 +296,11 @@
                         aria-label="Close" (click)="cancel()" id="chapter-save-modal">Cancel</button>
                     <a>
                         <button type="button" class="apply_modal_btn font-15 font-500"
-                            (click)="addChapter()" *ngIf="!isSubmited;else spinner" [disabled]="isDisableButton">Save</button>
+                            (click)="addChapter()"  [disabled]="isSubmited">
+                            <div *ngIf="!isSubmited;else spinner">
+                                Save
+                            </div>
+                           </button>
                     </a>
                     <ng-template #spinner>
                         <div class="spinner-border text-light" role="status">
@@ -351,8 +355,18 @@
                         aria-label="Close" (click)="cancel()" id="chapter-update-modal">Cancel</button>
                     <a>
                         <button type="button" class="apply_modal_btn font-15 font-500"
-                            (click)="updateChapter()">Save</button>
+                            (click)="updateChapter()"  [disabled]="isSubmitedUpdateChapter">
+                            <div *ngIf="!isSubmitedUpdateChapter;else spinner">
+                                Save
+                            </div>
+                
+                            </button>
                     </a>
+                    <ng-template #spinnerUpdateChapter>
+                        <div class="spinner-border text-light" role="status">
+                          <span class="sr-only"></span>
+                        </div>
+                      </ng-template>
                 </div>
 
             </div>
@@ -479,8 +493,17 @@
                         id="exam_modal_close" aria-label="Close" (click)="cancel()">Cancel</button>
                     <a>
                         <button type="button" [hidden]="exam.isStart==true?true:false" id="buttonName"
-                            class="apply_modal_btn font-15 font-500" (click)="addUpdateExams()">Create</button>
+                            class="apply_modal_btn font-15 font-500" (click)="addUpdateExams()" [disabled]="isSubmitedExam">
+                            <div *ngIf="!isSubmitedExam;else spinnerExam">
+                                Create
+                            </div>
+                            </button>
                     </a>
+                    <ng-template #spinnerExam>
+                        <div class="spinner-border text-light" role="status">
+                          <span class="sr-only"></span>
+                        </div>
+                      </ng-template>
                 </div>
 
             </div>
@@ -605,9 +628,18 @@
                         aria-label="Close" (click)="cancel()">Cancel</button>
                     <a>
                         <button type="button" class="apply_modal_btn font-15 font-500"
-                            (click)="addUpdateQuestion()">Save
-                            Question</button>
+                            (click)="addUpdateQuestion()"  [disabled]="isSubmitedQuestion">
+                            <div *ngIf="!isSubmitedQuestion;else spinner">
+                                Save
+                                Question
+                            </div>
+                           </button>
                     </a>
+                    <ng-template #spinnerQuestion>
+                        <div class="spinner-border text-light" role="status">
+                          <span class="sr-only"></span>
+                        </div>
+                      </ng-template>
                     
                 </div>
 

@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, HostListener, Type } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { log } from 'console';
 import { Subscription, timer } from 'rxjs';
 import { Chapter } from 'src/app/entity/chapter';
 import { QuizeQuestion } from 'src/app/entity/quize-question';
@@ -10,6 +11,14 @@ import { ExamServiceService } from 'src/app/service/exam-service.service';
 import { LoginService } from 'src/app/service/login.service';
 import { QuestionServiceService } from 'src/app/service/question-service.service';
 import Swal from 'sweetalert2'
+
+
+export enum AnswereType{
+  VIEWED="VIEWED",
+  ANSWERED="ANSWERED",
+  NOT_VIEWED="NOT_VIEWED"
+}
+
 
 @Component({
   selector: 'app-questions',
@@ -23,7 +32,7 @@ export class QuestionsComponent implements AfterViewInit {
   question: QuizeQuestion = new QuizeQuestion();
   previousButton: boolean = false;
   nextButton: boolean = false;
-  questionClicked = new Map<number, string>();
+  questionClicked = new Map<number, any>();
   questionAnswered: number = 0;
   questionView: number = 0;
   questionNotAnswered: number = 0
@@ -44,6 +53,8 @@ export class QuestionsComponent implements AfterViewInit {
   subjectTimer!: number
   examTimer!: number;
 
+  answeredType=AnswereType;
+
   constructor(private questionService: QuestionServiceService, private activateRouter: ActivatedRoute,
     private chapterService: ChapterServiceService,
     private router: Router,
@@ -52,6 +63,10 @@ export class QuestionsComponent implements AfterViewInit {
     this.questionClicked = new Map<number, string>();
     this.toggleFullScreen()
   }
+
+
+  
+ 
 
   ngAfterViewInit(): void {
     if (this.type == Exam.subjectExam) {
@@ -178,6 +193,9 @@ export class QuestionsComponent implements AfterViewInit {
       this.question = this.questions[++this.index]
       this.questionNumber++;
     }
+
+    this.openQuestionFromProgressBar(this.question.questionId,this.index)
+
   }
 
   public previousQuestion() {
@@ -190,6 +208,7 @@ export class QuestionsComponent implements AfterViewInit {
       this.question = this.questions[--this.index]
       this.questionNumber--;
     }
+    this.openQuestionFromProgressBar(this.question.questionId,this.index)
 
   }
 
@@ -338,11 +357,37 @@ export class QuestionsComponent implements AfterViewInit {
 
   public manageQuestionProgressBar(questionId: number) {
     if (this.questionClicked.has(questionId)) {
-      // Value is present in the map
-      return true;
+       //  
+       if(this.questionClicked.get(questionId)==null){
+         return AnswereType.VIEWED;
+       }
+       return AnswereType.ANSWERED;
+  
     } else {
       // Value is not present in the map
-      return false;
+      return AnswereType.NOT_VIEWED;
     }
+  }
+
+
+  openQuestionFromProgressBar(questionId:any,index:any){
+      this.question = this.questions.filter(q=>{
+      //  if(!this.questionClicked.get(questionId))
+      //    this.questionClicked.set(questionId,null);
+       return q.questionId==questionId;
+      })[0];
+      this.questionNumber=index+1;
+      this.index=index;
+      // index--;
+      
+      //  for(;index>=0;index--){
+      //   let id=this.questions[index].questionId;
+      //      if(!this.questionClicked.has(id))
+      //       this.questionClicked.set(id,null);
+      //  }
+
+     
+
+
   }
 }

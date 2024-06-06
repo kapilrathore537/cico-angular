@@ -90,6 +90,7 @@ export class TaskDetailsComponent {
         },
         error: (er) => {
           this.toast.showError(er.error.message, 'Error')
+          this.loading=false;
         }
       }
     )

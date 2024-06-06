@@ -180,7 +180,15 @@
               <button type="button" class="cancel_modal_btn font-15 font-500" data-bs-dismiss="modal"
                 aria-label="Close">Cancel</button>
 
-              <button type="button" class="apply_modal_btn font-15 font-500" (click)="feesPay()">Submit</button>
+              <button type="button" class="apply_modal_btn font-15 font-500" (click)="feesPay()" [disabled]="isSubmit">
+                <div *ngIf="!isSubmit;else spinner">
+                  Submit
+              </div>
+              <ng-template #spinner>
+                  <div class="spinner-border text-light" role="status">
+                      <span class="sr-only"></span>
+                  </div>
+              </ng-template></button>
 
             </div>
 

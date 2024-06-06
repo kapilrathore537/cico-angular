@@ -162,7 +162,7 @@ src="https://www.youtube.com/embed/tgbNymZ7vqY">
 
         <div class="apply_modal_buttons d-flex justify-content-between align-items-center">
           <button type="button" class="cancel_modal_btn">Save Draft</button>
-          <button type="button" class="apply_modal_btn" (click)="submitTask()">
+          <button type="button" class="apply_modal_btn" (click)="submitTask()" [disabled]="loading">
 
             <div *ngIf="!loading;else spinner">
               Submit

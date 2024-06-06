@@ -1,17 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { DisableRightClickService } from './service/disable-right-click.service';
 import { JavaScriptLoaderService } from './service/java-script-loader.service';
 import { LoginService } from './service/login.service';
 import { NavigationEnd, Router } from '@angular/router';
-import { DisableRightClickService } from './service/disable-right-click.service';
-import { SocketServiceService } from './service/socket-service.service';
 import { QRServiceService } from './service/qrservice.service';
+import { SocketServiceService } from './service/socket-service.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent  implements OnInit {
 
 
   title = 'CiCO';
@@ -39,7 +39,9 @@ export class AppComponent {
       console.log('student');
 
       if (!this.loginService.isTokenExpired())
+      {
         this.router.navigate(['student']);
+      }
       else {
         this.loginService.logout();
         this.router.navigate(['']);
@@ -57,19 +59,17 @@ export class AppComponent {
         const state = {
           url: event.url // Store just the URL
         };
-        localStorage.setItem('namedOutletState', JSON.stringify(state));
+        sessionStorage.setItem('namedOutletState', JSON.stringify(state));
       }
     });
 
     // Check if there is any stored state for named outlets
-    const storedState = localStorage.getItem('namedOutletState');
+    const storedState = sessionStorage.getItem('namedOutletState');
     if (storedState) {
       const state = JSON.parse(storedState);
       // Navigate to the named outlets using the stored URL
       const decodedUrl = decodeURIComponent(state.url);
       this.router.navigateByUrl(decodedUrl); // Use navigateByUrl instead of navigate
     }
-
-
-  }
+ }
 }

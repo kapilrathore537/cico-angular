@@ -181,7 +181,7 @@
                     <button type="button" class="cancel_modal_btn font-15 font-500" data-bs-dismiss="modal"
                         aria-label="Close" id="course-form-close">Cancel</button>
                     <a>
-                        <button type="button" class="apply_modal_btn font-15 font-500" (click)="saveCourse()">
+                        <button type="button" class="apply_modal_btn font-15 font-500" (click)="saveCourse()" [disabled]="loading">
                             <div *ngIf="!loading;else spinner">
                                 Save course
                             </div>
@@ -304,11 +304,11 @@
                     <button type="button" class="cancel_modal_btn font-15 font-500" data-bs-dismiss="modal"
                         aria-label="Close" id="course-update-modal">Cancel</button>
                     <a>
-                        <button type="button" class="apply_modal_btn font-15 font-500" (click)="updateCourse()">
-                            <div *ngIf="!loading;else spinner">
+                        <button type="button" class="apply_modal_btn font-15 font-500" (click)="updateCourse()" [disabled]="loadingUpdate">
+                            <div *ngIf="!loadingUpdate;else spinnerUpdate">
                                 Update course
                             </div>
-                            <ng-template #spinner>
+                            <ng-template #spinnerUpdate>
                                 <div class="spinner-border text-light" role="status">
                                     <span class="sr-only"></span>
                                 </div>

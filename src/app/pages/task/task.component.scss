@@ -184,13 +184,17 @@
       padding-top: 214px;
     }
     .image_gif{
-      margin-left: 50px !important;
-      margin-right: 50px !important;
-      height: 300px !important;
-      width: 300px !important;
+      margin-top: -10rem;
+      margin-left: -7rem;
+      height: 400px !important;
+      width: 400px !important;
+      opacity: 0.5;
+      pointer-events: none; 
     }
 
     .gif_image_class1{
       padding-left: 245px;
       padding-top: 180px;
     }
+
+

@@ -6,7 +6,7 @@
       </div>
     <div class="scroll_sec mt-0">
 
-        <div class="subject-test">
+        <div class="subject-test" *ngIf="normalExam.length!==0 else elsepart1;">
             <h3 _ngcontent-ghv-c53="" class="admin-title font-17 font-600 secondary position-relative">Test</h3>
             <div class="row mt-4">
                 <div class="col-md-4 mb-4 " *ngFor="let obj of normalExam">
@@ -45,7 +45,7 @@
             </div>
     
     
-            <h3 _ngcontent-ghv-c53="" class="admin-title font-17 font-600 secondary position-relative">Schedule Test
+            <h3 _ngcontent-ghv-c53="" *ngIf="scheduleExam.length!==0" class="admin-title font-17 font-600 secondary position-relative">Schedule Test
             </h3>
             <div class="row mt-4">
                 <div class="col-md-4 mb-4" *ngFor="let obj of scheduleExam;let i =index">
@@ -89,7 +89,10 @@
                     </div>
                 </div>
             </div>
-          
         </div>
+        <ng-template #elsepart1>
+            <img  class="image_gif" src="../../../assets/images/temp_img/Online test-1.gif">
+            <img class="not_found_text" src="../../../assets/images/temp_img/unavailable.png">
+        </ng-template>
     </div>
 </div>

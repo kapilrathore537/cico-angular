@@ -71,55 +71,62 @@
         <div class="row mx-0">
           <div class="col-md-6 mb-4">
             <h3 class="title font-21 font-600 secondary position-relative">Upcoming Batches </h3>
-            <h3  class="font-21 font-600 secondary position-relative"*ngIf="length==0">NO UPCOMING BATCHES!!! </h3>
-
-            
-            <div class="all_summary mb-2" *ngFor="let batch of batches">
-              <div class="Batches d-flex align-items-center">
-                <div class="">
-                  <div class="d-flex java">
-                    <img style="height:60px;width:60px;" class="imageSize"
-                    [src]="batch.subject.technologyStack.imageName">
-                    <div class="ms-2">
-                      <h2 class="font-21 font-600 text-black java java_heading">{{batch.batchName}}</h2>
-                     
-
-                      <h2 class="font-16 font-00 text-black java java_heading2">Duration 90 Days</h2>
-                      <h3 class="font-14 font-400 text-black mb-0">{{batch.batchStartDate}}</h3>
+            <div *ngIf="batches.length!==0 else elsepart1">
+              <div class="all_summary mb-2" *ngFor="let batch of batches">
+                <div class="Batches d-flex align-items-center">
+                  <div class="">
+                    <div class="d-flex java">
+                      <img style="height:60px;width:60px;" class="imageSize"
+                      [src]="batch.subject.technologyStack.imageName">
+                      <div class="ms-3">
+                        <h2 class="font-21 font-600 text-black java java_heading">{{batch.batchName}}</h2>
+                       
+    
+                        <h2 class="font-16 font-00 text-black java java_heading2">Duration 90 Days</h2>
+                        <h3 class="font-14 font-400 text-black mb-0">{{batch.batchStartDate}}</h3>
+                      </div>
                     </div>
                   </div>
+                  <button class="btn-sm btn-info mx-3">
+                    Enquiry Now
+                  </button>
                 </div>
-                <button type="button" class="Enroll_btn font-14 font-600 text-white ms-auto">
-                  Enquire Now
-                </button>
               </div>
             </div>
-           </div>
+            <ng-template #elsepart1>
+              <div class="gif_image_class1">
+                <img  class="image_gif" src="../../../assets/images/temp_img/no-batch.gif">
+              </div>
+            </ng-template>
+          </div>
 
           <div class="col-md-6 mb-4">
             <h3 class="title font-21 font-600 secondary position-relative">Other Courses</h3>
-            <h3  class="font-21 font-600 secondary position-relative" *ngIf="courses.length == 0">
-              NO COURSES AVAILABLE !!!
-            </h3>
-            <div class="all_summary mb-2" *ngFor="let course of courses">
-              <div class="Batches d-flex align-items-center">
-                <div class="">
-                  <div class="d-flex java">
-                    <img style="height:60px;width:60px;" class="imageSize"
-                      [src]="course.technologyStack.imageName">
-                    <div class="ms-2">
-                      <h2 class="font-21 font-600 text-black java java_heading">{{course.courseName}}</h2>
-                      <h2 class="font-16 font-500 text-black java java_heading2">Duration {{course.duration}}</h2>
-                      <h3 class="font-14 font-400 text-black mb-0">{{course.sortDescription}}</h3>
+            <div *ngIf="courses.length!==0 else elsepart2">
+              <div class="all_summary mb-2" *ngFor="let course of courses">
+                <div class="Batches d-flex align-items-center">
+                  <div class="">
+                    <div class="d-flex java">
+                      <img style="height:60px;width:60px;" class="imageSize"
+                        [src]="course.technologyStack.imageName">
+                      <div class="ms-3">
+                        <h2 class="font-21 font-600 text-black java java_heading">{{course.courseName}}</h2>
+                        <h2 class="font-16 font-500 text-black java java_heading2">Duration {{course.duration}}</h2>
+                        <h3 class="font-14 font-400 text-black mb-0">{{course.sortDescription}}</h3>
+                      </div>
                     </div>
                   </div>
-
+                  <button class="btn-sm  btn-info mx-3">
+                    Enquiry Now
+                  </button>
                 </div>
-                <button type="button" class="Enroll_btn font-14 font-600 text-white ms-auto">
-                  Enquire Now
-                </button>
               </div>
             </div>
+            <ng-template #elsepart2>
+              <div class="gif_image_class1">
+                <img  class="image_gif1" src="../../../assets/images/temp_img/courses-not-available.gif">
+              </div>
+            </ng-template>
 
           </div>
         </div>

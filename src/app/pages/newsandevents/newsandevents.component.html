@@ -6,7 +6,7 @@
   </div>
 
   <div class="scroll_section">
-    <!-- <div class="row mb-4">
+    <div class="row mb-4">
       <div class="col-md-12">
         <div class="top-content">
           <div class="row">
@@ -25,7 +25,7 @@
           </div>
         </div>
       </div>
-    </div> -->
+    </div>
     <div class="task_assignment">
       <h3 class="title font-21 font-600 secondary position-relative">News</h3>
       <mat-paginator *ngIf="totalNewsAndEvent>8"
@@ -34,7 +34,7 @@
       aria-label="Select page"
       (page)="onChangePage($event)">    
       </mat-paginator> 
-      <div class="news_events">
+      <div *ngIf="totalNewsAndEvent==null else elsepart1;"  class="news_events">
         <h3 class="font-21 font-600 secondary position-relative" *ngIf="totalNewsAndEvent== 0"> NO NEWS AND EVENTS FOUND !!!</h3>
         <div class="row mt-3">
           <div class="col-md-3" *ngFor="let newsAndEvent of newsAndEvents">
@@ -53,6 +53,12 @@
         </div>
       </div>
     </div> 
+    <ng-template #elsepart1>
+      <div  class="gif_image_class">
+        <img class="text-not-found" src="../../../assets/images/temp_img/unavailable.png">
+        <img class="image_gif" src="../../../assets/images/temp_img/News.gif" >
+      </div>
+    </ng-template>
   </div>  
 
 

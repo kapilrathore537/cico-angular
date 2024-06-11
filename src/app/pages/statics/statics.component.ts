@@ -1,169 +1,95 @@
 import { Component, ViewChild } from '@angular/core';
-import { ApexAxisChartSeries, ApexChart, ApexDataLabels, ApexPlotOptions, ApexYAxis, ApexXAxis, ApexFill, ApexTooltip, ApexStroke, ApexLegend, ChartComponent, ApexNonAxisChartSeries, ApexGrid, ApexMarkers, ApexTitleSubtitle } from 'ng-apexcharts';
+import {
+  ApexAxisChartSeries,
+  ApexChart,
+  ApexDataLabels,
+  ApexPlotOptions,
+  ApexYAxis,
+  ApexXAxis,
+  ApexFill,
+  ApexTooltip,
+  ApexStroke,
+  ApexLegend,
+  ChartComponent,
+} from 'ng-apexcharts';
+import { AssignmentChart } from 'src/app/charts/assignment-chart';
+import { NormalExamBar, ScheduleExamBar } from 'src/app/charts/normal-exam-bar';
+import { ExamServiceService } from 'src/app/service/exam-service.service';
+import { StudentService } from 'src/app/service/student.service';
 
-
-
-export type ChartOptions = {
+export type AssignmentOption = {
   series: ApexAxisChartSeries;
   chart: ApexChart;
-  xaxis: ApexXAxis;
-  stroke: ApexStroke;
   dataLabels: ApexDataLabels;
-  markers: ApexMarkers;
-  tooltip: any; // ApexTooltip;
+  plotOptions: ApexPlotOptions;
   yaxis: ApexYAxis;
-  grid: ApexGrid;
+  xaxis: ApexXAxis;
+  fill: ApexFill;
+  tooltip: ApexTooltip;
+  stroke: ApexStroke;
   legend: ApexLegend;
-  title: ApexTitleSubtitle;
 };
 
-export type FeesOptions = {
-  series: ApexNonAxisChartSeries;
-  chart: ApexChart;
-  labels: string[];
-  plotOptions: ApexPlotOptions;
+export type NormalExamResult = {
+  series: any;
+  chart: any;
+  responsive: any;
+  labels: any;
+  colors: any
+  legend: any;
+  stroke: any;
 };
+export type ScheduleTestResult = {
+  series: any;
+  chart: any;
+  responsive: any;
+  labels: any;
+  colors: any
+  legend: any;
+  stroke: any;
+};
+
+
 @Component({
   selector: 'app-statics',
   templateUrl: './statics.component.html',
-  styleUrls: ['./statics.component.scss']
+  styleUrls: ['./statics.component.scss'],
 })
 export class StaticsComponent {
+  @ViewChild('assignmentChart') assignmentChart!: ChartComponent;
+  public assignmentOption: any;
 
-  @ViewChild("chart") chart!: ChartComponent;
-  public chartOptions: any;
-
-
-  
-  @ViewChild("chart") feeChart!: ChartComponent;
-  public FeesOptions: any;
-
-  constructor() {
-    this.chartOptions = {
-      series: [
-        {
-          name: "Session Duration",
-          data: [45, 52, 38, 24, 33, 26, 21, 20, 6, 8, 15, 10]
-        },
-        {
-          name: "Page Views",
-          data: [35, 41, 62, 42, 13, 18, 29, 37, 36, 51, 32, 35]
-        },
-        {
-          name: "Total Visits",
-          data: [87, 57, 74, 99, 75, 38, 62, 47, 82, 56, 45, 47]
-        }
-      ],
-      chart: {
-        height: 350,
-        type: "line"
-      },
-      dataLabels: {
-        enabled: false
-      },
-      stroke: {
-        width: 5,
-        curve: "straight",
-        dashArray: [0, 8, 5]
-      },
-      title: {
-        text: "Page Statistics",
-        align: "left"
-      },
-      legend: {
-        tooltipHoverFormatter: function(val:any, opts:any) {
-          return (
-            val +
-            " - <strong>" +
-            opts.w.globals.series[opts.seriesIndex][opts.dataPointIndex] +
-            "</strong>"
-          );
-        }
-      },
-      markers: {
-        size: 0,
-        hover: {
-          sizeOffset: 6
-        }
-      },
-      xaxis: {
-        labels: {
-          trim: false
-        },
-        categories: [
-          "01 Jan",
-          "02 Jan",
-          "03 Jan",
-          "04 Jan",
-          "05 Jan",
-          "06 Jan",
-          "07 Jan",
-          "08 Jan",
-          "09 Jan",
-          "10 Jan",
-          "11 Jan",
-          "12 Jan"
-        ]
-      },
-      tooltip: {
-        x: [
-          {
-            title: {
-              formatter: function(val:any) {
-                return val + " (mins)";
-              }
-            }
-          },
-          {
-            title: {
-              formatter: function(val:any) {
-                return val + " per session";
-              }
-            }
-          },
-          {
-            title: {
-              formatter: function(val:any) {
-                return val;
-              }
-            }
-          }
-        ]
-      },
-      grid: {
-        borderColor: "#f1f1f1"
-  }
-    };
-
-    this.FeesOptions = {
-      series: [44, 55, 67, 83],
-      feeChart: {
-        height: 350,
-        type: "radialBar"
-      },
-      plotOptions: {
-        radialBar: {
-          dataLabels: {
-            name: {
-              fontSize: "22px"
-            },
-            value: {
-              fontSize: "16px"
-            },
-            total: {
-              show: true,
-              label: "Total",
-              formatter: function(w:any) {
-                return "249";
-              }
-            }
-          }
-        }
-      },
-      labels: ["Apples", "Oranges", "Bananas", "Berries"]
-    };
-  }
+  @ViewChild('normalTestChart') normalTestChart!: ChartComponent | undefined;
+  public normalExamOption: Partial<NormalExamResult>;
 
   
+  @ViewChild('scheduleTestChart') scheduleTestChart!: ChartComponent | undefined;
+  public scheduleExamOption: Partial<ScheduleTestResult>;
+
+  assignmentBar: AssignmentChart = new AssignmentChart();
+  normalExamBar: NormalExamBar = new NormalExamBar();
+  scheduleExamBar: ScheduleExamBar = new ScheduleExamBar();
+
+
+  constructor(
+    private examService: ExamServiceService,
+    private studentService: StudentService
+  ) {
+    this.assignmentOption = this.assignmentBar.assignmentOption;
+    this.normalExamOption = this.normalExamBar.normalTestResult;
+    this.scheduleExamOption = this.scheduleExamBar.scheduleTestResult;
+  }
+
+  ngOnInit() {
+    this.getExamResult();
+  }
+
+  public getExamResult() {
+    this.studentService.student.subscribe((value) => {
+      this.examService.fetchExamCounting(value.id).subscribe((result:any)=>{
+      this.normalExamOption.series = [result.totalNormalCount,result.normalExamCount];
+      this.scheduleExamOption.series = [result.totalScheduleExamCount,result.scheduleExamCount];
+      });
+    });
+  }
 }
-

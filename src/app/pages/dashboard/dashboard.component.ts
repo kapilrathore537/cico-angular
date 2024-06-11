@@ -87,16 +87,16 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     this.getSubmitedAssignment();
     this.getdoAssignment()
     //Timer API
-    this.clock = interval(1000).pipe(
-      switchMap(() => this.studentService.getCurrentTime()),
-      map((response: any) => new Date(response.datetime))
-    );
+    // this.clock = interval(1000).pipe(
+    //   switchMap(() => this.studentService.getCurrentTime()),
+    //   map((response: any) => new Date(response.datetime))
+    // );
 
     //Timer API ---> get formattedDate
     const datePipe = new DatePipe('en-US');
-    this.clock.subscribe((date: Date) => {
-      this.formattedDate = datePipe.transform(date, 'EEEE, MMMM d');
-    });
+    // this.clock.subscribe((date: Date) => {
+    //   this.formattedDate = datePipe.transform(date, 'EEEE, MMMM d');
+    // });
 
     //Student Attendance API
     this.getStudentAttendance();

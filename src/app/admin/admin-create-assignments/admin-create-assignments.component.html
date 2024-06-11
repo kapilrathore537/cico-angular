@@ -230,10 +230,13 @@
                 <h3 class="admin-title font-17 font-600 secondary position-relative mb_20">Assignment Attechments</h3>
             </div>
 
+
+
             <div class="col-md-12" >
-                <form   (click)="triggerFileInput()"
+                <form   (click)="triggerFileInput($event)" class=" pointer"
                 [class]="!fileLoading?' button-hover attachment_file2 d-inline-flex align-items-center  position-relative mb-2 add-attechment pointer':' button-hover1 pointer attachment_file2 d-inline-flex align-items-center  position-relative mb-2 add-attechment '">
-                <input type="file" name="attachment" value="attachment" #attachment (change)="addAttachmentFile($event)"
+
+                <input type="file" name="attachment" value="attachment"   #attachment (change)="addAttachmentFile($event)"
                     class="d-none" id="attachment">
                 <label for="attachment" class="font-17 font-500 d-flex">
                     <div *ngIf="!fileLoading;else spinner">

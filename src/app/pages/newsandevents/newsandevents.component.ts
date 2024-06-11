@@ -3,7 +3,11 @@ import { Component, OnInit } from '@angular/core';
 import { an } from '@fullcalendar/core/internal-common';
 import { log } from 'console';
 import { NewsAndEvent } from 'src/app/entity/news-and-event';
+import { BatchResponse } from 'src/app/payload/batch-response';
+import { BatchesService } from 'src/app/service/batches.service';
+import { LoginService } from 'src/app/service/login.service';
 import { NewsEventServiceService } from 'src/app/service/news-event-service.service';
+import { StudentService } from 'src/app/service/student.service';
 import { UtilityServiceService } from 'src/app/service/utility-service.service';
 
 @Component({
@@ -13,17 +17,21 @@ import { UtilityServiceService } from 'src/app/service/utility-service.service';
 })
 export class NewsandeventsComponent implements OnInit {
 
+  batchResponse:BatchResponse = new BatchResponse();
+  courseName:string='';
   newsAndEvents: NewsAndEvent[] = [];
   news: NewsAndEvent[] = []
   totalNewsAndEvent: number = 0;
   currentDate: string | null | undefined;
   createdDate: any;
   dayAgoForChild: number = 0;
-  constructor(private newsAndEventService: NewsEventServiceService, public utilityService: UtilityServiceService) { }
+  constructor(private newsAndEventService: NewsEventServiceService, public utilityService: UtilityServiceService,private studentService:StudentService,private batchService:BatchesService) { }
 
 
   ngOnInit(): void {
     this.getAllNewsAndEvents(0, 8);
+    this.getUpcomingFirstStartBatch();
+    
   }
 
   public getAllNewsAndEvents(page: number, size: number) {
@@ -59,6 +67,15 @@ export class NewsandeventsComponent implements OnInit {
   }
   public parentTochild(dayAgo: number) {
 
+  }
+
+  public getUpcomingFirstStartBatch(){
+    this.studentService.student.subscribe(value => {
+      this.courseName = value.course;
+      this.batchService.getFirstUpcomingBatchByCourse(this.courseName).subscribe((data:any)=>{
+       this.batchResponse = data;
+      })
+    })
   }
 }
 

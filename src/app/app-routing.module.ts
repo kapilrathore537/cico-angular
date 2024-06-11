@@ -65,6 +65,7 @@ import { AdminDiscussionForumComponent } from './admin/admin-discussion-forum/ad
 import { AdminChapterResultComponent } from './admin/admin-chapter-result/admin-chapter-result.component';
 import { TestComponent } from './pages/test/test.component';
 import { StaticsComponent } from './pages/statics/statics.component';
+import { CodePlaygroundComponent } from './pages/code-playground/code-playground.component';
 
 
 
@@ -91,7 +92,8 @@ const routes: Routes = [
       { path: 'jobdescription/:id', component: JobDescriptionComponent, pathMatch: 'full' },
       { path: 'internshipsdescription/:id', component: InternshipsDescriptionComponent, pathMatch: 'full' },
       { path: 'test', component: TestComponent, pathMatch: 'full' },
-      { path: 'statics', component: StaticsComponent, pathMatch: 'full' }
+      { path: 'statics', component: StaticsComponent, pathMatch: 'full' },
+      { path: 'playground', component: CodePlaygroundComponent, pathMatch: 'full' }
     ]
   },
   { path: 'result', component: ResultComponent, pathMatch: 'full' },

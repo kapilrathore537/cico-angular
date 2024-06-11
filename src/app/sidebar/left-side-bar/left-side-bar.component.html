@@ -57,6 +57,12 @@
             check == 'test' ? 'icon-text dashboard' : 'icon-text'
           ">Test</span></a>
 
+          <a routerLink="/student/playground" [ngClass]="check == 'playground' ? 'active' : 'box-hover'"
+      (click)="getValueById(lsdv11.value)"><input #lsdv11 type="hidden" value="playground" /><img
+        src="assets/images/svg_img/New folder/Neutral-News.svg" class="material-icons" id="icon8" /><span [ngClass]="
+            check == 'playground' ? 'icon-text dashboard' : 'icon-text'
+          ">Code-playground</span></a>
+
   </div>
 
   <div class="side-navbar">
@@ -67,7 +73,7 @@
     <!-- <a
       routerLink="/student/taskAndAssignment"
       [ngClass]="check == 'setting' ? 'active' : 'box-hover'"
-      (click)="getValueById(lsdv10.value)" 
+      (click)="getValueById(lsdv10.value)"
       ><input #lsdv10 type="hidden" value="setting" /><img
         src="assets/images/svg_img/New folder/Neutral-Settings.svg"
         class="material-icons"

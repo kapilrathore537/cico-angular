@@ -19,49 +19,50 @@ import { WebsocketServiceDiscussionFormService } from 'src/app/service/websocket
 })
 
 export class ProfileBarComponent implements OnInit {
+
   profileData: Profile = new Profile();
   totalNotifications = 0;
+  role: string = '';
+  Coursestatus: boolean = false;
 
   constructor(private studentService: StudentService,
-    private utilityService: UtilityServiceService,
     private loginService: LoginService,
     private adminService: AdminServiceService,
     private announcementService: AnnouncementServiceService, private webSocketService: WebsocketServiceDiscussionFormService) {
   }
 
+
+
   ngOnInit(): void {
 
     if (this.loginService.getRole() == 'STUDENT') {
+      this.role = this.loginService.getRole();
       this.profileData = this.studentService.getStudentHeaderProfileData();
       this.getAllUnseenNotificationCount();
     } else if (this.loginService.getRole() == 'ADMIN') {
+      this.role = this.loginService.getRole();
       this.profileData = this.adminService.getAdminProfileData()
     }
     this.connect()
   }
-  // public connect() {
-  //   this.webSocketService.getMessages().subscribe((message) => {
-  //     if (message.type == 'announcement') {
-  //       this.totalNotifications += 1
-  //     }
-  //   });
-  // }
 
-  Coursestatus: boolean = false;
+
   public connect() {
-    this.webSocketService.getMessages().subscribe((message) => {
-      if (message.type == 'announcement') {
-        let newObject = new Announcement(message.title, message.message, message.date);
-        this.getStudentCourse(message.allCourse).then(() => {
-          if (this.Coursestatus) {
-            this.Coursestatus = false;
-            this.totalNotifications += 1
-          }
-        });
-      }else if(message.type=='reloadAnnouncement'){
-        this.getAllUnseenNotificationCount()
-      }
-    });
+    if (this.role == 'STUDENT') {
+      this.webSocketService.getMessages().subscribe((message) => {
+        if (message.type == 'announcement') {
+          let newObject = new Announcement(message.title, message.message, message.date, message.announcementId);
+          this.getStudentCourse(message.allCourse).then(() => {
+            if (this.Coursestatus) {
+              this.Coursestatus = false;
+              this.totalNotifications += 1
+            }
+          });
+        } else if (message.type == 'reloadAnnouncement') {
+          this.getAllUnseenNotificationCount()
+        }
+      });
+    }
   }
 
   public async getStudentCourse(course: number[]): Promise<void> {

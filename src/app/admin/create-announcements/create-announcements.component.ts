@@ -35,7 +35,7 @@ export class CreateAnnouncementsComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAllCourses();
-    this.connect()
+   // this.connect()
   }
 
   public getAllCourses() {
@@ -56,11 +56,15 @@ export class CreateAnnouncementsComponent implements OnInit {
        //   courses.push(e.courseId);
        // });
 
+       console.log('admin');
+     
+       
         let obj = {
           type: 'announcement',
           date: data.date,
           message: data.message,
           title: data.title,
+          announcementId: data.announcementId,
           allCourse: this.announcementRequest.courseId
         }
 
@@ -68,6 +72,8 @@ export class CreateAnnouncementsComponent implements OnInit {
           this.router.navigate(['/admin/announcements']);
         })
         this.sendMessage(obj);
+        console.log(obj);
+       
       },
       error: (err: any) => {
         this.isSubmit=false
@@ -76,11 +82,11 @@ export class CreateAnnouncementsComponent implements OnInit {
     })
   }
 
-  connect() {
-    this.websocketService.getMessages().subscribe((message) => {
+  // connect() {
+  //   this.websocketService.getMessages().subscribe((message) => {
 
-    });
-  }
+  //   });
+  // }
 
   public sendMessage(message: any) {
     this.websocketService.sendMessage(message);

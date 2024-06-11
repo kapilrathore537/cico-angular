@@ -42,9 +42,7 @@ export class AnnouncementServiceService {
   }
 
   public seenMassageByStudent(announcementId: number, studentId: number) {
-    return this.http.post(`${this.ANNOUNCEMENT_URL}/seenAnnouncement?announcementId=${announcementId}&studentId=${studentId}`, {
-      responseType: 'any'
-    })
+    return this.http.post(`${this.ANNOUNCEMENT_URL}/seenAnnouncement?announcementId=${announcementId}&studentId=${studentId}`, null);
   }
 
   public countUnseenNotificationForStudent(studentId: number) {

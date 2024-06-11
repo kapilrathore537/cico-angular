@@ -12,9 +12,14 @@
                 <h4 class="font-17 font-700 light-black mb-0 d-flex align-items-center pointer"  (click)="clickSubmitButton()" >Submit&nbsp;&nbsp;<i
                     class="fi fi-sr-arrow-right mx-2 ms-0 lh-0" ></i></h4>
             </div>
-            <div class="progressbar">
-                  <span [ngClass]="manageQuestionProgressBar(obj.questionId)?'prosesss complete':'prosesss'" *ngFor="let obj of questions"></span> 
+            <div class="progressbar pointer">
+                  <span class="active-arrow" [ngClass]="(manageQuestionProgressBar(obj.questionId)==answeredType.VIEWED?'prosesss not-answered':(manageQuestionProgressBar(obj.questionId)==answeredType.NOT_VIEWED?'prosesss ':'prosesss answered'))"   *ngFor="let obj of questions; index as i" #qu [id]="obj.questionId" (click)="openQuestionFromProgressBar(obj.questionId,i)" >
+                    <div *ngIf="qu.id==question.questionId+''" class="arrow-up"></div>
+                    
+
+                  </span> 
                   <!-- <span [ngClass]="'prosesss '" ></span> -->
+                
             </div>
             <div class="question_section">
                 <div class="d-flex justify-content-center align-items-center" *ngIf="question.questionImage!=null">
@@ -69,16 +74,16 @@
                 <div class="d-flex flex-column align-items-center">
                     <h4
                         class="marked_details d-flex justify-content-center align-items-center position-relative mb-0 font-15 font-700">
-                        {{questionAnswered}}</h4>
+                        {{questionNotAnswered}}</h4>
                     <h5 class="font-13 font-500 txt-dark mb-0 mt-3" >Marked</h5>
                 </div>
-                <div class="d-flex flex-column align-items-center">
+                <!-- <div class="d-flex flex-column align-items-center">
                     <h4
                         class="not_ans_details d-flex justify-content-center align-items-center position-relative mb-0 font-15 font-700">
                         {{questionNotAnswered}}</h4>
                     <h5 class="font-13 font-500 txt-dark mb-0 mt-3">Not Answered</h5>
             
-                </div>
+                </div> -->
 
                 <button type="button" class="next_btn font-17 font-500 txt-white" [disabled]="nextButton" (click)="nextQuestion(question.questionId)" >Next</button>
 

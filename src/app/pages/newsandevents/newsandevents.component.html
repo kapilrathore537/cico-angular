@@ -11,9 +11,9 @@
         <div class="top-content">
           <div class="row">
             <div class="col-md-6">
-              <h2 class="heading-1 font-600 text-light heading-2">Learn JAVA From Scratch</h2>
-              <h3 class="font-25 font-400 text-light heading-3">New Batch Starting<br class="d-none d-md-block">
-                From <span class="font-600">1st April</span></h3>
+              <h2 class="heading-1 font-600 text-light heading-2">Learn {{courseName}} From Scratch</h2>
+              <h3 class="font-25 font-400 text-light heading-3">New Batch {{batchResponse.batchName}} Starting<br class="d-none d-md-block">
+                From <span class="font-600">{{batchResponse.batchStartDate}}</span></h3>
               <button type="button" class="btn-1 font-17 font-600 mb-3">
                 Enroll Now
                 <i class="fi fi-rr-arrow-right mt-2 lh-0 ms-0"></i>
@@ -35,7 +35,6 @@
       (page)="onChangePage($event)">    
       </mat-paginator> 
       <div *ngIf="totalNewsAndEvent==null else elsepart1;"  class="news_events">
-        <h3 class="font-21 font-600 secondary position-relative" *ngIf="totalNewsAndEvent== 0"> NO NEWS AND EVENTS FOUND !!!</h3>
         <div class="row mt-3">
           <div class="col-md-3" *ngFor="let newsAndEvent of newsAndEvents">
             <a routerLink="/student/newandseventsdescription/{{newsAndEvent.id}}" (onclick)="parentTochild(newsAndEvent.dayAgo)">
@@ -55,8 +54,7 @@
     </div> 
     <ng-template #elsepart1>
       <div  class="gif_image_class">
-        <img class="text-not-found" src="../../../assets/images/temp_img/unavailable.png">
-        <img class="image_gif" src="../../../assets/images/temp_img/News.gif" >
+        <img class="image_gif" src="../../../assets/images/temp_img/news.gif" >
       </div>
     </ng-template>
   </div>  

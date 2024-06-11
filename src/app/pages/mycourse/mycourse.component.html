@@ -73,8 +73,7 @@
             <h3 class="title font-21 font-600 secondary position-relative">Upcoming Batches </h3>
             <div *ngIf="batches.length!==0 else elsepart1">
               <div class="all_summary mb-2" *ngFor="let batch of batches">
-                <div class="Batches d-flex align-items-center">
-                  <div class="">
+                <div class="Batches d-flex align-items-center batch_Card">
                     <div class="d-flex java">
                       <img style="height:60px;width:60px;" class="imageSize"
                       [src]="batch.subject.technologyStack.imageName">
@@ -85,7 +84,6 @@
                         <h2 class="font-16 font-00 text-black java java_heading2">Duration 90 Days</h2>
                         <h3 class="font-14 font-400 text-black mb-0">{{batch.batchStartDate}}</h3>
                       </div>
-                    </div>
                   </div>
                   <button class="btn-sm btn-info mx-3">
                     Enquiry Now
@@ -104,8 +102,7 @@
             <h3 class="title font-21 font-600 secondary position-relative">Other Courses</h3>
             <div *ngIf="courses.length!==0 else elsepart2">
               <div class="all_summary mb-2" *ngFor="let course of courses">
-                <div class="Batches d-flex align-items-center">
-                  <div class="">
+                <div class="Batches d-flex align-items-center batch_Card">
                     <div class="d-flex java">
                       <img style="height:60px;width:60px;" class="imageSize"
                         [src]="course.technologyStack.imageName">
@@ -115,7 +112,6 @@
                         <h3 class="font-14 font-400 text-black mb-0">{{course.sortDescription}}</h3>
                       </div>
                     </div>
-                  </div>
                   <button class="btn-sm  btn-info mx-3">
                     Enquiry Now
                   </button>

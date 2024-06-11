@@ -44,7 +44,7 @@
               </div>
 
             </div>
-            <h4  class="Requirement_text font-13 font-400">{{ showFullMessage && numberOfJob == (i+1) && jobId == obj.jobId ? obj.jobDescription : (obj.jobDescription | slice:0:50)+"..." }}<br><br><button *ngIf="obj.jobDescription.length>30" class="btn btn-sm btn-outline btn-custom" (click)="toggleShowMore(i+1,obj.jobId)">{{ showFullMessage && numberOfJob == (i+1) && jobId == obj.jobId? '  read less' : '  read more' }}</button></h4>
+            <h4  class="Requirement_text font-13 font-400">{{ showFullMessage && numberOfJob == (i+1) && jobId == obj.jobId ? obj.jobDescription : (obj.jobDescription | slice:0:35)+"..." }}<br><br><button *ngIf="obj.jobDescription.length>30" class="btn btn-sm btn-outline btn-custom" (click)="toggleShowMore(i+1,obj.jobId)">{{ showFullMessage && numberOfJob == (i+1) && jobId == obj.jobId? '  read less' : '  read more' }}</button></h4>
           </div>
 
       </div>
@@ -78,7 +78,7 @@
             </div>
 
           </div>
-          <h4 class="Requirement_text font-13 font-400">{{ showFullMessage && numberOfJob == (i+1) && jobId == obj.jobId ? obj.jobDescription : (obj.jobDescription | slice:0:50) +"..." }}</h4>
+          <h4 class="Requirement_text font-13 font-400">{{ showFullMessage && numberOfJob == (i+1) && jobId == obj.jobId ? obj.jobDescription : (obj.jobDescription | slice:0:35) +"..." }}</h4>
           <button *ngIf="obj.jobDescription.length>30" class="btn btn-sm btn-outline btn-custom" (click)="toggleShowMore(i+1,obj.jobId)">{{ showFullMessage && numberOfJob == (i+1) && jobId == obj.jobId? '  read less' : '  read more' }}</button>
         </div>
     </div>

@@ -58,7 +58,6 @@ export class AdminCreateNewJobComponent implements OnInit {
 
   createJob() {
     this.jobDetailsForm.markAllAsTouched();
-
     if (this.jobDetailsForm.valid && this.imageName != '') {
       this.isSubmit = true
 
@@ -126,5 +125,4 @@ export class AdminCreateNewJobComponent implements OnInit {
     });
 
   }
-
 }

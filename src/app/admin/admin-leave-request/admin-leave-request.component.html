@@ -16,10 +16,10 @@
                 <div class="attendance_dropdown d-flex justify-content-between align-items-center">
                     <h3 class="admin-title font-17 font-600 secondary position-relative">Student</h3>
                    <div class="right-side-dropdown-btn d-flex">
-                    <div class="student-search">
+                    <!-- <div class="student-search">
                         <input type="text" name="" id="" placeholder="Search" class="gray-input-bg">
-                    </div>
-                    <div class="dropdown">
+                    </div> -->
+                    <!-- <div class="dropdown">
                         <a class="attendance_dropdown1 dropdown-toggle font-15 font-500 dark" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                           Course
                         </a>
@@ -75,7 +75,7 @@
                             <li><a class="dropdown-item" href="#">November </a></li>
                             <li><a class="dropdown-item" href="#">December </a></li>
                           </ul>
-                        </div>
+                        </div> -->
                    </div>
                   </div>
                 <div class="table_container">
@@ -116,16 +116,13 @@
                         </tbody>
                     </table>
                 </div>
-                <nav aria-label="Page navigation example" class="table-pagination"  >
+                <nav aria-label="Page navigation example" class="table-pagination"  *ngIf="leavesRequestPageManager.totalElements>leavesRequestPageRequest.pageSize" >
                       
                     <ul class="pagination">
                         <li class="p-2  mx-2 ms-0 "><a class="fs-16 fw-500 secondary "  [ngClass]="leavesRequestPageManager.first?'theading ':' cur-point'"  (click)="leavesRequestManageNextPrev(false)">Previous</a></li>
                         <li class="page-item cur-point" *ngFor="let b of leavesRequestPageManager.showButtons ;"  (click)="leavestRequestPageGet(b-1)"><a class="page-link text_orange " [ngClass]="leavesRequestPageRequest.pageNumber==b-1?'active':''" id="{{b}}" href="javascript:void(0)">{{b}}</a>
                         </li>
-                        <!-- <li class="page-item "><a class="page-link" >2</a></li>
-                        <li class="page-item "><a class="page-link" >3</a></li>
-                        <li class="page-item "><a class="page-link" >4</a></li>
-                        <li class="page-item "><a class="page-link" >5</a></li> -->
+                      
                         <li class="p-2  mx-0 ms-2"><a class="fs-16 fw-500 secondary"  [ngClass]="leavesRequestPageManager.last?'theading':' cur-point'"   (click)="leavesRequestManageNextPrev(true)">Next</a></li>
                     </ul>
                 </nav>
@@ -136,7 +133,7 @@
     <!-- DASHBOARD END -->
 
     <!-- RIGHT SIDE START-->
-    <app-right-side-bar></app-right-side-bar>
+    <!-- <app-right-side-bar></app-right-side-bar> -->
     <!-- RIGHT SIDE END -->
 
 

@@ -2,16 +2,19 @@ export class AssignmentChart{
     assignmentOption = {
         series: [
             {
-              name: "Net Profit",
-              data: [44, 55, 57, 56, 61, 58,]
+              name: "Total Assignment",
+              data: [44, 55, 57, 56, 61, 58,],
+              color:'#00008B'
             },
             {
-              name: "Revenue",
-              data: [76, 85, 101, 98, 87, 105,]
+              name: "Accepted",
+              data: [76, 85, 101, 98, 87, 105,],
+              color:'#17A40A'
             },
             {
-              name: "Free Cash Flow",
-              data: [35, 41, 36, 26, 45, 48]
+              name: "Rejected",
+              data: [35, 41, 36, 26, 45, 48],
+              color:'#DC0707'
             }
           ],
           chart: {
@@ -33,8 +36,8 @@ export class AssignmentChart{
           },
           stroke: {
             show: true,
-            width: 5,
-            colors: ["transparent"]
+            width: 1,
+            colors: ["#000"],
           },
           xaxis: {
             categories: [
@@ -50,12 +53,13 @@ export class AssignmentChart{
             show: false 
           },
           fill: {
-            opacity: 1
+            opacity: 1,
+            colors:["#00008B", "#17A40A", "#DC0707"]
           },
           tooltip: {
             y: {
               formatter: function(val:any) {
-                return "$ " + val + " thousands";
+                return  val ;
               }
             }
           }

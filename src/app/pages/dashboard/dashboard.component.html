@@ -73,8 +73,8 @@
         <!-- <h6 *ngIf="toDoAssignment==null">{{message}}</h6>
         -->
         <div class="col-md-4">
-
-          <div *ngIf="tasks.length!=0 else elsepart4">
+          <h3 class="title font-17 font-500 secondary position-relative">Tasks</h3>
+          <div *ngIf="tasks.length!==0 else elsepart4">
             <app-shared-task [tasks]="tasks" [taskIndexing]="taskIndexing" (eventEmit)="getAllData($event)"
               [type]="'task'" [paginationManager]="TaskpageManager" [pageRequest]="TaskPageRequest"></app-shared-task>
           </div>

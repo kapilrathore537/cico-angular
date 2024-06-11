@@ -49,47 +49,14 @@
     
                     </div> <!-- subject_card -->
                 </div>
+            </div>
             <ng-template #elsepart1>
                 <div class="gif_image_class1">
                   <img  class="image_gif1" src="../../../assets/images/temp_img/courses-not-available.gif">
                 </div>
             </ng-template>
-
-        </div>
     </div>
 
-    <div class="scroll_sec mt-0">
-        <div class="row" *ngIf="subjects.length!==0 else elsepart1">
-            <div class="col-md-3 bootstrap_cards" *ngFor="let subject of subjects;let i =index">
-                <div class="admin-subject_card">
-                    <div class="admin-subject_card_top">
-                        <div class="admin-subject_name_card">
-                            <div class="admin-sub-left">
-                                <div class="admin-subject-image">
-                                    <img [src]="subject.technologyStack.imageName">
-                                </div>
-                                <div class="subject-details">
-                                    <h3 class="subject_heading txt-dark mb-0">{{ subject.subjectName }}</h3>
-                                    <p class="chapter-cout mb-0">{{subject.chapterCount!=0?subject.chapterCount:0}}
-                                        Chapters</p>
-                                </div>
-                            </div>
-                        </div>
-                        <app-drop-down-delete-add-update [deleteModalId]="'#delete-modal'"
-                            [editModalId]="'#subject-edit-modal'" [path]="'/admin/subjectchapter/'"
-                            [params]="{subjectId:subject.subjectId}" [id]="subject.subjectId" [index]="i"
-                            (onClick)="onClick($event)"></app-drop-down-delete-add-update>
-                    </div><!-- subject_card_top -->
-
-                </div> <!-- subject_card -->
-            </div>
-        </div>
-        <ng-template #elsepart1>
-            <div class="gif_image_class">
-                <img class="image_gif" src="../../../assets/images/temp_img/no-subjects.gif">
-            </div>
-        </ng-template>
-    </div>
     <!-- DASHBOARD END -->
 
     <!-- RIGHT SIDE START-->

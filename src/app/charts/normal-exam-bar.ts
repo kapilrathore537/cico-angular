@@ -8,7 +8,7 @@ export class NormalExamBar{
                 show: false // Hide the default toolbar
               }
             },
-            colors: ["#1f77b4","#2ca02c"],
+            colors: ["#00008B","#17A40A"],
       
             labels: ["Total Test","Test Completed"],
             legend: {
@@ -44,7 +44,7 @@ export class ScheduleExamBar{
                 show: false // Hide the default toolbar
               }
             },
-            colors: ["#1f77b4","#2ca02c"],
+            colors: ["#00008B","#17A40A"],
       
             labels: ["Total Schedule Test","Schedule Test Completed"],
             legend: {

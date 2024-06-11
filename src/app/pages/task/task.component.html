@@ -7,27 +7,24 @@
   <div class="scroll_section">
     <div class="task_assignment mt-0">
       <div class="row">
-        <div class="col-md-6 mb-4"  >
+        <div class="col-md-6 mb-4">
           <h3 class="title font-17 font-500 secondary position-relative">Tasks</h3>
           <div *ngIf="tasks.length!==0 else elsepart1;">
-              <app-shared-task [tasks]="tasks" [taskIndexing]="taskIndexing"  (eventEmit)="getAllData($event)" [type]="'task'" [paginationManager]="TaskpageManager"
-              [pageRequest]="TaskPageRequest"></app-shared-task>
-             </div>
-            <ng-template #elsepart1>
-              <div  class="gif_image_class">
-               <img  class="image_gif" src="../../../assets/images/temp_img/No data (2).gif">
-              </div>
-              </ng-template >
+            <app-shared-task [tasks]="tasks" [taskIndexing]="taskIndexing" (eventEmit)="getAllData($event)"
+              [type]="'task'" [paginationManager]="TaskpageManager" [pageRequest]="TaskPageRequest"></app-shared-task>
           </div>
-        
+          <ng-template #elsepart1>
+            <div class="gif_image_class1">
+              <img class="image_gif" src="../../../assets/images/temp_img/No data (2).gif">
+            </div>
+          </ng-template>
+        </div>
+
         <!-- ASSIGNMENT ACCORDION  END-->
 
         <div class="col-md-6">
           <div class="assignment-updates-top">
             <h3 class="title font-17 font-500 secondary position-relative">Updates</h3>
-
-          
-            
             <div class="top-status-month d-flex gap-3">
               <div class="dropdown">
                 <a class="attendance_dropdown1 dropdown-toggle font-15 font-500 dark" id="status1" role="button"
@@ -46,21 +43,20 @@
             </div>
           </div>
           <div class="all_summary assignment-updates">
-          <div *ngIf="taskSubmissionList2.length!=0 else elsepart2">
-
-            <app-task-and-assignment-submission   [submission]="taskSubmissionList2" [title]="'Task'"  [paginationManager]="submissioTaskpageManager" (eventEmit)="getAllData($event)"
-            [type]="'taskSubmission'" [pageRequest]="submissioTaskPageRequest"></app-task-and-assignment-submission>
-         
-          </div>
-            <ng-template #elsepart2>
-              <div  class="gif_image_class1">
-               <img  class="image_gif" src="../../../assets/images/temp_img/No data (2).gif">
-              </div>
-              </ng-template >
-          </div>
+            <div *ngIf="taskSubmissionList2.length!==0 else elsepart2">
+              <app-task-and-assignment-submission [submission]="taskSubmissionList2" [title]="'Task'"
+                [paginationManager]="submissioTaskpageManager" (eventEmit)="getAllData($event)"
+                [type]="'taskSubmission'" [pageRequest]="submissioTaskPageRequest"></app-task-and-assignment-submission>
+            </div>
+          <ng-template #elsepart2>
+            <div class="gif_image_class1">
+              <img class="image_gif" src="../../../assets/images/temp_img/No data (2).gif">
+            </div>
+          </ng-template>
+        </div>
           <!-- <app-pagination *ngIf="submissioTaskpageManager.totalElements>submissioTaskPageRequest.pageSize"  [paginationManager]="submissioTaskpageManager" (eventEmit)="getAllData($event)"
             [type]="'taskSubmission'" [pageRequest]="submissioTaskPageRequest"></app-pagination> -->
-         
+
         </div>
       </div>
     </div>
@@ -117,6 +113,6 @@
       </div>
     </div>
   </div>
-</div>  
+</div>
 <app-right-side-bar></app-right-side-bar>
 <!-- end dashboard updates modal -->

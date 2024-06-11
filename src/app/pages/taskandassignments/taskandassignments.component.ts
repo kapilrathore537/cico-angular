@@ -47,6 +47,8 @@ export class TaskandassignmentsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log(this.unLockAssignment!==undefined);
+    
     this.getSubmitedAssignment();
     this.getAllAssignments();
   }

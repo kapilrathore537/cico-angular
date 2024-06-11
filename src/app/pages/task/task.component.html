@@ -8,13 +8,14 @@
     <div class="task_assignment mt-0">
       <div class="row">
         <div class="col-md-6 mb-4"  >
-             <div *ngIf="tasks.length!=0 else elsepart1;">
+          <h3 class="title font-17 font-500 secondary position-relative">Tasks</h3>
+          <div *ngIf="tasks.length!==0 else elsepart1;">
               <app-shared-task [tasks]="tasks" [taskIndexing]="taskIndexing"  (eventEmit)="getAllData($event)" [type]="'task'" [paginationManager]="TaskpageManager"
               [pageRequest]="TaskPageRequest"></app-shared-task>
              </div>
             <ng-template #elsepart1>
               <div  class="gif_image_class">
-               <img  class="image_gif" style="margin-left: 50px;height: 200px; width: 200px;" src="../../../assets/images/temp_img/No data (2).gif">
+               <img  class="image_gif" src="../../../assets/images/temp_img/No data (2).gif">
               </div>
               </ng-template >
           </div>
@@ -53,7 +54,7 @@
           </div>
             <ng-template #elsepart2>
               <div  class="gif_image_class1">
-               <img  class="image_gif" style="margin-left: 50px;height: 200px; width: 200px;" src="../../../assets/images/temp_img/No data (2).gif">
+               <img  class="image_gif" src="../../../assets/images/temp_img/No data (2).gif">
               </div>
               </ng-template >
           </div>

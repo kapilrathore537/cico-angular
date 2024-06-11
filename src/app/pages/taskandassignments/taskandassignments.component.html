@@ -46,15 +46,18 @@
             <app-task-and-assignment-submission
             [submission]="assignmentSubmissionsList"  [title]="'Assignment'" [paginationManager]="assignmentSubmissionPagination" (eventEmit)="getAllData($event)"
             [type]="'AssignmentSubmission'" [pageRequest]="assignmentSubmissionPageRequest"></app-task-and-assignment-submission>
-           </div>
-            <!-- <app-pagination  *ngIf="assignmentSubmissionPagination.totalElements>assignmentSubmissionPageRequest.pageSize" [paginationManager]="assignmentSubmissionPagination" (eventEmit)="getAllData($event)"
-              [type]="'AssignmentSubmission'" [pageRequest]="assignmentSubmissionPageRequest"></app-pagination> -->
-              <ng-template #elsepart2>
-                <div  class="gif_image_class1">
-                 <img  class="image_gif" style="margin-left: 50px;height: 200px; width: 200px;" src="../../../assets/images/temp_img/No data (2).gif">
-                </div>
-                </ng-template >
+          </div>
+          <!-- <app-pagination  *ngIf="assignmentSubmissionPagination.totalElements>assignmentSubmissionPageRequest.pageSize" [paginationManager]="assignmentSubmissionPagination" (eventEmit)="getAllData($event)"
+            [type]="'AssignmentSubmission'" [pageRequest]="assignmentSubmissionPageRequest"></app-pagination> -->
             
+            <ng-template #elsepart2>
+              <div  class="gif_image_class1">
+               <img  class="image_gif" src="../../../assets/images/temp_img/No data (2).gif">
+              </div>
+              </ng-template >
+
+           </div>
+
             </div>
         </div>
       </div>

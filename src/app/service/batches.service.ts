@@ -16,8 +16,8 @@ export class BatchesService {
     return this.http.post(`${this.batchUrl}/createBatch`,batch);
   }
 
-  public getAllBatch(studentId:number){
-    return this.http.get(`${this.batchUrl}/getAllBatches?studentId=${studentId}`);
+  public getUpcomingBatch(){
+    return this.http.get(`${this.batchUrl}/getUpcomingBatches`);
   }
 
   getBatchById(id: number) {
@@ -30,5 +30,9 @@ export class BatchesService {
 
   public deletBatch(id: number) {
     return this.http.put(`${this.batchUrl}/deleteBatch/${id}`,{});
+  }
+
+  public getFirstUpcomingBatchByCourse(course:string){
+    return this.http.get(`${this.batchUrl}/firstUpcomingBatchOfCurrentCourse/`+course);
   }
 }

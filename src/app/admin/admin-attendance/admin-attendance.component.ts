@@ -221,10 +221,6 @@ export class AdminAttendanceComponent {
     this.currentMonth = moment(monthNum, "MM").format("MMMM");
     this.studentService.getMonthWiseAttendanceData(monthNum).subscribe({
       next: (data: any) => {
-        // this.leaveWidth = data.OnLeave
-        // this.absentWidth = data.Absent
-        // this.presentWidth = data.Present
-        console.log(data);
         this.manageStrackedBar(data.Absent, data.Present, data.OnLeave);
       }
     })

@@ -3,12 +3,13 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { JobAlert } from '../entity/job-alert';
 import { UtilityServiceService } from './utility-service.service';
 import { Observable } from 'rxjs';
-import { an } from '@fullcalendar/core/internal-common';
 import { JobAlertRequest } from '../payload/job-alert-request';
 @Injectable({
   providedIn: 'root'
 })
 export class JobAlertService {
+
+
   BASE_URL = this.utilityService.getBaseUrl();
   jobUrl = this.BASE_URL + '/job';
 
@@ -29,8 +30,8 @@ export class JobAlertService {
     return this.http.post<JobAlert>(`${this.jobUrl}/createJobApi`, formData)
   }
   getInternShipJobs(page: number, size: number) {
-    console.log("temp")
-    return this.http.get<JobAlert[]>(`${this.jobUrl}/getAllJobsApi?type=INTERN&page=${page}&size=${size}`)
+
+    return this.http.get<JobAlert[]>(`${this.jobUrl}/getAllJobsApi?type=INTERNSHIP&page=${page}&size=${size}`)
   }
   getAllJobs(page: Number, size: number) {
     var formData = new FormData();
@@ -54,18 +55,15 @@ export class JobAlertService {
   searchJobs(data: any, role: string) {
     let params = new HttpParams()
     params = params.append('field', data)
-    if (role == "student") {
-      params = params.append("role", "student")
-    }
-    if (role == "admin") {
-      params = params.append("role", "admin")
-    }
+    params = params.append("role", role == "admin" ? "admin" : "student")
+
+
     return this.http.get<JobAlert[]>(`${this.jobUrl}/searchJobApi`, { params })
   }
 
-  updateJobs(jobAlert:JobAlert){
-   
-    
-    return this.http.put(`${this.jobUrl}/updateAlertJobApi`,jobAlert);
+  updateJobs(jobAlert: JobAlert) {
+
+
+    return this.http.put(`${this.jobUrl}/updateAlertJobApi`, jobAlert);
   }
 }

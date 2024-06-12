@@ -29,7 +29,6 @@ export class JobAlertService {
     return this.http.post<JobAlert>(`${this.jobUrl}/createJobApi`, formData)
   }
   getInternShipJobs(page: number, size: number) {
-    console.log("temp")
     return this.http.get<JobAlert[]>(`${this.jobUrl}/getAllJobsApi?type=INTERNSHIP&page=${page}&size=${size}`)
   }
   getAllJobs(page: Number, size: number) {

@@ -47,6 +47,174 @@
   <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
   <link href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css" rel="stylesheet">
 
+<!-- w3script -->
+ 
+
+  <style>
+  
+  #container {
+    background-color:#E7E9EB;
+    width:95%;
+    overflow:auto;
+    position:absolute;
+    top:144px;
+  
+    bottom:0;
+    height:70%;
+  }
+
+
+  #textareacontainer, #iframecontainer {
+    float:left;
+    height:100%;
+    width:50%;
+  }
+  
+  #textarea, #textarea2, #iframe {
+    height:100%;
+    width:100%;
+    padding-bottom:10px;
+    padding-top:1px;
+  }
+  #textarea {
+    padding-left:10px;
+    padding-right:5px;  
+  }
+  #iframe {
+    padding-left:5px;
+    padding-right:10px;  
+    position:relative;  
+      
+      color:#ffffff;
+      font-family: consolas,"courier new",monospace;    
+    
+  }
+  #textareawrapper {
+    width:100%;
+    height:100%;
+    
+    overflow:auto;
+    
+    background-color: #ffffff;
+    position:relative;
+    
+      box-shadow:0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    
+  }
+  #iframewrapper {
+    width:100%;
+    height:100%;
+    -webkit-overflow-scrolling: touch;
+    background-color: #ffffff;
+    
+      box-shadow:0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    
+      color:#ffffff;
+      font-family: consolas,"courier new",monospace;  
+    
+  }
+  #textareaCode, #textareaCode2 {
+    background-color: #ffffff;
+    font-family: consolas,Menlo,"courier new",monospace;
+    font-size:15px;
+    height:100%;
+    width:100%;
+    padding:8px;
+    resize: none;
+    border:none;
+    line-height:normal;    
+  }
+  #iframeResult, #iframeSource {
+    background-color: #ffffff;
+    
+      background-color: #000000;
+      color:#ffffff;
+      font-family: consolas,"courier new",monospace!important;      
+      padding:8px;    
+    
+    
+    height:100%;
+    width:100%;  
+  }
+  
+    #iframeResult * {
+      font-family: consolas,"courier new",monospace!important;  
+    }
+  
+  
+  #runbtn {
+    background-color:#20c4d0;
+    color:white;
+    font-family: 'Source Sans Pro', sans-serif;
+    font-size:18px;
+    padding:6px 25px;
+    margin-top:4px;
+    border-radius:5px;
+    word-spacing:10px;
+  }
+  #runbtn:hover {
+    background-color: #1ecad6 !important;
+    color:white!important;
+  }
+  
+  @media screen and (max-width: 727px) {
+    .trytopnav {top:70px;}
+    #container {top:116px;}
+    #breadcrumb {display:none;}
+    #tryhome  {display:block;}
+  }
+  @media screen and (max-width: 467px) {
+    .trytopnav {top:60px;}
+    #container {top:106px;}
+    .w3-dropdown-content {width:100%}
+  }
+  @media only screen and (max-device-width: 768px) {
+    #iframewrapper {overflow: auto;}
+    #container     {min-width:310px;}
+    .stack         {display:none;}
+    #tryhome       {display:block;}
+    .trytopnav     {min-width:310px;}  
+  }
+  
+    #runloadercontainer{
+      display:none;
+      position:absolute;
+      background-color:#000;
+      z-index:9;
+    }
+    #runloader{
+      margin:auto;
+      border: 10px solid #333333;
+      border-top: 10px solid #0e96b7;
+      border-radius: 50%;
+      max-width: 70px;
+      max-height: 70px;
+      animation: spin 2s linear infinite;
+      position:relative;
+    }
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+  
+  
+  
+  .tabitem.tabselected{
+    opacity:1;
+  }
+
+  </style>
+  <script type="text/javascript" async="" src="//cdn.snigelweb.com/prebid/8.26.0/prebid.js?v=10771-1718095669984"></script><script type="text/javascript" async="" src="//c.amazon-adsystem.com/aax2/apstag.js"></script><script type="text/javascript" async="" src="//securepubads.g.doubleclick.net/tag/js/gpt.js"></script><script type="text/javascript" async="" src="//adengine.snigelweb.com/w3schools.com/10771-1718095669984/adngin.js"></script><script type="text/javascript" async="" src="//cdn.snigelweb.com/argus/argus.js"></script><script type="text/javascript" async="" src="https://cdnx.snigelweb.com/315b44bc-10e5-45a8-8f58-064d6e7317c0.js"></script><meta http-equiv="origin-trial" content="AlK2UR5SkAlj8jjdEc9p3F3xuFYlF6LYjAML3EOqw1g26eCwWPjdmecULvBH5MVPoqKYrOfPhYVL71xAXI1IBQoAAAB8eyJvcmlnaW4iOiJodHRwczovL2RvdWJsZWNsaWNrLm5ldDo0NDMiLCJmZWF0dXJlIjoiV2ViVmlld1hSZXF1ZXN0ZWRXaXRoRGVwcmVjYXRpb24iLCJleHBpcnkiOjE3NTgwNjcxOTksImlzU3ViZG9tYWluIjp0cnVlfQ=="><meta http-equiv="origin-trial" content="Amm8/NmvvQfhwCib6I7ZsmUxiSCfOxWxHayJwyU1r3gRIItzr7bNQid6O8ZYaE1GSQTa69WwhPC9flq/oYkRBwsAAACCeyJvcmlnaW4iOiJodHRwczovL2dvb2dsZXN5bmRpY2F0aW9uLmNvbTo0NDMiLCJmZWF0dXJlIjoiV2ViVmlld1hSZXF1ZXN0ZWRXaXRoRGVwcmVjYXRpb24iLCJleHBpcnkiOjE3NTgwNjcxOTksImlzU3ViZG9tYWluIjp0cnVlfQ=="><meta http-equiv="origin-trial" content="A/ERL66fN363FkXxgDc6F1+ucRUkAhjEca9W3la6xaLnD2Y1lABsqmdaJmPNaUKPKVBRpyMKEhXYl7rSvrQw+AkAAACNeyJvcmlnaW4iOiJodHRwczovL2RvdWJsZWNsaWNrLm5ldDo0NDMiLCJmZWF0dXJlIjoiRmxlZGdlQmlkZGluZ0FuZEF1Y3Rpb25TZXJ2ZXIiLCJleHBpcnkiOjE3MTkzNTk5OTksImlzU3ViZG9tYWluIjp0cnVlLCJpc1RoaXJkUGFydHkiOnRydWV9"><meta http-equiv="origin-trial" content="A6OdGH3fVf4eKRDbXb4thXA4InNqDJDRhZ8U533U/roYjp4Yau0T3YSuc63vmAs/8ga1cD0E3A7LEq6AXk1uXgsAAACTeyJvcmlnaW4iOiJodHRwczovL2dvb2dsZXN5bmRpY2F0aW9uLmNvbTo0NDMiLCJmZWF0dXJlIjoiRmxlZGdlQmlkZGluZ0FuZEF1Y3Rpb25TZXJ2ZXIiLCJleHBpcnkiOjE3MTkzNTk5OTksImlzU3ViZG9tYWluIjp0cnVlLCJpc1RoaXJkUGFydHkiOnRydWV9"><script src="https://securepubads.g.doubleclick.net/pagead/managed/js/gpt/m202406060101/pubads_impl.js" async=""></script><argprec0></argprec0><argprec1></argprec1><style type="text/css">.snigel-cmp-framework .sn-inner {background-color:#fffefe!important;}.snigel-cmp-framework .sn-b-def {border-color:#04aa6d!important;color:#04aa6d!important;}.snigel-cmp-framework .sn-b-def.sn-blue {color:#ffffff!important;background-color:#04aa6d!important;border-color:#04aa6d!important;}.snigel-cmp-framework .sn-selector ul li {color:#04aa6d!important;}.snigel-cmp-framework .sn-selector ul li:after {background-color:#04aa6d!important;}.snigel-cmp-framework .sn-footer-tab .sn-privacy a {color:#04aa6d!important;}.snigel-cmp-framework .sn-arrow:after,.snigel-cmp-framework .sn-arrow:before {background-color:#04aa6d!important;}.snigel-cmp-framework .sn-switch input:checked + span::before {background-color:#04aa6d!important;}#adconsent-usp-link {border: 1px solid #04aa6d!important;color:#04aa6d!important;}#adconsent-usp-banner-optout input:checked + .adconsent-usp-slider {background-color:#04aa6d!important;}#adconsent-usp-banner-btn {color:#ffffff;border: solid 1px #04aa6d!important;background-color:#04aa6d!important; }</style><style type="text/css">.sn_ad_label{height:unset !important}</style><script src="https://config.aps.amazon-adsystem.com/configs/3927" type="text/javascript" async="async"></script><script src="//secure.cdn.fastclick.net/js/pubcid/latest/pubcid.min.js"></script><script src="//cdn.id5-sync.com/api/1.0/id5-api.js"></script><script esp-signal="true" src="https://cdn.id5-sync.com/api/1.0/esp.js"></script>
+
+
+
+
+
+
+
+
+
+
   <style>
     .main-inner {
       display: flex;

@@ -135,6 +135,21 @@ export class StaticsComponent {
   }
     };
 
+      const documentDefinition: TDocumentDefinitions = {
+        content: [
+          contentArray,
+          horizontalLine,
+          { image: imgData, width: 500, marginTop: 50 }, // Image
+        ],
+      };
+
+    // Create and download the PDF with the specified file name
+    const pdfFileName = `Result & Statistics.pdf`;
+    pdfMake.createPdf(documentDefinition).download(pdfFileName);
+    document.getElementById('pdf')!.hidden = false;
+
+    });
+
     this.FeesOptions = {
       series: [44, 55, 67, 83],
       feeChart: {
@@ -162,6 +177,7 @@ export class StaticsComponent {
       },
       labels: ["Apples", "Oranges", "Bananas", "Berries"]
     };
+
   }
 
   

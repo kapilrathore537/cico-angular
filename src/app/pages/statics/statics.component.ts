@@ -121,6 +121,10 @@ export class StaticsComponent {
       Name: this.student.name,
       Course: this.student.course,
     };
+   // Calculate the current date and time
+   const today = new Date();
+   const formattedDate = today.toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' });
+   const formattedTime = today.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' });
 
     // Create an array to hold content elements
     const contentArray: Content[] = [];
@@ -172,6 +176,12 @@ export class StaticsComponent {
       };
 
       const documentDefinition: TDocumentDefinitions = {
+        header: {
+          columns: [
+              { text: '' },
+              { text: `${formattedDate} ${formattedTime}`, alignment: 'right', margin: [0, 10, 10, 0] }
+          ]
+      },
         content: [
           contentArray,
           horizontalLine,

@@ -71,8 +71,8 @@ export class AdminSubjectsChapterQuizComponent {
         }
       }
     )
-  }
 
+  }
   handleImageInput(event: any) {
     this.question.questionImage = event.target.files[0];
   }
@@ -81,7 +81,7 @@ export class AdminSubjectsChapterQuizComponent {
     this.chapterService.getChapterExamQuestions(this.chapterId).subscribe(
       {
         next: (data: any) => {
-          this.questions = data.questions ? data.questions : [];
+          this.questions = data.questions;
           this.activeStatus = data.isActive;
         },
         error: (er) => {
@@ -183,10 +183,10 @@ export class AdminSubjectsChapterQuizComponent {
 
   activeStatus: boolean = false
 
-  title1: string = 'Do you really want to activate the exam? The exam cannot be deactivated once it has started.'
-  title2: string = 'You can inactivate once there are no submissions or no one has started the exam.'
+  title1:string='Do you really want to activate the exam? The exam cannot be deactivated once it has started.'
+  title2:string='You can inactivate once there are no submissions or no one has started the exam.'
   beforeToggle(event: Event) {
-    let proceed = confirm(!this.activeStatus ? this.title1 : this.title2);
+    let proceed = confirm(!this.activeStatus?this.title1:this.title2);
     if (proceed) {
       proceed = this.activateExam()
       if (!proceed) {

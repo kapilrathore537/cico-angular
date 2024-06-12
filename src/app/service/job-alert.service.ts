@@ -30,11 +30,11 @@ export class JobAlertService {
   }
   getInternShipJobs(page: number, size: number) {
     console.log("temp")
-    return this.http.get<JobAlert[]>(`${this.jobUrl}/getAllJobsApi?type=INTERNSHIP&page=${page}&size=${size}`)
+    return this.http.get<JobAlert[]>(`${this.jobUrl}/getAllJobsApi?type=INTERN&page=${page}&size=${size}`)
   }
   getAllJobs(page: Number, size: number) {
     var formData = new FormData();
-    formData.append('type', "JOB")
+    formData.append('type', "Jobs")
     return this.http.get<JobAlert[]>(`${this.jobUrl}/getAllJobsApi?type=JOB&page=${page}&size=${size}`)
   }
   getAllJobsAndIntership(page: Number, size: number) {
@@ -54,14 +54,18 @@ export class JobAlertService {
   searchJobs(data: any, role: string) {
     let params = new HttpParams()
     params = params.append('field', data)
-    params = params.append("role", role == "admin" ? "admin" : "student")
-
+    if (role == "student") {
+      params = params.append("role", "student")
+    }
+    if (role == "admin") {
+      params = params.append("role", "admin")
+    }
     return this.http.get<JobAlert[]>(`${this.jobUrl}/searchJobApi`, { params })
   }
 
-  updateJobs(jobAlert: JobAlert) {
-
-
-    return this.http.put(`${this.jobUrl}/updateAlertJobApi`, jobAlert);
+  updateJobs(jobAlert:JobAlert){
+   
+    
+    return this.http.put(`${this.jobUrl}/updateAlertJobApi`,jobAlert);
   }
 }

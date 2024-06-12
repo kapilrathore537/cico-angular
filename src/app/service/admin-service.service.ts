@@ -29,7 +29,7 @@ export class AdminServiceService {
           this.profileData.profilePic = data.profilePic;
           this.profileData.adminId = data.adminEmail;
           this.profileData.role =this.loginService.getRole();
-         // console.log(this.profileData)
+          console.log(this.profileData)
         }, (error) => {
           console.log(error);
         }

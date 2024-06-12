@@ -6,8 +6,12 @@
       </div>
     <div class="scroll_sec mt-0">
 
+        <h3 _ngcontent-ghv-c53="" class="admin-title font-17 font-600 secondary position-relative">Test</h3>
         <div class="subject-test">
+<<<<<<< HEAD
             <h3 _ngcontent-ghv-c53="" class="admin-title font-17 font-600 secondary position-relative">Test</h3>
+=======
+>>>>>>> 24e0293c0d372d82240d32d6e6d65b107f0d5d50
             <div class="row mt-4">
                     <div class="col-md-4 mb-4 " *ngFor="let obj of normalExam">
                         <div class="test_card">
@@ -40,6 +44,7 @@
                                 </div>
                             </div>
                         </div>
+<<<<<<< HEAD
                     </div>
                   </div>
                     <img  *ngIf="normalExam.length==0 " class="image_gif" src="../../../assets/images/temp_img/no-test-available.gif">
@@ -57,6 +62,15 @@
                 <div *ngIf="scheduleExam.length!==0; else elsepart2">
                 
                 <div class="col-md-4 mb-4" *ngFor="let obj of scheduleExam;let i =index">
+=======
+                </div>
+                    <img  *ngIf="normalExam.length===0" class="image_gif" src="../../../assets/images/temp_img/no-test-available.gif">
+            </div>
+    
+        <h3 _ngcontent-ghv-c53="" class="admin-title font-17 font-600 secondary position-relative">Schedule Test</h3>
+        <div class="row mt-4">
+                    <div class="col-md-4 mb-4" *ngFor="let obj of scheduleExam;let i =index">
+>>>>>>> 24e0293c0d372d82240d32d6e6d65b107f0d5d50
                         <div class="test_card">
                             <div class="d-flex justify-content-between align-items-center mb_12">
                                 <div class="d-flex align-items-center gap_12">
@@ -95,6 +109,7 @@
                                 </div>
                             </div>
                         </div>
+<<<<<<< HEAD
                     </div>
               
               
@@ -104,5 +119,10 @@
                 </ng-template>
             </div>
            
+=======
+                </div>
+                    <img *ngIf="scheduleExam.length===0"  class="image_gif" src="../../../assets/images/temp_img/no-test-shedule.gif">
+            </div>
+>>>>>>> 24e0293c0d372d82240d32d6e6d65b107f0d5d50
     </div>
 </div>

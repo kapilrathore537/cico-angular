@@ -24,6 +24,7 @@ import { Content, TDocumentDefinitions } from 'pdfmake/interfaces';
 import { Profile } from 'src/app/entity/profile';
 import { profile } from 'console';
 
+
 (pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
 
 export type AssignmentOption = {
@@ -182,7 +183,6 @@ export class StaticsComponent {
     const pdfFileName = `Result & Statistics.pdf`;
     pdfMake.createPdf(documentDefinition).open();
     document.getElementById('pdf')!.hidden = false;
-
     });
   }
 }

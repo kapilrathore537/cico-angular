@@ -8,7 +8,6 @@
 
         <div class="subject-test">
             <h3 _ngcontent-ghv-c53="" class="admin-title font-17 font-600 secondary position-relative">Test</h3>
-            <div *ngIf="normalExam.length!==0 else elsepart1;">
             <div class="row mt-4">
                     <div class="col-md-4 mb-4 " *ngFor="let obj of normalExam">
                         <div class="test_card">
@@ -42,18 +41,22 @@
                             </div>
                         </div>
                     </div>
+                  </div>
+                    <img  *ngIf="normalExam.length==0 " class="image_gif" src="../../../assets/images/temp_img/no-test-available.gif">
                 </div>
-                </div>
-                <ng-template #elsepart1>
-                    <img  class="image_gif" src="../../../assets/images/temp_img/no-test-available.gif">
-                </ng-template>
+
+
+                
+              
     
     
             <h3 _ngcontent-ghv-c53="" class="admin-title font-17 font-600 secondary position-relative">Schedule Test
             </h3>
-            <div *ngIf="scheduleExam.length!==0; else elsepart2">
+          
             <div class="row mt-4">
-                    <div class="col-md-4 mb-4" *ngFor="let obj of scheduleExam;let i =index">
+                <div *ngIf="scheduleExam.length!==0; else elsepart2">
+                
+                <div class="col-md-4 mb-4" *ngFor="let obj of scheduleExam;let i =index">
                         <div class="test_card">
                             <div class="d-flex justify-content-between align-items-center mb_12">
                                 <div class="d-flex align-items-center gap_12">
@@ -93,10 +96,13 @@
                             </div>
                         </div>
                     </div>
+              
+              
                 </div>
+                <ng-template #elsepart2>
+                    <img  class="image_gif" src="../../../assets/images/temp_img/no-test-shedule.gif">
+                </ng-template>
             </div>
-            <ng-template #elsepart2>
-                <img  class="image_gif" src="../../../assets/images/temp_img/no-test-shedule.gif">
-            </ng-template>
+           
     </div>
 </div>

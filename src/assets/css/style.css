@@ -1023,7 +1023,8 @@ td {
   border-radius: 6px;
   margin-bottom: 24px;
   min-height: 130px; 
-  /* height: 175px; */
+  overflow-wrap: break-word; /* Ensures long words break to the next line */
+  word-break: break-word;
 }
 
 

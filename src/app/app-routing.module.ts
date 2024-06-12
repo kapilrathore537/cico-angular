@@ -65,6 +65,7 @@ import { AdminDiscussionForumComponent } from './admin/admin-discussion-forum/ad
 import { AdminChapterResultComponent } from './admin/admin-chapter-result/admin-chapter-result.component';
 import { TestComponent } from './pages/test/test.component';
 import { StaticsComponent } from './pages/statics/statics.component';
+import { CodePlaygroundComponent } from './pages/code-playground/code-playground.component';
 
 
 
@@ -73,6 +74,7 @@ const routes: Routes = [
   { path: 'login', component: AdminLoginComponent, pathMatch: 'full' },
   {
     path: 'student', component: HomeComponent, canActivate: [StudentGuardGuard], children: [
+      { path: 'playground', component: CodePlaygroundComponent, pathMatch: 'full' },
       { path: '', component: DashboardComponent, pathMatch: 'full' },
       { path: 'checkInCheckOut', component: CheckincheckoutComponent, pathMatch: 'full' },
       { path: 'study', component: StudyComponent, pathMatch: 'full' },

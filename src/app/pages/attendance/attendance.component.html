@@ -516,7 +516,7 @@
             </div>
           </div>
 
-          <form class="attachment_file2 d-flex align-items-center position-relative w-75 file1">
+          <form *ngIf="attendance.attachment" class="attachment_file2 d-flex align-items-center position-relative w-75 file1">
             <input type="file" name="fileupload" value="fileupload" class="d-none" id="fileupload" />
             <label for="fileupload" class="font-15 font-700 secondary text-white attachment_file_text mb-0">
               <i class="fi fi-rr-paperclip-vertical secondary add_more position-absolute light mx-2"></i>
@@ -588,4 +588,4 @@
     </div>
   </div>
   <!-- Modal leave details end -->
-  <!-- <app-right-side-bar></app-right-side-bar> -->
+  <app-right-side-bar></app-right-side-bar>

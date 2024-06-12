@@ -10,9 +10,10 @@ export class Announcement {
     public seenBy: MessageSeenBy = new MessageSeenBy;
     public date: any;
 
-    constructor(title: string, message: string, date: any) {
+    constructor(title: string, message: string, date: any, announcementId: any) {
         this.title = title
         this.message = message
         this.date = date
+        this.announcementId = announcementId;
     }
 }

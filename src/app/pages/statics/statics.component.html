@@ -3,8 +3,8 @@
     <h1 class="font-27 font-700 secondary mb-0">Dashboard</h1>
     <app-profile-bar></app-profile-bar>
   </div>
-  <div class="scroll_dashboard" id="pdfTable" #pdfTable>
 
+  <div class="scroll_dashboard">
     <div class="row mb_20">
 
       <div class="col-md-6 admin-dash-attendance mb-4">
@@ -23,38 +23,161 @@
       </div>
 
       <div class="col-md-6 admin-dash-assignment mb-4">
-          <h3 class="admin-title font-17 font-600 secondary position-relative">Assignments</h3>       
+        <h3 class="admin-title font-17 font-600 secondary position-relative">Assignments</h3>
         <div class="assignment-area">
-          <div id="chart">
-            <apx-chart [series]="assignmentOption.series" [chart]="assignmentOption.chart"
-              [dataLabels]="assignmentOption.dataLabels" [plotOptions]="assignmentOption.plotOptions"
-              [yaxis]="assignmentOption.yaxis" [legend]="assignmentOption.legend" [fill]="assignmentOption.fill"
-              [stroke]="assignmentOption.stroke" [tooltip]="assignmentOption.tooltip"
-              [xaxis]="assignmentOption.xaxis"></apx-chart>
-          </div>
-          </div>
+          <!-- <div class="assignment-chart"> -->
+            <div id="chart">
+              <apx-chart [series]="chartOptions.series" [chart]="chartOptions.chart"
+                [dataLabels]="chartOptions.dataLabels" [plotOptions]="chartOptions.plotOptions"
+                [yaxis]="chartOptions.yaxis" [legend]="chartOptions.legend" [fill]="chartOptions.fill"
+                [stroke]="chartOptions.stroke" [tooltip]="chartOptions.tooltip"
+                [xaxis]="chartOptions.xaxis"></apx-chart>
+            </div>
+
+          <!-- </div> -->
+          <!-- <div class="chart-detail-bottom justify-content-center">
+            <div class="submitted-value">
+              <p>Submited</p>
+              <h2 class="font-14 font-600 text_dark"> <span class="purple-small-box"></span>{{3}}%</h2>
+            </div>
+            <div class="pending-value">
+              <p>Reviewed</p>
+              <h2 class="font-14 font-600 text_dark"> <span class="purple-small-box"></span>{{3}}%</h2>
+            </div>
+            <div class="approve-value">
+              <p>Unreviewed</p>
+              <h2 class="font-14 font-600 text_dark"> <span class="purple-small-box"></span>{{10}}%</h2>
+            </div>
+          </div> -->
+        </div>
       </div>
 
       <div class="col-md-6 admin-dash-fees mb-4">
-        <h3 class="admin-title font-17 font-600 secondary position-relative">Test Detail</h3>
+        <h3 class="admin-title font-17 font-600 secondary position-relative">Fees</h3>
         <div class="fees-area d-flex align-items-center justify-content-center">
+
           <div id="chart">
-            <apx-chart [colors]="normalExamOption.colors" [series]="normalExamOption.series"
-              [chart]="normalExamOption.chart" [labels]="normalExamOption.labels"
-              [responsive]="normalExamOption.responsive" [legend]="normalExamOption.legend"
-              [stroke]="normalExamOption.stroke"></apx-chart>
+            <apx-chart
+              [series]="FeesOptions.series"
+              [chart]="FeesOptions.feeChart"
+              [plotOptions]="FeesOptions.plotOptions"
+              [labels]="FeesOptions.labels"
+            ></apx-chart>
           </div>
+          <!-- <div class="fees-details w-100">
+              <div class="d-flex align-items-center justify-content-between">
+                <span class="left-color-border bg-total-red"><span class="ms-3"> Total</span></span> 
+                <p class="mb-0 font-15">{{totalFees}}</p>
+                
+              </div>
+              <div class="d-flex align-items-center justify-content-between my-2">
+                <span class="left-color-border bg-collect-green"><span class="ms-3"> Collected</span></span> 
+                <p class="mb-0 font-15">{{collectedFees}}</p>
+              </div>
+              <div class="d-flex align-items-center justify-content-between">
+                <span class="left-color-border bg-pending-yellow"><span class="ms-3"> Pending</span></span> 
+                <p class="mb-0 font-15">{{pendingFees}}</p>
+              </div>
+            </div> -->
+        </div>
+      </div>
+      <div class="col-md-6 admin-dash-fees mb-4">
+        <h3 class="admin-title font-17 font-600 secondary position-relative">Fees</h3>
+        <div class="fees-area d-flex align-items-center justify-content-center">
+
           <div id="chart">
-            <apx-chart [colors]="scheduleExamOption.colors" [series]="scheduleExamOption.series"
-              [chart]="scheduleExamOption.chart" [labels]="scheduleExamOption.labels"
-              [responsive]="scheduleExamOption.responsive" [legend]="scheduleExamOption.legend"
-              [stroke]="scheduleExamOption.stroke"></apx-chart>
+            <apx-chart
+              [series]="FeesOptions.series"
+              [chart]="FeesOptions.feeChart"
+              [plotOptions]="FeesOptions.plotOptions"
+              [labels]="FeesOptions.labels"
+            ></apx-chart>
+            <!-- <apx-chart
+                  [series]="feesPieOptions.series"
+                  [chart]="feesPieOptions.chart"
+                  [responsive]="feesPieOptions.responsive"
+                  [legend]="feesPieOptions.legend"
+                  [colors]="feesPieOptions.colors"
+                  [stroke]="feesPieOptions.stroke"
+                  [labels]="feesPieOptions.labels"
+                ></apx-chart> -->
+                
           </div>
+
+          <!-- <div class="fees-details w-100">
+                <div class="d-flex align-items-center justify-content-between">
+                  <span class="left-color-border bg-total-red"><span class="ms-3"> Total</span></span> 
+                  <p class="mb-0 font-15">{{totalFees}}</p>
+                  
+                </div>
+                <div class="d-flex align-items-center justify-content-between my-2">
+                  <span class="left-color-border bg-collect-green"><span class="ms-3"> Collected</span></span> 
+                  <p class="mb-0 font-15">{{collectedFees}}</p>
+                </div>
+                <div class="d-flex align-items-center justify-content-between">
+                  <span class="left-color-border bg-pending-yellow"><span class="ms-3"> Pending</span></span> 
+                  <p class="mb-0 font-15">{{pendingFees}}</p>
+                </div>
+              </div> -->
+        </div>
+      </div>
+      <div class="col-md-6 admin-dash-fees mb-4">
+        <h3 class="admin-title font-17 font-600 secondary position-relative">Fees</h3>
+        <div class="fees-area d-flex align-items-center justify-content-center">
+
+          <div id="chart">
+            <apx-chart
+              [series]="FeesOptions.series"
+              [chart]="FeesOptions.feeChart"
+              [plotOptions]="FeesOptions.plotOptions"
+              [labels]="FeesOptions.labels"
+            ></apx-chart>
+            <!-- <apx-chart
+                  [series]="feesPieOptions.series"
+                  [chart]="feesPieOptions.chart"
+                  [responsive]="feesPieOptions.responsive"
+                  [legend]="feesPieOptions.legend"
+                  [colors]="feesPieOptions.colors"
+                  [stroke]="feesPieOptions.stroke"
+                  [labels]="feesPieOptions.labels"
+                ></apx-chart> -->
+          </div>
+
+          <!-- <div class="fees-details w-100">
+                <div class="d-flex align-items-center justify-content-between">
+                  <span class="left-color-border bg-total-red"><span class="ms-3"> Total</span></span> 
+                  <p class="mb-0 font-15">{{totalFees}}</p>
+                  
+                </div>
+                <div class="d-flex align-items-center justify-content-between my-2">
+                  <span class="left-color-border bg-collect-green"><span class="ms-3"> Collected</span></span> 
+                  <p class="mb-0 font-15">{{collectedFees}}</p>
+                </div>
+                <div class="d-flex align-items-center justify-content-between">
+                  <span class="left-color-border bg-pending-yellow"><span class="ms-3"> Pending</span></span> 
+                  <p class="mb-0 font-15">{{pendingFees}}</p>
+                </div>
+              </div> -->
         </div>
       </div>
     </div>
+
     </div>
   <img src="../../../assets/images/temp_img/pdf-icon.svg" #pdfButton id="pdf" (click)="downloadAsPDF()" class="pdf-icon">   
+
+
+
+  </div>
+  <!-- DASHBOARD END -->
+
+  <!-- RIGHT SIDE START-->
+
   <app-right-side-bar></app-right-side-bar>
+  <!-- RIGHT SIDE END -->
+
+
+  <!-- MIDDLE CONTENT END -->
+
 
 </div>
+<!--DASHBOARD END -->

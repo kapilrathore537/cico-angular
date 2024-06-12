@@ -14,14 +14,14 @@ import Swal from 'sweetalert2';
   templateUrl: './admin-create-new-job.component.html',
   styleUrls: ['./admin-create-new-job.component.scss']
 })
-export class AdminCreateNewJobComponent implements OnInit{
-  jobAlert:JobAlert=new JobAlert();
-  jobAlertRequest:JobAlertRequest=new JobAlertRequest();
-  jobAlerts:JobAlert[]=[];
-  technologyStack:TechnologyStack[]=[];
+export class AdminCreateNewJobComponent implements OnInit {
+  jobAlert: JobAlert = new JobAlert();
+  jobAlertRequest: JobAlertRequest = new JobAlertRequest();
+  jobAlerts: JobAlert[] = [];
+  technologyStack: TechnologyStack[] = [];
   imageName = ''
-  jobDetailsForm: FormGroup ;
-  isSubmit:boolean=false;
+  jobDetailsForm: FormGroup;
+  isSubmit: boolean = false;
 
   constructor(private jobAlertService: JobAlertService, private technologyStackService: TechnologyStackService, private router: Router, private formBuilder: FormBuilder) {
     this.jobDetailsForm = this.formBuilder.group({
@@ -34,7 +34,7 @@ export class AdminCreateNewJobComponent implements OnInit{
       jobDescription: ['', Validators.required],
 
     });
-   }
+  }
   ngOnInit(): void {
     this.getAllTechImages();
   }
@@ -56,82 +56,73 @@ export class AdminCreateNewJobComponent implements OnInit{
     }
   }
 
-  createJob(){
+  createJob() {
     this.jobDetailsForm.markAllAsTouched();
-    console.log(this.jobAlertRequest);
-    
-    if (this.jobDetailsForm.valid && this.imageName != ''){
-      this.isSubmit=true
+    if (this.jobDetailsForm.valid && this.imageName != '') {
+      this.isSubmit = true
 
-    this.jobAlertService.addJob(this.jobAlertRequest).subscribe(
-      (data: any) => {
-        if(this.jobAlertRequest.type=='JOB'){
-        const Toast = Swal.mixin({
-          toast: true,
-          position: 'top-end',
-          showConfirmButton: false,
-          timer: 1500,
-          timerProgressBar: true,
-        })
-        Toast.fire({
-          icon: 'success',
-          title: 'job Add success !!'
-        }).then(e => {
-          this.jobAlert = new JobAlert
-          this.router.navigate(['/admin/jobalert']);
-        })
-        this.isSubmit=false
+      this.jobAlertService.addJob(this.jobAlertRequest).subscribe(
+        (data: any) => {
+          if (this.jobAlertRequest.type == 'JOB') {
+            const Toast = Swal.mixin({
+              toast: true,
+              position: 'top-end',
+              showConfirmButton: false,
+              timer: 1500,
+              timerProgressBar: true,
+            })
+            Toast.fire({
+              icon: 'success',
+              title: 'job Add success !!'
+            }).then(e => {
+              this.jobAlert = new JobAlert
+              this.router.navigate(['/admin/jobalert']);
+            })
+            this.isSubmit = false
 
-      }else{
-        this.isSubmit=false
-        const Toast = Swal.mixin({
-          toast: true,
-          position: 'top-end',
-          showConfirmButton: false,
-          timer: 1500,
-          timerProgressBar: true,
-        })
-        Toast.fire({
-          icon: 'success',
-          title: 'Internship Add success !!'
-        }).then(e => {
-          this.jobAlert = new JobAlert
-          this.router.navigate(['/admin/jobalert']);
-        })
+          } else {
+            this.isSubmit = false
+            const Toast = Swal.mixin({
+              toast: true,
+              position: 'top-end',
+              showConfirmButton: false,
+              timer: 1500,
+              timerProgressBar: true,
+            })
+            Toast.fire({
+              icon: 'success',
+              title: 'Internship Add success !!'
+            }).then(e => {
+              this.jobAlert = new JobAlert
+              this.router.navigate(['/admin/jobalert']);
+            })
 
-      }
-      },
-      (err) => {
-        const Toast = Swal.mixin({
-          toast: true,
-          position: 'top-end',
-          showConfirmButton: false,
-          timer: 1500,
-          timerProgressBar: true,
-        })
-        Toast.fire({
-          icon: 'error',
-          title: ' failed !!'
-        })
-      }
-   
-    )
+          }
+        },
+        (err) => {
+          const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 1500,
+            timerProgressBar: true,
+          })
+          Toast.fire({
+            icon: 'error',
+            title: ' failed !!'
+          })
+        }
+
+      )
     }
   }
 
-  public getAllTechImages(){
+  public getAllTechImages() {
     this.technologyStackService.getAllTechnologyStack().subscribe({
-      next:(data:any)=>{
+      next: (data: any) => {
         this.technologyStack = data
       }
     });
-  
-  }
- 
-  set(){
-    this.jobDetailsForm.setValue({
-      //imageName:this.imageName // Set the value for the 'jobType' field
-    
-    });
+
   }
 }

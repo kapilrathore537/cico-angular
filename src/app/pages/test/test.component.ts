@@ -42,8 +42,6 @@ export class TestComponent implements OnInit, AfterViewInit {
   }
   ngOnInit(): void {
     this.getAllExam();
-    console.log(this.normalExam);
-    
   }
 
   getAllExam() {

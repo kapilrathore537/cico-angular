@@ -1,185 +1,169 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
-import {
-  ApexAxisChartSeries,
-  ApexChart,
-  ApexDataLabels,
-  ApexPlotOptions,
-  ApexYAxis,
-  ApexXAxis,
-  ApexFill,
-  ApexTooltip,
-  ApexStroke,
-  ApexLegend,
-  ChartComponent,
-} from 'ng-apexcharts';
-import { AssignmentChart } from 'src/app/charts/assignment-chart';
-import { NormalExamBar, ScheduleExamBar } from 'src/app/charts/normal-exam-bar';
-import { ExamServiceService } from 'src/app/service/exam-service.service';
-import { StudentService } from 'src/app/service/student.service';
-import jsPDF from 'jspdf';
-import * as pdfMake from 'pdfmake/build/pdfmake';
-import * as pdfFonts from 'pdfmake/build/vfs_fonts';
-import html2canvas from 'html2canvas';
-import { Content, TDocumentDefinitions } from 'pdfmake/interfaces';
-import { Profile } from 'src/app/entity/profile';
-import { profile } from 'console';
+import { Component, ViewChild } from '@angular/core';
+import { ApexAxisChartSeries, ApexChart, ApexDataLabels, ApexPlotOptions, ApexYAxis, ApexXAxis, ApexFill, ApexTooltip, ApexStroke, ApexLegend, ChartComponent, ApexNonAxisChartSeries, ApexGrid, ApexMarkers, ApexTitleSubtitle } from 'ng-apexcharts';
 
-(pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
 
-export type AssignmentOption = {
+
+export type ChartOptions = {
   series: ApexAxisChartSeries;
   chart: ApexChart;
-  dataLabels: ApexDataLabels;
-  plotOptions: ApexPlotOptions;
-  yaxis: ApexYAxis;
   xaxis: ApexXAxis;
-  fill: ApexFill;
-  tooltip: ApexTooltip;
   stroke: ApexStroke;
+  dataLabels: ApexDataLabels;
+  markers: ApexMarkers;
+  tooltip: any; // ApexTooltip;
+  yaxis: ApexYAxis;
+  grid: ApexGrid;
   legend: ApexLegend;
+  title: ApexTitleSubtitle;
 };
 
-export type NormalExamResult = {
-  series: any;
-  chart: any;
-  responsive: any;
-  labels: any;
-  colors: any;
-  legend: any;
-  stroke: any;
+export type FeesOptions = {
+  series: ApexNonAxisChartSeries;
+  chart: ApexChart;
+  labels: string[];
+  plotOptions: ApexPlotOptions;
 };
-export type ScheduleTestResult = {
-  series: any;
-  chart: any;
-  responsive: any;
-  labels: any;
-  colors: any;
-  legend: any;
-  stroke: any;
-};
-
 @Component({
   selector: 'app-statics',
   templateUrl: './statics.component.html',
-  styleUrls: ['./statics.component.scss'],
+  styleUrls: ['./statics.component.scss']
 })
 export class StaticsComponent {
-  @ViewChild('pdfTable') pdfTable!: ElementRef;
 
-  @ViewChild('assignmentChart') assignmentChart!: ChartComponent;
-  public assignmentOption: any;
+  @ViewChild("chart") chart!: ChartComponent;
+  public chartOptions: any;
 
-  @ViewChild('normalTestChart') normalTestChart!: ChartComponent | undefined;
-  public normalExamOption: Partial<NormalExamResult>;
 
-  @ViewChild('scheduleTestChart') scheduleTestChart!:
-    | ChartComponent
-    | undefined;
-  public scheduleExamOption: Partial<ScheduleTestResult>;
+  
+  @ViewChild("chart") feeChart!: ChartComponent;
+  public FeesOptions: any;
 
-  student: Profile = new Profile();
-  assignmentBar: AssignmentChart = new AssignmentChart();
-  normalExamBar: NormalExamBar = new NormalExamBar();
-  scheduleExamBar: ScheduleExamBar = new ScheduleExamBar();
-
-  constructor(
-    private examService: ExamServiceService,
-    private studentService: StudentService
-  ) {
-    this.assignmentOption = this.assignmentBar.assignmentOption;
-    this.normalExamOption = this.normalExamBar.normalTestResult;
-    this.scheduleExamOption = this.scheduleExamBar.scheduleTestResult;
+  constructor() {
+    this.chartOptions = {
+      series: [
+        {
+          name: "Session Duration",
+          data: [45, 52, 38, 24, 33, 26, 21, 20, 6, 8, 15, 10]
+        },
+        {
+          name: "Page Views",
+          data: [35, 41, 62, 42, 13, 18, 29, 37, 36, 51, 32, 35]
+        },
+        {
+          name: "Total Visits",
+          data: [87, 57, 74, 99, 75, 38, 62, 47, 82, 56, 45, 47]
+        }
+      ],
+      chart: {
+        height: 350,
+        type: "line"
+      },
+      dataLabels: {
+        enabled: false
+      },
+      stroke: {
+        width: 5,
+        curve: "straight",
+        dashArray: [0, 8, 5]
+      },
+      title: {
+        text: "Page Statistics",
+        align: "left"
+      },
+      legend: {
+        tooltipHoverFormatter: function(val:any, opts:any) {
+          return (
+            val +
+            " - <strong>" +
+            opts.w.globals.series[opts.seriesIndex][opts.dataPointIndex] +
+            "</strong>"
+          );
+        }
+      },
+      markers: {
+        size: 0,
+        hover: {
+          sizeOffset: 6
+        }
+      },
+      xaxis: {
+        labels: {
+          trim: false
+        },
+        categories: [
+          "01 Jan",
+          "02 Jan",
+          "03 Jan",
+          "04 Jan",
+          "05 Jan",
+          "06 Jan",
+          "07 Jan",
+          "08 Jan",
+          "09 Jan",
+          "10 Jan",
+          "11 Jan",
+          "12 Jan"
+        ]
+      },
+      tooltip: {
+        x: [
+          {
+            title: {
+              formatter: function(val:any) {
+                return val + " (mins)";
+              }
+            }
+          },
+          {
+            title: {
+              formatter: function(val:any) {
+                return val + " per session";
+              }
+            }
+          },
+          {
+            title: {
+              formatter: function(val:any) {
+                return val;
+              }
+            }
+          }
+        ]
+      },
+      grid: {
+        borderColor: "#f1f1f1"
   }
-
-  ngOnInit() {
-    this.getExamResult();
-  }
-
-  public getExamResult() {
-    this.studentService.student.subscribe((value) => {
-      this.student.studentId = value.id;
-      this.student.name = value.studentName;
-      this.student.course = value.course;
-      this.student.profilePic = value.profilePic;
-      this.examService.fetchExamCounting(value.id).subscribe((result: any) => {
-        this.normalExamOption.series = [
-          result.totalNormalCount,
-          result.normalExamCount,
-        ];
-        this.scheduleExamOption.series = [
-          result.totalScheduleExamCount,
-          result.scheduleExamCount,
-        ];
-      });
-    });
-  }
-
-  public downloadAsPDF() {
-    const keyValuePairs: any = {
-      Student_Id: this.student.studentId,
-      Name: this.student.name,
-      Course: this.student.course,
     };
 
-    // Create an array to hold content elements
-    const contentArray: Content[] = [];
-
-    document.getElementById('pdf')!.hidden = true;
-    const pdfContent = this.pdfTable.nativeElement;
-    const originalHeight = pdfContent.style.height;
-    const originalOverflow = pdfContent.style.overflow;
-
-    // Expand the element to its full height
-    pdfContent.style.height = `${pdfContent.scrollHeight}px`;
-    pdfContent.style.overflow = 'visible';
-
-    // Capture HTML content as image using html2canvas
-    html2canvas(pdfContent, { scale: 2 }).then((canvas: any) => {
-      const imgData = canvas.toDataURL('image/png');
-
-      // Restore the original style
-      pdfContent.style.height = originalHeight;
-      pdfContent.style.overflow = originalOverflow;
-
-      // Define document definition with the captured image
-      for (const key in keyValuePairs) {
-        if (keyValuePairs.hasOwnProperty(key)) {
-          contentArray.push({
-            text: `${key}: ${keyValuePairs[key]}`,
-            fontSize: 14,
-            margin: [5, 10, 0, 2],
-            alignment: 'left',
-            color: 'black',
-          });
+    this.FeesOptions = {
+      series: [44, 55, 67, 83],
+      feeChart: {
+        height: 350,
+        type: "radialBar"
+      },
+      plotOptions: {
+        radialBar: {
+          dataLabels: {
+            name: {
+              fontSize: "22px"
+            },
+            value: {
+              fontSize: "16px"
+            },
+            total: {
+              show: true,
+              label: "Total",
+              formatter: function(w:any) {
+                return "249";
+              }
+            }
+          }
         }
-      }
-
-      // Add a horizontal line
-      const horizontalLine:any = {
-        canvas: [
-          {
-            type: 'line',
-            x1: 0,
-            y1: 0,
-            x2: 520,
-            y2: 0,
-            lineWidth: 2,
-            color: '#000',
-          },
-        ],
-        margin: [0, 10],
-      };
-
-      const documentDefinition: TDocumentDefinitions = {
-        content: [
-          contentArray,
-          horizontalLine,
-          { image: imgData, width: 500, marginTop: 50 }, // Image
-        ],
-      };
-      // Create and open PDF
-      pdfMake.createPdf(documentDefinition).open();
-      document.getElementById('pdf')!.hidden = false;
-    });
+      },
+      labels: ["Apples", "Oranges", "Bananas", "Berries"]
+    };
   }
+
+  
 }
+

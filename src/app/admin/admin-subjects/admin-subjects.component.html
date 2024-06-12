@@ -10,19 +10,10 @@
         <app-profile-bar></app-profile-bar>
     </div>
 
-    <!-- SUBJECT START -->
-    <div class="dashboard_title">
-        <nav aria-label="breadcrumb" class="font-17 font-600 light-black mb-0 lh-36">
-          <ol class="breadcrumb mb-0 mb-3">
-            <li class="breadcrumb-item"><a routerLink="/student" class="gray-light">Home</a></li>
-            <li class="breadcrumb-item  light-black" aria-current="page">Subjects</li>
-          </ol>
-        </nav>
-      </div>
     <!-- DASHBOARD START -->
 
     <div class="scroll_sec mt-0">
-        <div class="row" *ngIf="subjects.length!==0 else elsepart1">
+        <div class="row">
             <div class="col-md-3 bootstrap_cards" *ngFor="let subject of subjects;let i =index">
                 <div class="admin-subject_card">
                     <div class="admin-subject_card_top">
@@ -47,16 +38,11 @@
                 </div> <!-- subject_card -->
             </div>
         </div>
-        <ng-template #elsepart1>
-            <div class="gif_image_class">
-                <img class="image_gif" src="../../../assets/images/temp_img/no-subjects.gif">
-            </div>
-        </ng-template>
     </div>
     <!-- DASHBOARD END -->
 
     <!-- RIGHT SIDE START-->
-    <app-right-side-bar></app-right-side-bar>
+    <!-- <app-right-side-bar></app-right-side-bar> -->
     <!-- RIGHT SIDE END -->
 
     <!-- MIDDLE CONTENT END -->

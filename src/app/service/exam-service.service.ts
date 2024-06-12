@@ -70,8 +70,4 @@ export class ExamServiceService {
   fetchChapterExam(chapterId: number) {
     return this.http.get(`${this.EXAM_URL}/getChapterExam?chapterId=${chapterId}`)
   }
-
-  fetchExamCounting(studentId:any){
-    return this.http.get(`${this.EXAM_URL}/getSubjectExamCount?studentId=${studentId}`);
-  }
 }

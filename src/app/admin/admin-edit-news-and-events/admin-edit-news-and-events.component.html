@@ -46,7 +46,7 @@
                             <div class="profile_edits">
                                 <div class="profile_buttons d-flex align-items-end">
 
-                                    <i class="fi fi-rr-trash light font-24 line-height-0 hover-delete-icon"  (click)="removeImage()"
+                                    <i class="fi fi-rr-trash light font-24 line-height-0 hover-delete-icon"  (click)="removeImage(file)"
                                        ></i>
                                 </div>
                             </div>
@@ -62,7 +62,7 @@
                         <form>
                             <div
                                 class="attachment_file2 d-flex align-items-center justify-content-center  position-relative add-attechment add-media-attech">
-                                <input type="file" name="image" formControlName="image" (change)="addImage($event)"
+                                <input type="file" #file name="image" formControlName="image" (change)="addImage($event)"
                                     value="fileName" class="form-control d-none" id="image">
                                 <label for="image" class="font-17 font-500 d-flex">
                                     <i class="fi fi-rr-plus-small warning font-24 line-height-0"></i>
@@ -108,7 +108,7 @@
     <!-- DASHBOARD END -->
 
     <!-- RIGHT SIDE START-->
-    <!-- <app-right-side-bar></app-right-side-bar> -->
+    <app-right-side-bar></app-right-side-bar>
     <!-- RIGHT SIDE END -->
 
 

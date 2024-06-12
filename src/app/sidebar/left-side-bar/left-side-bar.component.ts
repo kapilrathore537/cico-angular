@@ -1,9 +1,9 @@
 import { QRServiceService } from 'src/app/service/qrservice.service';
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { Route, Router } from '@angular/router';
 import { LoginService } from 'src/app/service/login.service';
 import Swal from 'sweetalert2';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-left-side-bar',
@@ -12,28 +12,28 @@ import { Router } from '@angular/router';
 })
 export class LeftSideBarComponent implements OnInit {
 
-  check = '';
-  constructor(private qrService: QRServiceService, private location: Location, private router: Router) { }
+  check='';
+  constructor (private qrService:QRServiceService,private location:Location,private loginService:LoginService,private router:Router) {}
 
-  ngOnInit() {
-    this.getPath();
+  ngOnInit(){
+    this.getPath() ;
   }
 
-  public getValueById(value: any) {
+  public getValueById(value:any){
     this.check = value;
   }
 
   public getPath() {
     const path = this.location.path();
 
-    if (path.toString().substring(9) == '') {
+    if(path.toString().substring(9)== ''){
       this.check = 'dashboard'
-    } else {
+    }else{
       this.check = path.toString().substring(9);
     }
   }
 
-  public logout() {
+  public logout(){
     Swal.fire({
       title: 'Are you sure?',
       text: "Do you want to logout!",
@@ -44,19 +44,19 @@ export class LeftSideBarComponent implements OnInit {
       confirmButtonText: 'Yes, LogOut!'
     }).then((result) => {
       if (result.isConfirmed) {
-
+        
         Swal.fire(
           'SUCCESS!',
           'Your are logged out.',
           'success'
         )
         this.qrService.webLogout().subscribe({
-          next: (data) => {
+          next:(data)=>{
             localStorage.clear();
             this.router.navigate(['']);
           }
         });;
       }
     })
-  }
+    }
 }

@@ -59,7 +59,7 @@
                 <div class="col-md-3">
                     <form [formGroup]="newsAndEventForm">
                         <div class="attachment_file2 d-flex align-items-center justify-content-center  position-relative add-attechment add-media-attech">
-                        <input type="file" name="image" formControlName="image"  (change)="addImage($event)" value="fileName" class="form-control d-none" id="image"  >
+                        <input type="file" #file  name="image" formControlName="image"  (change)="addImage($event)" value="fileName" class="form-control d-none" id="image"  >
                         <label for="image" class="font-17 font-500 d-flex">
                             <i class="fi fi-rr-plus-small warning font-24 line-height-0"></i>
                             Add Media</label>
@@ -106,7 +106,7 @@
     <!-- DASHBOARD END -->
 
     <!-- RIGHT SIDE START-->
-   <!-- <app-right-side-bar></app-right-side-bar> -->
+   <app-right-side-bar></app-right-side-bar>
     <!-- RIGHT SIDE END -->
 
 
@@ -129,7 +129,7 @@
                         <p class="secondary font-21 font-500 text-center">Are You Sure You Want To Delete This Image?</p>
                         <div class="apply_modal_buttons d-flex justify-content-between align-items-center">
                             <a routerLink="/admin/createnewsAndEvent">
-                                <button type="button" class="cancel_modal_btn font-15 font-500 delete-icon-color" data-bs-dismiss="modal" aria-label="Close" (click)="removeImage()">Yes,
+                                <button type="button" class="cancel_modal_btn font-15 font-500 delete-icon-color" data-bs-dismiss="modal" aria-label="Close" (click)="removeImage(file)">Yes,
                                     delete</button>
                             </a>
                             <a routerLink="/admin/createnewsAndEvent">

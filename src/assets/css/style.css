@@ -1004,13 +1004,12 @@ td {
 }
 
 .Enroll_btn {
-  width: 93px;
-  height: 30px;
   background: #1BAEC1;
   box-shadow: -2px 2px 4px rgba(0, 0, 0, 0.08);
   border-radius: 6px;
   border: 1px solid transparent;
 }
+
 .java img{
   width: 87px;
   height: 87px;
@@ -1023,8 +1022,10 @@ td {
   padding: 12px;
   border-radius: 6px;
   margin-bottom: 24px;
-  height: 130px;
+  min-height: 130px; 
+  /* height: 175px; */
 }
+
 
 .container_top {
   margin-bottom: 12px;
@@ -4429,9 +4430,7 @@ box-shadow: 1px 2px 8px 0px rgba(0, 0, 0, 0.08);
 .java_heading2 {
   font-size:14px !important;
 }
-.Enroll_btn {
-  font-size: 11px;
-}
+
 .java h3{
   font-size: 12px;
 }

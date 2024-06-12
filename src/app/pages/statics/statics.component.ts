@@ -24,7 +24,6 @@ import { Content, TDocumentDefinitions } from 'pdfmake/interfaces';
 import { Profile } from 'src/app/entity/profile';
 import { profile } from 'console';
 
-
 (pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
 
 export type AssignmentOption = {
@@ -116,11 +115,24 @@ export class StaticsComponent {
   }
 
   public downloadAsPDF() {
+
     const keyValuePairs: any = {
       Student_Id: this.student.studentId,
       Name: this.student.name,
       Course: this.student.course,
     };
+
+    // Calculate the current date and time
+    const today = new Date();
+    const formattedDate = today.toLocaleDateString(undefined, {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    });
+    const formattedTime = today.toLocaleTimeString(undefined, {
+      hour: '2-digit',
+      minute: '2-digit',
+    });
 
     // Create an array to hold content elements
     const contentArray: Content[] = [];
@@ -156,7 +168,7 @@ export class StaticsComponent {
       }
 
       // Add a horizontal line
-      const horizontalLine:any = {
+      const horizontalLine: any = {
         canvas: [
           {
             type: 'line',
@@ -172,17 +184,25 @@ export class StaticsComponent {
       };
 
       const documentDefinition: TDocumentDefinitions = {
+        header: {
+          columns: [
+            { text: '' },
+            {
+              text: `${formattedDate} ${formattedTime}`,
+              alignment: 'right',
+              margin: [0, 10, 10, 0],
+            },
+          ],
+        },
         content: [
           contentArray,
           horizontalLine,
           { image: imgData, width: 500, marginTop: 50 }, // Image
         ],
       };
-
-    // Create and download the PDF with the specified file name
-    const pdfFileName = `Result & Statistics.pdf`;
-    pdfMake.createPdf(documentDefinition).open();
-    document.getElementById('pdf')!.hidden = false;
+      // Create and open PDF
+      pdfMake.createPdf(documentDefinition).open();
+      document.getElementById('pdf')!.hidden = false;
     });
   }
 }

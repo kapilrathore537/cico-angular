@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
@@ -115,7 +115,10 @@ export class AdminCreateTaskComponent {
     this.fileName = data.name
     this.addAttachment();
   }
-  
+  triggerFileInput() {
+    const fileInput = document.getElementById('attachment') as HTMLInputElement;
+    fileInput.click();
+  }
 
   public addTaskQuestion() {
     if (this.secondTaskForm.invalid) {

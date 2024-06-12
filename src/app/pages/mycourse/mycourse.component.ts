@@ -35,7 +35,7 @@ export class MycourseComponent implements OnInit {
   ngOnInit(): void {
 
     this.getAllCourses();
-    this.getAllUpcomingBatches();
+    this.getAllBatches();
     this.getAllTrasection();
     this.getCourseProgress()
   }
@@ -47,8 +47,8 @@ export class MycourseComponent implements OnInit {
       }
     })
   }
-  public getAllUpcomingBatches() {
-    this.batchService.getUpcomingBatch().subscribe({
+  public getAllBatches() {
+    this.batchService.getAllBatch(this.loginService.getStudentId()).subscribe({
       next: (data: any) => {
         this.batches = data
         this.length = this.batches.length

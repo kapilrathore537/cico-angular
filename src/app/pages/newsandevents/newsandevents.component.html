@@ -34,7 +34,7 @@
       aria-label="Select page"
       (page)="onChangePage($event)">    
       </mat-paginator> 
-      <div *ngIf="totalNewsAndEvent!==null else elsepart1;"  class="news_events">
+      <div *ngIf="totalNewsAndEvent else elsepart1;"  class="news_events">
         <div class="row mt-3">
           <div class="col-md-3" *ngFor="let newsAndEvent of newsAndEvents">
             <a routerLink="/student/newandseventsdescription/{{newsAndEvent.id}}" (onclick)="parentTochild(newsAndEvent.dayAgo)">

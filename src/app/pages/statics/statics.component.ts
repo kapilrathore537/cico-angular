@@ -180,9 +180,8 @@ export class StaticsComponent {
 
     // Create and download the PDF with the specified file name
     const pdfFileName = `Result & Statistics.pdf`;
-    pdfMake.createPdf(documentDefinition).download(pdfFileName);
+    pdfMake.createPdf(documentDefinition).open();
     document.getElementById('pdf')!.hidden = false;
-
     });
   }
 }

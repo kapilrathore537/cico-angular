@@ -8,88 +8,95 @@
 
         <div class="subject-test">
             <h3 _ngcontent-ghv-c53="" class="admin-title font-17 font-600 secondary position-relative">Test</h3>
+            <div *ngIf="normalExam.length!==0 else elsepart1;">
             <div class="row mt-4">
-                <div class="col-md-4 mb-4 " *ngFor="let obj of normalExam">
-                    <div class="test_card">
-                        <div class="d-flex justify-content-between align-items-center mb_12">
-                            <div class="d-flex align-items-center gap_12">
-                                <img src="{{obj.examImage}}" class="test_icon">
-                                <div class="test_details">
-                                    <h3 class="mb-1">{{obj.examName}}</h3>
-                                    <h4 class="mb-0" *ngIf="obj.scoreGet!=null" [ngStyle]="{'color':calculatePercentage(obj.scoreGet,obj.totalQuestionForTest) <=obj.passingMarks?'red':''}"> Score -> {{calculatePercentage(obj.scoreGet,obj.totalQuestionForTest)}}%   ({{ calculatePercentage(obj.scoreGet,obj.totalQuestionForTest)<=obj.passingMarks?'Fail':'Pass'}})</h4>
+                    <div class="col-md-4 mb-4 " *ngFor="let obj of normalExam">
+                        <div class="test_card">
+                            <div class="d-flex justify-content-between align-items-center mb_12">
+                                <div class="d-flex align-items-center gap_12">
+                                    <img src="{{obj.examImage}}" class="test_icon">
+                                    <div class="test_details">
+                                        <h3 class="mb-1">{{obj.examName}}</h3>
+                                        <h4 class="mb-0" *ngIf="obj.scoreGet!=null" [ngStyle]="{'color':calculatePercentage(obj.scoreGet,obj.totalQuestionForTest) <=obj.passingMarks?'red':''}"> Score -> {{calculatePercentage(obj.scoreGet,obj.totalQuestionForTest)}}%   ({{ calculatePercentage(obj.scoreGet,obj.totalQuestionForTest)<=obj.passingMarks?'Fail':'Pass'}})</h4>
+                                    </div>
                                 </div>
+                                <button *ngIf="obj.resultId==null" class="test_btn" (click)="startTest(obj.examId,obj.subjectId)">Start
+                                    Test</button>
+                                <button *ngIf="obj.resultId!=null" class="test_btn" (click)="viewExamReview(obj.resultId)">View
+                                    Result</button>
                             </div>
-                            <button *ngIf="obj.resultId==null" class="test_btn" (click)="startTest(obj.examId,obj.subjectId)">Start
-                                Test</button>
-                            <button *ngIf="obj.resultId!=null" class="test_btn" (click)="viewExamReview(obj.resultId)">View
-                                Result</button>
-                        </div>
-    
-                        <div class="d-flex justify-content-around">
-                            <div class="test_details2">
-                                <h3>Questions</h3>
-                                <h4>{{obj.totalQuestionForTest}}</h4>
-                            </div>
-                            <div class="test_details2">
-                                <h3>Passing marks</h3>
-                                <h4>{{obj.passingMarks}} %</h4>
-                            </div>
-                            <div class="test_details2">
-                                <h3>Duration</h3>
-                                <h4>{{obj.examTimer}}Min</h4>
+        
+                            <div class="d-flex justify-content-around">
+                                <div class="test_details2">
+                                    <h3>Questions</h3>
+                                    <h4>{{obj.totalQuestionForTest}}</h4>
+                                </div>
+                                <div class="test_details2">
+                                    <h3>Passing marks</h3>
+                                    <h4>{{obj.passingMarks}} %</h4>
+                                </div>
+                                <div class="test_details2">
+                                    <h3>Duration</h3>
+                                    <h4>{{obj.examTimer}}Min</h4>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-              
-            </div>
+                </div>
+                <ng-template #elsepart1>
+                    <img  class="image_gif" src="../../../assets/images/temp_img/no-test-available.gif">
+                </ng-template>
     
     
             <h3 _ngcontent-ghv-c53="" class="admin-title font-17 font-600 secondary position-relative">Schedule Test
             </h3>
+            <div *ngIf="scheduleExam.length!==0; else elsepart2">
             <div class="row mt-4">
-                <div class="col-md-4 mb-4" *ngFor="let obj of scheduleExam;let i =index">
-                    <div class="test_card">
-                        <div class="d-flex justify-content-between align-items-center mb_12">
-                            <div class="d-flex align-items-center gap_12">
-                                <img src="{{obj.examImage}}" class="test_icon">
-                                <div class="test_details">
-                                    <h3 class="mb-1">{{obj.examName}}</h3>
-                                    <h4 class="mb-0" *ngIf="obj.scoreGet!=null" [ngStyle]="{'color':obj.scoreGet <=obj.passingMarks?'red':''}" >  Score -> {{obj.scoreGet}}%  ({{ calculatePercentage(obj.scoreGet,obj.totalQuestionForTest)<=obj.passingMarks?'Fail':'Pass'}})</h4>
+                    <div class="col-md-4 mb-4" *ngFor="let obj of scheduleExam;let i =index">
+                        <div class="test_card">
+                            <div class="d-flex justify-content-between align-items-center mb_12">
+                                <div class="d-flex align-items-center gap_12">
+                                    <img src="{{obj.examImage}}" class="test_icon">
+                                    <div class="test_details">
+                                        <h3 class="mb-1">{{obj.examName}}</h3>
+                                        <h4 class="mb-0" *ngIf="obj.scoreGet!=null" [ngStyle]="{'color':obj.scoreGet <=obj.passingMarks?'red':''}" >  Score -> {{obj.scoreGet}}%  ({{ calculatePercentage(obj.scoreGet,obj.totalQuestionForTest)<=obj.passingMarks?'Fail':'Pass'}})</h4>
+                                    </div>
+                                </div>
+                                <div class="lock_details">
+        
+                                    <h3  class="mb-0" [id]="'testId'+obj.examId"></h3>
+                                    <i class="fi fi-rr-lock lh-0 font-20 lock" *ngIf="!obj.isExamEnd && obj.resultId==null && !obj.isExamStarted"></i>
+                                    <h3  [ngStyle]="{ 'color': obj.remainingTime?.split(' ')[1] <= '600' ||  obj.remainingTime?.split(' ')[0] <= '60'  && obj.remainingTime!=null ? 'red' : '' }"
+                                    class="mb-0" id="{'remainingTime'+{{obj.examId}}}" *ngIf="!obj.isExamStarted  && obj.resultId==null && obj.remainingTime!=null ">Time Left  {{obj.remainingTime}}</h3>
+                                    <h3  class="mb-0"id="{'date'+{{i}}}" *ngIf="obj.remainingTime==null && obj.resultId==null && !obj.isExamEnd ">{{obj.scheduleTestDate}}</h3>
+                                   <button  *ngIf="obj.isExamStarted && obj.resultId ==null && !obj.isExamEnd" class="test_btn" (click)="startTest(obj.examId,obj.subjectId)">Start
+                                    Test</button>  <button *ngIf="obj.resultId!=null" class="test_btn" (click)="viewExamReview(obj.resultId)">View
+                                        Result</button>
+                                        <button  *ngIf="obj.isExamEnd &&  obj.resultId==null  " class="test_btn">Exam-Missed</button> 
                                 </div>
                             </div>
-                            <div class="lock_details">
-    
-                                <h3  class="mb-0" [id]="'testId'+obj.examId"></h3>
-                                <i class="fi fi-rr-lock lh-0 font-20 lock" *ngIf="!obj.isExamEnd && obj.resultId==null && !obj.isExamStarted"></i>
-                                <h3  [ngStyle]="{ 'color': obj.remainingTime?.split(' ')[1] <= '600' ||  obj.remainingTime?.split(' ')[0] <= '60'  && obj.remainingTime!=null ? 'red' : '' }"
-                                class="mb-0" id="{'remainingTime'+{{obj.examId}}}" *ngIf="!obj.isExamStarted  && obj.resultId==null && obj.remainingTime!=null ">Time Left  {{obj.remainingTime}}</h3>
-                                <h3  class="mb-0"id="{'date'+{{i}}}" *ngIf="obj.remainingTime==null && obj.resultId==null && !obj.isExamEnd ">{{obj.scheduleTestDate}}</h3>
-                               <button  *ngIf="obj.isExamStarted && obj.resultId ==null && !obj.isExamEnd" class="test_btn" (click)="startTest(obj.examId,obj.subjectId)">Start
-                                Test</button>  <button *ngIf="obj.resultId!=null" class="test_btn" (click)="viewExamReview(obj.resultId)">View
-                                    Result</button>
-                                    <button  *ngIf="obj.isExamEnd &&  obj.resultId==null  " class="test_btn">Exam-Missed</button> 
-                            </div>
-                        </div>
-    
-                        <div class="d-flex justify-content-around">
-                            <div class="test_details2">
-                                <h3>Questions</h3>
-                                <h4>{{obj.totalQuestionForTest}}</h4>
-                            </div>
-                            <div class="test_details2">
-                                <h3>Passing marks</h3>
-                                <h4>{{obj.passingMarks}}%</h4>
-                            </div>
-                            <div class="test_details2">
-                                <h3>Duration</h3>
-                                <h4>{{obj.examTimer}}</h4>
+        
+                            <div class="d-flex justify-content-around">
+                                <div class="test_details2">
+                                    <h3>Questions</h3>
+                                    <h4>{{obj.totalQuestionForTest}}</h4>
+                                </div>
+                                <div class="test_details2">
+                                    <h3>Passing marks</h3>
+                                    <h4>{{obj.passingMarks}}%</h4>
+                                </div>
+                                <div class="test_details2">
+                                    <h3>Duration</h3>
+                                    <h4>{{obj.examTimer}}</h4>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-          
-        </div>
+            <ng-template #elsepart2>
+                <img  class="image_gif" src="../../../assets/images/temp_img/no-test-shedule.gif">
+            </ng-template>
     </div>
 </div>

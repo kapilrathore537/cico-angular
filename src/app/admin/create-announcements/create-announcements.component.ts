@@ -51,9 +51,14 @@ export class CreateAnnouncementsComponent implements OnInit {
 
     this.announcementService.publishAnnouncement(this.announcementRequest).subscribe({
       next: (data: any) => {
+        //let courses: number[] = []
+       /// data.course.forEach((e: any) => {
+       //   courses.push(e.courseId);
+       // });
 
-        console.log(data.announcementId);
-        
+       console.log('admin');
+     
+       
         let obj = {
           type: 'announcement',
           date: data.date,

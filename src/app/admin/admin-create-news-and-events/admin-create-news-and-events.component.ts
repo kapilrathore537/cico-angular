@@ -143,7 +143,8 @@ export class AdminCreateNewsAndEventsComponent implements OnInit {
     }
   }
 
-  public removeImage() {
+  public removeImage(file:HTMLInputElement) {
+    file.value = '';
     this.imagePreview = '';
     this.imageName = '';
     this.newRequest.fileName = '';

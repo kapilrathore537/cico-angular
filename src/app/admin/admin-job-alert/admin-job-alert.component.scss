@@ -10,6 +10,20 @@
   .dropdown-padding{
     padding: 0.25rem 1rem;
 }
-.read-color{
-  color: dodgerblue;
+// .read-color{
+//   color: dodgerblue;
+//   font-size: 15px;
+// }
+
+.btn-custom{
+  border-color: #49BFCF;
+  box-shadow: none;
+  color: #49BFCF;
+  opacity: 0.5;
+  font-size: 10px;
+
+}
+.btn-custom:hover{
+  background-color: #49BFCF;
+  color: white;
 }

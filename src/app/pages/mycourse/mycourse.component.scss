@@ -2,3 +2,49 @@
     width: 75px;
     height: 75px;
 }
+
+
+.image_gif{
+    margin-top: -10rem;
+    margin-left: -7rem;
+    height: 300px !important;
+    width: 300px !important;
+    opacity: 0.5;
+    pointer-events: none; 
+    border-bottom-right-radius: 17rem;
+    border-bottom-left-radius: 13rem;
+}
+.image_gif1{
+    margin-top: -10rem;
+    margin-left: -7rem;
+    height: 300px !important;
+    width: 300px !important;
+    opacity: 0.5;
+    pointer-events: none; 
+    border-bottom-right-radius: 10rem;
+}
+
+.gif_image_class1{
+    padding-left: 245px;
+    padding-top: 180px;
+}
+
+
+.btn-info{
+    background-color: #51BFCF !important;
+    color: whitesmoke;
+    box-shadow: none;
+    margin-top: 3rem;
+    border-color: transparent!important;
+}
+.bnt-custom:hover{
+    background-color: #51BFCF!important;
+    color: whitesmoke;
+    border-color: transparent !important;
+    box-shadow: none !important;
+    border-color: #51BFCF;
+}
+
+.batch_Card{
+    justify-content: space-between;
+}

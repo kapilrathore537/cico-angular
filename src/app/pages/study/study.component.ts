@@ -28,6 +28,8 @@ export class StudyComponent {
     this.subjectService.getAllSubjectsWithChapterCompletedStatus().subscribe({
       next: (data: any) => {
         this.subjects = data;
+        console.log(this.subjects+"cxvcx");
+        
       },
     });
   }

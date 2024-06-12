@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { log } from 'console';
 import { id } from 'date-fns/locale';
 import { AssignmentSubmission } from 'src/app/entity/assignment-submission';
@@ -21,7 +21,9 @@ export class AdminAssignmentSubmissionComponent implements OnInit {
   taskReviewed: any[] = []
 
   constructor(private activateRoute: ActivatedRoute,
-    private assignmentService: AssignmentServiceService) {
+    private assignmentService: AssignmentServiceService,
+    private route:Router
+    ) {
 
     this.activateRoute.queryParams.subscribe(params => {
       this.submissionId = params['submissionId'];
@@ -72,6 +74,8 @@ export class AdminAssignmentSubmissionComponent implements OnInit {
         if (status != 'Reviewing') {
           this.removeTaskFromList()
         }
+        if(this.submitedAssignment.length===0)
+          this.route.navigate(['admin/assignments']);
       }
     })
   }
@@ -106,4 +110,5 @@ export class AdminAssignmentSubmissionComponent implements OnInit {
       }
     })
   }
+
 }

@@ -241,7 +241,7 @@
 
             <div class="col-md-12">
 
-                <form   (click)="triggerFileInput()"
+                <form
                     [class]="!fileLoading?' button-hover attachment_file2 d-inline-flex align-items-center  position-relative mb-2 add-attechment pointer':' button-hover1 pointer attachment_file2 d-inline-flex align-items-center  position-relative mb-2 add-attechment '">
                     <input type="file" name="attachment" value="attachment" #attachment (change)="addAttachmentFile($event)"
                         class="d-none" id="attachment">
@@ -258,7 +258,9 @@
                         </ng-template>
 
                     </label>
+                    
                 </form><br>
+                
                 <!-- <div class="add-que mb-2" style="padding: 16px 12px;" *ngI>
                     <i class="fi fi-rr-file-zipper warning font-24 line-height-0"></i>
                     <h5 class="font-17 font-500 warning mb-0">{{attachmentInfo.name}} ({{attachmentInfo.size}} mb)</h5>

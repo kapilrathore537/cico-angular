@@ -20,3 +20,20 @@
 .all-course-images::-webkit-scrollbar{
     display: none;
 }
+
+
+
+.image_gif{
+    margin-top: -10rem;
+    margin-left: 8rem;
+    height: 500px !important;
+    width: 600px !important;
+    opacity: 0.5;
+    pointer-events: none; 
+    border-bottom-right-radius: 18rem;
+}
+
+.gif_image_class{
+    padding-left: 245px;
+    padding-top: 180px;
+}

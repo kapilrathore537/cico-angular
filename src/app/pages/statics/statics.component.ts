@@ -24,6 +24,7 @@ import { Content, TDocumentDefinitions } from 'pdfmake/interfaces';
 import { Profile } from 'src/app/entity/profile';
 import { profile } from 'console';
 
+
 (pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
 
 export type AssignmentOption = {

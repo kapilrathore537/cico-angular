@@ -183,7 +183,6 @@ export class StaticsComponent {
     const pdfFileName = `Result & Statistics.pdf`;
     pdfMake.createPdf(documentDefinition).open();
     document.getElementById('pdf')!.hidden = false;
-
     });
   }
 }

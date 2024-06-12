@@ -177,9 +177,12 @@ export class StaticsComponent {
           { image: imgData, width: 500, marginTop: 50 }, // Image
         ],
       };
-      // Create and open PDF
-      pdfMake.createPdf(documentDefinition).open();
-      document.getElementById('pdf')!.hidden = false;
+
+    // Create and download the PDF with the specified file name
+    const pdfFileName = `Result & Statistics.pdf`;
+    pdfMake.createPdf(documentDefinition).download(pdfFileName);
+    document.getElementById('pdf')!.hidden = false;
+
     });
   }
 }

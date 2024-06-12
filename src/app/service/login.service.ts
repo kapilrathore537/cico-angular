@@ -51,7 +51,7 @@ export class LoginService {
       let tokenData = this.getDecodedAccessToken(token);
     if(tokenData!=null)
       return tokenData.StudentId;
-    }
+    }else
     return null;
   }
   public getAdminId(){

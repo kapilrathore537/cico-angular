@@ -52,24 +52,24 @@ export class AppComponent  implements OnInit {
     // for managing the routes ///////
 
 
-    // Listen for router events
-    this.router.events.subscribe((event: any) => {
-      if (event instanceof NavigationEnd) {
-        // Store the state of the named outlets in local storage
-        const state = {
-          url: event.url // Store just the URL
-        };
-        sessionStorage.setItem('namedOutletState', JSON.stringify(state));
-      }
-    });
+//     // Listen for router events
+//     this.router.events.subscribe((event: any) => {
+//       if (event instanceof NavigationEnd) {
+//         // Store the state of the named outlets in local storage
+//         const state = {
+//           url: event.url // Store just the URL
+//         };
+//         sessionStorage.setItem('namedOutletState', JSON.stringify(state));
+//       }
+//     });
 
-    // Check if there is any stored state for named outlets
-    const storedState = sessionStorage.getItem('namedOutletState');
-    if (storedState) {
-      const state = JSON.parse(storedState);
-      // Navigate to the named outlets using the stored URL
-      const decodedUrl = decodeURIComponent(state.url);
-      this.router.navigateByUrl(decodedUrl); // Use navigateByUrl instead of navigate
-    }
+//     // Check if there is any stored state for named outlets
+//     const storedState = sessionStorage.getItem('namedOutletState');
+//     if (storedState) {
+//       const state = JSON.parse(storedState);
+//       // Navigate to the named outlets using the stored URL
+//       const decodedUrl = decodeURIComponent(state.url);
+//       this.router.navigateByUrl(decodedUrl); // Use navigateByUrl instead of navigate
+//     }
  }
 }

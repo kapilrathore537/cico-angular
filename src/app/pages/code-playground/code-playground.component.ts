@@ -8,7 +8,7 @@ import { Component } from '@angular/core';
 export class CodePlaygroundComponent {
   langid: any;
 
-  languages: string[] = ['java', 'c', 'c++' , 'python'];
+  languages: string[] = ['java', 'c', 'c++', 'python'];
   selectedLanguage: string = 'java';
   dropdownOpen: boolean = false;
   codeSnippets: { [key: string]: string } = {
@@ -45,177 +45,174 @@ int main() {
     this.selectedLanguage = language;
     this.dropdownOpen = false;
   }
-submitdata(){
-  if(this.selectedLanguage==="java")
-    {
+  submitdata() {
+    if (this.selectedLanguage === "java") {
       this.submitTryitjava();
 
     }
-    else if(this.selectedLanguage==="python"){
+    else if (this.selectedLanguage === "python") {
       this.submitTryitpython();
     }
-    else if(this.selectedLanguage==="c")
-      {
-        this.submitTryitcc();
-      }
-      else if(this.selectedLanguage==="c++")
-        {
-          this.submitTryitcpp();
-        }
-}
-submitTryitcpp(): void {
-
-  const editor = (window as any).editor;
-
-  if (editor) {
-    editor.save();
+    else if (this.selectedLanguage === "c") {
+      this.submitTryitcc();
+    }
+    else if (this.selectedLanguage === "c++") {
+      this.submitTryitcpp();
+    }
   }
+  submitTryitcpp(): void {
 
-  const textArea = document.getElementById("textareaCode") as HTMLTextAreaElement;
-  const text = textArea.value;
+    const editor = (window as any).editor;
 
-  const ifr = document.createElement("iframe");
-  ifr.setAttribute("frameborder", "0");
-  ifr.setAttribute("id", "iframeResult");
-  ifr.setAttribute("name", "iframeResult");
+    if (editor) {
+      editor.save();
+    }
 
-  const iframeWrapper = document.getElementById("iframewrapper") as HTMLElement;
-  iframeWrapper.innerHTML = "";
-  iframeWrapper.appendChild(ifr);
+    const textArea = document.getElementById("textareaCode") as HTMLTextAreaElement;
+    const text = textArea.value;
 
-  const iframeResult = document.getElementById("iframeResult") as HTMLIFrameElement;
-  iframeResult.addEventListener("load", this.hideSpinner);
-  this.displaySpinner();
+    const ifr = document.createElement("iframe");
+    ifr.setAttribute("frameborder", "0");
+    ifr.setAttribute("id", "iframeResult");
+    ifr.setAttribute("name", "iframeResult");
 
-  let t = text;
-  t = t.replace(/=/gi, "w3equalsign");
-  t = t.replace(/\+/gi, "w3plussign");
+    const iframeWrapper = document.getElementById("iframewrapper") as HTMLElement;
+    iframeWrapper.innerHTML = "";
+    iframeWrapper.appendChild(ifr);
 
-  let pos = t.search(/script/i);
-  while (pos > 0) {
-    t =
-      t.substring(0, pos) +
-      "w3" +
-      t.substr(pos, 3) +
-      "w3" +
-      t.substr(pos + 3, 3) +
-      "tag" +
-      t.substr(pos + 6);
-    pos = t.search(/script/i);
+    const iframeResult = document.getElementById("iframeResult") as HTMLIFrameElement;
+    iframeResult.addEventListener("load", this.hideSpinner);
+    this.displaySpinner();
+
+    let t = text;
+    t = t.replace(/=/gi, "w3equalsign");
+    t = t.replace(/\+/gi, "w3plussign");
+
+    let pos = t.search(/script/i);
+    while (pos > 0) {
+      t =
+        t.substring(0, pos) +
+        "w3" +
+        t.substr(pos, 3) +
+        "w3" +
+        t.substr(pos + 3, 3) +
+        "tag" +
+        t.substr(pos + 6);
+      pos = t.search(/script/i);
+    }
+
+    const code = document.getElementById("code") as HTMLInputElement;
+    code.value = t;
+
+    const codeForm = document.getElementById("codeForm") as HTMLFormElement;
+    codeForm.action = `https://try.w3schools.com/try_cpp.php?x=${Math.random()}`;
+    codeForm.method = "post";
+    codeForm.acceptCharset = "utf-8";
+    codeForm.target = "iframeResult";
+    codeForm.submit();
   }
+  submitTryitcc(): void {
 
-  const code = document.getElementById("code") as HTMLInputElement;
-  code.value = t;
+    const editor = (window as any).editor;
 
-  const codeForm = document.getElementById("codeForm") as HTMLFormElement;
-  codeForm.action = `https://try.w3schools.com/try_cpp.php?x=${Math.random()}`;
-  codeForm.method = "post";
-  codeForm.acceptCharset = "utf-8";
-  codeForm.target = "iframeResult";
-  codeForm.submit();
-}
-submitTryitcc(): void {
+    if (editor) {
+      editor.save();
+    }
 
-  const editor = (window as any).editor;
+    const textArea = document.getElementById("textareaCode") as HTMLTextAreaElement;
+    const text = textArea.value;
 
-  if (editor) {
-    editor.save();
+    const ifr = document.createElement("iframe");
+    ifr.setAttribute("frameborder", "0");
+    ifr.setAttribute("id", "iframeResult");
+    ifr.setAttribute("name", "iframeResult");
+
+    const iframeWrapper = document.getElementById("iframewrapper") as HTMLElement;
+    iframeWrapper.innerHTML = "";
+    iframeWrapper.appendChild(ifr);
+
+    const iframeResult = document.getElementById("iframeResult") as HTMLIFrameElement;
+    iframeResult.addEventListener("load", this.hideSpinner);
+    this.displaySpinner();
+
+    let t = text;
+    t = t.replace(/=/gi, "w3equalsign");
+    t = t.replace(/\+/gi, "w3plussign");
+
+    let pos = t.search(/script/i);
+    while (pos > 0) {
+      t =
+        t.substring(0, pos) +
+        "w3" +
+        t.substr(pos, 3) +
+        "w3" +
+        t.substr(pos + 3, 3) +
+        "tag" +
+        t.substr(pos + 6);
+      pos = t.search(/script/i);
+    }
+
+    const code = document.getElementById("code") as HTMLInputElement;
+    code.value = t;
+
+    const codeForm = document.getElementById("codeForm") as HTMLFormElement;
+    codeForm.action = `https://try.w3schools.com/try_c.php?x=${Math.random()}`;
+    codeForm.method = "post";
+    codeForm.acceptCharset = "utf-8";
+    codeForm.target = "iframeResult";
+    codeForm.submit();
   }
+  submitTryitpython(): void {
 
-  const textArea = document.getElementById("textareaCode") as HTMLTextAreaElement;
-  const text = textArea.value;
+    const editor = (window as any).editor;
 
-  const ifr = document.createElement("iframe");
-  ifr.setAttribute("frameborder", "0");
-  ifr.setAttribute("id", "iframeResult");
-  ifr.setAttribute("name", "iframeResult");
+    if (editor) {
+      editor.save();
+    }
 
-  const iframeWrapper = document.getElementById("iframewrapper") as HTMLElement;
-  iframeWrapper.innerHTML = "";
-  iframeWrapper.appendChild(ifr);
+    const textArea = document.getElementById("textareaCode") as HTMLTextAreaElement;
+    const text = textArea.value;
 
-  const iframeResult = document.getElementById("iframeResult") as HTMLIFrameElement;
-  iframeResult.addEventListener("load", this.hideSpinner);
-  this.displaySpinner();
+    const ifr = document.createElement("iframe");
+    ifr.setAttribute("frameborder", "0");
+    ifr.setAttribute("id", "iframeResult");
+    ifr.setAttribute("name", "iframeResult");
 
-  let t = text;
-  t = t.replace(/=/gi, "w3equalsign");
-  t = t.replace(/\+/gi, "w3plussign");
+    const iframeWrapper = document.getElementById("iframewrapper") as HTMLElement;
+    iframeWrapper.innerHTML = "";
+    iframeWrapper.appendChild(ifr);
 
-  let pos = t.search(/script/i);
-  while (pos > 0) {
-    t =
-      t.substring(0, pos) +
-      "w3" +
-      t.substr(pos, 3) +
-      "w3" +
-      t.substr(pos + 3, 3) +
-      "tag" +
-      t.substr(pos + 6);
-    pos = t.search(/script/i);
+    const iframeResult = document.getElementById("iframeResult") as HTMLIFrameElement;
+    iframeResult.addEventListener("load", this.hideSpinner);
+    this.displaySpinner();
+
+    let t = text;
+    t = t.replace(/=/gi, "w3equalsign");
+    t = t.replace(/\+/gi, "w3plussign");
+
+    let pos = t.search(/script/i);
+    while (pos > 0) {
+      t =
+        t.substring(0, pos) +
+        "w3" +
+        t.substr(pos, 3) +
+        "w3" +
+        t.substr(pos + 3, 3) +
+        "tag" +
+        t.substr(pos + 6);
+      pos = t.search(/script/i);
+    }
+
+    const code = document.getElementById("code") as HTMLInputElement;
+    code.value = t;
+
+    const codeForm = document.getElementById("codeForm") as HTMLFormElement;
+    codeForm.action = `https://try.w3schools.com/try_python.php?x=${Math.random()}`;
+    codeForm.method = "post";
+    codeForm.acceptCharset = "utf-8";
+    codeForm.target = "iframeResult";
+    codeForm.submit();
   }
-
-  const code = document.getElementById("code") as HTMLInputElement;
-  code.value = t;
-
-  const codeForm = document.getElementById("codeForm") as HTMLFormElement;
-  codeForm.action = `https://try.w3schools.com/try_c.php?x=${Math.random()}`;
-  codeForm.method = "post";
-  codeForm.acceptCharset = "utf-8";
-  codeForm.target = "iframeResult";
-  codeForm.submit();
-}
-submitTryitpython(): void {
-
-  const editor = (window as any).editor;
-
-  if (editor) {
-    editor.save();
-  }
-
-  const textArea = document.getElementById("textareaCode") as HTMLTextAreaElement;
-  const text = textArea.value;
-
-  const ifr = document.createElement("iframe");
-  ifr.setAttribute("frameborder", "0");
-  ifr.setAttribute("id", "iframeResult");
-  ifr.setAttribute("name", "iframeResult");
-
-  const iframeWrapper = document.getElementById("iframewrapper") as HTMLElement;
-  iframeWrapper.innerHTML = "";
-  iframeWrapper.appendChild(ifr);
-
-  const iframeResult = document.getElementById("iframeResult") as HTMLIFrameElement;
-  iframeResult.addEventListener("load", this.hideSpinner);
-  this.displaySpinner();
-
-  let t = text;
-  t = t.replace(/=/gi, "w3equalsign");
-  t = t.replace(/\+/gi, "w3plussign");
-
-  let pos = t.search(/script/i);
-  while (pos > 0) {
-    t =
-      t.substring(0, pos) +
-      "w3" +
-      t.substr(pos, 3) +
-      "w3" +
-      t.substr(pos + 3, 3) +
-      "tag" +
-      t.substr(pos + 6);
-    pos = t.search(/script/i);
-  }
-
-  const code = document.getElementById("code") as HTMLInputElement;
-  code.value = t;
-
-  const codeForm = document.getElementById("codeForm") as HTMLFormElement;
-  codeForm.action = `https://try.w3schools.com/try_python.php?x=${Math.random()}`;
-  codeForm.method = "post";
-  codeForm.acceptCharset = "utf-8";
-  codeForm.target = "iframeResult";
-  codeForm.submit();
-}
   submitTryitjava(): void {
 
     const editor = (window as any).editor;

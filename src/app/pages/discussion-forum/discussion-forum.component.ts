@@ -38,7 +38,6 @@
 //   isMessagLoading: boolean = false
 //   studentId!: number
 
-
 //   constructor(private discussionFormSerice: DiscussionFormServiceService,
 //     private loginService: LoginService,
 //     private utilityService: UtilityServiceService,
@@ -78,7 +77,7 @@
 //     )
 //   }
 
-//   // creaeting like 
+//   // creaeting like
 //   public like(discussionFormId: number) {
 //     this.loaderService.show()
 //     this.discussionFormSerice.addOrRemoveLike(this.loginService.getStudentId(), discussionFormId).subscribe(
@@ -114,7 +113,6 @@
 //               console.log('unknown message type!!');
 
 //           }
-
 
 //           //this.sendMessage(new LikeResponseForm(discussionFormId, DiscussionFormEnum.likeResponse, data.likes, data.isLike, this.loginService.getStudentId()))
 //         },
@@ -294,7 +292,6 @@
 
 //   private timeOut: number = 5000; // 5 seconds
 
-
 //   public pushTypingMessage(
 //     message: any): void {
 //     if (message.status === 'typed') {
@@ -314,7 +311,6 @@
 //         if (this.student.studentId !== message.id)
 //           this.typing.push(message); i.refresh;
 //       }
-
 
 //     }
 //   }
@@ -355,146 +351,187 @@ import { CommentResponseForm } from 'src/app/payload/comment-response-form';
 import { LikeResponseForm } from 'src/app/payload/like-response-form';
 import { Typing } from 'src/app/entity/typing';
 import { ToastService } from 'src/app/service/toast.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { text } from 'stream/consumers';
 
 @Component({
   selector: 'app-discussion-forum',
   templateUrl: './discussion-forum.component.html',
-  styleUrls: ['./discussion-forum.component.scss']
+  styleUrls: ['./discussion-forum.component.scss'],
 })
 export class DiscussionForumComponent implements OnInit {
-
-  discussionFormList: DiscussionFormResponse[] = []
-  student: StudentDetails = new StudentDetails
-  comment: string = ''
-  commentResponse: CommentResponse = new CommentResponse
-  likeResponse = new LikeResponse
-  discussionFormResponse: DiscussionFormResponse = new DiscussionFormResponse
-  discussionForm = new DiscussionFormResponse
-  commnetVisibility: boolean[] = []
+  discussionFormList: DiscussionFormResponse[] = [];
+  student: StudentDetails = new StudentDetails();
+  comment: string = '';
+  commentResponse: CommentResponse = new CommentResponse();
+  likeResponse = new LikeResponse();
+  discussionFormResponse: DiscussionFormResponse = new DiscussionFormResponse();
+  discussionForm = new DiscussionFormResponse();
+  commnetVisibility: boolean[] = [];
   message!: string;
-  typing: Typing[] = []
+  typing: Typing[] = [];
   isMessageSend: Boolean = false;
-  isMessagLoading: boolean = false
+  isMessagLoading: boolean = false;
+  inputForm!: FormGroup;
 
-
-  constructor(private discussionFormSerice: DiscussionFormServiceService,
+  constructor(
+    private discussionFormSerice: DiscussionFormServiceService,
     private loginService: LoginService,
     private utilityService: UtilityServiceService,
     private studentService: StudentService,
     private webSocketService: WebsocketServiceDiscussionFormService,
-    private toast: ToastService
-  ) { }
+    private toast: ToastService,
+    private formBuilder: FormBuilder
+  ) {
+    this.inputForm = this.formBuilder.group({
+      content: ['', Validators.required],
+    });
+  }
 
   ngOnInit(): void {
-    this.getAllForms()
+    this.getAllForms();
     this.getStudent();
     this.connect();
   }
 
   public getAllForms() {
     this.isMessagLoading = true;
-    this.discussionFormSerice.getAllDiscussionForm(this.loginService.getStudentId()).subscribe(
-      {
+    this.discussionFormSerice
+      .getAllDiscussionForm(this.loginService.getStudentId())
+      .subscribe({
         next: (data: any) => {
-          this.discussionFormList = data.response
-          this.isMessagLoading = false
+          this.discussionFormList = data.response;
+          this.isMessagLoading = false;
         },
         error: (er) => {
-          alert('something went wrong...')
-        }
-      }
-    )
+          alert('something went wrong...');
+        },
+      });
   }
 
   public like(discussionFormId: number) {
-    this.discussionFormSerice.addOrRemoveLike(this.loginService.getStudentId(), discussionFormId).subscribe(
-      {
+    this.discussionFormSerice
+      .addOrRemoveLike(this.loginService.getStudentId(), discussionFormId)
+      .subscribe({
         next: (data: any) => {
-          let form = this.discussionFormList.find(obj => obj.id === discussionFormId) as DiscussionFormResponse
+          let form = this.discussionFormList.find(
+            (obj) => obj.id === discussionFormId
+          ) as DiscussionFormResponse;
           //  form.likes = data.likes
-          this.sendMessage(new LikeResponseForm(discussionFormId, 'likeResponse', data.likes, data.isLike, this.loginService.getStudentId()))
+          this.sendMessage(
+            new LikeResponseForm(
+              discussionFormId,
+              'likeResponse',
+              data.likes,
+              data.isLike,
+              this.loginService.getStudentId()
+            )
+          );
         },
         error: (er) => {
-          alert('something went wrong...')
-
-        }
-      }
-    )
+          alert('something went wrong...');
+        },
+      });
   }
 
   public getStudent() {
-    this.studentService.getByStudentById(this.loginService.getStudentId()).subscribe(
-      {
+    this.studentService
+      .getByStudentById(this.loginService.getStudentId())
+      .subscribe({
         next: (data: any) => {
-          this.student = data
-        }
-      }
-    )
+          this.student = data;
+        },
+      });
   }
   public date(date: any) {
-    return this.utilityService.updateTimeline(date)
+    return this.utilityService.updateTimeline(date);
   }
 
   public createComment(id: number) {
-    if (this.comment === '' || this.comment === ' ')
-      return
-    this.discussionFormSerice.creatCommnet(this.loginService.getStudentId(), id, this.comment).subscribe(
-      {
+    if (this.comment === '' || this.comment === ' ') return;
+    this.discussionFormSerice
+      .creatCommnet(this.loginService.getStudentId(), id, this.comment)
+      .subscribe({
         next: (data: any) => {
           //let form = this.discussionFormList.find(obj => obj.id === id) as DiscussionFormResponse
           //this.commentResponse = data
           //  form.comments.push(this.commentResponse)
-          this.comment = ''
-          this.sendTypingUser('typed')
-          this.sendMessage(new CommentResponseForm(id, data.studentProfilePic, data.studentName, data.content, (data.createdDate).toString(), data.id, 'commentResponse'))
-
+          this.comment = '';
+          this.sendTypingUser('typed');
+          this.sendMessage(
+            new CommentResponseForm(
+              id,
+              data.studentProfilePic,
+              data.studentName,
+              data.content,
+              data.createdDate.toString(),
+              data.id,
+              'commentResponse'
+            )
+          );
         },
         error: (er) => {
-          this.toast.showSuccess('Already commented...', '')
-        }
-      }
-    )
-
+          this.toast.showSuccess('Already commented...', '');
+        },
+      });
   }
 
-  isTrue: boolean = false
+  isTrue: boolean = false;
   public createDiscussionForm() {
-    if (this.isTrue) {
-      this.message = ''
-      this.isTrue = false
-      this.isMessageSend = true
-      this.discussionFormSerice.createDiscussionForm(this.student.studentId, this.discussionForm.content, this.discussionForm.file, this.discussionForm.audioFile).subscribe(
-        {
+    if (this.inputForm.invalid) {
+      return;
+    } else {
+      this.message = '';
+      this.isTrue = false;
+      this.isMessageSend = true;
+      this.discussionFormSerice
+        .createDiscussionForm(
+          this.student.studentId,
+          this.discussionForm.content,
+          this.discussionForm.file,
+          this.discussionForm.audioFile
+        )
+        .subscribe({
           next: (data: any) => {
             // this.discussionFormList.push(data);
-            let obj = new DiscussionResponseForm(data.studentProfilePic, data.studentName, data.content, (data.createdDate).toString(), data.id, 'createDiscussionForm', data.file, this.student.studentId, data.audioFile);
-            this.discussionForm = new DiscussionFormResponse()
+            let obj = new DiscussionResponseForm(
+              data.studentProfilePic,
+              data.studentName,
+              data.content,
+              data.createdDate.toString(),
+              data.id,
+              'createDiscussionForm',
+              data.file,
+              this.student.studentId,
+              data.audioFile
+            );
+            this.discussionForm = new DiscussionFormResponse();
             this.sendMessage(obj);
-            //  this.isMessageSend = false
+            //  this.isMessageSend =
+            this.inputForm.reset();
           },
           error: (er) => {
-            alert('something went wrong...')
-          }
-        }
-      )
-    } else {
-      this.message = 'message can not be empty'
-      this.isTrue = false
+            alert('something went wrong...');
+          },
+        });
     }
   }
 
   public clearMessage() {
-    if (this.discussionForm.content !== null && this.discussionForm.content !== '' && this.message !== undefined) {
-      this.message = ''
-      this.isTrue = true
+    if (
+      this.discussionForm.content !== null &&
+      this.discussionForm.content !== '' &&
+      this.message !== undefined
+    ) {
+      this.message = '';
+      this.isTrue = true;
     } else {
-      this.message = 'message can not be empty'
-      this.isTrue = false
+      this.message = 'message can not be empty';
+      this.isTrue = false;
     }
   }
 
   public fileEvent(event: any) {
-
     let file: File = event.target.files[0];
     if (file.type.startsWith('audio') || file.type.startsWith('video')) {
       this.discussionForm.audioFile = event.target.files[0];
@@ -506,32 +543,45 @@ export class DiscussionForumComponent implements OnInit {
   }
 
   toggleComment(index: number): void {
-    this.commnetVisibility = [false]
+    this.commnetVisibility = [false];
     this.commnetVisibility[index] = !this.commnetVisibility[index];
   }
   connect() {
     this.webSocketService.getMessages().subscribe((message) => {
       switch (message.type) {
-
         case 'commentResponse':
-          let form = this.discussionFormList.find(obj => obj.id === message.discussionFormId) as DiscussionFormResponse
-          if (form && !form.comments.find(c => c.id === message.id)) {
+          let form = this.discussionFormList.find(
+            (obj) => obj.id === message.discussionFormId
+          ) as DiscussionFormResponse;
+          if (form && !form.comments.find((c) => c.id === message.id)) {
             form.comments.unshift(message);
           }
           break;
         case 'removeComment':
-          let forum = this.discussionFormList.find(obj => obj.id === message.discussionFormId) as DiscussionFormResponse
+          let forum = this.discussionFormList.find(
+            (obj) => obj.id === message.discussionFormId
+          ) as DiscussionFormResponse;
           if (forum) {
-            let index = forum.comments.findIndex(obj1 => obj1.id === message.commentId)
+            let index = forum.comments.findIndex(
+              (obj1) => obj1.id === message.commentId
+            );
             if (index !== -1) {
               forum.comments.splice(index, 1);
             }
           }
           break;
         case 'likeResponse':
-          let form1 = this.discussionFormList.find(obj => obj.id == message.discussionFormId) as DiscussionFormResponse;
+          let form1 = this.discussionFormList.find(
+            (obj) => obj.id == message.discussionFormId
+          ) as DiscussionFormResponse;
 
-          if (form1 && message.likeId && !form1.likes.find(o => o.id === message.likeId || message.likeId === undefined)) {
+          if (
+            form1 &&
+            message.likeId &&
+            !form1.likes.find(
+              (o) => o.id === message.likeId || message.likeId === undefined
+            )
+          ) {
             let newLike = new LikeResponse();
             newLike.id = message.likeId;
             form1.likes.push(newLike);
@@ -543,8 +593,12 @@ export class DiscussionForumComponent implements OnInit {
           break;
 
         case 'removeLike':
-          let form2 = this.discussionFormList.find(obj => obj.id == message.discussionFormId) as DiscussionFormResponse;
-          let likeIndex = form2.likes.findIndex(like => like.id == message.likeId);
+          let form2 = this.discussionFormList.find(
+            (obj) => obj.id == message.discussionFormId
+          ) as DiscussionFormResponse;
+          let likeIndex = form2.likes.findIndex(
+            (like) => like.id == message.likeId
+          );
           console.log(likeIndex);
 
           if (likeIndex !== -1) {
@@ -557,8 +611,8 @@ export class DiscussionForumComponent implements OnInit {
           break;
 
         case 'createDiscussionForm':
-          this.isMessageSend = false
-          if (!this.discussionFormList.find(e => e.id === message.id)) {
+          this.isMessageSend = false;
+          if (!this.discussionFormList.find((e) => e.id === message.id)) {
             this.discussionFormList.unshift(message);
           }
           break;
@@ -569,7 +623,6 @@ export class DiscussionForumComponent implements OnInit {
           console.error('Unknown message type:', message.type);
           break;
       }
-
     });
   }
 
@@ -582,27 +635,24 @@ export class DiscussionForumComponent implements OnInit {
       type: 'typing',
       status: status,
       name: this.student.fullName,
-      id: this.student.studentId
-    }
+      id: this.student.studentId,
+    };
     this.sendMessage(obj);
   }
 
   private timeOut: number = 5000; // 5 seconds
 
-
-  public pushTypingMessage(
-    message: any): void {
+  public pushTypingMessage(message: any): void {
     if (message.status === 'typed') {
-      let obj = this.typing.find(e => e.id == message.id)
+      let obj = this.typing.find((e) => e.id == message.id);
       if (obj) {
         this.removeTypingUser(message);
         return;
       }
     } else {
-      let obj = this.typing.find(e => e.id === message.id) as Typing
+      let obj = this.typing.find((e) => e.id === message.id) as Typing;
       if (!obj) {
-        if (this.student.studentId !== message.id)
-          this.typing.push(message);
+        if (this.student.studentId !== message.id) this.typing.push(message);
         setTimeout(() => {
           this.removeTypingUser(message);
         }, this.timeOut);
@@ -611,7 +661,7 @@ export class DiscussionForumComponent implements OnInit {
   }
 
   public removeTypingUser(message: any) {
-    const index = this.typing.findIndex(obj => obj.id === message.id);
+    const index = this.typing.findIndex((obj) => obj.id === message.id);
     if (index !== -1) {
       this.typing.splice(index, 1)[0] as Typing;
     }
@@ -630,4 +680,3 @@ export class DiscussionForumComponent implements OnInit {
     }
   }
 }
-

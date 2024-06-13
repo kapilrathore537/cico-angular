@@ -16,22 +16,27 @@
             <div class="timeline_post d-flex justify-content-between align-items-center">
               <img class="profilePic" [src]="student.profilePic">
 
-              <form class="form-inline text_input my-2 my-lg-0">
-                <input
-                  [ngClass]="discussionForm.content.length==0?'form_control font-14 font-400 mx-0 search-box':'form_control font-14 font-400 mx-0' "
+            
+
+              <form class="form-inline text_input my-2 my-lg-0" [formGroup]="inputForm">
+                <input formControlName="content" 
+                  [ngClass]="(inputForm.get('content')?.hasError('required') && inputForm.get('content')?.touched) ?'form_control font-14 font-400 mx-0 search-box': 'form_control font-14 font-400 mx-0'"
                   (input)="clearMessage()" type="search" placeholder="Write a post..." name="content"
                   [(ngModel)]="discussionForm.content" />
-                <!-- <h6 style="color: red;">{{  message}}</h6> -->
-              </form>
-              <span class="reply_svg d-flex align-items-center justify-content-center  button"
-                (click)="createDiscussionForm()" *ngIf="isMessageSend==false">
+                  </form> 
+              <span class="reply_svg d-flex align-items-center justify-content-center button" 
+                (click)="createDiscussionForm()" *ngIf="isMessageSend==false else elsePart">
                 <a> <img src="assets/images/svg_img/reply.svg"></a>
               </span>
-              <span class="reply_svg d-flex align-items-center justify-content-center  button" *ngIf="isMessageSend">
-                <h6 style="color: white;"> <i class="fa fa-spinner fa-pulse fa-2x fa-fw"></i>
-                  <span class="sr-only">Loading...</span>
-                </h6>
-              </span>
+
+               <ng-template #elsePart>
+                <span class="reply_svg d-flex align-items-center justify-content-center button"  >
+                  <div class="spinner-border text-light" role="status">
+                    <span class="sr-only">Loading...</span>
+                  </div>
+                </span>
+               </ng-template>
+              
 
             </div>
             <div class="post_btn d-flex align-items-center">

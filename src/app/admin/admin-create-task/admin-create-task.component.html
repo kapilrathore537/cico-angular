@@ -222,11 +222,10 @@
                     <!-- <i class="fi fi-rr-plus-small warning font-36 line-height-0"></i>
                     <h5 class="font-17 font-500 warning mb-0">Add Question</h5> -->
 
-                    <div *ngIf="!loading;else spinner">
-                        <i class="fi fi-rr-plus-small warning font-36 line-height-0"></i>
+                    <div *ngIf="!loading; else spinner" class="d-flex align-items-center">
+                        <i class="fi fi-rr-plus-small warning font-36 line-height-0 mr-2"></i>
                         <h5 class="font-17 font-500 warning mb-0">Add Question</h5>
                     </div>
-
                     <ng-template #spinner>
                         <div class="spinner-border text-light" role="status">
                             <span class="sr-only">Loading...</span>
@@ -241,26 +240,28 @@
 
             <div class="col-md-12">
 
-                <form
-                    [class]="!fileLoading?' button-hover attachment_file2 d-inline-flex align-items-center  position-relative mb-2 add-attechment pointer':' button-hover1 pointer attachment_file2 d-inline-flex align-items-center  position-relative mb-2 add-attechment '">
-                    <input type="file" name="attachment" value="attachment" #attachment (change)="addAttachmentFile($event)"
-                        class="d-none" id="attachment">
-                    <label for="attachment" class="font-17 font-500 d-flex">
-                        <div *ngIf="!fileLoading;else spinner">
-                            <i style="margin-left: 60px;" class="fi fi-rr-plus-small warning font-24 line-height-0"></i>
-                            <h5>Add Attachments</h5>
-                        </div>
 
+
+
+
+                <form (click)="fileChange()"
+                    [class]="!fileLoading ? 'button-hover attachment_file2 d-inline-flex align-items-center position-relative mb-2 add-attechment pointer' : 'button-hover1 pointer attachment_file2 d-inline-flex align-items-center position-relative mb-2 add-attechment'">
+                    <input type="file" name="attachment" value="attachment" #attachment
+                        (change)="addAttachmentFile($event)" class="form-control d-none" id="attachment">
+                    <label for="attachment" class="font-17 font-500 d-flex align-items-center" id="file">
+                        <div *ngIf="!fileLoading;else spinner" class="d-flex align-items-center mt-1">
+                            <i class="fi fi-rr-plus-small warning font-24 line-height-0 mr-2"></i>
+                            <h5 class="mb-0">Add Attachments</h5>
+                        </div>
                         <ng-template #spinner>
                             <div class="spinner-border text-light" role="status">
                                 <span class="sr-only">Loading...</span>
                             </div>
                         </ng-template>
-
                     </label>
-                    
                 </form><br>
-                
+
+
                 <!-- <div class="add-que mb-2" style="padding: 16px 12px;" *ngI>
                     <i class="fi fi-rr-file-zipper warning font-24 line-height-0"></i>
                     <h5 class="font-17 font-500 warning mb-0">{{attachmentInfo.name}} ({{attachmentInfo.size}} mb)</h5>
@@ -270,15 +271,16 @@
                     *ngIf="attachmentInfo.name != '';else elsePart">
                     <i class="fi fi-rr-file-zipper warning font-25 line-height-0"></i>
                     <h5 class="font-17 font-500 warning mb-0">{{attachmentInfo.name}} ({{attachmentInfo.size}} mb)</h5>
-                    <span data-bs-toggle="modal" data-bs-target="#delete-modal1" ><i
+                    <span data-bs-toggle="modal" data-bs-target="#delete-modal1"><i
                             class="fi fi-rr-trash line-height-0  pointer font-24 ms-3 delete-icon-color"></i></span>
                 </div>
 
                 <ng-template #elsePart>
-                    <div class="add-que border-0" style="padding: 16px 12px;" *ngIf="task.taskAttachment!='' && task.taskAttachment!=null">
-                        <a href="{{task.taskAttachment}}">
-                            <i class="fi fi-rr-file-zipper warning font-25 line-height-0"></i>
-                        <h5 class="font-17 font-500 warning mb-0">Attachment</h5>
+                    <div class="add-que border-0" style="padding: 16px 12px;"
+                        *ngIf="task.taskAttachment!='' && task.taskAttachment!=null">
+                        <a href="{{task.taskAttachment}}" class="d-flex align-items-center">
+                            <i class="fi fi-rr-file-zipper warning font-25 line-height-0 mr-2"></i>
+                            <h5 class="font-17 font-500 warning mb-0">Attachment</h5>
                         </a>
                         <span data-bs-toggle="modal" data-bs-target="#delete-modal1"><i
                                 class="fi fi-rr-trash line-height-0 pointer font-24 ms-3 delete-icon-color"></i></span>

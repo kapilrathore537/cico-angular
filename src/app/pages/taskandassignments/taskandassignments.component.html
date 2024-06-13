@@ -41,7 +41,7 @@
             </div>
           </div>
           <div class="all_summary assignment-updates">
-           <div *ngIf="assignmentSubmissionsList.length!=0 else elsepart2">
+           <div *ngIf="assignmentSubmissionsList && assignmentSubmissionsList.length!=0 else elsepart2">
             <app-task-and-assignment-submission
             [submission]="assignmentSubmissionsList"  [title]="'Assignment'" [paginationManager]="assignmentSubmissionPagination" (eventEmit)="getAllData($event)"
             [type]="'AssignmentSubmission'" [pageRequest]="assignmentSubmissionPageRequest"></app-task-and-assignment-submission>
@@ -91,7 +91,7 @@
             <label for="fileupload" class="font-15 font-400 secondary w-75">Select A File</label>
             <button type="button" class="submit_btn0 ms-auto">
               <i class="fi fi-rr-upload mx-1 mb-0 lh-0"></i><a type="btn" value=""
-                class=" font-15 font-400 text-white">Upload File</a>
+                class=" font-15 font-400 text-white">Upload File</a>      
             </button>
           </form>
 

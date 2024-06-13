@@ -1,3 +1,4 @@
+
 export class AssignmentChart{
     assignmentOption = {
         series: [

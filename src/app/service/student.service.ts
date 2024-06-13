@@ -185,4 +185,8 @@ export class StudentService {
     return this.http.get(`${this.studentUrl}/todayAttendanceCountsForAdmin`);
   }
 
+
+  getTaskStatics() {
+    return this.http.get(`${this.studentUrl}/taskStatics?studentId=${this.loginService.getStudentId()}`)
+  }
 }

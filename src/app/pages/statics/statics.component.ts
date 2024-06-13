@@ -23,6 +23,7 @@ import html2canvas from 'html2canvas';
 import { Content, TDocumentDefinitions } from 'pdfmake/interfaces';
 import { Profile } from 'src/app/entity/profile';
 import { profile } from 'console';
+import { LoginService } from 'src/app/service/login.service';
 
 
 (pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
@@ -94,6 +95,7 @@ export class StaticsComponent {
 
   ngOnInit() {
     this.getExamResult();
+    this.getTaskStatics()
   }
 
   public getExamResult() {
@@ -121,10 +123,10 @@ export class StaticsComponent {
       Name: this.student.name,
       Course: this.student.course,
     };
-   // Calculate the current date and time
-   const today = new Date();
-   const formattedDate = today.toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' });
-   const formattedTime = today.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' });
+    // Calculate the current date and time
+    const today = new Date();
+    const formattedDate = today.toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' });
+    const formattedTime = today.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' });
 
     // Create an array to hold content elements
     const contentArray: Content[] = [];
@@ -160,7 +162,7 @@ export class StaticsComponent {
       }
 
       // Add a horizontal line
-      const horizontalLine:any = {
+      const horizontalLine: any = {
         canvas: [
           {
             type: 'line',
@@ -178,10 +180,10 @@ export class StaticsComponent {
       const documentDefinition: TDocumentDefinitions = {
         header: {
           columns: [
-              { text: '' },
-              { text: `${formattedDate} ${formattedTime}`, alignment: 'right', margin: [0, 10, 10, 0] }
+            { text: '' },
+            { text: `${formattedDate} ${formattedTime}`, alignment: 'right', margin: [0, 10, 10, 0] }
           ]
-      },
+        },
         content: [
           contentArray,
           horizontalLine,
@@ -189,10 +191,26 @@ export class StaticsComponent {
         ],
       };
 
-    // Create and download the PDF with the specified file name
-    const pdfFileName = `Result & Statistics.pdf`;
-    pdfMake.createPdf(documentDefinition).open();
-    document.getElementById('pdf')!.hidden = false;
+      // Create and download the PDF with the specified file name
+      const pdfFileName = `Result & Statistics.pdf`;
+      pdfMake.createPdf(documentDefinition).open();
+      document.getElementById('pdf')!.hidden = false;
     });
+  }
+
+
+  getTaskStatics() {
+    this.studentService.getTaskStatics().subscribe({
+      next: (data: any) => {
+        this.assignmentOption.series[1].data=data.totalAccepted
+        this.assignmentOption.series[2].data=data.totalRejected
+        this.assignmentOption.series[0].data =data.totalSubmitted
+        this.assignmentOption.xaxis.categories = data.categories;
+        window.dispatchEvent(new Event('resize'));
+      },
+      error: (er: any) => {
+  
+      }
+    })
   }
 }

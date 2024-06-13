@@ -70,19 +70,21 @@ export class AdminCreateAssignmentsComponent implements OnInit {
   }
 
   public addImageFile(event: any) {
-    this.taskQuestion.questionImages.push(event.target.files[0]);
-    const selectedFile = event.target.files[0];
+    if (event.target.files[0]) {
+      this.taskQuestion.questionImages.push(event.target.files[0]);
+      const selectedFile = event.target.files[0];
 
-    if (selectedFile) {
-      const reader = new FileReader();
-      reader.onload = (e: any) => {
-        this.imagePreview.push(e.target.result);
-        this.imageName.push(selectedFile.name);
-      };
-      reader.readAsDataURL(selectedFile);
-    } else {
-      this.imagePreview.push('');
-      this.imageName.push('');
+      if (selectedFile) {
+        const reader = new FileReader();
+        reader.onload = (e: any) => {
+          this.imagePreview.push(e.target.result);
+          this.imageName.push(selectedFile.name);
+        };
+        reader.readAsDataURL(selectedFile);
+      } else {
+        this.imagePreview.push('');
+        this.imageName.push('');
+      }
     }
   }
   url: string = '';
@@ -144,13 +146,11 @@ export class AdminCreateAssignmentsComponent implements OnInit {
 
   // }
 
-  fileLoading: boolean = false;
-
-  triggerFileInput(event:any) {
-    const fileInput = document.getElementById('attachment') as HTMLInputElement;
-    fileInput.click();
-    
+  fileChange() {
+    document.getElementById('file')?.click;
   }
+
+  fileLoading: boolean = false;
 
   deleteAttachment(attachment: HTMLInputElement) {
     attachment.value = '';

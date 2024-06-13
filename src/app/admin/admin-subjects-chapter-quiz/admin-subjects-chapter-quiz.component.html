@@ -19,14 +19,14 @@
 
     <!-- DASHBOARD START -->
 
-    <div class="scroll_sec mt-0">
+
         <div class="d-flex align-items-center justify-content-between">
             <h3 class="admin-title font-17 font-600 secondary position-relative">Chapter Test</h3>
             <a (click)="pageRenderUsingRouterLink('/admin/subjectContent')" type="button"
                 class="back_button font-15 font-500 d-flex justify-content-center align-items-center lh-0"><i
                     class="fi fi-rr-arrow-left lh-0"></i>Back</a>
         </div>
-        
+        <div class="scroll_sec mt-0">
         <div class="row mt-3">
             <div class="hh">
                 <div class="col-md-12" *ngFor="let obj of questions let a =index">

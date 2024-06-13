@@ -21,17 +21,17 @@ import { AppUtils } from 'src/app/utils/app-utils';
 @Component({
   selector: 'app-admin-create-task',
   templateUrl: './admin-create-task.component.html',
-  styleUrls: ['./admin-create-task.component.scss']
+  styleUrls: ['./admin-create-task.component.scss'],
 })
 export class AdminCreateTaskComponent {
-  task: Task = new Task()
-  subjects: Subject[] = []
-  courses: Course[] = []
+  task: Task = new Task();
+  subjects: Subject[] = [];
+  courses: Course[] = [];
   taskId: number = 0;
-  question: TaskQuestion = new TaskQuestion()
+  question: TaskQuestion = new TaskQuestion();
   public Editor = ClassicEditor;
-  questionIndex!: number
-  taskData: Task = new Task()
+  questionIndex!: number;
+  taskData: Task = new Task();
 
   //taskData: Task = new Task
   taskQuestion: TaskQuestionRequest = new TaskQuestionRequest();
@@ -40,144 +40,142 @@ export class AdminCreateTaskComponent {
   newImg = '';
   attachmentInfo = {
     name: '',
-    size: 0
+    size: 0,
   };
   questionId: number = 0;
   secondTaskForm: FormGroup;
-  loading: boolean = false
+  loading: boolean = false;
 
-  constructor(private activateRouter: ActivatedRoute,
+  constructor(
+    private activateRouter: ActivatedRoute,
     private subjectService: SubjectService,
     private courseService: CourseServiceService,
     private taskService: TaskServiceService,
     private router: Router,
     private utilityService: UtilityServiceService,
     private formBuilder: FormBuilder,
-    private toast: ToastService) {
-
+    private toast: ToastService
+  ) {
     this.secondTaskForm = this.formBuilder.group({
-      question: ['', Validators.required]
-    })
+      question: ['', Validators.required],
+    });
   }
 
   ngOnInit() {
-    this.taskId = this.activateRouter.snapshot.params[('id')]
-    this.getTask()
+    this.taskId = this.activateRouter.snapshot.params['id'];
+    this.getTask();
   }
 
   public getTask() {
-    this.taskService.getTaskById(this.taskId).subscribe(
-      (data: any) => {
-        this.task = data.task;
-        // this.attachmentInfo.name = this.task.taskAttachment != null ? this.task.taskAttachment : ''
-        //   this.taskData.taskQuestion = data.taskQuestion;
-        this.task.taskQuestion.forEach(() => this.expandedQuestions.push(false));
-      }
-    )
+    this.taskService.getTaskById(this.taskId).subscribe((data: any) => {
+      this.task = data.task;
+      // this.attachmentInfo.name = this.task.taskAttachment != null ? this.task.taskAttachment : ''
+      //   this.taskData.taskQuestion = data.taskQuestion;
+      this.task.taskQuestion.forEach(() => this.expandedQuestions.push(false));
+    });
   }
 
   public getCourses() {
-    this.courseService.getAllCourses(0, 100).subscribe(
-      (data: any) => {
-        this.courses = data.response
-      }
-    )
+    this.courseService.getAllCourses(0, 100).subscribe((data: any) => {
+      this.courses = data.response;
+    });
   }
   public getSubjects() {
-    this.subjects = this.task.course.subjects
+    this.subjects = this.task.course.subjects;
   }
 
   public deleteTaskQuestion() {
-    this.taskService.deleteTaskQuestion(this.questionId).subscribe(
-      {
-        next: (data: any) => {
-          this.task.taskQuestion.splice(this.questionIndex, 1)
-          this.toast.showSuccess(data.message, 'Success')
-          AppUtils.modelDismiss('delete-task-modal')
-        },
-        error: (er: any) => {
-          this.toast.showError(er.error.message, 'Error')
-        }
-      }
-    )
+    this.taskService.deleteTaskQuestion(this.questionId).subscribe({
+      next: (data: any) => {
+        this.task.taskQuestion.splice(this.questionIndex, 1);
+        this.toast.showSuccess(data.message, 'Success');
+        AppUtils.modelDismiss('delete-task-modal');
+      },
+      error: (er: any) => {
+        this.toast.showError(er.error.message, 'Error');
+      },
+    });
   }
 
   setQuestionId(id: number) {
     this.questionId = id;
   }
 
-  fileName: string = ''
+  fileName: string = '';
 
   public addAttachmentFile(event: any) {
     const data = event.target.files[0];
     this.taskData.taskAttachment = data;
     this.taskData.taskId = this.taskId;
-    this.fileName = data.name
+    this.fileName = data.name;
     this.addAttachment();
   }
-  
 
   public addTaskQuestion() {
     if (this.secondTaskForm.invalid) {
-      this.secondFormControl()
+      this.secondFormControl();
       return;
     } else {
-      this.loading = true
-      this.taskService.addQuestionInTask(this.taskQuestion, this.taskId).subscribe(
-        {
+      this.loading = true;
+      this.taskService
+        .addQuestionInTask(this.taskQuestion, this.taskId)
+        .subscribe({
           next: (data: any) => {
-            this.task.taskQuestion.push(data)
-            this.toast.showSuccess('Successfully added', 'Success')
+            this.task.taskQuestion.push(data);
+            this.toast.showSuccess('Successfully added', 'Success');
             this.secondTaskForm.reset();
             setTimeout(() => {
-              this.loading = false
+              this.loading = false;
               this.taskQuestion = new TaskQuestionRequest();
               this.imagePreview = [];
               this.imageName = [];
             }, 1000);
           },
           error: (errore) => {
-            this.toast.showError('Error occure', 'Error')
-          }
-        }
-      )
-
+            this.toast.showError('Error occure', 'Error');
+          },
+        });
     }
   }
 
-  fileLoading: boolean = false
+  fileLoading: boolean = false;
 
   addAttachment() {
-    this.fileLoading = true
+    this.fileLoading = true;
     this.taskService.addAttachment(this.taskData).subscribe({
       next: (data: any) => {
         this.attachmentInfo.name = this.fileName;
         this.fileLoading = false;
-        this.toast.showSuccess('Successfully attachement added', 'Success')
-      }, error: (er: any) => {
-        this.fileLoading = false
-        this.toast.showError('Please try another one  or retry', 'Error')
-      }
-    })
+        this.toast.showSuccess('Successfully attachement added', 'Success');
+      },
+      error: (er: any) => {
+        this.fileLoading = false;
+        this.toast.showError('Please try another one  or retry', 'Error');
+      },
+    });
   }
 
   public addImageFile(event: any) {
-    this.taskQuestion.questionImages.push(event.target.files[0]);
 
-    const selectedFile = event.target.files[0];
+    let file =event.target.files[0]
+    if (file) {
+      this.taskQuestion.questionImages.push(file);
 
-    if (selectedFile) {
-      const reader = new FileReader();
+      const selectedFile = file
 
-      reader.onload = (e: any) => {
-        this.imagePreview.push(e.target.result);
-        this.imageName.push(selectedFile.name);
-      };
+      if (selectedFile) {
+        const reader = new FileReader();
 
-      reader.readAsDataURL(selectedFile);
-    } else {
-      this.imagePreview.push('');
-      this.imageName.push('');
+        reader.onload = (e: any) => {
+          this.imagePreview.push(e.target.result);
+          this.imageName.push(selectedFile.name);
+        };
+
+        reader.readAsDataURL(selectedFile);
+      } else {
+        this.imagePreview.push('');
+        this.imageName.push('');
+      }
     }
   }
   expandedQuestions: boolean[] = [];
@@ -185,10 +183,9 @@ export class AdminCreateTaskComponent {
     this.expandedQuestions[index] = !this.expandedQuestions[index];
   }
 
-
-  public deleteImage(index: number,file:HTMLInputElement) {
+  public deleteImage(index: number, file: HTMLInputElement) {
     if (index >= 0 && index < this.taskQuestion.questionImages.length) {
-      file.value=''
+      file.value = '';
       this.taskQuestion.questionImages.splice(index, 1);
       this.imagePreview.splice(index, 1);
       this.imageName.splice(index, 1);
@@ -201,29 +198,33 @@ export class AdminCreateTaskComponent {
   }
 
   public secondFormControl() {
-    AppUtils.submissionFormFun(this.secondTaskForm)
+    AppUtils.submissionFormFun(this.secondTaskForm);
   }
 
   public pageRenderUsingRouterLink(path: string, questionId: number) {
     const dataParams = {
       id: questionId,
-      type: "taskQuestion",
-      taskId: this.taskId
+      type: 'taskQuestion',
+      taskId: this.taskId,
     };
     this.router.navigate([path], {
-      queryParams: dataParams
+      queryParams: dataParams,
     });
   }
 
-  deleteAttachement(attachment:HTMLInputElement) {
+  deleteAttachement(attachment: HTMLInputElement) {
     this.taskService.deleteAttachement(this.taskId).subscribe({
       next: (data: any) => {
-        attachment.value=''
+        attachment.value = '';
         this.toast.showSuccess('success', '');
-        this.attachmentInfo.name = ''
-        this.task.taskAttachment = ''
-        AppUtils.modelDismiss('delete-task-modal1')
-      }
-    })
+        this.attachmentInfo.name = '';
+        this.task.taskAttachment = '';
+        AppUtils.modelDismiss('delete-task-modal1');
+      },
+    });
+  }
+
+  fileChange() {
+    document.getElementById('file')?.click;
   }
 }

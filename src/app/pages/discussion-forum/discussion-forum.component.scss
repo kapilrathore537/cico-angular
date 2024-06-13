@@ -1,5 +1,6 @@
 .button {
   border: none;
+  width: 55px;
 }
 
 .profilePic {
@@ -10,8 +11,8 @@
 }
 
 .post_img {
-  width: 240px;
-  height: 240px;
+  width: 25rem !important;
+  height: 15rem !important;
 
 }
 
@@ -94,3 +95,4 @@ $speed: 1.1s;
   margin: 0px;
   transform: translate(-63px, 22px) !important; 
 }
+

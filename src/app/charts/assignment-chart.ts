@@ -3,31 +3,29 @@ export class AssignmentChart{
         series: [
             {
               name: "Total Assignment",
-              data: [44, 55, 57, 56, 61, 58,],
-              color:'#00008B'
+              data: [44, 55, 57, 56, 61, 58,44, 55, 57, 56, 61, 58,44, 55, 57, 56, 61, 58,44, 55, 57, 56, 61, 58,44, 55, 57, 56, 61, 58],
+              color:'#4d4dff'
             },
             {
               name: "Accepted",
-              data: [76, 85, 101, 98, 87, 105,],
-              color:'#17A40A'
+              data: [76, 85, 101, 98, 87, 105,76, 85, 101, 98, 87, 105,76, 85, 101, 98, 87, 105,76, 85, 101, 98, 87, 105,76, 85, 101, 98, 87, 105,],
+              color:'#66cc66'
             },
             {
               name: "Rejected",
-              data: [35, 41, 36, 26, 45, 48],
-              color:'#DC0707'
+              data: [76, 85, 101, 98, 87, 105,76, 85, 101, 98, 87, 105,76, 85, 101, 98, 87, 105,76, 85, 101, 98, 87, 105,76, 85, 101, 98, 87, 105,],
+              color:'#ff4d4d'
             }
           ],
           chart: {
             type: "bar",
             height: 350,
-            toolbar: {
-                show: false  // This will remove the toolbar
-            }
+            toolbar:false
           },
           plotOptions: {
             bar: {
               horizontal: false,
-              columnWidth: "80%",
+              columnWidth: "55%",
               endingShape: "rounded"
             }
           },
@@ -36,8 +34,8 @@ export class AssignmentChart{
           },
           stroke: {
             show: true,
-            width: 1,
-            colors: ["#000"],
+            width: 2,
+            colors: ["transparent"]
           },
           xaxis: {
             categories: [

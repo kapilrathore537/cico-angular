@@ -693,4 +693,22 @@ svg {
 .sector {
   fill: rgba(255, 0, 0, 0.14); 
   stroke: #000;
-  stroke-width: 1px;}
+  stroke-width: 1px;
+}
+
+
+.gif_image_class{
+    padding-left: 245px;
+    padding-top: 180px;
+}
+
+.image_gif{
+    margin-top: -10rem;
+    margin-left: -7rem;
+    height: 300px !important;
+    width: 300px !important;
+    opacity: 0.5;
+    pointer-events: none; 
+    border-bottom-right-radius: 10rem;
+    border-bottom-left-radius: 10rem;
+}

@@ -4141,8 +4141,8 @@ a:hover {
   margin-bottom: 6px;
 }
 .send_option {
-  width: 36px;
-  height: 36px;
+  height: 2.2rem;
+  width: 2.5rem;
   background: #49BFCF;
   border-radius: 20px;
   aspect-ratio: 1;

@@ -202,14 +202,31 @@ export class StaticsComponent {
   getTaskStatics() {
     this.studentService.getTaskStatics().subscribe({
       next: (data: any) => {
-        this.assignmentOption.series[1].data=data.totalAccepted
-        this.assignmentOption.series[2].data=data.totalRejected
-        this.assignmentOption.series[0].data =data.totalSubmitted
-        this.assignmentOption.xaxis.categories = data.categories;
-        window.dispatchEvent(new Event('resize'));
+
+        this.assignmentOption.series = [
+          {
+            name: "Total Assignment",
+            data: data.totalSubmitted,
+            color: '#4d4dff'
+          },
+          {
+            name: "Accepted",
+            data: data.totalAccepted,
+            color: '#66cc66'
+          },
+          {
+            name: "Rejected",
+            data: data.totalRejected,
+            color: '#ff4d4d'
+          }
+        ],
+          this.assignmentOption.xaxis = {
+            categories: data.categories
+
+          }
       },
       error: (er: any) => {
-  
+
       }
     })
   }

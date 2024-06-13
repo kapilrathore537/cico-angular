@@ -20,11 +20,11 @@
 
               <form class="form-inline text_input my-2 my-lg-0" [formGroup]="inputForm">
                 <input formControlName="content" 
-                  [ngClass]="(inputForm.get('content')?.hasError('required') && inputForm.get('content')?.touched) ?'form_control font-14 font-400 mx-0 search-box': 'form_control font-14 font-400 mx-0'"
-                  (input)="clearMessage()" type="search" placeholder="Write a post..." name="content"
+                  [ngClass]="(inputForm.get('content')?.hasError('required') && inputForm.get('content')?.touched) ?'form_control font-14 font-400 mx-0 search-box': 'form_control font-14 font-400 mx-0 pointer'"
+                  type="search" placeholder="Write a post..." name="content"
                   [(ngModel)]="discussionForm.content" />
                   </form> 
-              <span class="reply_svg d-flex align-items-center justify-content-center button" 
+              <span  [ngClass]="(inputForm.get('content')?.hasError('required') && inputForm.get('content')?.touched) ?'reply_svg d-flex align-items-center justify-content-center button':'reply_svg d-flex align-items-center justify-content-center button pointer'"
                 (click)="createDiscussionForm()" *ngIf="isMessageSend==false else elsePart">
                 <a> <img src="assets/images/svg_img/reply.svg"></a>
               </span>
@@ -40,7 +40,7 @@
 
             </div>
             <div class="post_btn d-flex align-items-center">
-              <button class="Camera font-13 font-700 d-flex justify-content-center align-items-center">
+              <!-- <button class="Camera font-13 font-700 d-flex justify-content-center align-items-center">
                 <i class="fi fi-rr-camera lh-0"></i>Camera
               </button>
               <button class="select_options">
@@ -50,10 +50,10 @@
                   <label for="imageupload"
                     class="image_upload font-13 font-700 d-flex justify-content-center align-items-center"><i
                       class="fi fi-rr-file lh-0"></i>Gallery</label>
-                </form>
-              </button>
-              <button class="select_options">
-                <form class="d-flex align-items-center  mb-1 position-relative">
+                </form> -->
+              <!-- </button> -->
+              <button class="select_options  " >
+                <form class="d-flex align-items-center  mb-1 position-relative" >
                   <input type="file" name="fileupload" value="fileupload" class="d-none" id="fileupload"
                     accept="audio/mp3, video/mp4, image/*" (change)="fileEvent($event)">
                   <label for="fileupload"
@@ -61,7 +61,15 @@
                       class="fi fi-rr-file lh-0"></i>File</label>
                 </form>
               </button>
+
+             
             </div>
+          <div  class="discussionForm-image" *ngIf="imagePriview">
+            <div class="mx-0 ms-auto mr-0 delete-icon pointer" (click)="deleleImage()">
+              <i class="fi fi-sr-trash light2"></i>
+            </div>
+            <img style="height: 200px;width: 200px;" [src]="imagePriview">
+          </div>
           </div>
           <app-right-side-bar></app-right-side-bar>
 

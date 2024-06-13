@@ -61,6 +61,7 @@
     "stompjs": "^2.3.3",
     "sweetalert2": "^11.6.13",
     "tslib": "^2.3.0",
+    "url": "^0.11.3",
     "web-animations-js": "^2.3.2",
     "zone.js": "~0.12.0"
   },

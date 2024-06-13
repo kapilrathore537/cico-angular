@@ -40,12 +40,6 @@ export class AssignmentChart{
           },
           xaxis: {
             categories: [
-              "Mon",
-              "Tue",
-              "Wed",
-              "Thu",
-              "Fri",
-              "Sat",
             ]
           },
           yaxis: {

@@ -353,6 +353,8 @@ import { Typing } from 'src/app/entity/typing';
 import { ToastService } from 'src/app/service/toast.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { text } from 'stream/consumers';
+import { AppUtils } from 'src/app/utils/app-utils';
+
 
 @Component({
   selector: 'app-discussion-forum',
@@ -373,6 +375,7 @@ export class DiscussionForumComponent implements OnInit {
   isMessageSend: Boolean = false;
   isMessagLoading: boolean = false;
   inputForm!: FormGroup;
+  imagePriview: string = ''
 
   constructor(
     private discussionFormSerice: DiscussionFormServiceService,
@@ -381,7 +384,8 @@ export class DiscussionForumComponent implements OnInit {
     private studentService: StudentService,
     private webSocketService: WebsocketServiceDiscussionFormService,
     private toast: ToastService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+
   ) {
     this.inputForm = this.formBuilder.group({
       content: ['', Validators.required],
@@ -479,10 +483,9 @@ export class DiscussionForumComponent implements OnInit {
   isTrue: boolean = false;
   public createDiscussionForm() {
     if (this.inputForm.invalid) {
+      AppUtils.submissionFormFun(this.inputForm)
       return;
     } else {
-      this.message = '';
-      this.isTrue = false;
       this.isMessageSend = true;
       this.discussionFormSerice
         .createDiscussionForm(
@@ -493,7 +496,7 @@ export class DiscussionForumComponent implements OnInit {
         )
         .subscribe({
           next: (data: any) => {
-            // this.discussionFormList.push(data);
+            this.discussionFormList.unshift(data);
             let obj = new DiscussionResponseForm(
               data.studentProfilePic,
               data.studentName,
@@ -507,8 +510,9 @@ export class DiscussionForumComponent implements OnInit {
             );
             this.discussionForm = new DiscussionFormResponse();
             this.sendMessage(obj);
-            //  this.isMessageSend =
+            this.isMessageSend = false
             this.inputForm.reset();
+            this.imagePriview = ''
           },
           error: (er) => {
             alert('something went wrong...');
@@ -517,29 +521,27 @@ export class DiscussionForumComponent implements OnInit {
     }
   }
 
-  public clearMessage() {
-    if (
-      this.discussionForm.content !== null &&
-      this.discussionForm.content !== '' &&
-      this.message !== undefined
-    ) {
-      this.message = '';
-      this.isTrue = true;
-    } else {
-      this.message = 'message can not be empty';
-      this.isTrue = false;
+
+
+  public fileEvent(event: any) {
+    let file: any = event.target.files[0];
+    if (event.target.files[0]) {
+      if (file.type.startsWith('audio') || file.type.startsWith('video')) {
+        this.discussionForm.audioFile = event.target.files[0];
+        event.target.value = '';
+        this.imagePriview = URL.createObjectURL(file)
+      } else if (file.type.startsWith('image')) {
+        this.discussionForm.file = event.target.files[0];
+        event.target.value = '';
+        this.imagePriview = URL.createObjectURL(file)
+      }
     }
   }
 
-  public fileEvent(event: any) {
-    let file: File = event.target.files[0];
-    if (file.type.startsWith('audio') || file.type.startsWith('video')) {
-      this.discussionForm.audioFile = event.target.files[0];
-      event.target.value = '';
-    } else if (file.type.startsWith('image')) {
-      this.discussionForm.file = event.target.files[0];
-      event.target.value = '';
-    }
+  deleleImage() {
+    this.imagePriview = ''
+    this.discussionForm.audioFile = ''
+    this.discussionForm.file = ''
   }
 
   toggleComment(index: number): void {

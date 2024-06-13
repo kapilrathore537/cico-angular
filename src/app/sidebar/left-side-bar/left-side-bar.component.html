@@ -1,8 +1,9 @@
 <!-- LEFT SIDEBAR START -->
-<div id="mySidebar" class="sidebar" onmouseover="toggleSidebar()"
-  onmouseout="toggleSidebar()">
-  <div class="side-navbar">
+<div   id="mySidebar" class="sidebar" 
+onmouseout="toggleSidebar()">
+<div class="side-navbar">
     <div class="logoleftbar"> <img src="assets/images/temp_img/Smart tracko.png" /></div>
+    <div class="scroll_sec mt-0">
     <a routerLink="/student" [ngClass]="check == 'dashboard' ? 'active' : 'box-hover'"
       (click)="getValueById(lsdv.value)">
       <input #lsdv type="hidden" value="dashboard" />
@@ -64,13 +65,15 @@
                      check == 'playground' ? 'icon-text dashboard' : 'icon-text'
                    ">Code-playground</span></a>
 
-  </div>
+  
+<a [ngClass]="check == 'account' ? 'active' : 'box-hover'" (click)="getValueById(lsdv9.value)"
+(click)="logout()"><input #lsdv9 type="hidden" value="account" /><img
+  src="assets/images/svg_img/New folder/Neutral-User.svg" class="material-icons" id="icon8" /><span
+  [ngClass]="check == 'account' ? 'icon-text dashboard' : 'icon-text'">Logout</span></a>
+</div>
 
-  <div class="side-navbar">
-    <a [ngClass]="check == 'account' ? 'active' : 'box-hover'" (click)="getValueById(lsdv9.value)"
-      (click)="logout()"><input #lsdv9 type="hidden" value="account" /><img
-        src="assets/images/svg_img/New folder/Neutral-User.svg" class="material-icons" id="icon8" /><span
-        [ngClass]="check == 'account' ? 'icon-text dashboard' : 'icon-text'">Logout</span></a>
+ 
+   
     <!-- <a
       routerLink="/student/taskAndAssignment"
       [ngClass]="check == 'setting' ? 'active' : 'box-hover'"
@@ -84,6 +87,7 @@
         >Settings</span
       ></a
     > -->
-  </div>
+  
 
+</div>
 </div>

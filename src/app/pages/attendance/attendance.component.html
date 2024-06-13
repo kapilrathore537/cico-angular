@@ -88,9 +88,6 @@
             </div>
           </div>
           <div *ngIf="attendances" [ngClass]="attendances.length > 6 ? 'scroller-bar' : ''">
-            <h3 class="font-21 font-600 secondary position-relative" *ngIf="attendances.length == 0">
-              NO ATTENDANCE FOUND !!!
-            </h3>
             <div class="all_attendance" *ngFor="let attendance of attendances" data-bs-toggle="modal"
               data-bs-target="#exampleModal3">
               <div class="attendance d-flex align-items-center bg_attendance position-relative"
@@ -127,6 +124,9 @@
                 </div>
               </div>
             </div>
+          </div>
+          <div class="gif_image_class" *ngIf="!attendances">
+            <img class="image_gif" src="../../../assets/images/temp_img/attandance.gif" alt="">
           </div>
         </div>
 

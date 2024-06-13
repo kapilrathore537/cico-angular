@@ -22,22 +22,11 @@
         </div>
       </div>
 
-      <div class="col-md-6 admin-dash-assignment mb-4">
-          <h3 class="admin-title font-17 font-600 secondary position-relative">Assignments</h3>       
-        <div class="assignment-area">
-          <div id="chart">
-            <apx-chart [series]="assignmentOption.series" [chart]="assignmentOption.chart"
-              [dataLabels]="assignmentOption.dataLabels" [plotOptions]="assignmentOption.plotOptions"
-              [yaxis]="assignmentOption.yaxis" [legend]="assignmentOption.legend" [fill]="assignmentOption.fill"
-              [stroke]="assignmentOption.stroke" [tooltip]="assignmentOption.tooltip"
-              [xaxis]="assignmentOption.xaxis"></apx-chart>
-          </div>
-          </div>
-      </div>
-
-      <div class="col-md-6 admin-dash-fees mb-4">
+    
+      <div class="col-md-6 admin-dash-fees mt-10">
         <h3 class="admin-title font-17 font-600 secondary position-relative">Test Detail</h3>
-        <div class="fees-area d-flex align-items-center justify-content-center">
+        <div class="fees-area d-flex align-items-center justify-content-center chart-css">
+          
           <div id="chart">
             <apx-chart [colors]="normalExamOption.colors" [series]="normalExamOption.series"
               [chart]="normalExamOption.chart" [labels]="normalExamOption.labels"
@@ -53,6 +42,30 @@
         </div>
       </div>
     </div>
+    <div class="col-md-12 admin-dash-assignment mb-4">
+      <h3 class="admin-title font-17 font-600 secondary position-relative">Assignments</h3>       
+    <div class="assignment-area">
+      <div id="chart">
+        <apx-chart [series]="assignmentOption.series" [chart]="assignmentOption.chart"
+          [dataLabels]="assignmentOption.dataLabels" [plotOptions]="assignmentOption.plotOptions"
+          [yaxis]="assignmentOption.yaxis" [legend]="assignmentOption.legend" [fill]="assignmentOption.fill"
+          [stroke]="assignmentOption.stroke" [tooltip]="assignmentOption.tooltip"
+          [xaxis]="assignmentOption.xaxis"></apx-chart>
+      </div>
+      </div>
+  </div>
+  <div class="col-md-12 admin-dash-assignment mb-4">
+    <h3 class="admin-title font-17 font-600 secondary position-relative">Tasks</h3>       
+  <div class="assignment-area">
+    <div id="chart">
+      <apx-chart [series]="assignmentOption.series" [chart]="assignmentOption.chart"
+        [dataLabels]="assignmentOption.dataLabels" [plotOptions]="assignmentOption.plotOptions"
+        [yaxis]="assignmentOption.yaxis" [legend]="assignmentOption.legend" [fill]="assignmentOption.fill"
+        [stroke]="assignmentOption.stroke" [tooltip]="assignmentOption.tooltip"
+        [xaxis]="assignmentOption.xaxis"></apx-chart>
+    </div>
+    </div>
+</div>
     </div>
   <img src="../../../assets/images/temp_img/pdf-icon.svg" #pdfButton id="pdf" (click)="downloadAsPDF()" class="pdf-icon">   
   <app-right-side-bar></app-right-side-bar>

@@ -98,7 +98,7 @@ int main() {
         t.substr(pos + 3, 3) +
         "tag" +
         t.substr(pos + 6);
-      pos = t.search(/script/i);
+      pos = t.search(/script/i);   
     }
 
     const code = document.getElementById("code") as HTMLInputElement;

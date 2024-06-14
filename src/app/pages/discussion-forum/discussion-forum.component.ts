@@ -525,15 +525,18 @@ export class DiscussionForumComponent implements OnInit {
 
   public fileEvent(event: any) {
     let file: any = event.target.files[0];
-    if (event.target.files[0]) {
+
+    if (file) {
+      
+      let imageUrl = URL.createObjectURL(file)
       if (file.type.startsWith('audio') || file.type.startsWith('video')) {
-        this.discussionForm.audioFile = event.target.files[0];
+        this.discussionForm.audioFile = file;
         event.target.value = '';
-        this.imagePriview = URL.createObjectURL(file)
+        this.imagePriview = imageUrl
       } else if (file.type.startsWith('image')) {
-        this.discussionForm.file = event.target.files[0];
+        this.discussionForm.file = file;
         event.target.value = '';
-        this.imagePriview = URL.createObjectURL(file)
+        this.imagePriview = imageUrl
       }
     }
   }

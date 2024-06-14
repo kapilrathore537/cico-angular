@@ -15,27 +15,27 @@
           <div class="timeline_massages" id="updown_btn">
             <div class="timeline_post d-flex justify-content-between align-items-center">
               <img class="profilePic" [src]="student.profilePic">
-
-              <form class="form-inline text_input my-2 my-lg-0">
-                <input
-                  [ngClass]="discussionForm.content.length==0?'form_control font-14 font-400 mx-0 search-box':'form_control font-14 font-400 mx-0' "
-                  (input)="clearMessage()" type="search" placeholder="Write a post..." name="content"
-                  [(ngModel)]="discussionForm.content" />
-                <!-- <h6 style="color: red;">{{  message}}</h6> -->
+              <form class="form-inline text_input my-2 my-lg-0" [formGroup]="inputForm">
+                <input formControlName="content"
+                  [ngClass]="(inputForm.get('content')?.hasError('required') && inputForm.get('content')?.touched) ?'form_control font-14 font-400 mx-0 search-box': 'form_control font-14 font-400 mx-0 pointer'"
+                  type="search" placeholder="Write a post..." name="content" [(ngModel)]="discussionForm.content" />
               </form>
-              <span class="reply_svg d-flex align-items-center justify-content-center  button"
-                (click)="createDiscussionForm()" *ngIf="isMessageSend==false">
+              <span
+                [ngClass]="(inputForm.get('content')?.hasError('required') && inputForm.get('content')?.touched) ?'reply_svg d-flex align-items-center justify-content-center button':'reply_svg d-flex align-items-center justify-content-center button pointer'"
+                (click)="createDiscussionForm()" *ngIf="isMessageSend==false else elsePart">
                 <a> <img src="assets/images/svg_img/reply.svg"></a>
               </span>
-              <span class="reply_svg d-flex align-items-center justify-content-center  button" *ngIf="isMessageSend">
-                <h6 style="color: white;"> <i class="fa fa-spinner fa-pulse fa-2x fa-fw"></i>
-                  <span class="sr-only">Loading...</span>
-                </h6>
-              </span>
 
+              <ng-template #elsePart>
+                <span class="reply_svg d-flex align-items-center justify-content-center button">
+                  <div class="spinner-border text-light" role="status">
+                    <span class="sr-only">Loading...</span>
+                  </div>
+                </span>
+              </ng-template>
             </div>
             <div class="post_btn d-flex align-items-center">
-              <button class="Camera font-13 font-700 d-flex justify-content-center align-items-center">
+              <!-- <button class="Camera font-13 font-700 d-flex justify-content-center align-items-center">
                 <i class="fi fi-rr-camera lh-0"></i>Camera
               </button>
               <button class="select_options">
@@ -45,9 +45,9 @@
                   <label for="imageupload"
                     class="image_upload font-13 font-700 d-flex justify-content-center align-items-center"><i
                       class="fi fi-rr-file lh-0"></i>Gallery</label>
-                </form>
-              </button>
-              <button class="select_options">
+                </form> -->
+              <!-- </button> -->
+              <button class="select_options  ">
                 <form class="d-flex align-items-center  mb-1 position-relative">
                   <input type="file" name="fileupload" value="fileupload" class="d-none" id="fileupload"
                     accept="audio/mp3, video/mp4, image/*" (change)="fileEvent($event)">
@@ -56,6 +56,19 @@
                       class="fi fi-rr-file lh-0"></i>File</label>
                 </form>
               </button>
+
+
+            </div>
+            <div class="discussionForm-image" *ngIf="imagePriview">
+              <div class="mx-0 ms-auto mr-0 delete-icon pointer" (click)="deleleImage()">
+                <i class="fi fi-sr-trash light2"></i>
+              </div>
+              <img *ngIf="!discussionForm.audioFile  && !discussionForm.audioFile && imagePriview"
+                style="height: 200px;width: 200px;" [src]="imagePriview">
+              <div
+                *ngIf="discussionForm.audioFile  && discussionForm.audioFile &&  discussionForm.audioFile!=='' &&discussionForm.audioFile !== undefined">
+                <video [src]="imagePriview" class="post_img" controls></video>
+              </div>
             </div>
           </div>
           <app-right-side-bar></app-right-side-bar>
@@ -78,7 +91,8 @@
                   <i class="fi fi-rr-menu-dots info2 font-20 lh-0"></i>
                   <ul class="dropdown-menu delete_dropdown">
                     <li>
-                      <a class="dropdown-item d-flex align-items-center justify-content-center delete_post" href="#"><i class="fi fi-sr-trash lh-0 mx-2 ms-0"></i>Delete Post</a>
+                      <a class="dropdown-item d-flex align-items-center justify-content-center delete_post" href="#"><i
+                          class="fi fi-sr-trash lh-0 mx-2 ms-0"></i>Delete Post</a>
                     </li>
                   </ul>
                 </div>
@@ -87,14 +101,12 @@
 
 
               <div class="d-flex justify-content-center align-items-center mb-1">
-                <div
-                  *ngIf="  obj.audioFile !== 'null'&& obj.audioFile !== null &&  obj.audioFile!=='' &&obj.audioFile !== undefined">
+                <div *ngIf="obj.audioFile  && obj.audioFile &&  obj.audioFile!=='' &&obj.audioFile !== undefined">
                   <video [src]=" obj.audioFile" class="post_img" controls></video>
 
                 </div>
 
-                <div class="assignment_image"
-                  *ngIf="obj.file!=='null' &&obj.file!==null && obj.file!=='' && obj.file !== undefined ">
+                <div class="assignment_image" *ngIf="obj.file  && obj.file!=='' && obj.file !== undefined ">
                   <img [src]="obj.file" (click)="toggleImageSize($event)" class="post_img">
                 </div>
 
@@ -166,24 +178,25 @@
 
                 <div class="comment_section d-flex" *ngFor=" let comment of obj.comments">
                   <div>
-                   <div class="d-flex align-items-center mb-1">
-                     <div class="mx-1 ms-0">
-                      <img class="profilePic" [src]="comment.studentProfilePic">
-                     </div>
-                     <div class="text mx-1">
-                       <h3 class="font-15 font-500 black mb-0">{{comment.studentName}}</h3>
-                       <p class="font-11 font-400 light2 mb-0">{{comment.createdDate | date}}<span class="mx-0 ms-1">{{date(comment.createdDate)}}</span>
-                       </p>
-                     </div>
-                   
-                   </div>
-                   <h3 class="font-15 font-400 text_small">{{comment.content}}</h3>
-                     <h4 class="light2 font-13 font-500 reply_ans">Reply</h4>
+                    <div class="d-flex align-items-center mb-1">
+                      <div class="mx-1 ms-0">
+                        <img class="profilePic" [src]="comment.studentProfilePic">
+                      </div>
+                      <div class="text mx-1">
+                        <h3 class="font-15 font-500 black mb-0">{{comment.studentName}}</h3>
+                        <p class="font-11 font-400 light2 mb-0">{{comment.createdDate | date}}<span
+                            class="mx-0 ms-1">{{date(comment.createdDate)}}</span>
+                        </p>
+                      </div>
+
+                    </div>
+                    <h3 class="font-15 font-400 text_small">{{comment.content}}</h3>
+                    <h4 class="light2 font-13 font-500 reply_ans">Reply</h4>
                   </div>
-                     <div class="mx-0 ms-auto">
-                       <i class="fi fi-sr-trash light2"></i>
-                     </div>
-                 </div>
+                  <div class="mx-0 ms-auto">
+                    <i class="fi fi-sr-trash light2"></i>
+                  </div>
+                </div>
 
                 <!-- end -->
               </div>
@@ -195,11 +208,11 @@
 
             </div>
           </div>
-        <!-- </div>
+          <!-- </div>
         <a href="#updown_btn" class="scroll_btn d-flex justify-content-center align-items-center">
           <img src="assets/images/svg_img/uparrow.svg">
         </a> -->
+        </div>
       </div>
-    </div>
 
-  </div>
+    </div>

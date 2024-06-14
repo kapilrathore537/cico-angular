@@ -2,14 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { dt } from '@fullcalendar/core/internal-common';
 import { error, log } from 'console';
 import { Announcement } from 'src/app/entity/announcement';
-import { Course } from 'src/app/entity/course';
 import { Profile } from 'src/app/entity/profile';
 import { AdminServiceService } from 'src/app/service/admin-service.service';
 import { AnnouncementServiceService } from 'src/app/service/announcement-service.service';
 import { LoginService } from 'src/app/service/login.service';
-import { QRServiceService } from 'src/app/service/qrservice.service';
 import { StudentService } from 'src/app/service/student.service';
-import { UtilityServiceService } from 'src/app/service/utility-service.service';
 import { WebsocketServiceDiscussionFormService } from 'src/app/service/websocket-service-discussion-form-service.service';
 
 @Component({
@@ -21,9 +18,9 @@ import { WebsocketServiceDiscussionFormService } from 'src/app/service/websocket
 export class ProfileBarComponent implements OnInit {
   profileData: Profile = new Profile();
   totalNotifications = 0;
+  role: string = ''
 
   constructor(private studentService: StudentService,
-    private utilityService: UtilityServiceService,
     private loginService: LoginService,
     private adminService: AdminServiceService,
     private announcementService: AnnouncementServiceService, private webSocketService: WebsocketServiceDiscussionFormService) {
@@ -32,9 +29,11 @@ export class ProfileBarComponent implements OnInit {
   ngOnInit(): void {
 
     if (this.loginService.getRole() == 'STUDENT') {
+      this.role = 'STUDENT'
       this.profileData = this.studentService.getStudentHeaderProfileData();
       this.getAllUnseenNotificationCount();
     } else if (this.loginService.getRole() == 'ADMIN') {
+      this.role = 'ADMIN'
       this.profileData = this.adminService.getAdminProfileData()
     }
     this.connect()
@@ -58,7 +57,7 @@ export class ProfileBarComponent implements OnInit {
             this.totalNotifications += 1
           }
         });
-      }else if(message.type=='reloadAnnouncement'){
+      } else if (message.type == 'reloadAnnouncement') {
         this.getAllUnseenNotificationCount()
       }
     });

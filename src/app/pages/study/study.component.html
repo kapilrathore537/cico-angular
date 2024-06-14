@@ -1,7 +1,7 @@
 
   <div id="main" class="main mycourse_page subject_page">
     <div class="profile mb-0 d-flex mb-4">
-      <h1 class="font-27 font-700 secondary mb-0">Study</h1>
+      <h1 class="font-27 font-700 secondary mb-0">Study Material</h1>
      <app-profile-bar></app-profile-bar>
     </div>
 
@@ -16,7 +16,7 @@
     </div>
     <div class="scroll_sec mt-0">
 
-      <div class="row">
+      <div *ngIf="subjects.length!==0 else elsepart1;" class="row">
         <div class="col-md-3 bootstrap_cards" *ngFor="let obj of subjects">
           <a routerLink="/student/chapter/{{obj.subjectId}}">
             <div class="subject_card">
@@ -43,7 +43,12 @@
             </div> <!-- subject_card -->
           </a>         
         </div>
+      </div>
+      <ng-template #elsepart1>
+        <div class="gif_image_class">
+            <img class="image_gif" src="../../../assets/images/temp_img/no-subjects.gif">
         </div>
+    </ng-template>
       </div>
     <!-- SUBJECT END -->
     <app-right-side-bar></app-right-side-bar>

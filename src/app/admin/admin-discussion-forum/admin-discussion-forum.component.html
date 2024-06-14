@@ -32,7 +32,15 @@
                   <p class="font-13 font-400 light2 mb-0">{{discussion.createdDate}} <span class="mx-0 ms-1">{{utilityService.updateTimeline(discussion.createdDate)}}</span></p>
                 </div>
               </div>
+              
               <h4 class="post_subtitle text_small font-17 font-400 lh-21">{{discussion.content}} </h4>
+
+              <div class="d-flex justify-content-center align-items-center mb-1"
+              *ngIf="  discussion.audioFile !== 'null'&& discussion.audioFile !== null &&  discussion.audioFile!=='' &&discussion.audioFile !== undefined">
+              <video [src]=" discussion.audioFile" class="post_img" controls></video>
+
+            </div>
+
               <div class="d-flex justify-content-center align-items-center mb-1" *ngIf="discussion.file!=null && discussion.file!=''" > 
                 <img [src]="discussion.file" class="post_img">
               </div>
@@ -40,7 +48,7 @@
                 <button class="view_details d-flex align-items-center font-14 font-600 lh-0" (click)="newDiscussion=discussion">View & Manage Submit Answer<i class="fi fi-rr-arrow-right ms-2 mx-0 lh-0 iconarrow"></i></button>
             </div>
             </div>
-            <app-right-side-bar></app-right-side-bar>
+           
           </div>
         </div>
         <a href="#updown_btn" class="scroll_btn d-flex justify-content-center align-items-center">

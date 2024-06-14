@@ -1,7 +1,7 @@
 import { LocationStrategy, DatePipe } from '@angular/common';
-import { Component, ElementRef, Renderer2, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, OnDestroy, Renderer2, ViewChild } from '@angular/core';
 import { an } from '@fullcalendar/core/internal-common';
-import { log } from 'console';
+import { log, timeStamp } from 'console';
 import * as moment from 'moment';
 import { Observable, interval, map, switchMap } from 'rxjs';
 import { Assignment } from 'src/app/entity/assignment';
@@ -16,7 +16,7 @@ import { UtilityServiceService } from 'src/app/service/utility-service.service';
   templateUrl: './checkincheckout.component.html',
   styleUrls: ['./checkincheckout.component.scss']
 })
-export class CheckincheckoutComponent {
+export class CheckincheckoutComponent implements OnDestroy{
   color = "--mdc-circular-progress-active-indicator-color: #fffff;"
 
   timer: number = 0;
@@ -30,7 +30,7 @@ export class CheckincheckoutComponent {
   checkInTime = this.attendance.checkInTime
   checkOutTime = this.attendance.checkOutTime
   name: string = ''
-  clock: Observable<Date> | undefined;
+  clock: Observable<Date> | undefined|any;
   dateString: Date | undefined;
   formattedDate: string | null | undefined;
   formattedCheckInTime: any
@@ -45,17 +45,44 @@ export class CheckincheckoutComponent {
     private utilityService: UtilityServiceService,
     private loginService: LoginService,
     private localst: LocationStrategy, private studentService: StudentService
-    , private renderer: Renderer2
+    , private renderer: Renderer2,private cdf:ChangeDetectorRef
   ) { }
+  ngOnDestroy(): void {
+   clearInterval(this.clock);
+  }
+
+time:Date=new Date();
+showTime:any;
 
   ngOnInit(): void {
     this.preventBackButton();
 
-    //Timer API
-    this.clock = interval(1000).pipe(
-      switchMap(() => this.studentService.getCurrentTime()),
-      map((response: any) => new Date(response.datetime))
+    this.studentService.getCurrentTime().subscribe({
+      next:(data:any)=>{
+        this.time=new Date(data.datetime);
+        this.showTime=datePipe.transform(new Date(data.datetime), 'EEEE, MMM d');
+      }
+    })
+
+    // //Timer API
+     this.cdf.detach();
+    this.clock = interval(1000).subscribe({
+    next:()=>{
+      this.time.setSeconds(this.time.getSeconds()+1);
+        this.time=new Date(this.time)
+        this.cdf.detectChanges();
+    }}
     );
+ 
+  //   setInterval(()=>{
+  //        this.time.setSeconds(this.time.getSeconds()+1);
+  //      this.showTime=datePipe.transform(this.time, 'EEEE, MMM d');
+  //      this.showTime=this.time
+  //      console.log("time",this.showTime);
+  //      this.cdf.detectChanges();
+  //   },1000)
+    
+
 
     //Timer API ---> get formattedDate
     const datePipe = new DatePipe('en-US');

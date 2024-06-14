@@ -12,44 +12,55 @@
         <app-profile-bar></app-profile-bar>
     </div>
 
+     <!-- SUBJECT START -->
+     <div class="dashboard_title">
+        <nav aria-label="breadcrumb" class="font-17 font-600 light-black mb-0 lh-36">
+          <ol class="breadcrumb mb-0 mb-3">
+            <li class="breadcrumb-item"><a routerLink="/student" class="gray-light">Home</a></li>
+            <li class="breadcrumb-item  light-black" aria-current="page">Courses</li>
+          </ol>
+        </nav>
+      </div>
     <!-- DASHBOARD START -->
 
     <div class="scroll_sec mt-0">
-        <div class="row">
-            <h3 class="font-21 font-600 secondary position-relative" *ngIf="  totalCourses == 0">
-                NO COURSES AVAILABLE
-            </h3>
-            <div class="col-md-3 bootstrap_cards"
-                *ngFor="let course of courseResponse;trackBy:trackById(course);let i = index">
-                <div class="admin-subject_card">
-                    <div class="admin-subject_card_top">
-                        <div class="admin-subject_name_card">
-                            <div class="admin-sub-left">
-                                <div class="admin-subject-image">
-                                    <img [src]="course.technologyStack.imageName">
-                                </div>
-                                <div class="subject-details">
-                                    <h3 class="subject_heading txt-dark mb-0">{{course.courseName}}</h3>
-                                    <p class="chapter-cout mb-0">{{course.batchesCount}} Batches {{course.subjectCount}}
-                                        Subjects</p>
+        <div class="row"  *ngIf="courseResponse.length!==0 else elsepart1">
+                <div class="col-md-3 bootstrap_cards"
+                    *ngFor="let course of courseResponse;trackBy:trackById(course);let i = index">
+                    <div class="admin-subject_card">
+                        <div class="admin-subject_card_top">
+                            <div class="admin-subject_name_card">
+                                <div class="admin-sub-left">
+                                    <div class="admin-subject-image">
+                                        <img [src]="course.technologyStack.imageName">
+                                    </div>
+                                    <div class="subject-details">
+                                        <h3 class="subject_heading txt-dark mb-0">{{course.courseName}}</h3>
+                                        <p class="chapter-cout mb-0">{{course.batchesCount}} Batches {{course.subjectCount}}
+                                            Subjects</p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <app-drop-down-delete-add-update [deleteModalId]="'#delete-modal'"
-                            [editModalId]="'#course-edit-modal'" [path]="'/admin/coursesbatches/'"
-                            [params]="{courseId:course.courseId}" [id]="course.courseId" [index]="i"
-                            (onClick)="onClick($event)"></app-drop-down-delete-add-update>
-                    </div><!-- subject_card_top -->
-
-                </div> <!-- subject_card -->
+                            <app-drop-down-delete-add-update [deleteModalId]="'#delete-modal'"
+                                [editModalId]="'#course-edit-modal'" [path]="'/admin/coursesbatches/'"
+                                [params]="{courseId:course.courseId}" [id]="course.courseId" [index]="i"
+                                (onClick)="onClick($event)"></app-drop-down-delete-add-update>
+                        </div><!-- subject_card_top -->
+    
+                    </div> <!-- subject_card -->
+                </div>
             </div>
-
-        </div>
+            <ng-template #elsepart1>
+                <div class="gif_image_class1">
+                  <img  class="image_gif1" src="../../../assets/images/temp_img/courses-not-available.gif">
+                </div>
+            </ng-template>
     </div>
+
     <!-- DASHBOARD END -->
 
     <!-- RIGHT SIDE START-->
-    <app-right-side-bar></app-right-side-bar>
+
     <!-- RIGHT SIDE END -->
 
 

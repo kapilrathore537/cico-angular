@@ -88,9 +88,6 @@
             </div>
           </div>
           <div *ngIf="attendances" [ngClass]="attendances.length > 6 ? 'scroller-bar' : ''">
-            <h3 class="font-21 font-600 secondary position-relative" *ngIf="attendances.length == 0">
-              NO ATTENDANCE FOUND !!!
-            </h3>
             <div class="all_attendance" *ngFor="let attendance of attendances" data-bs-toggle="modal"
               data-bs-target="#exampleModal3">
               <div class="attendance d-flex align-items-center bg_attendance position-relative"
@@ -127,6 +124,9 @@
                 </div>
               </div>
             </div>
+          </div>
+          <div class="gif_image_class" *ngIf="!attendances">
+            <img class="image_gif" src="../../../assets/images/temp_img/attandance.gif" alt="">
           </div>
         </div>
 
@@ -516,7 +516,7 @@
             </div>
           </div>
 
-          <form class="attachment_file2 d-flex align-items-center position-relative w-75 file1">
+          <form *ngIf="attendance.attachment" class="attachment_file2 d-flex align-items-center position-relative w-75 file1">
             <input type="file" name="fileupload" value="fileupload" class="d-none" id="fileupload" />
             <label for="fileupload" class="font-15 font-700 secondary text-white attachment_file_text mb-0">
               <i class="fi fi-rr-paperclip-vertical secondary add_more position-absolute light mx-2"></i>

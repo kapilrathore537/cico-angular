@@ -180,7 +180,7 @@ export class RightSideBarComponent implements OnInit, AfterViewInit {
       next: (data: any) => {
         setTimeout(() => {
           this.announcements = data;
-          if(this.announcements){
+          if (this.announcements) {
             this.unseenNotification = this.announcements.length
           }
           this.isDataReloading = false
@@ -244,9 +244,11 @@ export class RightSideBarComponent implements OnInit, AfterViewInit {
           if (this.Coursestatus) {
             this.messages = false
             this.Coursestatus = false;
-  
+
             // Check if the announcement is already in the list
             if (!this.isDuplicate(newObject)) {
+              console.log(newObject);
+              
               this.announcements.unshift(newObject);
             }
           }
@@ -254,16 +256,17 @@ export class RightSideBarComponent implements OnInit, AfterViewInit {
       }
     });
   }
-  
+
   // Helper function to check for duplicates
-  private isDuplicate(newAnnouncement:any) {
+  private isDuplicate(newAnnouncement: any) {
     return this.announcements.some(announcement =>
       announcement.title === newAnnouncement.title &&
       announcement.message === newAnnouncement.message &&
-      announcement.date === newAnnouncement.date
+      announcement.date === newAnnouncement.date &&
+      announcement.announcementId === newAnnouncement.announcementId
     );
   }
-  
+
 
   public async getStudentCourse(course: number[]): Promise<void> {
     let courseId = 0;

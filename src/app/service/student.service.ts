@@ -5,7 +5,7 @@ import { UtilityServiceService } from './utility-service.service';
 import { Profile } from '../entity/profile';
 import { LoginService } from './login.service';
 import { TodayLeavesRequest } from '../entity/today-leaves-request';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { StudentDetails } from '../entity/student-details';
 import { PageRequest } from '../payload/page-request';
 import { PassThrough } from 'stream';
@@ -20,6 +20,9 @@ export class StudentService {
   studentUrl = this.BASE_URL + '/student';
   TIME_URL = this.utilityService.getTimeUrl();
   profileData: Profile = new Profile();
+
+  private studentData = new BehaviorSubject<any>(null);
+  student = this.studentData.asObservable();
 
   constructor(private http: HttpClient, private utilityService: UtilityServiceService, private datepipe: DatePipe, public loginService: LoginService) { }
 
@@ -78,6 +81,7 @@ export class StudentService {
             this.profileData.profilePic = data.profilePic;
             this.profileData.course = data.course;
             this.profileData.studentId = data.id
+            this.studentData.next(data);
           },
           error: (error) => {
 
@@ -181,4 +185,8 @@ export class StudentService {
     return this.http.get(`${this.studentUrl}/todayAttendanceCountsForAdmin`);
   }
 
+
+  getTaskStatics() {
+    return this.http.get(`${this.studentUrl}/taskStatics?studentId=${this.loginService.getStudentId()}`)
+  }
 }

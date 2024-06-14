@@ -98,6 +98,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { SharedModule } from './shared/shared.module';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { StaticsComponent } from './pages/statics/statics.component';
+import { CodePlaygroundComponent } from './pages/code-playground/code-playground.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -172,6 +173,7 @@ import { StaticsComponent } from './pages/statics/statics.component';
     LoaderComponentComponent,
     TestComponent,
     StaticsComponent,
+    CodePlaygroundComponent,
 
 
 

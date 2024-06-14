@@ -47,20 +47,16 @@
           <div class="scroller-bar">
             <div class="all_summary">
               <!-- TASK ACCORDION  START-->
-              <div class="left-tasks" *ngFor="let task of toDoAssignment.taskQuestion else elsepart1;let i=index">
+              <div class="left-tasks" *ngFor="let task of toDoAssignment.taskQuestion let i=index">
                 <div class="task_summary d-flex align-items-center justify-content-between mb-0">
                   <h3 class="font-15 font-500 mb-0">Task {{task.taskNumber}} </h3>
                   <h4 class="font-13 font-500 warning ms-auto mb-0 task_modal" data-bs-toggle="modal"
                     (click)="pageRenderUsingRouterLink('/student/assignmentdetails',task.questionId)">View</h4>
                 </div>
               </div>
-
-
-              <ng-template #elsepart1>
-                <div class="gif_image_class">
+                <div *ngIf="toDoAssignment && toDoAssignment.taskQuestion.length===0" class="gif_image_class">
                   <img class="image_gif" src="../../../assets/images/temp_img/No data (2).gif">
                 </div>
-              </ng-template>
 
             </div>
 
@@ -73,8 +69,8 @@
         <!-- <h6 *ngIf="toDoAssignment==null">{{message}}</h6>
         -->
         <div class="col-md-4">
-
-          <div *ngIf="tasks.length!=0 else elsepart4">
+          <h3 class="title font-17 font-500 secondary position-relative">Tasks</h3>
+          <div *ngIf="tasks.length!==0 else elsepart4">
             <app-shared-task [tasks]="tasks" [taskIndexing]="taskIndexing" (eventEmit)="getAllData($event)"
               [type]="'task'" [paginationManager]="TaskpageManager" [pageRequest]="TaskPageRequest"></app-shared-task>
           </div>

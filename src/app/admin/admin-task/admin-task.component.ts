@@ -47,7 +47,7 @@ export class AdminTaskComponent implements AfterViewInit {
   submissioTaskPageRequest: PageRequest = new PageRequest();
   course = new Course()
   subject = new Subject
-  isSubmitTask:boolean=false
+  isSubmitTask: boolean = false
 
   constructor(private subjectService: SubjectService,
     private courseService: CourseServiceService,
@@ -99,19 +99,19 @@ export class AdminTaskComponent implements AfterViewInit {
       AppUtils.submissionFormFun(this.firstTaskForm);
       return;
     } else {
-      this.isSubmitTask=true
+      this.isSubmitTask = true
       this.taskService.addTask(this.task).subscribe(
         {
           next: (data: any) => {
             this.toast.showSuccess(data.message, 'Success')
             this.firstTaskForm.reset()
             this.router.navigate(['/admin/createtask/' + data.taskId])
-            this.isSubmitTask=false
+            this.isSubmitTask = false
 
           },
           error: (er: any) => {
             this.toast.showError(er.error.message, 'Error')
-            this.isSubmitTask=false
+            this.isSubmitTask = false
 
           }
         }
@@ -136,10 +136,14 @@ export class AdminTaskComponent implements AfterViewInit {
 
   public getAllSubmittedTaskFilter(course: Course, subjectId: number, status: string, pageRequest: PageRequest) {
     this.course1 = course
-    course.courseId != 0 ? this.getCourseSubject(course.courseId) : course
+    course.courseId != 0 ? this.getCourseSubject(course.courseId) : this.subjectes = []
+
     let c = document.getElementById('course2');
-    let s = document.getElementById('subject2');
+    let s = document.getElementById('subject2') as HTMLButtonElement;
     let st = document.getElementById('status2');
+
+    course.courseId == 0 ? s.disabled = true : s!.disabled = false
+
     s!.innerText = subjectId != 0 ? this.subjectName : 'Subject'
     c!.innerText = course.courseName != '' ? course.courseName : 'Course'
     st!.innerText = status != 'NOT_CHECKED_WITH_IT' ? status : 'Status'
@@ -182,9 +186,11 @@ export class AdminTaskComponent implements AfterViewInit {
 
   public courseFilterByCourseIdAndSubjectId(course: Course, subject: Subject, pageRequest: PageRequest) {
     this.course = course;
-    course.courseId != 0 ? this.getCourseSubject(course.courseId) : course
+    course.courseId != 0 ? this.getCourseSubject(course.courseId) : this.subjectes = []
     let c = document.getElementById('course1');
-    let s = document.getElementById('subject1');
+    let s = document.getElementById('subject1') as HTMLButtonElement;
+    course.courseId == 0 ? s.disabled = true : s!.disabled = false
+
     s!.innerText = subject.subjectName != '' && subject.subjectId != 0 ? subject.subjectName : 'Subject'
     c!.innerText = course.courseName != '' ? course.courseName : 'Course'
     this.taskService.getAllSubmissionTaskStatusByCourseIdAndSubjectIdFilter(course.courseId, subject.subjectId, pageRequest ? pageRequest : new PageRequest()).subscribe({
@@ -199,22 +205,6 @@ export class AdminTaskComponent implements AfterViewInit {
     })
   }
 
-  // public courseFilterByCourseIdAndSubjectId(course: Course, subjectId: number, pageRequest?: PageRequest) {
-  //   this.course = course;
-  //   //course != 0 ? this.getCourseSubject(this.courseId) : courseId
-  //   let c = document.getElementById('course1');
-  //   let s = document.getElementById('subject1');
-  //   s!.innerText = this.subjectName != '' && subjectId != 0 ? this.subjectName : 'Subject'
-  //   c!.innerText = course.courseName != '' ? course.courseName : 'Course'
-  //   this.assignmentService.getAllSubmissionAssignmentTaskStatusByCourseIdFilter(course.courseId, subjectId, pageRequest ? pageRequest : new PageRequest()).subscribe((
-  //     (data: any) => {
-  //       this.taskSubmissionStatus = data.content
-  //       this.taskSubmissionStatus = data.content
-  //       this.assignmentPagination.setPageData(data);
-  //       this.assignmentPageRequest.pageNumber = data.pageable.pageNumber;
-  //     }
-  //   ))
-  // }
 
   public pageRanderWithObj(id: any, taskId: number) {
     const dataParams = {

@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Router, Routes } from '@angular/router';
+import { Router } from '@angular/router';
 import { AssignmentSubmission } from 'src/app/entity/assignment-submission';
 import { Course } from 'src/app/entity/course';
 import { Subject } from 'src/app/entity/subject';
@@ -12,7 +12,6 @@ import { CourseServiceService } from 'src/app/service/course-service.service';
 import { SubjectService } from 'src/app/service/subject.service';
 import { UtilityServiceService } from 'src/app/service/utility-service.service';
 import { ToastService } from 'src/app/service/toast.service';
-import { ToastrService } from 'ngx-toastr';
 import { PageRequest } from 'src/app/payload/page-request';
 import { PaginationManager } from 'src/app/entity/pagination-manager';
 import { AppUtils } from 'src/app/utils/app-utils';
@@ -53,7 +52,6 @@ export class AdminAssignmentsComponent implements OnInit, AfterViewInit {
     private subjectService: SubjectService,
     private assignmentService: AssignmentServiceService,
     private router: Router,
-    private utilityService: UtilityServiceService,
     private formBuilder: FormBuilder,
     private tost: ToastService) {
 
@@ -69,10 +67,10 @@ export class AdminAssignmentsComponent implements OnInit, AfterViewInit {
 
     this.getAllCourses();
 
-    //    this.getAllSubmissionAssignmentStatus()
+    //this.getAllSubmissionAssignmentStatus()
     this.getOverAllAssignmentTaskStatus();
     this.courseFilterByCourseIdAndSubjectId(new Course, 0)
-    this.getAllSubject();
+    // this.getAllSubject();
   }
 
   ngAfterViewInit(): void {
@@ -124,17 +122,17 @@ export class AdminAssignmentsComponent implements OnInit, AfterViewInit {
       this.submissionFormFun()
       return;
     } else {
-      this.isSubmitAssignment=true
+      this.isSubmitAssignment = true
 
       this.assignmentService.createAssignment(this.assignmentRequest).subscribe({
         next: (data: any) => {
           this.tost.showSuccess('Successfully added', 'Success')
           this.router.navigate(['/admin/createassignments/' + data.assignmentId])
-          this.isSubmitAssignment=false
+          this.isSubmitAssignment = false
         },
         error: (error) => {
           this.tost.showError(error.error.message, 'Error')
-          this.isSubmitAssignment=false
+          this.isSubmitAssignment = false
         }
       }
       )
@@ -179,12 +177,19 @@ export class AdminAssignmentsComponent implements OnInit, AfterViewInit {
   }
 
   public courseFilterByCourseIdAndSubjectId(course: Course, subjectId: number, pageRequest?: PageRequest) {
+
     this.course = course;
-    //course != 0 ? this.getCourseSubject(this.courseId) : courseId
+    //getting the subjectes of course
+    course.courseId !== 0 ? this.getCourseSubject(course.courseId) : this.subjectes = [];
+
     let c = document.getElementById('course1');
-    let s = document.getElementById('subject1');
+    let s = document.getElementById('subject1') as HTMLButtonElement;
+    // disabled the subject button  if no subject are present
+    course.courseId == 0 ? s.disabled = true : s!.disabled = false
+    // managing the dropdown label  
     s!.innerText = this.subjectName != '' && subjectId != 0 ? this.subjectName : 'Subject'
     c!.innerText = course.courseName != '' ? course.courseName : 'Course'
+
     this.assignmentService.getAllSubmissionAssignmentTaskStatusByCourseIdFilter(course.courseId, subjectId, pageRequest ? pageRequest : new PageRequest()).subscribe((
       (data: any) => {
         this.taskSubmissionStatus = data.content
@@ -195,12 +200,15 @@ export class AdminAssignmentsComponent implements OnInit, AfterViewInit {
   }
 
   public getAllSubmitedAssignments(course: Course, subjectId: number, status: string, pageRequest?: PageRequest) {
-
+    course.courseId !== 0 ? this.getCourseSubject(course.courseId) : this.subjectes = [];
     // managing the dropdown label
     this.course = course!;
     let c = document.getElementById('course2');
-    let s = document.getElementById('subject2');
+    let s = document.getElementById('subject2') as HTMLButtonElement;
     let st = document.getElementById('status2');
+
+    // disabled the subject button  if no subject are present
+    course.courseId == 0 ? s.disabled = true : s!.disabled = false
     s!.innerText = this.subjectName != '' && subjectId != 0 ? this.subjectName : 'Subject'
     c!.innerText = course.courseName != '' ? course.courseName : 'Course'
     st!.innerText = status != 'NOT_CHECKED_WITH_IT' ? status : 'Status'
@@ -251,6 +259,7 @@ export class AdminAssignmentsComponent implements OnInit, AfterViewInit {
   isDuplicateAssignment(name: string, currentIndex: number): boolean {
     return this.taskSubmissionStatus.findIndex((assignment, index) => index < currentIndex && assignment.assignmentTitle === name) !== -1;
   }
+
   // this method is called from child component
   getAllData(event: any) {
     if (event.method == "getAllData") {

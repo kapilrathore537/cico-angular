@@ -28,7 +28,7 @@ export type ChartOptions = {
   legend: any;
   responsive: any;
   labels: any;
-  stroke :any;
+  stroke: any;
 };
 
 @Component({
@@ -50,19 +50,19 @@ export class AdminDashboardComponent implements OnInit {
   admissionMap = new Map<number, number>();
   feesMap = new Map<number, number>();
 
-  admissionBar:BarChart = new BarChart();
-  feesBar:BarChart = new BarChart();
-  pieChart:PieChart = new PieChart();
-  attendanceChart:DonutChart = new DonutChart();
+  admissionBar: BarChart = new BarChart();
+  feesBar: BarChart = new BarChart();
+  pieChart: PieChart = new PieChart();
+  attendanceChart: DonutChart = new DonutChart();
 
   totaOnleaves = 0;
   totalAbsent = 0;
   totalPresent = 0;
   totalEarlyCheckOut = 0;
 
-  feesPays:FeesPay[]=[];
-  feeses:Fees[]=[];
-  
+  feesPays: FeesPay[] = [];
+  feeses: Fees[] = [];
+
   totalFees = 0;
   collectedFees = 0;
   pendingFees = 0
@@ -71,15 +71,15 @@ export class AdminDashboardComponent implements OnInit {
   reveiwed = 0;
   unReveiwed = 0;
 
-  taskSubmissionStatus2: SubmissionAssignmentTaskStatus= new SubmissionAssignmentTaskStatus
+  taskSubmissionStatus2: SubmissionAssignmentTaskStatus = new SubmissionAssignmentTaskStatus
 
-  constructor(private elementRef: ElementRef,  
-    private localst: LocationStrategy, 
-    private studentService: StudentService,  
+  constructor(private elementRef: ElementRef,
+    private localst: LocationStrategy,
+    private studentService: StudentService,
     private feesService: FeesService,
-    private feesPayService:FeesPayService,
-    private taskService: TaskServiceService, 
-    private assignmentService:AssignmentServiceService) {
+    private feesPayService: FeesPayService,
+    private taskService: TaskServiceService,
+    private assignmentService: AssignmentServiceService) {
 
     this.admissinonOptions = this.admissionBar.chartOptions
 
@@ -87,18 +87,18 @@ export class AdminDashboardComponent implements OnInit {
     this.feesOptions.series[0].name = 'Fees'
 
     this.feesPieOptions = this.pieChart.chartOptions
-    this.feesPieOptions.labels = ['Total','Completed','Pending']
-    this.feesPieOptions.colors = ['#49cf9f','#4daaf8','#f6c453']
+    this.feesPieOptions.labels = ['Total', 'Completed', 'Pending']
+    this.feesPieOptions.colors = ['#49cf9f', '#4daaf8', '#f6c453']
 
     this.attendanceOptions = this.attendanceChart.chartOptions
-    this.attendanceChart.chartOptions.colors = ['#49cf9f','#f0845d','#8079ff',"#88048f"]
+    this.attendanceChart.chartOptions.colors = ['#49cf9f', '#f0845d', '#8079ff', "#88048f"]
     this.attendanceChart.chartOptions.labels = ["Present", "Absent", "Leaves", "EarlyCheckOut"]
 
     this.years = this.generateYearsArray(2000, new Date().getFullYear());
     this.admissionYear = new Date().getFullYear();
     this.feesYear = new Date().getFullYear();
   }
-  
+
 
   ngOnInit(): void {
     this.preventBackButton();
@@ -106,8 +106,8 @@ export class AdminDashboardComponent implements OnInit {
     this.getAdmissinonDataByWiseForYear(this.admissionYear);
     this.getFeesCollectionMonthAndYearWise(this.feesYear);
     this.getAllFeesCollections();
-    this.recentCollection(0,6);
-    this.upcomingDues(0,6);
+    this.recentCollection(0, 6);
+    this.upcomingDues(0, 6);
     this.getOverAllAssignmentTaskStatus();
     this.getTodayAttendanceForAdmin();
   }
@@ -131,29 +131,32 @@ export class AdminDashboardComponent implements OnInit {
     this.studentService.getAdmissinonDataByWiseForYear(year).subscribe({
       next: (data: any) => {
         this.admissionMap = data
-        this.getAdmissionBarChartData()
-       
-        this.admissinonOptions.xaxis= {
+        // this.getAdmissionBarChartData()
+        this.admissinonOptions.series = [
+          {
+            name: "Student",
+            data: data
+          }
+        ]
+        this.admissinonOptions.xaxis = {
           categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
         }
       }
     })
   }
 
-  alet(year: number) {
-    console.log(year)
-  }
 
-  public getAdmissionBarChartData() {
-    let arr: number[] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-    const mapEntries: [number, number][] = Object.entries(this.admissionMap).map(([key, value]) => [parseInt(key), value]);
-    const resultMap: Map<number, number> = new Map<number, number>(mapEntries);
-    for (const entry of resultMap.entries()) {
-      arr[entry[0] - 1] = entry[1];
-    }
-    this.admissinonOptions.series[0].data = arr
-   // window.dispatchEvent(new Event('resize'));
-  }
+
+  // public getAdmissionBarChartData() {
+  //   let arr: number[] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+  //   const mapEntries: [number, number][] = Object.entries(this.admissionMap).map(([key, value]) => [parseInt(key), value]);
+  //   const resultMap: Map<number, number> = new Map<number, number>(mapEntries);
+  //   for (const entry of resultMap.entries()) {
+  //     arr[entry[0] - 1] = entry[1];
+  //   }
+  //   this.admissinonOptions.series[0].data = arr
+  //  // window.dispatchEvent(new Event('resize'));
+  // }
   public getFessBarData() {
     let arr: number[] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
     const mapEntries: [number, number][] = Object.entries(this.feesMap).map(([key, value]) => [parseInt(key), value]);
@@ -162,7 +165,7 @@ export class AdminDashboardComponent implements OnInit {
       arr[entry[0] - 1] = entry[1];
     }
     this.feesOptions.series[0].data = arr
-  //  window.dispatchEvent(new Event('resize'));
+    //  window.dispatchEvent(new Event('resize'));
   }
 
   public generateYearsArray(startYear: number, endYear: number): number[] {
@@ -178,7 +181,7 @@ export class AdminDashboardComponent implements OnInit {
       (data: any) => {
         this.feesMap = data.body
         this.getFessBarData();
-        this.feesOptions.xaxis= {
+        this.feesOptions.xaxis = {
           categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
         }
       }
@@ -186,12 +189,12 @@ export class AdminDashboardComponent implements OnInit {
   }
 
   public getChartData() {
-    this.attendanceOptions.series = [ this.totalPresent,this.totalAbsent, this.totaOnleaves]
+    this.attendanceOptions.series = [this.totalPresent, this.totalAbsent, this.totaOnleaves]
   }
 
-  public getTodayAttendanceForAdmin(){
+  public getTodayAttendanceForAdmin() {
     this.studentService.getTodayAllAttendanceTypeForAdmin().subscribe({
-      next:(data:any)=>{
+      next: (data: any) => {
         this.totalPresent = data.present;
         this.totaOnleaves = data.leaves;
         this.totalAbsent = data.absent;
@@ -202,41 +205,41 @@ export class AdminDashboardComponent implements OnInit {
   }
 
 
-  public getAllFeesCollections(){
+  public getAllFeesCollections() {
     this.feesService.getAllFeesCollection().subscribe({
-      next:(data:any)=>{
+      next: (data: any) => {
         this.totalFees = data.body.Total
         this.collectedFees = data.body.Collected
         this.pendingFees = data.body.Pending
 
-       this.feesPieOptions.series = [data.body.Total,data.body.Collected,data.body.Pending]
+        this.feesPieOptions.series = [data.body.Total, data.body.Collected, data.body.Pending]
       }
     })
   }
 
-  public recentCollection(page:Number,size:number){
-    this.feesPayService.feesPayList(page,size).subscribe(
-      (data:any)=>{
-        this.feesPays=data.response;;
+  public recentCollection(page: Number, size: number) {
+    this.feesPayService.feesPayList(page, size).subscribe(
+      (data: any) => {
+        this.feesPays = data.response;;
       }
     )
   }
-  public upcomingDues(page:Number,size:number){
-    this.feesPayService.feesPendingList(page,size).subscribe(
-      (data:any)=>{
-        this.feeses=data.response;;
+  public upcomingDues(page: Number, size: number) {
+    this.feesPayService.feesPendingList(page, size).subscribe(
+      (data: any) => {
+        this.feeses = data.response;;
       }
     )
 
   }
 
-  public getOverAllAssignmentTaskStatus(){
+  public getOverAllAssignmentTaskStatus() {
     this.assignmentService.getOverAllAssignmentTaskStatus().subscribe(
-       (data:any)=>{
+      (data: any) => {
         this.totalSubmitted = data.totalCount
-        this.reveiwed =data.reviewedCount
+        this.reveiwed = data.reviewedCount
         this.unReveiwed = data.unreviewedCount
-       }
+      }
     )
   }
 }

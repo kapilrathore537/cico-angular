@@ -33,17 +33,15 @@ export class TestComponent implements OnInit, AfterViewInit {
     this.utilityService.getCurrentDate().subscribe(
       (data: any) => {
         this.date = data
-        console.log('Data received:', data);
+        // console.log('Data received:', data);
       },
-      error => {
+      (error:any) => {
         console.error('Error:', error);
       }
     );
   }
   ngOnInit(): void {
-    this.getAllExam();
-    console.log(this.normalExam);
-    
+
   }
 
   getAllExam() {
@@ -53,10 +51,10 @@ export class TestComponent implements OnInit, AfterViewInit {
         this.scheduleExam = data.scheduleExam
         setTimeout(() => {
           this.scheduleExam.forEach(exam => this.startExamTimer(exam));
-        }, 500);
+        }, 1000);
         setTimeout(() => {
           this.fetchBestScore();
-        }, 1000);
+        }, 50);
       },
       error: (er: any) => {
 
@@ -64,7 +62,7 @@ export class TestComponent implements OnInit, AfterViewInit {
     })
   }
   ngAfterViewInit(): void {
-
+    this.getAllExam();
   }
 
   startTest(examId: any, subjectId: any) {
@@ -160,10 +158,7 @@ export class TestComponent implements OnInit, AfterViewInit {
   }
 
   fetchBestScore() {
-    // Combine the arrays
     const combinedExams = [...this.normalExam, ...this.scheduleExam];
-
-    // Calculate the percentage for each object and find the one with the highest score
     const highestScoreExam = combinedExams
       .map(obj => ({
         ...obj,

@@ -15,40 +15,36 @@ export class UtilityServiceService {
 
   private BASE_URL =   'http://localhost:8080';//
   private readonly TIME_URL = 'http://worldtimeapi.org/api/ip';
+  private readonly TIME_URL_1 = 'https://timeapi.io/api/time/current/zone?timeZone=Asia%2FKolkata';
 
-
-  getCurrentTime(): Observable<any> {
-    return this.http.get(this.TIME_URL).pipe(
-      catchError(error => {
+  getCurrentDate(): Observable<any> {
+    return this.http.get(this.TIME_URL_1).pipe(
+      map((response: any) => {
+        // Transform the data to the desired format
+        return this.transformData(response);
+      }),
+      catchError((error:any) => {
         console.error('Error fetching time:', error);
         return throwError(error);
       })
     );
   }
 
-  getCurrentDate(): Observable<any> {
-    return this.getCurrentTime().pipe(
-      map((data: any) => this.transformData(data)),
-      catchError(error => {
-        console.error('Error transforming data:', error);
-        return throwError(error);
-      })
-    );
-  }
+  public transformData(data: any): any {
+    let date = new Date(data.dateTime); // Adjust this to your API response field name
 
-  private transformData(data: any): any {
-    let date = new Date(data.datetime);
-    let date2 = this.datePipe.transform(date, 'yyyy-MM-dd');
-    let dateWithTime = `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`;
-    let time = date.toLocaleTimeString();
+    let date2 = this.datePipe.transform(date, 'yyyy-MM-dd'); // Format to 'yyyy-MM-dd'
+    let dateWithTime = `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`; // Combine date and time
+    let time = date.toLocaleTimeString(); // Only time
 
     return {
-      date: date2,
-      dateWithTime: dateWithTime,
-      time: time,
-      actualDate:date
+      date: date2,            // 'yyyy-MM-dd' formatted date
+      dateWithTime: dateWithTime, // Full date and time string
+      time: time,             // Time only string
+      actualDate: date        // Actual JavaScript Date object
     };
   }
+
 
   public getBaseUrl() {
     return this.BASE_URL;
@@ -78,14 +74,6 @@ export class UtilityServiceService {
       return `${minutes} ${minutes === 1 ? 'minute' : 'minutes'} ago`;
     }
   }
-
-  // decodeFromBase64(encodedString: string): ArrayBuffer {
-  //   return decode(encodedString);
-  // }
-
-  // encodeToBase64(data: ArrayBuffer): string {
-  //   return encode(data);
-  // }
 }
 
 

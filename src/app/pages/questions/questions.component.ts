@@ -285,7 +285,7 @@ export class QuestionsComponent implements AfterViewInit {
     if (!this.isFullScreen) {
       // Enter fullscreen mode
       if (element.requestFullscreen) {
-        element.requestFullscreen();
+        element.requestFullscreen();  
       }
     } else {
       // Exit fullscreen mode

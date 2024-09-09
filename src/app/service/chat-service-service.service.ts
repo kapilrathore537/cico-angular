@@ -6,7 +6,7 @@ import { UtilityServiceService } from './utility-service.service';
 })
 export class ChatServiceService {
   BASE_URL = this.utilityService.getBaseUrl;
-  readonly QR_URL = `ws://localhost:8080/ws/sessionId?=`
+  readonly QR_URL = `ws://192.168.0.127:8080/ws/sessionId?=`
   readonly DISCUSSION_URL = `ws://localhost:8080/ws/discussion`
 
   // public messages!: Subject<any>; // DISCUSSIONFORUM
